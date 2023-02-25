@@ -1,0 +1,282 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type User @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  firstName: String
+  lastName: String
+  phone: String
+  email: String
+  imageUri: String
+  bio: String
+  status: String
+  Setting1: String
+  Setting2: String
+  Setting3: String
+  Setting4: Boolean
+  Setting5: Boolean
+  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  system: System @hasOne (fields: ["systemID"])
+  hospital: [Hospital] @manyToMany (relationName: "HospitalUser")
+  groups: [Group] @manyToMany (relationName: "GroupUser")
+  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  department: Department @hasOne (fields: ["departmentID"])
+  role: [Role] @manyToMany (relationName: "RoleUser")
+  quals: [Qual] @manyToMany (relationName: "QualUser")
+  shifts: [Shift] @hasMany(indexName: "byUser", fields: "id")
+  messageSent: [Message] @hasMany(indexName: "byUser", fields: "id")
+  messageRec: [Message] @hasMany(indexName: "byOtherUser", fields: "id")
+  announcements: [Announcement] @hasMany(indexName: "byCreatedBy", fields: "id")
+  events: [Event] @manyToMany (relationName: "EventUser")
+}
+
+type Role @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  title: String #nurse, tech, doctor, 
+  details: String
+  icon: String
+  color: String
+  imageUri: String
+  acronym: String
+  people: [User] @manyToMany (relationName: "RoleUser")
+}
+
+type Qual @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  title: String #CCT, charge, ems, manager
+  details: String 
+  people: [User] @manyToMany (relationName: "QualUser")
+}
+
+type System @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  name: String #Harris Health, Memorial Hermann
+  hospitals: [Hospital] @hasMany(indexName: "bySystem", fields: "id")
+}
+
+type Hospital @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  name: String #LBJ, HM, Ben Taub
+  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  system: System @hasOne (fields: ["systemID"])
+  departments: [Department] @hasMany(indexName: "byHospital", fields: "id")
+  people: [User] @manyToMany (relationName: "HospitalUser")
+  streetNum: String
+  streetAddress: String
+  city: String
+  state: String
+  postalCode: String
+  phone: String
+  color: String
+  imageUri: String
+}
+
+type Department @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  name: String #ER, ICU, MS
+  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospital: Hospital @hasOne (fields: ["hospitalID"])
+  members: [User] @hasMany(indexName: "byDepartment", fields: "id")
+  color: String
+  imageUri: String
+}
+
+type Shift @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  createdByID: ID @index(name: "byCreatedBy", sortKeyFields: ["id"])
+  createdBy: User @hasOne (fields: ["createdByID"])
+  name: String
+  notes: String
+  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  system: System @hasOne (fields: ["systemID"])
+  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospital: Hospital @hasOne (fields: ["hospitalID"])
+  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  department: Department @hasOne (fields: ["departmentID"])
+  roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
+  role: Role @hasOne (fields: ["roleID"])
+  announcementID: ID @index(name: "byAnnouncement", sortKeyFields: ["id"])
+  roannouncementle: Announcement @hasOne (fields: ["announcementID"])
+  qual: [Qual]
+  date: String
+  month: Int
+  year: Int
+  startTime: Int
+  startAMPM: String
+  endTime: Int
+  endAMPM: String
+  payMultiplier: Float
+  payRate: Float
+  status: String
+  userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+  user: User @hasOne (fields: ["userID"]) #this is who is working the shift
+  priority: String
+  numNeeded: Int
+  trade: Boolean
+  giveUp: Boolean
+}
+
+type Announcement @model @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
+{
+  id: ID!
+  type: String @index(name: "announcementsByDate", queryField: "announcementByDate", sortKeyFields: ["updatedAt"]  )
+  createdAt: String
+  updatedAt: String
+  createdByID: ID @index(name: "byCreatedBy", sortKeyFields: ["id"])
+  createdBy: User @hasOne (fields: ["createdByID"])
+  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  system: System @hasOne (fields: ["systemID"])
+  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospital: Hospital @hasOne (fields: ["hospitalID"])
+  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  department: Department @hasOne (fields: ["departmentID"])
+  roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
+  role: Role @hasOne (fields: ["roleID"])
+  title: String
+  accouncement: String
+  notes: String
+  priority: String
+  reactions: [Reaction] @hasMany(indexName: "byAnnouncement", fields: ["id"])
+  replies: [AnnouncementReply] @hasMany(indexName: "byAccouncement", fields: ["id"])
+  duration: Int
+  expire: Boolean
+  category: String
+  link: String
+  shifts: [Shift] @hasMany(indexName: "byAnnouncement", fields: ["id"])
+  sort: String #type of announcement
+}
+
+type Reaction @model @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
+{
+  id: ID!
+  type: String
+  createdAt: String
+  updatedAt: String
+  userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+  user: User @hasOne (fields: ["userID"])
+  reaction: String
+  icon: String
+  announcement: Announcement @hasOne (fields: ["announcementID"])
+  announcementID: ID @index(name: "byAnnouncement", sortKeyFields: ["id"])
+  event: Event @hasOne (fields: ["eventID"])
+  eventID: ID @index(name: "byEvent", sortKeyFields: ["id"])
+}
+
+type Message @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
+  {
+    id: ID!
+    type: String 
+      @index(name: "messagesByDate", queryField: "messagesByDate", sortKeyFields: ["createdAt"]  )
+      @index(name: "messagesByUpdatedDate", queryField: "messagesByUpdatedDate", sortKeyFields: ["updatedAt"]  )
+    createdAt: String
+    updatedAt: String
+    title: String
+    subtitle: String
+    content: String
+    user: User @hasOne (fields: ["userID"])
+    userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+    otherUserID: ID @index(name: "byOtherUser", sortKeyFields: ["id"])
+    otherUser: User @hasOne (fields: ["otherUserID"])
+    isReadbyUser: Boolean
+    isReadByOtherUser: Boolean
+    replies: [MessageReply] @hasMany(indexName: "byMessage", fields: ["id"])
+    request: String
+    status: String
+    groupID: ID @index(name: "byGroup", sortKeyFields: ["id"])
+    group: Group @hasOne (fields: ["groupID"])
+}
+
+type MessageReply @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
+  {
+    id: ID!
+    type: String @index(name: "repliesByDate", queryField: "repliesByDate", sortKeyFields: ["createdAt"]  )
+    createdAt: String
+    updatedAt: String
+    content: String
+    isRead: Boolean
+    messageID: ID! @index(name: "byMessage", sortKeyFields: ["id"])
+    message: Message @hasOne (fields: ["messageID"])
+    user: User @hasOne (fields: ["userID"])
+    userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+}
+
+type AnnouncementReply @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
+  {
+    id: ID!
+    type: String @index(name: "AnnouncementRepliesByDate", queryField: "AnnouncementRepliesByDate", sortKeyFields: ["createdAt"]  )
+    createdAt: String
+    updatedAt: String
+    content: String
+    isRead: Boolean
+    announcementID: ID! @index(name: "byAccouncement", sortKeyFields: ["id"])
+    announcement: Announcement @hasOne (fields: ["announcementID"])
+    user: User @hasOne (fields: ["userID"])
+    userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+}
+
+type Event @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  title: String
+  details: String
+  notes: String
+  imageUri: String
+  link: String
+  status: String
+  priority: String
+  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  system: System @hasOne (fields: ["systemID"])
+  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospital: Hospital @hasOne (fields: ["hospitalID"])
+  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  department: Department @hasOne (fields: ["departmentID"])
+  roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
+  role: Role @hasOne (fields: ["roleID"])
+  qualID: ID @index(name: "byQual", sortKeyFields: ["id"])
+  qual: Qual @hasOne (fields: ["qualID"])
+  date: String
+  month: Int
+  year: Int
+  startTime: Int
+  startAMPM: String
+  endTime: Int
+  endAMPM: String
+  reaction: [Reaction] @hasMany(indexName: "byEvent", fields: ["id"])
+  people: [User] @manyToMany (relationName: "EventUser")
+}
+
+type Group @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  name: String 
+  members: [User] @manyToMany (relationName: "GroupUser")
+  color: String
+  imageUri: String
+  messages: [Message] @hasMany(indexName: "byGroup", fields: ["id"])
+}
