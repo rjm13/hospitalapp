@@ -1,8 +1,6 @@
 import React from 'react';
 
 const context = {
-    storyID: null,
-    setStoryID: (id: string | null) => {},
 
     isRootScreen: null,
     setIsRootScreen: (val: boolean | null) => {},
@@ -12,17 +10,6 @@ const context = {
 
     deepLink: null,
     setDeepLink: () => {},
-
-    nsfwOn: false,
-    setNSFWOn: (val: boolean | null) => {},
-
-    ADon: false,
-    setADon: (val: boolean | null) => {},
-
-    progUpdate: false,
-    setProgUpdate: (val: boolean) => {},
-    premium: false,
-    setPremium: (val: boolean) => {},
 }
 
 export const AppContext = React.createContext(context);
