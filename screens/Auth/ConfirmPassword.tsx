@@ -14,6 +14,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {Auth} from '@aws-amplify/auth'
 import Feather from 'react-native-vector-icons/Feather';
 
+import Colors from '../../constants/Colors'
+
+import {styles} from '../../styles';
+
 const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) => {
 
     const {email} = route.params
@@ -57,19 +61,12 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-            <LinearGradient
-                colors={['#00ffffa5','#000', '#000']}
-                style={styles.container}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-            >
-
                 <View style={{ margin: 20}}>
-                    <Text style={{marginHorizontal: 20, color: '#fff', textAlign: 'center', marginBottom: 40, fontSize: 12}}>
+                    <Text style={[styles.paragraph, {textAlign: 'center', marginBottom: 40, fontSize: 12}]}>
                         Please check your email for the confirmation code to reset your password.
                     </Text>
                     <View>
-                        <Text style={styles.header}>
+                        <Text style={styles.title}>
                             Confirmation Code
                         </Text>
                         <View style={styles.inputfield}>
@@ -87,7 +84,7 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
 
                 <View style={{ marginBottom: 0, marginHorizontal: 20}}>
                     <View>
-                        <Text style={styles.header}>
+                        <Text style={styles.title}>
                             New Password
                         </Text>
                         <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
@@ -113,7 +110,7 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
 
                 <View style={{ marginBottom: 20, marginHorizontal: 20}}>
                     <View>
-                        <Text style={styles.header}>
+                        <Text style={styles.title}>
                             Confirm New Password
                         </Text>
                         <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
@@ -150,14 +147,12 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
                         Go Back
                     </Text>
                 </TouchableOpacity>
-
-            </LinearGradient>
         </View>
         </TouchableWithoutFeedback>
     );
 }
 
-const styles = StyleSheet.create({
+const istyles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         //alignItems: 'center',

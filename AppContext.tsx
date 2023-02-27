@@ -10,6 +10,9 @@ const context = {
 
     deepLink: null,
     setDeepLink: () => {},
+
+    theme: false,
+    setTheme: (val: boolean) => {},
 }
 
 export const AppContext = React.createContext(context);

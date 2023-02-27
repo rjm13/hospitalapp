@@ -19,6 +19,8 @@ export default function App() {
 
   const [isRootScreen, setIsRootScreen] = useState<boolean|null>(null);
 
+  const [theme, setTheme] = useState<boolean>(false);
+
   const [deepLink, setDeepLink] = useState(null);
 
   const isLoadingComplete = useCachedResources();
@@ -30,11 +32,14 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <AppContext.Provider value={{
-          setUserID: (user: {}) => setUserID(user),
+          userID,
+          setUserID: (val: {}) => setUserID(''),
           isRootScreen,
           setIsRootScreen: (val: boolean) => setIsRootScreen(val),
           deepLink,
           setDeepLink: (link: {}) => setDeepLink(link),
+          theme,
+          setTheme: (val: boolean) => setTheme(val),
         }}>
         <Navigation colorScheme={colorScheme} />
         </AppContext.Provider>

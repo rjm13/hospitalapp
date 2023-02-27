@@ -168,9 +168,9 @@ const Welcome = ({navigation} : any) => {
             </View> 
 
 {/* FOOTER */}
-            <View style={{height: '10%'}}>
+            <View style={[styles.button, {height: '10%'}]}>
                 <TouchableOpacity onPress={() =>  navigation.navigate('Redirect', {trigger: Math.random()})}>
-                    <Text style={{overflow: 'hidden', alignSelf: 'center', backgroundColor: 'cyan', paddingVertical: 6, paddingHorizontal: 20, borderRadius: 13, textAlign: 'center'}}>
+                    <Text style={styles.buttontext}>
                         Next
                     </Text>
                 </TouchableOpacity>

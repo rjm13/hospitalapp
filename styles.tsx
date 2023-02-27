@@ -11,6 +11,8 @@ const styles = StyleSheet.create ({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
       },
     title: {
         fontSize: 18,

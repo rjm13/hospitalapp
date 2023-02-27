@@ -10,6 +10,10 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 
+import Colors from '../../constants/Colors'
+
+import {styles} from '../../styles';
+
 import { LinearGradient } from 'expo-linear-gradient';
 import { Auth } from 'aws-amplify';
 
@@ -31,23 +35,17 @@ const ForgotPassword = ({navigation} : any) => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-            <LinearGradient
-                colors={['#00ffffa5','#000', '#000']}
-                style={styles.container}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-            >
+        <View style={[styles.container, {justifyContent: 'center'}]}>
                 <View style={{ margin: 20}}>
                     <View>
-                        <Text style={styles.header}>
+                        <Text style={styles.title}>
                             Email
                         </Text>
-                        <View style={styles.inputfield}>
+                        <View style={istyles.inputfield}>
                             <TextInput 
                                 placeholder='....'
                                 placeholderTextColor='#ffffffa5'
-                                style={styles.textInputTitle}
+                                style={istyles.textInputTitle}
                                 maxLength={40}
                                 onChangeText={val => setEmail(val)}
                             />
@@ -64,18 +62,16 @@ const ForgotPassword = ({navigation} : any) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.goBack() }>
-                    <Text style={{ fontSize: 14, color: '#fff', alignSelf: 'center', marginTop: 30}}>
+                    <Text style={[styles.paragraph, {alignSelf: 'center', marginTop: 30}]}>
                         Go Back
                     </Text>
                 </TouchableOpacity>
-
-            </LinearGradient>
         </View>
         </TouchableWithoutFeedback>
     );
 }
 
-const styles = StyleSheet.create({
+const istyles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         //alignItems: 'center',
@@ -94,7 +90,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
     },
     inputfield: {
-        width: '90%',
+        width: Dimensions.get('window').width - 40,
         height: 40,
         backgroundColor: '#363636',
         padding: 10,
