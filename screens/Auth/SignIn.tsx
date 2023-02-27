@@ -22,12 +22,14 @@ import {Modal, Provider, Portal} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from "date-fns";
 
+import Colors from '../../constants/Colors'
+
+import {styles} from '../../styles';
+
 import { Auth, API, graphqlOperation, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
 import { getUser } from '../../src/graphql/queries';
 import { createUser } from '../../src/graphql/mutations';
-
-import { styles } from "../../styles";
 
 
 const SignIn = ({navigation} : any) => {
@@ -79,14 +81,12 @@ const SignIn = ({navigation} : any) => {
             )
     
             if (userData.data.getUser) {
-                //console.log("User is already registered in database");
                 setUserID(userData.data.getUser);
                 setIsErr(false);
                 setTrigger(!trigger);
                 navigation.navigate('Redirect', {trigger: Math.random()});
                 return;
             };
-
           }
         }
 
@@ -125,55 +125,53 @@ const SignIn = ({navigation} : any) => {
         setSigningIn(false);
     }
 
-    const CreateFedUser = async () => {
-            const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true })
+    // const CreateFedUser = async () => {
 
-            if (userInfo) {
+    //         const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true })
 
-                const userCheck = await API.graphql(
-                    graphqlOperation(
-                    getUser,
-                    { id: userInfo.attributes.sub }
-                    )
-                )
+    //         if (userInfo) {
 
-                if (userCheck.data.getUser === null) {
+    //             const userCheck = await API.graphql(
+    //                 graphqlOperation(
+    //                 getUser,
+    //                 { id: userInfo.attributes.sub }
+    //                 )
+    //             )
 
-                    //showDatepicker()
+    //             if (userCheck.data.getUser === null) {
 
-                    await Auth.updateUserAttributes(userInfo, {
-                        //'birthdate': format(date, "MM/dd/yyyy")
-                        'birthdate': "04/20/2000"
-                      })
+    //                 await Auth.updateUserAttributes(userInfo, {
+    //                     'birthdate': "04/20/2000"
+    //                   })
 
                       
 
-                    .then(() => setUserstuff(userInfo.attributes))
+    //                 .then(() => setUserstuff(userInfo.attributes))
 
-                    const newUser = {
-                        id: userInfo.attributes.sub,
-                        type: 'User',
-                        name: userInfo.attributes.name,
-                        //birthdate: format(date, "MM/dd/yyyy"),
-                    }
+    //                 const newUser = {
+    //                     id: userInfo.attributes.sub,
+    //                     type: 'User',
+    //                     name: userInfo.attributes.name,
+    //                     //birthdate: format(date, "MM/dd/yyyy"),
+    //                 }
 
-                   const createdUser = await API.graphql(
-                        graphqlOperation(
-                        createUser,
-                        { input: newUser }
-                        )
-                    )
-                    if (createdUser) {
-                        navigation.navigate('Welcome')
-                    } 
-                } 
-                else {
-                    navigation.navigate('Redirect', {trigger: Math.random()});
-                }
+    //                const createdUser = await API.graphql(
+    //                     graphqlOperation(
+    //                     createUser,
+    //                     { input: newUser }
+    //                     )
+    //                 )
+    //                 if (createdUser) {
+    //                     navigation.navigate('Welcome')
+    //                 } 
+    //             } 
+    //             else {
+    //                 navigation.navigate('Redirect', {trigger: Math.random()});
+    //             }
 
                 
-            }
-    }
+    //         }
+    // }
     
     // useEffect(() => {
     //     Hub.listen('auth', ({ payload: { event, data } }) => {
@@ -195,40 +193,42 @@ const SignIn = ({navigation} : any) => {
     //     //getUser().then(userData => setUser(userData));
     //   }, []);
 
-    async function signInWithGoogle() {
-        //setSigningIn(true);
-        try {
+    // async function signInWithGoogle() {
+    //     //setSigningIn(true);
+    //     try {
             
-            //await Auth.federatedSignIn({provider: "google"})
-            //.then (CreateUser)
-            await Auth.federatedSignIn({
-                provider: CognitoHostedUIIdentityProvider.Google
-              });
-        } 
-        catch (error) {
-            console.log('error signing in', error)
-            //setIsErr(true);
-            //setSigningIn(false);
-        }
-        //setSigningIn(false);
-    }
+    //         //await Auth.federatedSignIn({provider: "google"})
+    //         //.then (CreateUser)
+    //         await Auth.federatedSignIn({
+    //             provider: CognitoHostedUIIdentityProvider.Google
+    //           });
+    //     } 
+    //     catch (error) {
+    //         console.log('error signing in', error)
+    //         //setIsErr(true);
+    //         //setSigningIn(false);
+    //     }
+    //     //setSigningIn(false);
+    // }
 
-    async function signInWithApple() {
-        setSigningIn(true);
-        const {username, password} = data;
-        try {
-            await Auth.signIn(username.replace(/ /g, ''), password)
-            .then (CreateUser)
-        } 
-        catch (error) {
-            console.log('error signing in', error)
-            setIsErr(true);
-            setSigningIn(false);
-        }
-        setSigningIn(false);
-    }
+    // async function signInWithApple() {
+    //     setSigningIn(true);
+    //     const {username, password} = data;
+    //     try {
+    //         await Auth.signIn(username.replace(/ /g, ''), password)
+    //         .then (CreateUser)
+    //     } 
+    //     catch (error) {
+    //         console.log('error signing in', error)
+    //         setIsErr(true);
+    //         setSigningIn(false);
+    //     }
+    //     setSigningIn(false);
+    // }
 
             //upload modal
+            
+              
             const [visible, setVisible] = useState(false);
             const showModal = () => {
                 setVisible(true);
@@ -242,28 +242,12 @@ const SignIn = ({navigation} : any) => {
             };
 
             //date time picker
-        const [date, setDate] = useState(new Date());
         const [mode, setMode] = useState('date');
         const [show, setShow] = useState(false);
-
-        const todaysdate = new Date();
-
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
-    };
 
     const showMode = (currentMode : any) => {
         setShow(true);
         setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-        if (Platform.OS === 'ios') {
-            showModal()
-        }
     };
 
     return (
@@ -271,35 +255,11 @@ const SignIn = ({navigation} : any) => {
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
                 <View>
-                        {show && (
-                            <View>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={date}
-                                    mode='date'
-                                    is24Hour={true}
-                                    display={Platform.OS === "ios" ? "spinner" : "default"}
-                                    onChange={onChange}
-                                />
-                                <TouchableWithoutFeedback onPress={hideModal}>
-                                    <Text style={{color: '#fff', alignSelf: 'center', marginTop: 20, paddingHorizontal: 20, paddingVertical: 6, overflow: 'hidden', borderRadius: 13, backgroundColor: '#008080'}}>
-                                        Select
-                                    </Text>
-                                </TouchableWithoutFeedback>
-                                
-                            </View>
-                        )}
-                    </View>
+                </View>
                 </Modal>
             </Portal>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={istyles.container}>
-            <LinearGradient
-                colors={['#00ffffa5','#000', '#000', '#000']}
-                style={istyles.container}
-                start={{ x: 1, y: 0 }}
-                end={{ x: 0, y: 1 }}
-            >
+        <View style={[styles.container, {justifyContent: 'center'}]}>
                 <View style={{ margin: 20}}>
                     {isErr ? (
                     <View style={{ alignItems: 'center', justifyContent: 'center', margin: 10}}>
@@ -312,7 +272,7 @@ const SignIn = ({navigation} : any) => {
                     </View>
                     ) : null}
                     <View>
-                        <Text style={istyles.header}>
+                        <Text style={[styles.title, {marginHorizontal: 20, marginVertical: 10,}]}>
                             Email
                         </Text>
                         <View style={istyles.inputfield}>
@@ -328,7 +288,7 @@ const SignIn = ({navigation} : any) => {
                     </View>
 
                     <View>
-                        <Text style={istyles.header}>
+                        <Text style={[styles.title, {marginHorizontal: 20, marginVertical: 10,}]}>
                             Password
                         </Text>
                         <View style={[istyles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
@@ -354,7 +314,7 @@ const SignIn = ({navigation} : any) => {
                     <View style={{width: Dimensions.get('window').width - 60, alignSelf: 'center', marginVertical: 20, justifyContent: 'space-between', flexDirection: 'row', marginTop: 30}}>
                         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
                             <View style={{  }}>
-                                <Text style={{ fontSize: 14, color: '#ffffffa5', alignSelf: 'center'}}>
+                                <Text style={{ fontSize: 14, color: '#000000a5', alignSelf: 'center'}}>
                                     Forgot password
                                 </Text>
                             </View>
@@ -362,82 +322,36 @@ const SignIn = ({navigation} : any) => {
 
                         <TouchableOpacity onPress={() => Linking.openURL('mailto:martianspidermedia@gmail.com') }>
                             <View style={{ }}>
-                                <Text style={{ fontSize: 14, color: '#ffffffa5', alignSelf: 'center'}}>
+                                <Text style={{ fontSize: 14, color: '#000000a5', alignSelf: 'center'}}>
                                     Contact us
                                 </Text>
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{alignSelf: 'center', width: Dimensions.get('window').width - 60, borderTopWidth: 1, borderColor: '#ffffffa5',}}>
+                    <View style={{alignSelf: 'center', width: Dimensions.get('window').width - 60, borderTopWidth: 1, borderColor: '#000000a5',}}>
                        
                     </View>
-                    
-
                 </View>
 
             {signingIn === true ? (
-                <ActivityIndicator size="small" color="cyan"/>
+                <ActivityIndicator size="small" color={Colors.light.loadingIcon}/>
                 ) : (
                     <TouchableOpacity onPress={signIn}>
                         <View style={[styles.button, {alignSelf: 'center'}]}>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={{textAlign: 'center', color: Colors.dark.text}}>
                                 Sign In
                             </Text>
                         </View>
                     </TouchableOpacity>
                 )}
 
-                {/* <View>
-                    <Text style={{color: '#fff', alignSelf: 'center', marginBottom: 10}}>
-                        or
-                    </Text>
-                </View> */}
-
-                {/* <TouchableOpacity>
-                    <View style={{width: '60%', flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 8, margin: 10, alignSelf: 'center', borderRadius: 17, borderWidth: 0.5, borderColor: '#fff'}}>
-                        <Image 
-                            source={require('../../assets/images/apple-logo.png')}
-                            style={{width: 16, height: 20, marginRight: 20}}
-                        />
-                        <Text style={{color: '#fff'}}>
-                            Continue with Apple
-                        </Text>
-                    </View>
-                </TouchableOpacity> */}
-                
-
-                {/* <TouchableOpacity onPress={signInWithGoogle}>
-                    <View style={{width: '60%', flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 8, margin: 10, alignSelf: 'center', borderRadius: 17, borderWidth: 0.5, borderColor: '#fff'}}>
-                        <Image 
-                            source={require('../../assets/images/google-icon.png')}
-                            style={{width: 16, height: 20, marginRight: 20}}
-                        />
-                        <Text style={{color: '#fff'}}>
-                            Continue with Google
-                        </Text>
-                    </View>
-                </TouchableOpacity> */}
-                {/* {Platform.OS === 'android' && show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode='date'
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                    />
-                )} */}
-
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp') }>
-                    <Text style={{ fontSize: 14, color: '#fff', alignSelf: 'center', margin: 20}}>
+                    <Text style={[styles.paragraph, { alignSelf: 'center', margin: 20}]}>
                         Create an account
                     </Text>
                 </TouchableOpacity>
-
-                
-            </LinearGradient>
-            <StatusBar style="light" backgroundColor ='transparent' />
+            <StatusBar style="dark" backgroundColor='transparent'/>
         </View>
         </TouchableWithoutFeedback>
         </Provider>

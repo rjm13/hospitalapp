@@ -12,6 +12,8 @@ import {
     Keyboard
 } from 'react-native';
 
+import Colors from '../../constants/Colors'
+
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -19,42 +21,47 @@ import {Modal, Provider, Portal} from 'react-native-paper';
 
 import {Auth} from 'aws-amplify';
 
+import {styles} from '../../styles';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from "date-fns";
+
+import { StatusBar } from 'expo-status-bar';
 
 const SignUp = ({navigation} : any) => {
 
 //date time picker
         const [date, setDate] = useState(new Date());
-        const [mode, setMode] = useState('date');
-        const [show, setShow] = useState(false);
 
-        const todaysdate = new Date();
+        // const [mode, setMode] = useState('date');
+        // const [show, setShow] = useState(false);
 
-    const onChange = (event, selectedDate) => {
-        console.log('date is')
-        console.log(selectedDate)
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(selectedDate);
-        setData({...data, birthdate: format(selectedDate, "MM/dd/yyyy")})
-    };
+        // const todaysdate = new Date();
 
-    const showMode = (currentMode : any) => {
-        setShow(true);
-        setMode(currentMode);
-    };
+    // const onChange = (event, selectedDate) => {
+    //     console.log('date is')
+    //     console.log(selectedDate)
+    //     const currentDate = selectedDate || date;
+    //     setShow(Platform.OS === 'ios');
+    //     setDate(selectedDate);
+    //     setData({...data, birthdate: format(selectedDate, "MM/dd/yyyy")})
+    // };
 
-    const showDatepicker = () => {
-        showMode('date');
-        if (Platform.OS === 'ios') {
-            showModal()
-        }
-    };
+    // const showMode = (currentMode : any) => {
+    //     setShow(true);
+    //     setMode(currentMode);
+    // };
 
-    const showTimepicker = () => {
-        showMode('time');
-    };
+    // const showDatepicker = () => {
+    //     showMode('date');
+    //     if (Platform.OS === 'ios') {
+    //         showModal()
+    //     }
+    // };
+
+    // const showTimepicker = () => {
+    //     showMode('time');
+    // };
 
     const [isErr, setIsErr] = useState(false);
 
@@ -74,23 +81,19 @@ const SignUp = ({navigation} : any) => {
         email: '',
         password: '',
         Name: '',
-        birthdate: format(date, "MM/dd/yyyy"),
         confirm_password: '',
         check_textInputChange: false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
-        membership: 'basic'
     });
 
 const CreateUser = async () => {
 
-    const { password, confirm_password, Name, email, birthdate, membership } = data;
-
-    console.log(birthdate)
+    const { password, confirm_password, Name, email } = data;
 
     let username = email.replace(/ /g, '');
 
-    let name = Name.toLowerCase();
+    //let name = Name.toLowerCase();
 
     setSigningUp(true);
 
@@ -99,15 +102,10 @@ const CreateUser = async () => {
             const { user } = await Auth.signUp({
                 username,
                 password,
-                attributes: {
-                    name,
-                    birthdate,
-                    //'custom:membership': membership
-                },
             });
 
             if (user) {
-                navigation.navigate('ConfirmEmail', {username, password})
+                navigation.navigate('ConfirmAccount', {username, password})
             }
         } catch (error) {
             console.log('error signing up:', error);
@@ -215,8 +213,6 @@ const CreateUser = async () => {
 
         const emailInfo = 'In order to recover your password, you must have a verified email.'
 
-        const birthInfo = 'We strive to allow artistic freedom. As a result, some of our content may not be suitable for certian ages.'
-
     return (
         <Provider>
             <Portal>
@@ -233,35 +229,11 @@ const CreateUser = async () => {
                 </Modal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
                     <View>
-                        {show && (
-                            <View>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={date}
-                                    mode='date'
-                                    is24Hour={true}
-                                    display={Platform.OS === "ios" ? "spinner" : "default"}
-                                    onChange={onChange}
-                                />
-                                <TouchableWithoutFeedback onPress={hideModal}>
-                                    <Text style={{color: '#fff', alignSelf: 'center', marginTop: 20, paddingHorizontal: 20, paddingVertical: 6, overflow: 'hidden', borderRadius: 13, backgroundColor: '#008080'}}>
-                                        Select
-                                    </Text>
-                                </TouchableWithoutFeedback>
-                                
-                            </View>
-                        )}
                     </View>
                 </Modal>
             </Portal>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1 }}>
-            <LinearGradient
-                colors={['#00ffffa5','#000', '#000']}
-                style={styles.container}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-            >
+        <View style={[styles.container, {justifyContent: 'center'}]}>
                 <View style={{ margin: 20, paddingTop: 70}}>
                     {userExist ? (
                             <View style={{ alignItems: 'center', justifyContent: 'center', margin: 10}}>
@@ -293,7 +265,7 @@ const CreateUser = async () => {
                     ) : null}
                     <View>
                         <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <Text style={styles.header}>
+                            <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
                                 Name
                             </Text>
                             <TouchableOpacity onPress={
@@ -305,7 +277,7 @@ const CreateUser = async () => {
                                 <FontAwesome5 
                                     name='info-circle'
                                     size={16}
-                                    color='#00ffffa5'
+                                    color={Colors.light.subIcon}
                                     style={{marginLeft: -10,  padding: 6}}
                                 />
                             </TouchableOpacity>
@@ -325,7 +297,7 @@ const CreateUser = async () => {
 
                     <View>
                     <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <Text style={styles.header}>
+                            <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
                                 Email
                             </Text>
                             <TouchableOpacity onPress={
@@ -337,7 +309,7 @@ const CreateUser = async () => {
                                 <FontAwesome5 
                                     name='info-circle'
                                     size={16}
-                                    color='#00ffffa5'
+                                    color={Colors.light.subIcon}
                                     style={{marginLeft: -10,  padding: 6}}
                                 />
                             </TouchableOpacity>
@@ -355,9 +327,10 @@ const CreateUser = async () => {
                         </View>
                     </View>
 
-                    <View style={{marginTop: 0}}>
+                    {/* Birth Date */}
+                    {/* <View style={{marginTop: 0}}>
                     <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <Text style={styles.header}>
+                            <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
                                 Birth Date
                             </Text>
                             <TouchableOpacity onPress={
@@ -369,7 +342,7 @@ const CreateUser = async () => {
                                 <FontAwesome5 
                                     name='info-circle'
                                     size={16}
-                                    color='#00ffffa5'
+                                    color={Colors.light.subIcon}
                                     style={{marginLeft: -10,  padding: 6}}
                                 />
                             </TouchableOpacity>
@@ -393,14 +366,14 @@ const CreateUser = async () => {
                                 />
                         )}
                        
-                    </View>
+                    </View> */}
 
                     <View style={{ borderBottomWidth: 1, borderColor: '#ffffffa5', marginBottom: 10, marginTop: 20, marginHorizontal: 20}}>
 
                     </View>
 
                     <View>
-                        <Text style={styles.header}>
+                        <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
                             Password
                         </Text>
                         <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
@@ -424,7 +397,7 @@ const CreateUser = async () => {
                     </View>
 
                     <View>
-                        <Text style={styles.header}>
+                        <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
                             Confirm Password
                         </Text>
                         <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
@@ -449,31 +422,31 @@ const CreateUser = async () => {
 
                 </View>
 
-                <TouchableOpacity onPress={handleSignUp}>
-                    <View style={styles.button}>
-                        {signingUp === true ? (
-                            <ActivityIndicator size="small" color="cyan"/>
-                        ) : (
-                            <Text style={styles.buttontext}>
+                {signingUp === true ? (
+                <ActivityIndicator size="small" color={Colors.light.loadingIcon}/>
+                ) : (
+                    <TouchableOpacity onPress={handleSignUp}>
+                        <View style={[styles.button, {alignSelf: 'center'}]}>
+                            <Text style={{textAlign: 'center', color: Colors.dark.text}}>
                                 Create Account
                             </Text>
-                        )}
-                    </View>
-                </TouchableOpacity>
+                        </View>
+                    </TouchableOpacity>
+                )}
 
                 <TouchableOpacity onPress={() => navigation.navigate('SignIn') }>
-                    <Text style={{ fontSize: 14, color: '#fff', alignSelf: 'center', marginTop: 40}}>
+                    <Text style={[styles.paragraph, { alignSelf: 'center', marginTop: 40}]}>
                         I already have an account.
                     </Text>
                 </TouchableOpacity>
-            </LinearGradient>
+            <StatusBar style="dark" backgroundColor='transparent'/>
         </View>
         </TouchableWithoutFeedback>
         </Provider>
     );
 }
 
-const styles = StyleSheet.create ({
+const istyles = StyleSheet.create ({
     container: {
         justifyContent: 'flex-start',
         //alignItems: 'center',

@@ -16,47 +16,43 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from "date-fns";
 import { AppContext } from '../../AppContext';
 
+import {styles} from '../../styles'
+
 
 const Welcome = ({navigation} : any) => {
-
-    const { nsfwOn } = useContext(AppContext);
-    const { setNSFWOn } = useContext(AppContext);
-
-    const { ADon } = useContext(AppContext);
-    const { setADon } = useContext(AppContext);
 
     const [isSet, setIsSet] = useState(false)
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
 
-    useEffect(() => {
-        const sendMessage = async () => {
+    // useEffect(() => {
+    //     const sendMessage = async () => {
 
-            const userInfo = await Auth.currentAuthenticatedUser()
+    //         const userInfo = await Auth.currentAuthenticatedUser()
 
-            await API.graphql(graphqlOperation(
-                createMessage, {
-                    input: {
-                    type: 'Message',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                    userID: userInfo.attributes.sub,
-                    otherUserID: null,
-                    content: 'Welcome to Blip!\n\nYour home for audio short stories.\n\nBlip curates stories, but also allows authors to share their own. Sign up as an author, narrator, or illustrator\n\nWe hope you enjoy using Blip! Happy listening!',
-                    title: 'Welcome to Blip!',
-                    subtitle: null,
-                    isReadbyUser: false,
-                    isReadByOtherUser: true,
-                    docID: null,
-                    request: null,
-                    status: 'noreply'
-                    }
-                }
-            ))
+    //         await API.graphql(graphqlOperation(
+    //             createMessage, {
+    //                 input: {
+    //                 type: 'Message',
+    //                 createdAt: new Date(),
+    //                 updatedAt: new Date(),
+    //                 userID: userInfo.attributes.sub,
+    //                 otherUserID: null,
+    //                 content: 'Welcome to Blip!\n\nYour home for audio short stories.\n\nBlip curates stories, but also allows authors to share their own. Sign up as an author, narrator, or illustrator\n\nWe hope you enjoy using Blip! Happy listening!',
+    //                 title: 'Welcome to Blip!',
+    //                 subtitle: null,
+    //                 isReadbyUser: false,
+    //                 isReadByOtherUser: true,
+    //                 docID: null,
+    //                 request: null,
+    //                 status: 'noreply'
+    //                 }
+    //             }
+    //         ))
 
-        }
-        sendMessage();
-    }, [])
+    //     }
+    //     sendMessage();
+    // }, [])
 
                     //upload modal
                     const [visible, setVisible] = useState(false);
@@ -78,104 +74,72 @@ const Welcome = ({navigation} : any) => {
         
                 const todaysdate = new Date();
         
-            const onChange = async (event, selectedDate) => {
-                const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true })
-                const currentDate = selectedDate || date;
-                setShow(Platform.OS === 'ios');
-                setDate(currentDate);
-                await Auth.updateUserAttributes(userInfo, {
-                    'birthdate': format(currentDate, "MM/dd/yyyy")
-                  }).then(() => setIsSet(true))
-            };
+            // const onChange = async (event, selectedDate) => {
+            //     const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true })
+            //     const currentDate = selectedDate || date;
+            //     setShow(Platform.OS === 'ios');
+            //     setDate(currentDate);
+            //     await Auth.updateUserAttributes(userInfo, {
+            //         'birthdate': format(currentDate, "MM/dd/yyyy")
+            //       }).then(() => setIsSet(true))
+            // };
         
             const showMode = (currentMode : any) => {
                 setShow(true);
                 setMode(currentMode);
             };
         
-            const showDatepicker = () => {
-                showMode('date');
-                if (Platform.OS === 'ios') {
-                    showModal()
-                }
-            };
+            // const showDatepicker = () => {
+            //     showMode('date');
+            //     if (Platform.OS === 'ios') {
+            //         showModal()
+            //     }
+            // };
 
-            const Next = async () => {
+            // const Next = async () => {
 
-                const userInfo = await Auth.currentAuthenticatedUser()
+            //     const userInfo = await Auth.currentAuthenticatedUser()
 
-                const date = new Date();
-                const year = date.getFullYear();
-                const month = date.getMonth();
-                const day = date.getDate();
-                const c = new Date(year - 18, month, day).toISOString();
-                const bd3 = new Date(userInfo.attributes.birthdate).toISOString()
+            //     const date = new Date();
+            //     const year = date.getFullYear();
+            //     const month = date.getMonth();
+            //     const day = date.getDate();
+            //     const c = new Date(year - 18, month, day).toISOString();
+            //     const bd3 = new Date(userInfo.attributes.birthdate).toISOString()
 
-                if (bd3 > c) {
-                    setNSFWOn(false);
-                    setADon(false);
-                    navigation.navigate('SplashCarousel')
-                } 
-                if (bd3 < c) {
-                    setNSFWOn(true);
-                    setADon(true)
-                    navigation.navigate('SplashCarousel')
-                } 
-            }
+            //     if (bd3 > c) {
+            //         setNSFWOn(false);
+            //         setADon(false);
+            //         navigation.navigate('SplashCarousel')
+            //     } 
+            //     if (bd3 < c) {
+            //         setNSFWOn(true);
+            //         setADon(true)
+            //         navigation.navigate('SplashCarousel')
+            //     } 
+            // }
     
     return (
         <Provider>
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
                 <View>
-                        {show && (
-                            <View>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={date}
-                                    mode='date'
-                                    is24Hour={true}
-                                    display={Platform.OS === "ios" ? "spinner" : "default"}
-                                    onChange={onChange}
-                                />
-                                <TouchableWithoutFeedback onPress={hideModal}>
-                                    <Text style={{color: '#fff', alignSelf: 'center', marginTop: 20, paddingHorizontal: 20, paddingVertical: 6, overflow: 'hidden', borderRadius: 13, backgroundColor: '#008080'}}>
-                                        Select
-                                    </Text>
-                                </TouchableWithoutFeedback>
-                                
-                            </View>
-                        )}
-                    </View>
+
+                </View>
                 </Modal>
             </Portal>
-        <View style={{justifyContent: 'space-between', height: SCREEN_HEIGHT}}>
+        <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
             <View style={{marginTop: 100, alignItems: 'center'}}>
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: '#fff', fontSize: 22, fontWeight: 'bold'}}>
-                        Welcome to Blip!
+                    <Text style={styles.title}>
+                        Welcome to Medall
                     </Text>
-                    <Text style={{color: '#fff', fontSize: 16, fontWeight: 'bold', marginTop: 20}}>
-                        Your home for audio short stories
+                    <Text style={[styles.paragraph, { marginTop: 20}]}>
+                        Your shift scheduler for medical staff
                     </Text>
-
-                    <Text style={{color: '#fff', textAlign: 'center', marginTop: 40, marginHorizontal: 20}}>
-                        Blip curates stories, but also allows authors to share their own. Sign up as an:
-                    </Text>
-                    <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <Text style={{color: 'cyan', textAlign: 'center', marginHorizontal: 20}}>
-                        Author
-                    </Text>
-                    <Text style={{color: 'pink', textAlign: 'center', marginHorizontal: 20}}>
-                        Narrator 
-                    </Text>
-                    <Text style={{color: '#27d995', textAlign: 'center', marginHorizontal: 20}}>
-                        Illustrator
-                    </Text>
-                    </View>
                     
-                    <Text style={{color: '#fff', textAlign: 'center', marginTop: 20, marginHorizontal: 20}}>
-                        To get started, head over to the publishing tab under the profile screen.
+                    <Text style={[styles.paragraph, {textAlign: 'center', marginTop: 20, marginHorizontal: 20}]}>
+                        To get started, head over to the home screen
                     </Text>
                 </View>
                 {/* <View>
@@ -205,7 +169,7 @@ const Welcome = ({navigation} : any) => {
 
 {/* FOOTER */}
             <View style={{height: '10%'}}>
-                <TouchableOpacity onPress={() => navigation.navigate('SplashCarousel')}>
+                <TouchableOpacity onPress={() =>  navigation.navigate('Redirect', {trigger: Math.random()})}>
                     <Text style={{overflow: 'hidden', alignSelf: 'center', backgroundColor: 'cyan', paddingVertical: 6, paddingHorizontal: 20, borderRadius: 13, textAlign: 'center'}}>
                         Next
                     </Text>
@@ -217,7 +181,7 @@ const Welcome = ({navigation} : any) => {
     )
 }
 
-const styles = StyleSheet.create ({
+const istyles = StyleSheet.create ({
     container: {
         justifyContent: 'flex-start',
         //alignItems: 'center',

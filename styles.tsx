@@ -1,20 +1,21 @@
 import React from 'react';
 import {Dimensions, Platform, StyleSheet} from 'react-native'
 
+import Colors from './constants/Colors'
+
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
 const styles = StyleSheet.create ({
     container: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
         alignItems: 'center',
-        marginTop: 40
       },
     title: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: '#fff',
+        color: '#000',
       },
       subtext: {
         fontSize: 14,
@@ -23,7 +24,7 @@ const styles = StyleSheet.create ({
     button: {
         paddingVertical: 6,
         paddingHorizontal: 20,
-        backgroundColor: '#00ffff',
+        backgroundColor: 'maroon',
         borderRadius: 15,
         overflow: 'hidden',
     },
@@ -41,7 +42,7 @@ const styles = StyleSheet.create ({
     },
     paragraph: {
       fontSize: 14,
-      color: '#fff',
+      color: '#000',
     },
     textInputTitle: {
       color: '#fff',

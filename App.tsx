@@ -37,8 +37,8 @@ export default function App() {
           setDeepLink: (link: {}) => setDeepLink(link),
         }}>
         <Navigation colorScheme={colorScheme} />
-        <StatusBar />
         </AppContext.Provider>
+        <StatusBar style="dark" backgroundColor='transparent'/>
       </SafeAreaProvider>
     );
   }
