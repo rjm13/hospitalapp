@@ -54,6 +54,7 @@ type Qual @model @auth(rules: [{ allow: private, operations: [create, delete, up
   createdAt: String
   updatedAt: String
   title: String #CCT, charge, ems, manager
+  abbreviation: String
   details: String 
   people: [User] @manyToMany (relationName: "QualUser")
 }
@@ -94,6 +95,7 @@ type Department @model @auth(rules: [{ allow: private, operations: [create, dele
   createdAt: String
   updatedAt: String
   name: String #ER, ICU, MS
+  abbreviation: String
   hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
   hospital: Hospital @hasOne (fields: ["hospitalID"])
   members: [User] @hasMany(indexName: "byDepartment", fields: "id")

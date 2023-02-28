@@ -12,6 +12,8 @@ import { createMessage } from '../../src/graphql/mutations';
 import {Modal, Provider, Portal} from 'react-native-paper';
 import { AppContext } from '../../AppContext';
 
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+
 import {styles} from '../../styles'
 
 
@@ -69,20 +71,23 @@ const Welcome = ({navigation} : any) => {
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
             <View style={{marginTop: 100, alignItems: 'center'}}>
                 <View style={{alignItems: 'center'}}>
-                    <Text style={styles.title}>
+                    <Text style={[styles.title, {fontSize: 26}]}>
                         Welcome to Medall
                     </Text>
-                    <Text style={[styles.paragraph, { marginTop: 20}]}>
-                        Your shift scheduler for medical staff
+                    <Text style={[styles.subtext, { fontWeight: '300'}]}>
+                        Communication for medical staff
                     </Text>
                     
                     <Text style={[styles.paragraph, {textAlign: 'center', marginTop: 20, marginHorizontal: 20}]}>
-                        To get started, we need to we need to find your people
+                        To get started, we need some information to connect you with your people:
                     </Text>
                 </View>
-                <View>
+            </View> 
+
+            <View>
+                <View style={{}}>
                     <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
-                        First name?
+                        First name
                     </Text>
                     <View style={styles.inputfield}>
                         <TextInput 
@@ -92,13 +97,12 @@ const Welcome = ({navigation} : any) => {
                             maxLength={30}
                             onChangeText={(val) => handleNameChange(val)}
                             autoCapitalize='none'
-                            
                         />
                     </View>
                 </View>
                 <View>
                     <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
-                        Last name?
+                        Last name
                     </Text>
                     <View style={styles.inputfield}>
                         <TextInput 
@@ -111,18 +115,36 @@ const Welcome = ({navigation} : any) => {
                             
                         />
                     </View>
-                </View>
-            </View> 
-
-{/* FOOTER */}
-            <View style={[styles.buttonlayout, {marginVertical: 60}]}>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectHospital')}>
-                    <Text style={styles.buttontext}>
-                        Next
-                    </Text>
-                </TouchableOpacity>
-                
+                </View>    
             </View>
+        <View style={{height: 140}}/>
+{/* FOOTER */}
+        <View style={{position: 'absolute', bottom: 20, flexDirection: 'row', width: Dimensions.get('window').width, justifyContent: 'space-between', paddingHorizontal: 40}}>
+                <TouchableOpacity onPress={() =>  navigation.navigate('SelectHospital')}>
+                    <View style={[{backgroundColor: 'maroon', width: 0, height: 0, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <FontAwesome5 
+                            name='chevron-left'
+                            color='#fff'
+                            size={24}
+                            style={{
+                                height: 0, width: 0
+                            }}
+                        />
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() =>  navigation.navigate('SelectHospital')}>
+                    <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <FontAwesome5 
+                            name='chevron-right'
+                            color='#fff'
+                            size={24}
+                            style={{
+                                
+                            }}
+                        />
+                    </View>
+                </TouchableOpacity>
+        </View>
         </View>
         </Provider>
     )

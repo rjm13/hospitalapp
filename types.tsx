@@ -29,6 +29,7 @@ export type RootStackParamList = {
   SelectHospital: undefined;
   SelectQuals: undefined;
   Settings: undefined;
+  ConfirmSetUp: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

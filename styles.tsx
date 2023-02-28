@@ -31,7 +31,8 @@ const styles = StyleSheet.create ({
       color: '#000',
     },
     subtext: {
-      fontSize: 14,
+      fontSize: 12,
+      fontWeight: '600',
       color: '#000000a5',
     },
     textInputTitle: {
