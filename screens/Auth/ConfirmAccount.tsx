@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
     View, 
-    Text, 
-    StyleSheet, 
-    Dimensions, 
+    Text,
     TextInput, 
     TouchableOpacity, 
     Keyboard, 
@@ -14,12 +12,15 @@ import { StatusBar } from 'expo-status-bar';
 
 import Colors from '../../constants/Colors'
 import {styles} from '../../styles';
+import { AppContext } from '../../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { createUser } from '../../src/graphql/mutations';
 import { ActivityIndicator } from 'react-native-paper';
 
 const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
+
+    const { theme } = useContext(AppContext);
 
     const [loggingIn, setLoggingIn] = useState(false);
 
@@ -54,9 +55,7 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
                         const newUser = {
                             id: userInfo.attributes.sub,
                             type: 'User',
-                            //name: userInfo.attributes.name,
-                            //birthdate: userInfo.attributes.birthdate,
-                            //plan: 'basic'
+                            //name: userInfo.attributes.name
                         }
 
                         const createdUser = await API.graphql(
@@ -95,6 +94,7 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
         });
     }
 
+    
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -104,11 +104,11 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
                         <Text style={[styles.title, {marginHorizontal: 20, marginVertical: 10,}]}>
                             Confirmation Code
                         </Text>
-                        <View style={istyles.inputfield}>
+                        <View style={styles.inputfield}>
                             <TextInput 
                                 placeholder='Check email for code'
                                 placeholderTextColor='#ffffffa5'
-                                style={istyles.textInputTitle}
+                                style={styles.textInputTitle}
                                 maxLength={30}
                                 onChangeText={(val) => handleCode(val)}
                                 autoCapitalize='none'
@@ -119,15 +119,17 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
                 </View>
 
                 <TouchableOpacity onPress={confirmSignUp}>
-                    <View style={styles.button}>
+                    
                         {loggingIn === true ? (
-                            <ActivityIndicator size='small' color={Colors.light.loadingIcon}/>
+                            <ActivityIndicator size='small' color={theme ? Colors.light.loadingIcon : Colors.light.loadingIcon}/>
                         ) : (
-                            <Text style={styles.buttontext}>
-                                Confirm Account
-                            </Text> 
+                            <View style={styles.buttonlayout}>
+                                <Text style={styles.buttontext}>
+                                    Confirm Account
+                                </Text> 
+                            </View>    
                             )}
-                    </View>
+                    
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={resendConfirmationCode}>
@@ -146,31 +148,5 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
         </TouchableWithoutFeedback>
     );
 }
-
-const istyles = StyleSheet.create({
-    textInputTitle: {
-        color: '#fff',
-        fontWeight: 'normal',
-    },
-    inputfield: {
-        width: Dimensions.get('window').width - 40,
-        height: 40,
-        backgroundColor: '#363636',
-        padding: 10,
-        borderRadius: 10,
-        alignSelf: 'center',
-    },
-    button: {
-       alignItems: 'center',
-       margin: 20,
-    },
-    buttontext: {
-        backgroundColor: 'cyan',
-        borderRadius: 17,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        overflow: 'hidden'
-    },
-});
 
 export default ConfirmEmail;

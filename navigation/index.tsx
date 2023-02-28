@@ -20,6 +20,10 @@ import SignUp from '../screens/Auth/SignUp';
 import Welcome from '../screens/Auth/Welcome';
 import ForgotPassword from '../screens/Auth/ForgotPassword';
 import Settings from '../screens/Settings';
+import SelectDept from '../screens/SetUp/SelectDept'
+import SelectHospital from '../screens/SetUp/SelectHospital'
+import SelectQuals from '../screens/SetUp/SelectQuals'
+import SelectRole from '../screens/SetUp/SelectRole'
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -52,6 +56,10 @@ function RootNavigator() {
       <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
       <Stack.Screen name="Redirect" component={Redirect}/>
       <Stack.Screen name="Welcome" component={Welcome}/>
+      <Stack.Screen name="SelectDept" component={SelectDept}/>
+      <Stack.Screen name="SelectHospital" component={SelectHospital}/>
+      <Stack.Screen name="SelectQuals" component={SelectQuals}/>
+      <Stack.Screen name="SelectRole" component={SelectRole}/>
       <Stack.Screen name="Settings" component={Settings}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

@@ -1,15 +1,22 @@
-import React from 'react';
-import {Dimensions, Platform, StyleSheet} from 'react-native'
+import React, {useContext} from 'react';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
+import { AppContext } from './AppContext';
 
 import Colors from './constants/Colors'
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
+const theme = () => {
+  const { theme } = useContext(AppContext);
+  return {theme}
+}
+
 const styles = StyleSheet.create ({
+  
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: theme === true ? '#000' : '#fff',
         alignItems: 'center',
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
@@ -19,39 +26,20 @@ const styles = StyleSheet.create ({
         fontWeight: 'bold',
         color: '#000',
       },
-      subtext: {
-        fontSize: 14,
-        color: '#fff',
-      },
-    button: {
-        paddingVertical: 6,
-        paddingHorizontal: 20,
-        backgroundColor: 'maroon',
-        borderRadius: 15,
-        overflow: 'hidden',
-    },
-    List : {
-      //height: 60, 
-      width: (SCREEN_WIDTH-40), 
-      alignSelf: 'center', 
-      backgroundColor: 'transparent', 
-      borderRadius: 8, 
-      paddingVertical: 10, 
-      marginHorizontal: 10, 
-      justifyContent: 'space-between',
-      flexDirection: 'row',
-      alignItems: 'center'
-    },
     paragraph: {
       fontSize: 14,
       color: '#000',
+    },
+    subtext: {
+      fontSize: 14,
+      color: '#000000a5',
     },
     textInputTitle: {
       color: '#fff',
       fontWeight: 'normal',
     },
     inputfield: {
-        width: '90%',
+        width: SCREEN_WIDTH - 40,
         height: 40,
         backgroundColor: '#363636',
         padding: 10,
@@ -64,7 +52,7 @@ const styles = StyleSheet.create ({
       fontWeight: '600'
     },
     buttonlayout: {
-        backgroundColor: 'purple',
+        backgroundColor: 'maroon',
         borderRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 30,

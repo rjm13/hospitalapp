@@ -24,6 +24,10 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   Redirect: undefined;
   Welcome: undefined;
+  SelectDept: undefined;
+  SelectRole: undefined;
+  SelectHospital: undefined;
+  SelectQuals: undefined;
   Settings: undefined;
 };
 

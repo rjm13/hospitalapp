@@ -1,3 +1,5 @@
+//select from mutiple quals (many to many)
+
 import React, {useState} from 'react';
 import {
     View, 

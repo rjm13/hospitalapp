@@ -4,6 +4,7 @@ import { AppContext } from '../../AppContext';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../../src/graphql/queries';
 import { StatusBar } from 'expo-status-bar';
+import {styles} from '../../styles';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -64,17 +65,17 @@ const Redirect = ({route, navigation} : any) => {
 
 
     return (
-        <View style={{alignContent: 'center', justifyContent: 'center', width: SCREEN_WIDTH, height: SCREEN_HEIGHT + 30, backgroundColor: '#000000'}}>
+        <View style={[styles.container, {alignContent: 'center', justifyContent: 'center'}]}>
             {isLoading === true ? (
-                <ActivityIndicator size="large" color="cyan" />
+                <ActivityIndicator size="large" color="maroon" />
             ) : (
                 <View>
-                    <Text style={{color: '#fff'}}>
+                    <Text style={styles.paragraph}>
                         Error logging in. Please check your internet connection.
                     </Text>
                     <TouchableWithoutFeedback onPress={() => setTryAgain(!tryAgain)}>
                        <View style={{margin: 20, padding: 20}}>
-                            <Text style={{fontSize: 14, color: 'cyan'}}>
+                            <Text style={[styles.paragraph, {color: 'cyan'}]}>
                                 Try Again
                             </Text>
                         </View> 

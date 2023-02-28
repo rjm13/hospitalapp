@@ -73,6 +73,7 @@ type Hospital @model @auth(rules: [{ allow: private, operations: [create, delete
   createdAt: String
   updatedAt: String
   name: String #LBJ, HM, Ben Taub
+  abbreviation: String
   systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
   system: System @hasOne (fields: ["systemID"])
   departments: [Department] @hasMany(indexName: "byHospital", fields: "id")

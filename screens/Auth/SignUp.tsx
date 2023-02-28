@@ -1,67 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { 
     View, 
-    Text, 
-    StyleSheet, 
-    TouchableOpacity, 
-    Platform, 
+    Text,
+    TouchableOpacity,
     TouchableWithoutFeedback, 
-    Dimensions, 
     TextInput, 
     ActivityIndicator, 
     Keyboard
 } from 'react-native';
 
-import Colors from '../../constants/Colors'
-
-import { LinearGradient } from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Modal, Provider, Portal} from 'react-native-paper';
-
 import {Auth} from 'aws-amplify';
-
-import {styles} from '../../styles';
-
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { format } from "date-fns";
-
 import { StatusBar } from 'expo-status-bar';
+
+import Colors from '../../constants/Colors'
+import {styles} from '../../styles';
+import { AppContext } from '../../AppContext';
 
 const SignUp = ({navigation} : any) => {
 
-//date time picker
-        const [date, setDate] = useState(new Date());
-
-        // const [mode, setMode] = useState('date');
-        // const [show, setShow] = useState(false);
-
-        // const todaysdate = new Date();
-
-    // const onChange = (event, selectedDate) => {
-    //     console.log('date is')
-    //     console.log(selectedDate)
-    //     const currentDate = selectedDate || date;
-    //     setShow(Platform.OS === 'ios');
-    //     setDate(selectedDate);
-    //     setData({...data, birthdate: format(selectedDate, "MM/dd/yyyy")})
-    // };
-
-    // const showMode = (currentMode : any) => {
-    //     setShow(true);
-    //     setMode(currentMode);
-    // };
-
-    // const showDatepicker = () => {
-    //     showMode('date');
-    //     if (Platform.OS === 'ios') {
-    //         showModal()
-    //     }
-    // };
-
-    // const showTimepicker = () => {
-    //     showMode('time');
-    // };
+    const { theme } = useContext(AppContext);
 
     const [isErr, setIsErr] = useState(false);
 
@@ -80,7 +38,6 @@ const SignUp = ({navigation} : any) => {
     const [data, setData] = useState({
         email: '',
         password: '',
-        Name: '',
         confirm_password: '',
         check_textInputChange: false,
         secureTextEntry: true,
@@ -89,11 +46,9 @@ const SignUp = ({navigation} : any) => {
 
 const CreateUser = async () => {
 
-    const { password, confirm_password, Name, email } = data;
+    const { password, email } = data;
 
     let username = email.replace(/ /g, '');
-
-    //let name = Name.toLowerCase();
 
     setSigningUp(true);
 
@@ -144,12 +99,12 @@ const CreateUser = async () => {
         });
     }
 
-    const handleNameChange = (val : any) => {
-        setData({
-            ... data,
-            Name: val
-        });
-    }
+    // const handleNameChange = (val : any) => {
+    //     setData({
+    //         ... data,
+    //         Name: val
+    //     });
+    // }
 
     const handleSignUp = () => {
 
@@ -169,13 +124,14 @@ const CreateUser = async () => {
             setNoMatch(true);
             setUserExist(false);
             return;
-        } if (data.Name.length < 3) {
-            setShortPass(false);
-            setIsErr(true);
-            setNoMatch(false);
-            setUserExist(false);
-            return;
         } 
+        // if (data.Name.length < 3) {
+        //     setShortPass(false);
+        //     setIsErr(true);
+        //     setNoMatch(false);
+        //     setUserExist(false);
+        //     return;
+        // } 
         // Make sure passwords match
         if (password === confirm_password && password.length > 5) {
             setIsErr(false);
@@ -187,51 +143,7 @@ const CreateUser = async () => {
         }
     }
 
-        //upload modal
-        const [visible, setVisible] = useState(false);
-        const showModal = () => {
-            setVisible(true);
-        }
-        const hideModal = () => setVisible(false);
-
-    //info modal
-                const [visible2, setVisible2] = useState(false);
-                const showModal2 = () => {
-                    setVisible2(true);
-                }
-                const hideModal2 = () => setVisible2(false);
-
-        const containerStyle = {
-            backgroundColor: '#363636', 
-            borderRadius: 15,
-            paddingVertical: 40
-        };
-
-        const [infoState, setInfoState] = useState('')
-
-        const nameInfo = 'This is used to display your name within the app.\n\nThis name may be public. For example, if you leave a comment on a story, this is the name that will display. \n\nIt does not have to be your real name.'
-
-        const emailInfo = 'In order to recover your password, you must have a verified email.'
-
     return (
-        <Provider>
-            <Portal>
-                <Modal visible={visible2} onDismiss={hideModal2} contentContainerStyle={containerStyle}>
-                <View style={{backgroundColor: 'transparent'}}>
-                    <Text style={{padding: 20, color: 'white', fontWeight: 'bold', fontSize: 16, textAlign: 'center'}}>
-                        Why do we need this?
-                    </Text>
-                    <View style={{width: '80%', height: 1, borderWidth: 0.5, borderColor: '#00ffffa5', alignSelf: 'center'}}/>
-                    <Text style={{padding: 20, color: 'white'}}>
-                        {infoState}
-                    </Text>
-                </View>
-                </Modal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                    <View>
-                    </View>
-                </Modal>
-            </Portal>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={[styles.container, {justifyContent: 'center'}]}>
                 <View style={{ margin: 20, paddingTop: 70}}>
@@ -263,171 +175,85 @@ const CreateUser = async () => {
                             </Text>
                         </View>
                     ) : null}
-                    <View>
-                        <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
-                                Name
-                            </Text>
-                            <TouchableOpacity onPress={
-                                () => {
-                                    showModal2();
-                                    setInfoState(nameInfo);
-                                }
-                            }>
-                                <FontAwesome5 
-                                    name='info-circle'
-                                    size={16}
-                                    color={Colors.light.subIcon}
-                                    style={{marginLeft: -10,  padding: 6}}
-                                />
-                            </TouchableOpacity>
-                            
-                        </View>
-                        
-                        <View style={styles.inputfield}>
-                            <TextInput 
-                                placeholder='...'
-                                placeholderTextColor='#ffffffa5'
-                                style={styles.textInputTitle}
-                                maxLength={40}
-                                onChangeText={(val) => handleNameChange(val)}
-                            />
-                        </View>
-                    </View>
 
                     <View>
                     <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
-                                Email
-                            </Text>
-                            <TouchableOpacity onPress={
-                                () => {
-                                    showModal2();
-                                    setInfoState(emailInfo);
-                                }
-                            }>
-                                <FontAwesome5 
-                                    name='info-circle'
-                                    size={16}
-                                    color={Colors.light.subIcon}
-                                    style={{marginLeft: -10,  padding: 6}}
-                                />
-                            </TouchableOpacity>
-                            
-                        </View>
-                        <View style={styles.inputfield}>
-                            <TextInput 
-                                placeholder='....'
-                                placeholderTextColor='#ffffffa5'
-                                style={styles.textInputTitle}
-                                maxLength={40}
-                                onChangeText={(val) => textInputChange(val)}
-                                autoCapitalize='none'
-                            />
-                        </View>
-                    </View>
-
-                    {/* Birth Date */}
-                    {/* <View style={{marginTop: 0}}>
-                    <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                            <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
-                                Birth Date
-                            </Text>
-                            <TouchableOpacity onPress={
-                                () => {
-                                    showModal2();
-                                    setInfoState(birthInfo);
-                                }
-                            }>
-                                <FontAwesome5 
-                                    name='info-circle'
-                                    size={16}
-                                    color={Colors.light.subIcon}
-                                    style={{marginLeft: -10,  padding: 6}}
-                                />
-                            </TouchableOpacity>
-                            
-                        </View>
-                        <TouchableWithoutFeedback onPress={showDatepicker}>
-                            <View style={styles.inputfield}>
-                                <Text style={styles.textInputTitle}>
-                                    {date === todaysdate ? '...' : format(date, "MMMM do, yyyy")}
-                                </Text>
-                            </View>
-                        </TouchableWithoutFeedback>
-                        {Platform.OS === 'android' && show && (
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={date}
-                                    mode='date'
-                                    is24Hour={true}
-                                    display="default"
-                                    onChange={onChange}
-                                />
-                        )}
-                       
-                    </View> */}
-
-                    <View style={{ borderBottomWidth: 1, borderColor: '#ffffffa5', marginBottom: 10, marginTop: 20, marginHorizontal: 20}}>
-
-                    </View>
-
-                    <View>
-                        <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
-                            Password
+                        <Text style={[styles.title, {marginHorizontal: 0, marginBottom: 4, marginTop: 10}]}>
+                            Email
                         </Text>
-                        <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <TextInput 
-                                placeholder='....'
-                                placeholderTextColor='#ffffffa5'
-                                style={[styles.textInputTitle, {width: '80%'}]}
-                                maxLength={20}
-                                autoCapitalize='none'
-                                secureTextEntry={seePass === true ? true : false }
-                                onChangeText={(val) => handlePasswordChange(val)}
-                            />
-                            <Feather 
-                                name={seePass === true ? 'eye-off' : 'eye'}
-                                color='#fff'
-                                size={18}
-                                style={{marginRight: 10}}
-                                onPress={() => setSeePass(!seePass)}
-                            />
-                        </View>
                     </View>
-
-                    <View>
-                        <Text style={[styles.title, {marginHorizontal: 20, marginBottom: 4, marginTop: 10}]}>
-                            Confirm Password
-                        </Text>
-                        <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <TextInput 
-                                placeholder='....'
-                                placeholderTextColor='#ffffffa5'
-                                style={[styles.textInputTitle, {width: '80%'}]}
-                                maxLength={20}
-                                autoCapitalize='none'
-                                secureTextEntry={seeConPass === true ? true : false }
-                                onChangeText={(val) => handleConfirmPasswordChange(val)}
-                            />
-                            <Feather 
-                                name={seeConPass === true ? 'eye-off' : 'eye'}
-                                color='#fff'
-                                size={18}
-                                style={{marginRight: 10}}
-                                onPress={() => setSeeConPass(!seeConPass)}
-                            />
-                        </View>
+                    <View style={styles.inputfield}>
+                        <TextInput 
+                            placeholder='....'
+                            placeholderTextColor='#ffffffa5'
+                            style={styles.textInputTitle}
+                            maxLength={40}
+                            onChangeText={(val) => textInputChange(val)}
+                            autoCapitalize='none'
+                        />
                     </View>
-
                 </View>
 
+                <View style={{ borderBottomWidth: 1, borderColor: '#ffffffa5', marginBottom: 10, marginTop: 20, marginHorizontal: 20}}>
+
+            </View>
+
+                <View>
+                    <Text style={[styles.title, {marginHorizontal: 0, marginBottom: 4, marginTop: 10}]}>
+                        Password
+                    </Text>
+                    <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
+                        <TextInput 
+                            placeholder='....'
+                            placeholderTextColor='#ffffffa5'
+                            style={[styles.textInputTitle, {width: '80%'}]}
+                            maxLength={20}
+                            autoCapitalize='none'
+                            secureTextEntry={seePass === true ? true : false }
+                            onChangeText={(val) => handlePasswordChange(val)}
+                        />
+                        <Feather 
+                            name={seePass === true ? 'eye-off' : 'eye'}
+                            color='#fff'
+                            size={18}
+                            style={{marginRight: 10}}
+                            onPress={() => setSeePass(!seePass)}
+                        />
+                    </View>
+                </View>
+
+                <View>
+                    <Text style={[styles.title, {marginHorizontal: 0, marginBottom: 4, marginTop: 10}]}>
+                        Confirm Password
+                    </Text>
+                    <View style={[styles.inputfield, {flexDirection: 'row', justifyContent: 'space-between'}]}>
+                        <TextInput 
+                            placeholder='....'
+                            placeholderTextColor='#ffffffa5'
+                            style={[styles.textInputTitle, {width: '80%'}]}
+                            maxLength={20}
+                            autoCapitalize='none'
+                            secureTextEntry={seeConPass === true ? true : false }
+                            onChangeText={(val) => handleConfirmPasswordChange(val)}
+                        />
+                        <Feather 
+                            name={seeConPass === true ? 'eye-off' : 'eye'}
+                            color='#fff'
+                            size={18}
+                            style={{marginRight: 10}}
+                            onPress={() => setSeeConPass(!seeConPass)}
+                        />
+                    </View>
+                </View>
+
+            </View>
+
                 {signingUp === true ? (
-                <ActivityIndicator size="small" color={Colors.light.loadingIcon}/>
+                <ActivityIndicator size="small" color={theme ? Colors.light.loadingIcon : Colors.dark.loadingIcon}/>
                 ) : (
                     <TouchableOpacity onPress={handleSignUp}>
-                        <View style={[styles.button, {alignSelf: 'center'}]}>
-                            <Text style={{textAlign: 'center', color: Colors.dark.text}}>
+                        <View style={[styles.buttonlayout, {alignSelf: 'center', marginTop: 40}]}>
+                            <Text style={styles.buttontext}>
                                 Create Account
                             </Text>
                         </View>
@@ -439,51 +265,10 @@ const CreateUser = async () => {
                         I already have an account.
                     </Text>
                 </TouchableOpacity>
-            <StatusBar style="dark" backgroundColor='transparent'/>
+            <StatusBar style={theme ? "light" : "dark"} backgroundColor='transparent'/>
         </View>
         </TouchableWithoutFeedback>
-        </Provider>
     );
 }
-
-const istyles = StyleSheet.create ({
-    container: {
-        justifyContent: 'flex-start',
-        //alignItems: 'center',
-        flex: 1,
-        width: Dimensions.get('window').width
-    },
-    header: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginHorizontal: 20,
-        marginBottom: 4,
-        marginTop: 10,
-    },
-    textInputTitle: {
-        color: '#fff',
-        fontWeight: 'normal',
-    },
-    inputfield: {
-        width: '90%',
-        height: 40,
-        backgroundColor: '#363636',
-        padding: 10,
-        borderRadius: 10,
-        alignSelf: 'center',
-    },
-    button: {
-       alignItems: 'center',
-       margin: 20,
-    },
-    buttontext: {
-        backgroundColor: 'cyan',
-        borderRadius: 17,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        overflow: 'hidden'
-    },
-});
 
 export default SignUp;

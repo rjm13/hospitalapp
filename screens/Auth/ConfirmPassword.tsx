@@ -2,15 +2,12 @@ import React, {useState} from 'react';
 import {
     View, 
     Text, 
-    StyleSheet, 
-    Dimensions, 
     TextInput, 
     TouchableOpacity, 
     Keyboard, 
     TouchableWithoutFeedback
 } from 'react-native';
 
-import { LinearGradient } from 'expo-linear-gradient';
 import {Auth} from '@aws-amplify/auth'
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -135,7 +132,7 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
                 </View>
 
                 <TouchableOpacity onPress={handleResetPassword}>
-                    <View style={styles.button}>
+                    <View style={styles.buttonlayout}>
                         <Text style={styles.buttontext}>
                             Reset Password
                         </Text>
@@ -143,7 +140,7 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.goBack() }>
-                    <Text style={{fontSize: 14, color: '#fff', alignSelf: 'center', margin: 20}}>
+                    <Text style={[styles.paragraph, {alignSelf: 'center', margin: 20}]}>
                         Go Back
                     </Text>
                 </TouchableOpacity>
@@ -151,44 +148,5 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
         </TouchableWithoutFeedback>
     );
 }
-
-const istyles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        //alignItems: 'center',
-        flex: 1,
-        width: Dimensions.get('window').width
-    },
-    header: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginHorizontal: 20,
-        marginVertical: 10,
-    },
-    textInputTitle: {
-        color: '#fff',
-        fontWeight: 'normal',
-    },
-    inputfield: {
-        width: '90%',
-        height: 40,
-        backgroundColor: '#363636',
-        padding: 10,
-        borderRadius: 10,
-        alignSelf: 'center',
-    },
-    button: {
-       alignItems: 'center',
-       margin: 20,
-    },
-    buttontext: {
-        backgroundColor: 'cyan',
-        borderRadius: 17,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        overflow: 'hidden'
-    },
-});
 
 export default ForgotPassword;

@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+ //select department (single relationship)
+
+ import React, {useState} from 'react';
 import {
     View, 
     Text, 
@@ -116,7 +118,7 @@ const Welcome = ({navigation} : any) => {
 
 {/* FOOTER */}
             <View style={[styles.buttonlayout, {marginVertical: 60}]}>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectHospital')}>
+                <TouchableOpacity onPress={() =>  navigation.navigate('Redirect', {trigger: Math.random()})}>
                     <Text style={styles.buttontext}>
                         Next
                     </Text>

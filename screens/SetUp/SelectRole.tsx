@@ -1,3 +1,4 @@
+//select multiple roles
 import React, {useState} from 'react';
 import {
     View, 
@@ -116,7 +117,7 @@ const Welcome = ({navigation} : any) => {
 
 {/* FOOTER */}
             <View style={[styles.buttonlayout, {marginVertical: 60}]}>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectHospital')}>
+                <TouchableOpacity onPress={() =>  navigation.navigate('Redirect', {trigger: Math.random()})}>
                     <Text style={styles.buttontext}>
                         Next
                     </Text>
