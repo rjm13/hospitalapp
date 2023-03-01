@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
     View, 
     Text, 
@@ -8,12 +8,11 @@ import {
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createMessage } from '../../src/graphql/mutations';
-import {Modal, Provider, Portal} from 'react-native-paper';
-import { AppContext } from '../../AppContext';
+import { updateUser } from '../../src/graphql/mutations';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
+import { AppContext } from '../../AppContext';
 import {styles} from '../../styles'
 
 
@@ -21,29 +20,51 @@ const Welcome = ({navigation} : any) => {
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
 
-    //upload modal
-    const [visible, setVisible] = useState(false);
-    const showModal = () => {
-        setVisible(true);
-    }
-    const hideModal = () => setVisible(false);
+    const { theme } = useContext(AppContext);
+    const { userID } = useContext(AppContext);
 
-    const containerStyle = {
-        backgroundColor: '#363636', 
-        borderRadius: 15,
-        paddingVertical: 40
-    };
+    //const { systemID } = useContext(AppContext);
+    const [systemID, setSystemID] = useState('')
 
-    //select multiple hospitals (many to many relationship)
-    //select roles (many to many relationship)
-    //select multiple quals (many to many relationship)
+    //cognito attribute zoneinfo is the placeholder value for the hospital system id. It is set at signup 
+    //with a post confirmation lambda trigger
+    useEffect(() => {
+        const changeUser = async () => {
+            const userInfo = await Auth.currentAuthenticatedUser();
+            if (userInfo.attributes.zoneinfo) {
+                setSystemID(userInfo.attributes.zoneinfo)
+            }
+        }
+        changeUser();
+    }, [])
 
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
-        systemID: '',
-        departmentID: '',
-    })
+    });
+
+    const Proceed = async () => {
+
+        if (data.firstName !== '' && data.lastName !== '') {
+            const userInfo = await Auth.currentAuthenticatedUser();
+            const changeUser = await API.graphql(
+                graphqlOperation(
+                updateUser, {input :{
+                    id: userInfo.attributes.sub,
+                    firstName: data.firstName.toLowerCase(),
+                    lastName:  data.lastName.toLowerCase()
+                }})
+            )
+
+            console.log(changeUser)
+
+            if (changeUser) {
+                navigation.navigate('SelectHospital', {systemID: systemID})
+            }
+        } 
+    }
+
+    
 
     const handleNameChange = (val : any) => {
         setData({
@@ -60,14 +81,6 @@ const Welcome = ({navigation} : any) => {
     }
     
     return (
-        <Provider>
-            <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                <View>
-
-                </View>
-                </Modal>
-            </Portal>
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
             <View style={{marginTop: 100, alignItems: 'center'}}>
                 <View style={{alignItems: 'center'}}>
@@ -132,7 +145,7 @@ const Welcome = ({navigation} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectHospital')}>
+                <TouchableOpacity onPress={Proceed}>
                     <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
                         <FontAwesome5 
                             name='chevron-right'
@@ -146,7 +159,6 @@ const Welcome = ({navigation} : any) => {
                 </TouchableOpacity>
         </View>
         </View>
-        </Provider>
     )
 }
 

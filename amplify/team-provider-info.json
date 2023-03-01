@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "hospitalapp71fd45eb": {}
+      },
+      "function": {
+        "addusertosystem": {
+          "deploymentBucketName": "amplify-hospitalapp-dev-133832-deployment",
+          "s3Key": "amplify-builds/addusertosystem-596b594f42314d5a4242-build.zip"
+        }
       }
     }
   }

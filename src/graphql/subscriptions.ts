@@ -31,6 +31,10 @@ export const onCreateUser = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospital {
         items {
@@ -59,6 +63,7 @@ export const onCreateUser = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -66,6 +71,7 @@ export const onCreateUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -75,12 +81,16 @@ export const onCreateUser = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       role {
         items {
@@ -131,6 +141,8 @@ export const onCreateUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -150,6 +162,8 @@ export const onCreateUser = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -169,6 +183,8 @@ export const onCreateUser = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -192,6 +208,8 @@ export const onCreateUser = /* GraphQL */ `
           category
           link
           sort
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -205,6 +223,8 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -237,6 +257,10 @@ export const onUpdateUser = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospital {
         items {
@@ -265,6 +289,7 @@ export const onUpdateUser = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -272,6 +297,7 @@ export const onUpdateUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -281,12 +307,16 @@ export const onUpdateUser = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       role {
         items {
@@ -337,6 +367,8 @@ export const onUpdateUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -356,6 +388,8 @@ export const onUpdateUser = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -375,6 +409,8 @@ export const onUpdateUser = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -398,6 +434,8 @@ export const onUpdateUser = /* GraphQL */ `
           category
           link
           sort
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -411,6 +449,8 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -443,6 +483,10 @@ export const onDeleteUser = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospital {
         items {
@@ -471,6 +515,7 @@ export const onDeleteUser = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -478,6 +523,7 @@ export const onDeleteUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -487,12 +533,16 @@ export const onDeleteUser = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       role {
         items {
@@ -543,6 +593,8 @@ export const onDeleteUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -562,6 +614,8 @@ export const onDeleteUser = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -581,6 +635,8 @@ export const onDeleteUser = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -604,6 +660,8 @@ export const onDeleteUser = /* GraphQL */ `
           category
           link
           sort
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -617,6 +675,8 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -643,6 +703,8 @@ export const onCreateRole = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -669,6 +731,8 @@ export const onUpdateRole = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -695,6 +759,8 @@ export const onDeleteRole = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -706,6 +772,7 @@ export const onCreateQual = /* GraphQL */ `
       createdAt
       updatedAt
       title
+      abbreviation
       details
       people {
         items {
@@ -717,6 +784,8 @@ export const onCreateQual = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -728,6 +797,7 @@ export const onUpdateQual = /* GraphQL */ `
       createdAt
       updatedAt
       title
+      abbreviation
       details
       people {
         items {
@@ -739,6 +809,8 @@ export const onUpdateQual = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -750,6 +822,7 @@ export const onDeleteQual = /* GraphQL */ `
       createdAt
       updatedAt
       title
+      abbreviation
       details
       people {
         items {
@@ -761,6 +834,8 @@ export const onDeleteQual = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -779,6 +854,7 @@ export const onCreateSystem = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -788,9 +864,15 @@ export const onCreateSystem = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         nextToken
       }
+      website
+      imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -809,6 +891,7 @@ export const onUpdateSystem = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -818,9 +901,15 @@ export const onUpdateSystem = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         nextToken
       }
+      website
+      imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -839,6 +928,7 @@ export const onDeleteSystem = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -848,9 +938,15 @@ export const onDeleteSystem = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         nextToken
       }
+      website
+      imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -862,6 +958,7 @@ export const onCreateHospital = /* GraphQL */ `
       createdAt
       updatedAt
       name
+      abbreviation
       systemID
       system {
         type
@@ -872,6 +969,10 @@ export const onCreateHospital = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       departments {
         items {
@@ -880,9 +981,12 @@ export const onCreateHospital = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -904,6 +1008,8 @@ export const onCreateHospital = /* GraphQL */ `
       phone
       color
       imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -915,6 +1021,7 @@ export const onUpdateHospital = /* GraphQL */ `
       createdAt
       updatedAt
       name
+      abbreviation
       systemID
       system {
         type
@@ -925,6 +1032,10 @@ export const onUpdateHospital = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       departments {
         items {
@@ -933,9 +1044,12 @@ export const onUpdateHospital = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -957,6 +1071,8 @@ export const onUpdateHospital = /* GraphQL */ `
       phone
       color
       imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -968,6 +1084,7 @@ export const onDeleteHospital = /* GraphQL */ `
       createdAt
       updatedAt
       name
+      abbreviation
       systemID
       system {
         type
@@ -978,6 +1095,10 @@ export const onDeleteHospital = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       departments {
         items {
@@ -986,9 +1107,12 @@ export const onDeleteHospital = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -1010,6 +1134,8 @@ export const onDeleteHospital = /* GraphQL */ `
       phone
       color
       imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -1021,6 +1147,7 @@ export const onCreateDepartment = /* GraphQL */ `
       createdAt
       updatedAt
       name
+      abbreviation
       hospitalID
       hospital {
         type
@@ -1028,6 +1155,7 @@ export const onCreateDepartment = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -1035,6 +1163,10 @@ export const onCreateDepartment = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -1050,6 +1182,8 @@ export const onCreateDepartment = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       members {
         items {
@@ -1071,11 +1205,15 @@ export const onCreateDepartment = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         nextToken
       }
       color
       imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -1087,6 +1225,7 @@ export const onUpdateDepartment = /* GraphQL */ `
       createdAt
       updatedAt
       name
+      abbreviation
       hospitalID
       hospital {
         type
@@ -1094,6 +1233,7 @@ export const onUpdateDepartment = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -1101,6 +1241,10 @@ export const onUpdateDepartment = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -1116,6 +1260,8 @@ export const onUpdateDepartment = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       members {
         items {
@@ -1137,11 +1283,15 @@ export const onUpdateDepartment = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         nextToken
       }
       color
       imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -1153,6 +1303,7 @@ export const onDeleteDepartment = /* GraphQL */ `
       createdAt
       updatedAt
       name
+      abbreviation
       hospitalID
       hospital {
         type
@@ -1160,6 +1311,7 @@ export const onDeleteDepartment = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -1167,6 +1319,10 @@ export const onDeleteDepartment = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -1182,6 +1338,8 @@ export const onDeleteDepartment = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       members {
         items {
@@ -1203,11 +1361,15 @@ export const onDeleteDepartment = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         nextToken
       }
       color
       imageUri
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -1243,6 +1405,10 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -1257,9 +1423,12 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -1282,6 +1451,8 @@ export const onCreateShift = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       name
       notes
@@ -1295,6 +1466,10 @@ export const onCreateShift = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -1303,6 +1478,7 @@ export const onCreateShift = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -1310,6 +1486,10 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -1325,6 +1505,8 @@ export const onCreateShift = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -1333,6 +1515,7 @@ export const onCreateShift = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -1340,6 +1523,7 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -1349,12 +1533,16 @@ export const onCreateShift = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -1371,6 +1559,8 @@ export const onCreateShift = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       announcementID
       roannouncementle {
@@ -1398,6 +1588,8 @@ export const onCreateShift = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -1406,6 +1598,10 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -1414,6 +1610,7 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -1423,6 +1620,8 @@ export const onCreateShift = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -1431,9 +1630,12 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -1447,6 +1649,8 @@ export const onCreateShift = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -1466,6 +1670,8 @@ export const onCreateShift = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       qual {
         type
@@ -1473,10 +1679,13 @@ export const onCreateShift = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       date
       month
@@ -1513,6 +1722,10 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -1527,9 +1740,12 @@ export const onCreateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -1552,11 +1768,15 @@ export const onCreateShift = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       priority
       numNeeded
       trade
       giveUp
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -1592,6 +1812,10 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -1606,9 +1830,12 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -1631,6 +1858,8 @@ export const onUpdateShift = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       name
       notes
@@ -1644,6 +1873,10 @@ export const onUpdateShift = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -1652,6 +1885,7 @@ export const onUpdateShift = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -1659,6 +1893,10 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -1674,6 +1912,8 @@ export const onUpdateShift = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -1682,6 +1922,7 @@ export const onUpdateShift = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -1689,6 +1930,7 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -1698,12 +1940,16 @@ export const onUpdateShift = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -1720,6 +1966,8 @@ export const onUpdateShift = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       announcementID
       roannouncementle {
@@ -1747,6 +1995,8 @@ export const onUpdateShift = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -1755,6 +2005,10 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -1763,6 +2017,7 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -1772,6 +2027,8 @@ export const onUpdateShift = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -1780,9 +2037,12 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -1796,6 +2056,8 @@ export const onUpdateShift = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -1815,6 +2077,8 @@ export const onUpdateShift = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       qual {
         type
@@ -1822,10 +2086,13 @@ export const onUpdateShift = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       date
       month
@@ -1862,6 +2129,10 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -1876,9 +2147,12 @@ export const onUpdateShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -1901,11 +2175,15 @@ export const onUpdateShift = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       priority
       numNeeded
       trade
       giveUp
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -1941,6 +2219,10 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -1955,9 +2237,12 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -1980,6 +2265,8 @@ export const onDeleteShift = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       name
       notes
@@ -1993,6 +2280,10 @@ export const onDeleteShift = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -2001,6 +2292,7 @@ export const onDeleteShift = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -2008,6 +2300,10 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -2023,6 +2319,8 @@ export const onDeleteShift = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -2031,6 +2329,7 @@ export const onDeleteShift = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -2038,6 +2337,7 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -2047,12 +2347,16 @@ export const onDeleteShift = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -2069,6 +2373,8 @@ export const onDeleteShift = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       announcementID
       roannouncementle {
@@ -2096,6 +2402,8 @@ export const onDeleteShift = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -2104,6 +2412,10 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -2112,6 +2424,7 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -2121,6 +2434,8 @@ export const onDeleteShift = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -2129,9 +2444,12 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -2145,6 +2463,8 @@ export const onDeleteShift = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -2164,6 +2484,8 @@ export const onDeleteShift = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       qual {
         type
@@ -2171,10 +2493,13 @@ export const onDeleteShift = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       date
       month
@@ -2211,6 +2536,10 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -2225,9 +2554,12 @@ export const onDeleteShift = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -2250,11 +2582,15 @@ export const onDeleteShift = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       priority
       numNeeded
       trade
       giveUp
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -2290,6 +2626,10 @@ export const onCreateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -2304,9 +2644,12 @@ export const onCreateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -2329,6 +2672,8 @@ export const onCreateAnnouncement = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       systemID
       system {
@@ -2340,6 +2685,10 @@ export const onCreateAnnouncement = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -2348,6 +2697,7 @@ export const onCreateAnnouncement = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -2355,6 +2705,10 @@ export const onCreateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -2370,6 +2724,8 @@ export const onCreateAnnouncement = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -2378,6 +2734,7 @@ export const onCreateAnnouncement = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -2385,6 +2742,7 @@ export const onCreateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -2394,12 +2752,16 @@ export const onCreateAnnouncement = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -2416,6 +2778,8 @@ export const onCreateAnnouncement = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       title
       accouncement
@@ -2432,6 +2796,8 @@ export const onCreateAnnouncement = /* GraphQL */ `
           icon
           announcementID
           eventID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -2445,6 +2811,8 @@ export const onCreateAnnouncement = /* GraphQL */ `
           isRead
           announcementID
           userID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -2481,10 +2849,14 @@ export const onCreateAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          createdOn
+          updatedOn
         }
         nextToken
       }
       sort
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -2520,6 +2892,10 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -2534,9 +2910,12 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -2559,6 +2938,8 @@ export const onUpdateAnnouncement = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       systemID
       system {
@@ -2570,6 +2951,10 @@ export const onUpdateAnnouncement = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -2578,6 +2963,7 @@ export const onUpdateAnnouncement = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -2585,6 +2971,10 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -2600,6 +2990,8 @@ export const onUpdateAnnouncement = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -2608,6 +3000,7 @@ export const onUpdateAnnouncement = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -2615,6 +3008,7 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -2624,12 +3018,16 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -2646,6 +3044,8 @@ export const onUpdateAnnouncement = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       title
       accouncement
@@ -2662,6 +3062,8 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           icon
           announcementID
           eventID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -2675,6 +3077,8 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           isRead
           announcementID
           userID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -2711,10 +3115,14 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          createdOn
+          updatedOn
         }
         nextToken
       }
       sort
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -2750,6 +3158,10 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -2764,9 +3176,12 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -2789,6 +3204,8 @@ export const onDeleteAnnouncement = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       systemID
       system {
@@ -2800,6 +3217,10 @@ export const onDeleteAnnouncement = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -2808,6 +3229,7 @@ export const onDeleteAnnouncement = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -2815,6 +3237,10 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -2830,6 +3256,8 @@ export const onDeleteAnnouncement = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -2838,6 +3266,7 @@ export const onDeleteAnnouncement = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -2845,6 +3274,7 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -2854,12 +3284,16 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -2876,6 +3310,8 @@ export const onDeleteAnnouncement = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       title
       accouncement
@@ -2892,6 +3328,8 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           icon
           announcementID
           eventID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -2905,6 +3343,8 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           isRead
           announcementID
           userID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -2941,10 +3381,14 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          createdOn
+          updatedOn
         }
         nextToken
       }
       sort
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -2980,6 +3424,10 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -2994,9 +3442,12 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -3019,6 +3470,8 @@ export const onCreateReaction = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       reaction
       icon
@@ -3047,6 +3500,8 @@ export const onCreateReaction = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -3055,6 +3510,10 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -3063,6 +3522,7 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -3072,6 +3532,8 @@ export const onCreateReaction = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -3080,9 +3542,12 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -3096,6 +3561,8 @@ export const onCreateReaction = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -3115,6 +3582,8 @@ export const onCreateReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       announcementID
       event {
@@ -3136,6 +3605,10 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -3144,6 +3617,7 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -3153,6 +3627,8 @@ export const onCreateReaction = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -3161,9 +3637,12 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -3177,6 +3656,8 @@ export const onCreateReaction = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         qualID
         qual {
@@ -3185,7 +3666,10 @@ export const onCreateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           title
+          abbreviation
           details
+          createdOn
+          updatedOn
         }
         date
         month
@@ -3200,8 +3684,12 @@ export const onCreateReaction = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       eventID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -3237,6 +3725,10 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -3251,9 +3743,12 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -3276,6 +3771,8 @@ export const onUpdateReaction = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       reaction
       icon
@@ -3304,6 +3801,8 @@ export const onUpdateReaction = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -3312,6 +3811,10 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -3320,6 +3823,7 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -3329,6 +3833,8 @@ export const onUpdateReaction = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -3337,9 +3843,12 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -3353,6 +3862,8 @@ export const onUpdateReaction = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -3372,6 +3883,8 @@ export const onUpdateReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       announcementID
       event {
@@ -3393,6 +3906,10 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -3401,6 +3918,7 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -3410,6 +3928,8 @@ export const onUpdateReaction = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -3418,9 +3938,12 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -3434,6 +3957,8 @@ export const onUpdateReaction = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         qualID
         qual {
@@ -3442,7 +3967,10 @@ export const onUpdateReaction = /* GraphQL */ `
           createdAt
           updatedAt
           title
+          abbreviation
           details
+          createdOn
+          updatedOn
         }
         date
         month
@@ -3457,8 +3985,12 @@ export const onUpdateReaction = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       eventID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -3494,6 +4026,10 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -3508,9 +4044,12 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -3533,6 +4072,8 @@ export const onDeleteReaction = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       reaction
       icon
@@ -3561,6 +4102,8 @@ export const onDeleteReaction = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -3569,6 +4112,10 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -3577,6 +4124,7 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -3586,6 +4134,8 @@ export const onDeleteReaction = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -3594,9 +4144,12 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -3610,6 +4163,8 @@ export const onDeleteReaction = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -3629,6 +4184,8 @@ export const onDeleteReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       announcementID
       event {
@@ -3650,6 +4207,10 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -3658,6 +4219,7 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -3667,6 +4229,8 @@ export const onDeleteReaction = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -3675,9 +4239,12 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -3691,6 +4258,8 @@ export const onDeleteReaction = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         qualID
         qual {
@@ -3699,7 +4268,10 @@ export const onDeleteReaction = /* GraphQL */ `
           createdAt
           updatedAt
           title
+          abbreviation
           details
+          createdOn
+          updatedOn
         }
         date
         month
@@ -3714,8 +4286,12 @@ export const onDeleteReaction = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       eventID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -3753,6 +4329,10 @@ export const onCreateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -3767,9 +4347,12 @@ export const onCreateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -3792,6 +4375,8 @@ export const onCreateMessage = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
       otherUserID
@@ -3819,6 +4404,10 @@ export const onCreateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -3833,9 +4422,12 @@ export const onCreateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -3858,6 +4450,8 @@ export const onCreateMessage = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       isReadbyUser
       isReadByOtherUser
@@ -3871,6 +4465,8 @@ export const onCreateMessage = /* GraphQL */ `
           isRead
           messageID
           userID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -3891,7 +4487,11 @@ export const onCreateMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        createdOn
+        updatedOn
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -3929,6 +4529,10 @@ export const onUpdateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -3943,9 +4547,12 @@ export const onUpdateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -3968,6 +4575,8 @@ export const onUpdateMessage = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
       otherUserID
@@ -3995,6 +4604,10 @@ export const onUpdateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4009,9 +4622,12 @@ export const onUpdateMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4034,6 +4650,8 @@ export const onUpdateMessage = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       isReadbyUser
       isReadByOtherUser
@@ -4047,6 +4665,8 @@ export const onUpdateMessage = /* GraphQL */ `
           isRead
           messageID
           userID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -4067,7 +4687,11 @@ export const onUpdateMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        createdOn
+        updatedOn
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -4105,6 +4729,10 @@ export const onDeleteMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4119,9 +4747,12 @@ export const onDeleteMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4144,6 +4775,8 @@ export const onDeleteMessage = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
       otherUserID
@@ -4171,6 +4804,10 @@ export const onDeleteMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4185,9 +4822,12 @@ export const onDeleteMessage = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4210,6 +4850,8 @@ export const onDeleteMessage = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       isReadbyUser
       isReadByOtherUser
@@ -4223,6 +4865,8 @@ export const onDeleteMessage = /* GraphQL */ `
           isRead
           messageID
           userID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -4243,7 +4887,11 @@ export const onDeleteMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        createdOn
+        updatedOn
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -4284,6 +4932,8 @@ export const onCreateMessageReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         userID
         otherUserID
@@ -4306,6 +4956,8 @@ export const onCreateMessageReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         isReadbyUser
         isReadByOtherUser
@@ -4323,7 +4975,11 @@ export const onCreateMessageReply = /* GraphQL */ `
           name
           color
           imageUri
+          createdOn
+          updatedOn
         }
+        createdOn
+        updatedOn
       }
       user {
         type
@@ -4349,6 +5005,10 @@ export const onCreateMessageReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4363,9 +5023,12 @@ export const onCreateMessageReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4388,8 +5051,12 @@ export const onCreateMessageReply = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -4430,6 +5097,8 @@ export const onUpdateMessageReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         userID
         otherUserID
@@ -4452,6 +5121,8 @@ export const onUpdateMessageReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         isReadbyUser
         isReadByOtherUser
@@ -4469,7 +5140,11 @@ export const onUpdateMessageReply = /* GraphQL */ `
           name
           color
           imageUri
+          createdOn
+          updatedOn
         }
+        createdOn
+        updatedOn
       }
       user {
         type
@@ -4495,6 +5170,10 @@ export const onUpdateMessageReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4509,9 +5188,12 @@ export const onUpdateMessageReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4534,8 +5216,12 @@ export const onUpdateMessageReply = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -4576,6 +5262,8 @@ export const onDeleteMessageReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         userID
         otherUserID
@@ -4598,6 +5286,8 @@ export const onDeleteMessageReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         isReadbyUser
         isReadByOtherUser
@@ -4615,7 +5305,11 @@ export const onDeleteMessageReply = /* GraphQL */ `
           name
           color
           imageUri
+          createdOn
+          updatedOn
         }
+        createdOn
+        updatedOn
       }
       user {
         type
@@ -4641,6 +5335,10 @@ export const onDeleteMessageReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4655,9 +5353,12 @@ export const onDeleteMessageReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4680,8 +5381,12 @@ export const onDeleteMessageReply = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -4720,6 +5425,8 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -4728,6 +5435,10 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -4736,6 +5447,7 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -4745,6 +5457,8 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -4753,9 +5467,12 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -4769,6 +5486,8 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -4788,6 +5507,8 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       user {
         type
@@ -4813,6 +5534,10 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4827,9 +5552,12 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -4852,8 +5580,12 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -4892,6 +5624,8 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -4900,6 +5634,10 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -4908,6 +5646,7 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -4917,6 +5656,8 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -4925,9 +5666,12 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -4941,6 +5685,8 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -4960,6 +5706,8 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       user {
         type
@@ -4985,6 +5733,10 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -4999,9 +5751,12 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -5024,8 +5779,12 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5064,6 +5823,8 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           Setting5
           systemID
           departmentID
+          createdOn
+          updatedOn
         }
         systemID
         system {
@@ -5072,6 +5833,10 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -5080,6 +5845,7 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -5089,6 +5855,8 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -5097,9 +5865,12 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -5113,6 +5884,8 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         title
         accouncement
@@ -5132,6 +5905,8 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        createdOn
+        updatedOn
       }
       user {
         type
@@ -5157,6 +5932,10 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -5171,9 +5950,12 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -5196,8 +5978,12 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       userID
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5225,6 +6011,10 @@ export const onCreateEvent = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -5233,6 +6023,7 @@ export const onCreateEvent = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -5240,6 +6031,10 @@ export const onCreateEvent = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -5255,6 +6050,8 @@ export const onCreateEvent = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -5263,6 +6060,7 @@ export const onCreateEvent = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -5270,6 +6068,7 @@ export const onCreateEvent = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -5279,12 +6078,16 @@ export const onCreateEvent = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -5301,6 +6104,8 @@ export const onCreateEvent = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       qualID
       qual {
@@ -5309,10 +6114,13 @@ export const onCreateEvent = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       date
       month
@@ -5332,6 +6140,8 @@ export const onCreateEvent = /* GraphQL */ `
           icon
           announcementID
           eventID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -5345,6 +6155,8 @@ export const onCreateEvent = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5372,6 +6184,10 @@ export const onUpdateEvent = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -5380,6 +6196,7 @@ export const onUpdateEvent = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -5387,6 +6204,10 @@ export const onUpdateEvent = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -5402,6 +6223,8 @@ export const onUpdateEvent = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -5410,6 +6233,7 @@ export const onUpdateEvent = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -5417,6 +6241,7 @@ export const onUpdateEvent = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -5426,12 +6251,16 @@ export const onUpdateEvent = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -5448,6 +6277,8 @@ export const onUpdateEvent = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       qualID
       qual {
@@ -5456,10 +6287,13 @@ export const onUpdateEvent = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       date
       month
@@ -5479,6 +6313,8 @@ export const onUpdateEvent = /* GraphQL */ `
           icon
           announcementID
           eventID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -5492,6 +6328,8 @@ export const onUpdateEvent = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5519,6 +6357,10 @@ export const onDeleteEvent = /* GraphQL */ `
         hospitals {
           nextToken
         }
+        website
+        imageUri
+        createdOn
+        updatedOn
       }
       hospitalID
       hospital {
@@ -5527,6 +6369,7 @@ export const onDeleteEvent = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -5534,6 +6377,10 @@ export const onDeleteEvent = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -5549,6 +6396,8 @@ export const onDeleteEvent = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       departmentID
       department {
@@ -5557,6 +6406,7 @@ export const onDeleteEvent = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         hospitalID
         hospital {
           type
@@ -5564,6 +6414,7 @@ export const onDeleteEvent = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -5573,12 +6424,16 @@ export const onDeleteEvent = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         members {
           nextToken
         }
         color
         imageUri
+        createdOn
+        updatedOn
       }
       roleID
       role {
@@ -5595,6 +6450,8 @@ export const onDeleteEvent = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       qualID
       qual {
@@ -5603,10 +6460,13 @@ export const onDeleteEvent = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       date
       month
@@ -5626,6 +6486,8 @@ export const onDeleteEvent = /* GraphQL */ `
           icon
           announcementID
           eventID
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -5639,6 +6501,8 @@ export const onDeleteEvent = /* GraphQL */ `
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5678,9 +6542,13 @@ export const onCreateGroup = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5720,9 +6588,13 @@ export const onUpdateGroup = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5762,9 +6634,13 @@ export const onDeleteGroup = /* GraphQL */ `
           request
           status
           groupID
+          createdOn
+          updatedOn
         }
         nextToken
       }
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -5798,6 +6674,10 @@ export const onCreateHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -5812,9 +6692,12 @@ export const onCreateHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -5837,6 +6720,8 @@ export const onCreateHospitalUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       hospital {
         type
@@ -5844,6 +6729,7 @@ export const onCreateHospitalUser = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -5851,6 +6737,10 @@ export const onCreateHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -5866,6 +6756,8 @@ export const onCreateHospitalUser = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -5902,6 +6794,10 @@ export const onUpdateHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -5916,9 +6812,12 @@ export const onUpdateHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -5941,6 +6840,8 @@ export const onUpdateHospitalUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       hospital {
         type
@@ -5948,6 +6849,7 @@ export const onUpdateHospitalUser = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -5955,6 +6857,10 @@ export const onUpdateHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -5970,6 +6876,8 @@ export const onUpdateHospitalUser = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6006,6 +6914,10 @@ export const onDeleteHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6020,9 +6932,12 @@ export const onDeleteHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6045,6 +6960,8 @@ export const onDeleteHospitalUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       hospital {
         type
@@ -6052,6 +6969,7 @@ export const onDeleteHospitalUser = /* GraphQL */ `
         createdAt
         updatedAt
         name
+        abbreviation
         systemID
         system {
           type
@@ -6059,6 +6977,10 @@ export const onDeleteHospitalUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         departments {
           nextToken
@@ -6074,6 +6996,8 @@ export const onDeleteHospitalUser = /* GraphQL */ `
         phone
         color
         imageUri
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6110,6 +7034,10 @@ export const onCreateGroupUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6124,9 +7052,12 @@ export const onCreateGroupUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6149,6 +7080,8 @@ export const onCreateGroupUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       group {
         type
@@ -6164,6 +7097,8 @@ export const onCreateGroupUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6200,6 +7135,10 @@ export const onUpdateGroupUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6214,9 +7153,12 @@ export const onUpdateGroupUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6239,6 +7181,8 @@ export const onUpdateGroupUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       group {
         type
@@ -6254,6 +7198,8 @@ export const onUpdateGroupUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6290,6 +7236,10 @@ export const onDeleteGroupUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6304,9 +7254,12 @@ export const onDeleteGroupUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6329,6 +7282,8 @@ export const onDeleteGroupUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       group {
         type
@@ -6344,6 +7299,8 @@ export const onDeleteGroupUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6380,6 +7337,10 @@ export const onCreateRoleUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6394,9 +7355,12 @@ export const onCreateRoleUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6419,6 +7383,8 @@ export const onCreateRoleUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       role {
         type
@@ -6434,6 +7400,8 @@ export const onCreateRoleUser = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6470,6 +7438,10 @@ export const onUpdateRoleUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6484,9 +7456,12 @@ export const onUpdateRoleUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6509,6 +7484,8 @@ export const onUpdateRoleUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       role {
         type
@@ -6524,6 +7501,8 @@ export const onUpdateRoleUser = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6560,6 +7539,10 @@ export const onDeleteRoleUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6574,9 +7557,12 @@ export const onDeleteRoleUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6599,6 +7585,8 @@ export const onDeleteRoleUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       role {
         type
@@ -6614,6 +7602,8 @@ export const onDeleteRoleUser = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6650,6 +7640,10 @@ export const onCreateQualUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6664,9 +7658,12 @@ export const onCreateQualUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6689,6 +7686,8 @@ export const onCreateQualUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       qual {
         type
@@ -6696,10 +7695,13 @@ export const onCreateQualUser = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6736,6 +7738,10 @@ export const onUpdateQualUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6750,9 +7756,12 @@ export const onUpdateQualUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6775,6 +7784,8 @@ export const onUpdateQualUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       qual {
         type
@@ -6782,10 +7793,13 @@ export const onUpdateQualUser = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6822,6 +7836,10 @@ export const onDeleteQualUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6836,9 +7854,12 @@ export const onDeleteQualUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6861,6 +7882,8 @@ export const onDeleteQualUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       qual {
         type
@@ -6868,10 +7891,13 @@ export const onDeleteQualUser = /* GraphQL */ `
         createdAt
         updatedAt
         title
+        abbreviation
         details
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -6908,6 +7934,10 @@ export const onCreateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -6922,9 +7952,12 @@ export const onCreateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -6947,6 +7980,8 @@ export const onCreateEventUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       event {
         type
@@ -6967,6 +8002,10 @@ export const onCreateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -6975,6 +8014,7 @@ export const onCreateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -6984,6 +8024,8 @@ export const onCreateEventUser = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -6992,9 +8034,12 @@ export const onCreateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -7008,6 +8053,8 @@ export const onCreateEventUser = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         qualID
         qual {
@@ -7016,7 +8063,10 @@ export const onCreateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           title
+          abbreviation
           details
+          createdOn
+          updatedOn
         }
         date
         month
@@ -7031,6 +8081,8 @@ export const onCreateEventUser = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -7067,6 +8119,10 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -7081,9 +8137,12 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -7106,6 +8165,8 @@ export const onUpdateEventUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       event {
         type
@@ -7126,6 +8187,10 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -7134,6 +8199,7 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -7143,6 +8209,8 @@ export const onUpdateEventUser = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -7151,9 +8219,12 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -7167,6 +8238,8 @@ export const onUpdateEventUser = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         qualID
         qual {
@@ -7175,7 +8248,10 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           title
+          abbreviation
           details
+          createdOn
+          updatedOn
         }
         date
         month
@@ -7190,6 +8266,8 @@ export const onUpdateEventUser = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt
@@ -7226,6 +8304,10 @@ export const onDeleteEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospital {
           nextToken
@@ -7240,9 +8322,12 @@ export const onDeleteEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         role {
           nextToken
@@ -7265,6 +8350,8 @@ export const onDeleteEventUser = /* GraphQL */ `
         events {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       event {
         type
@@ -7285,6 +8372,10 @@ export const onDeleteEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          website
+          imageUri
+          createdOn
+          updatedOn
         }
         hospitalID
         hospital {
@@ -7293,6 +8384,7 @@ export const onDeleteEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           systemID
           streetNum
           streetAddress
@@ -7302,6 +8394,8 @@ export const onDeleteEventUser = /* GraphQL */ `
           phone
           color
           imageUri
+          createdOn
+          updatedOn
         }
         departmentID
         department {
@@ -7310,9 +8404,12 @@ export const onDeleteEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           name
+          abbreviation
           hospitalID
           color
           imageUri
+          createdOn
+          updatedOn
         }
         roleID
         role {
@@ -7326,6 +8423,8 @@ export const onDeleteEventUser = /* GraphQL */ `
           color
           imageUri
           acronym
+          createdOn
+          updatedOn
         }
         qualID
         qual {
@@ -7334,7 +8433,10 @@ export const onDeleteEventUser = /* GraphQL */ `
           createdAt
           updatedAt
           title
+          abbreviation
           details
+          createdOn
+          updatedOn
         }
         date
         month
@@ -7349,6 +8451,8 @@ export const onDeleteEventUser = /* GraphQL */ `
         people {
           nextToken
         }
+        createdOn
+        updatedOn
       }
       createdAt
       updatedAt

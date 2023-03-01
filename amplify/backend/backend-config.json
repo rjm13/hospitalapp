@@ -52,5 +52,12 @@
         }
       }
     }
+  },
+  "function": {
+    "addusertosystem": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
   }
 }

@@ -1,6 +1,6 @@
  //select multiple hospitals (many to many relationship)
 
- import React, {useState} from 'react';
+ import React, {useState, useEffect} from 'react';
 import {
     View, 
     Text, 
@@ -9,11 +9,12 @@ import {
     TextInput,
     FlatList,
     ScrollView,
+    Image,
     TouchableWithoutFeedback
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createMessage } from '../../src/graphql/mutations';
+import { getUser } from '../../src/graphql/queries';
 import {Modal, Provider, Portal} from 'react-native-paper';
 import { AppContext } from '../../AppContext';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -88,48 +89,89 @@ const roles = [
     },
 ]
 
-const SelectRole = ({navigation} : any) => {
+const SelectRole = ({navigation, route} : any) => {
+
+    const {systemID, systemImageUri, systemName} = route.params
+
+    const [systemData, setSystemData] = useState({
+        id: systemID,
+        name: systemName,
+        imageUri: systemImageUri,
+    });
+
+    const [hospitalData, setHospitalData] = useState([
+        {
+            id: '',
+            name: '',
+        }
+    ]);
+
+    const [department, setDepartment] = useState({
+        id: '',
+        name: '',
+    })
+
+    useEffect(() => {
+
+        const fetchUser = async () => {
+
+            const userInfo = await Auth.currentAuthenticatedUser();
+
+            let hosparr = [];
+
+            const getIt = await API.graphql(
+                graphqlOperation(
+                    getUser, {
+                        id: userInfo.attributes.sub,
+                    })
+            )
+            console.log(getIt.data.getUser.department)
+            
+            for (let i = 0; i < 1; i++) {
+                hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
+            }
+            setHospitalData(hosparr)
+            setDepartment(getIt.data.getUser.department)
+        }
+        fetchUser();
+    }, [])
 
     const [roleIDs, setRoleIDs] = useState([])
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
     const SCREEN_WIDTH = Dimensions.get('window').width
-
-    //modal
-    const [visible, setVisible] = useState(false);
-    const showModal = () => {setVisible(true)}
-    const hideModal = () => setVisible(false);
-    const containerStyle = {backgroundColor: '#363636', borderRadius: 15, paddingVertical: 40};
-
-
     
     return (
-        <Provider>
-            <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                <View>
-
-                </View>
-                </Modal>
-            </Portal>
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
             <View style={{marginTop: 0, alignItems: 'center'}}>
-            <View style={{alignItems: 'center', marginTop: 60, backgroundColor: '#e0e0e0', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
-                <Text style={[styles.title, {fontSize: 26, marginTop: 20}]}>
-                    Harris Health
-                </Text>
+            <View style={{alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
+                {systemImageUri.length > 1 ? (
+                        <Image
+                            style={{height: 100, width: SCREEN_WIDTH - 100, resizeMode: 'contain'}}
+                            source={{uri: systemImageUri}}
+                        />
+                    ) : (
+                        <Text style={[styles.title, {fontSize: 26, marginTop: 20}]}>
+                            {systemName}
+                        </Text>
+                    )}
                 <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
-                <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                    LBJ 
-                </Text>
-                <View style={{width: 10}}/>
-                <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                    Ben Taub
-                </Text>
+                <View>
+                    {hospitalData.map(({id, name}, index) => {
+                        return (
+                            <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                <Text style={[styles.paragraph, {marginVertical: 0}]}>
+                                    {name}
+                                </Text>
+                            </View>
+                        )})}
                 </View>
-                    <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                        Emergency Department
-                    </Text>
+                </View>
+                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                        <Text style={[styles.paragraph, {marginVertical: 0}]}>
+                            {department?.name}
+                        </Text>
+                    </View>
                 </View>
                 <Text style={[styles.title, {fontSize: 20, marginTop: 30, marginBottom: 20}]}>
                     Please select your role(s):
@@ -196,7 +238,6 @@ const SelectRole = ({navigation} : any) => {
             </View>
         </LinearGradient>
         </View>
-        </Provider>
     )
 }
 

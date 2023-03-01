@@ -2,11 +2,11 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type User @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   firstName: String
   lastName: String
   phone: String
@@ -34,11 +34,11 @@ type User @model @auth(rules: [{ allow: private, operations: [create, delete, up
   events: [Event] @manyToMany (relationName: "EventUser")
 }
 
-type Role @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   title: String #nurse, tech, doctor, 
   details: String
   icon: String
@@ -48,31 +48,33 @@ type Role @model @auth(rules: [{ allow: private, operations: [create, delete, up
   people: [User] @manyToMany (relationName: "RoleUser")
 }
 
-type Qual @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Qual @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   title: String #CCT, charge, ems, manager
   abbreviation: String
   details: String 
   people: [User] @manyToMany (relationName: "QualUser")
 }
 
-type System @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type System @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   name: String #Harris Health, Memorial Hermann
   hospitals: [Hospital] @hasMany(indexName: "bySystem", fields: "id")
+  website: String
+  imageUri: String
 }
 
-type Hospital @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Hospital @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   name: String #LBJ, HM, Ben Taub
   abbreviation: String
   systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
@@ -89,11 +91,11 @@ type Hospital @model @auth(rules: [{ allow: private, operations: [create, delete
   imageUri: String
 }
 
-type Department @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Department @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   name: String #ER, ICU, MS
   abbreviation: String
   hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
@@ -103,11 +105,11 @@ type Department @model @auth(rules: [{ allow: private, operations: [create, dele
   imageUri: String
 }
 
-type Shift @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   createdByID: ID @index(name: "byCreatedBy", sortKeyFields: ["id"])
   createdBy: User @hasOne (fields: ["createdByID"])
   name: String
@@ -141,12 +143,12 @@ type Shift @model @auth(rules: [{ allow: private, operations: [create, delete, u
   giveUp: Boolean
 }
 
-type Announcement @model @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
+type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
 {
   id: ID!
   type: String @index(name: "announcementsByDate", queryField: "announcementByDate", sortKeyFields: ["updatedAt"]  )
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   createdByID: ID @index(name: "byCreatedBy", sortKeyFields: ["id"])
   createdBy: User @hasOne (fields: ["createdByID"])
   systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
@@ -171,12 +173,12 @@ type Announcement @model @auth( rules: [{ allow: private, operations: [create, d
   sort: String #type of announcement
 }
 
-type Reaction @model @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
+type Reaction @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
 {
   id: ID!
   type: String
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   userID: ID @index(name: "byUser", sortKeyFields: ["id"])
   user: User @hasOne (fields: ["userID"])
   reaction: String
@@ -187,14 +189,14 @@ type Reaction @model @auth( rules: [{ allow: private, operations: [create, delet
   eventID: ID @index(name: "byEvent", sortKeyFields: ["id"])
 }
 
-type Message @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
+type Message @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
   {
     id: ID!
     type: String 
       @index(name: "messagesByDate", queryField: "messagesByDate", sortKeyFields: ["createdAt"]  )
       @index(name: "messagesByUpdatedDate", queryField: "messagesByUpdatedDate", sortKeyFields: ["updatedAt"]  )
-    createdAt: String
-    updatedAt: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
     title: String
     subtitle: String
     content: String
@@ -211,12 +213,12 @@ type Message @model @auth(rules: [{ allow: private, operations: [create, delete,
     group: Group @hasOne (fields: ["groupID"])
 }
 
-type MessageReply @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
+type MessageReply @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
   {
     id: ID!
     type: String @index(name: "repliesByDate", queryField: "repliesByDate", sortKeyFields: ["createdAt"]  )
-    createdAt: String
-    updatedAt: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
     content: String
     isRead: Boolean
     messageID: ID! @index(name: "byMessage", sortKeyFields: ["id"])
@@ -225,12 +227,12 @@ type MessageReply @model @auth(rules: [{ allow: private, operations: [create, de
     userID: ID @index(name: "byUser", sortKeyFields: ["id"])
 }
 
-type AnnouncementReply @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
+type AnnouncementReply @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
   {
     id: ID!
     type: String @index(name: "AnnouncementRepliesByDate", queryField: "AnnouncementRepliesByDate", sortKeyFields: ["createdAt"]  )
-    createdAt: String
-    updatedAt: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
     content: String
     isRead: Boolean
     announcementID: ID! @index(name: "byAccouncement", sortKeyFields: ["id"])
@@ -239,11 +241,11 @@ type AnnouncementReply @model @auth(rules: [{ allow: private, operations: [creat
     userID: ID @index(name: "byUser", sortKeyFields: ["id"])
 }
 
-type Event @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Event @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   title: String
   details: String
   notes: String
@@ -272,11 +274,11 @@ type Event @model @auth(rules: [{ allow: private, operations: [create, delete, u
   people: [User] @manyToMany (relationName: "EventUser")
 }
 
-type Group @model @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+type Group @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   name: String 
   members: [User] @manyToMany (relationName: "GroupUser")
   color: String

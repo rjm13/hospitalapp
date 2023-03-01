@@ -54,8 +54,8 @@ const ConfirmSetUp = ({navigation} : any) => {
                 </View>
 
                 <View style={{marginTop: 40}}>
-                    <Text style={[styles.title, {}]}>
-                        Harris Health (System)
+                    <Text style={[styles.title, {fontWeight: '600'}]}>
+                        Harris Health
                     </Text>
                 </View>
 
@@ -65,14 +65,14 @@ const ConfirmSetUp = ({navigation} : any) => {
                     <Text style={styles.subtext}>
                         My Hospital(s)
                     </Text>
-                    <View style={{height: 1, backgroundColor: '#000', width: SCREEN_WIDTH - 40}}/>
+                    <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 
                 <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10}]}>
+                    <Text style={[styles.title, {marginVertical: 10, fontWeight: '600'}]}>
                         LBJ
                     </Text>
-                    <Text style={[styles.title, {marginVertical: 10}]}>
+                    <Text style={[styles.title, {marginVertical: 10, fontWeight: '600'}]}>
                         Ben Taub
                     </Text>
                 </View>
@@ -81,10 +81,10 @@ const ConfirmSetUp = ({navigation} : any) => {
                     <Text style={styles.subtext}>
                         My Department
                     </Text>
-                    <View style={{height: 1, backgroundColor: '#000', width: SCREEN_WIDTH - 40}}/>
+                    <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10}]}>
+                    <Text style={[styles.title, {marginVertical: 10, fontWeight: '600'}]}>
                         Emergency Department
                     </Text>
                 </View>
@@ -93,10 +93,10 @@ const ConfirmSetUp = ({navigation} : any) => {
                     <Text style={styles.subtext}>
                         My Role(s)
                     </Text>
-                    <View style={{height: 1, backgroundColor: '#000', width: SCREEN_WIDTH - 40}}/>
+                    <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center'}]}>
+                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center', fontWeight: '600'}]}>
                         Nurse (RN)
                     </Text>
                 </View>
@@ -105,13 +105,13 @@ const ConfirmSetUp = ({navigation} : any) => {
                     <Text style={styles.subtext}>
                         My Qualifications
                     </Text>
-                    <View style={{height: 1, backgroundColor: '#000', width: SCREEN_WIDTH - 40}}/>
+                    <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center'}]}>
+                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center', fontWeight: '600'}]}>
                         CCT
                     </Text>
-                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center'}]}>
+                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center', fontWeight: '600'}]}>
                         Charge
                     </Text>
                 </View>
