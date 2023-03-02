@@ -14,7 +14,8 @@ import {
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { getUser } from '../../src/graphql/queries';
+import { getUser, getDepartment } from '../../src/graphql/queries';
+import { updateUser } from '../../src/graphql/mutations';
 import {Modal, Provider, Portal} from 'react-native-paper';
 import { AppContext } from '../../AppContext';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -91,6 +92,18 @@ const roles = [
 
 const SelectRole = ({navigation, route} : any) => {
 
+    const [roles, setRoles] = useState([
+        {
+        id: '',
+        title: '',
+        acronym: '',
+        icon: '',
+        color: '',
+        details: '',
+
+        }
+    ]);
+
     const {systemID, systemImageUri, systemName} = route.params
 
     const [systemData, setSystemData] = useState({
@@ -110,6 +123,8 @@ const SelectRole = ({navigation, route} : any) => {
         id: '',
         name: '',
     })
+
+    const [roleIDs, setRoleIDs] = useState([])
 
     useEffect(() => {
 
@@ -132,11 +147,38 @@ const SelectRole = ({navigation, route} : any) => {
             }
             setHospitalData(hosparr)
             setDepartment(getIt.data.getUser.department)
+
+            if (getIt.data.getUser.departmentID) {
+                const getMore = await API.graphql(
+                    graphqlOperation(
+                        getDepartment, {
+                            id: getIt.data.getUser.departmentID,
+                        })
+                )
+                console.log(getMore.data.getDepartment)
+                setRoles(getMore.data.getDepartment.roles.items)
+            }
         }
         fetchUser();
     }, [])
 
-    const [roleIDs, setRoleIDs] = useState([])
+    const Proceed = async () => {
+        if (roleIDs.length > 0) {
+
+            const userInfo = await Auth.currentAuthenticatedUser();
+
+            const response = await API.graphql(
+                graphqlOperation(
+                    updateUser, {input: {
+                        id: userInfo.attributes.sub,
+                        primaryRoleID: roleIDs[0],
+                    }     
+                })
+            )
+            console.log(response)
+            navigation.navigate('SelectQuals', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})
+        }
+    }
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
     const SCREEN_WIDTH = Dimensions.get('window').width
@@ -144,8 +186,8 @@ const SelectRole = ({navigation, route} : any) => {
     return (
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
             <View style={{marginTop: 0, alignItems: 'center'}}>
-            <View style={{alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
-                {systemImageUri.length > 1 ? (
+                <View style={{alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
+                    {systemImageUri.length > 1 ? (
                         <Image
                             style={{height: 100, width: SCREEN_WIDTH - 100, resizeMode: 'contain'}}
                             source={{uri: systemImageUri}}
@@ -155,18 +197,19 @@ const SelectRole = ({navigation, route} : any) => {
                             {systemName}
                         </Text>
                     )}
-                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
-                <View>
-                    {hospitalData.map(({id, name}, index) => {
-                        return (
-                            <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
-                                <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                                    {name}
-                                </Text>
-                            </View>
-                        )})}
-                </View>
-                </View>
+                    <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
+                        <View>
+                            {hospitalData.map(({id, name}, index) => {
+                                return (
+                                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                        <Text style={[styles.paragraph, {marginVertical: 0}]}>
+                                            {name}
+                                        </Text>
+                                    </View>
+                                )})}
+                        </View>
+                    </View>
+
                     <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                         <Text style={[styles.paragraph, {marginVertical: 0}]}>
                             {department?.name}
@@ -194,7 +237,7 @@ const SelectRole = ({navigation, route} : any) => {
                             borderColor: roleIDs.includes(id) === true ? 'maroon' : '#fff', 
                             //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
                         }}>
-                            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '600', color: '#474747'}}>
+                            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '600', color: '#474747', textTransform: 'capitalize'}}>
                                 {title} ({acronym})
                             </Text>
                         </View>
@@ -223,7 +266,7 @@ const SelectRole = ({navigation, route} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectQuals')}>
+                <TouchableOpacity onPress={Proceed}>
                     <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
                         <FontAwesome5 
                             name='chevron-right'
