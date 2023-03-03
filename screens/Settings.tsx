@@ -27,6 +27,7 @@ const Settings = ({navigation} : any) => {
     const { setTheme } = useContext(AppContext);
     const { theme } = useContext(AppContext);
 
+    const [userInfo, setUserInfo] = useState({})
 
 //theme switch
     const [isSwitchOn, setIsSwitchOn] = useState<boolean>(theme);
@@ -48,6 +49,18 @@ const Settings = ({navigation} : any) => {
             setTrackColor('gray')
         }
     }, [theme]);
+
+    //get the user info
+    useEffect(() => {
+        const fetchUser = async () => {
+            const userAtts = await Auth.currentAuthenticatedUser();
+            const response = await API.graphql(graphqlOperation(
+                getUser, {id: userAtts.attributes.sub}
+            ))
+            setUserInfo(response.data.getUser)
+        }
+        fetchUser();
+    }, [])
 
     //sign out function
     async function SignOut() {
@@ -85,9 +98,9 @@ const Settings = ({navigation} : any) => {
                             Are you sure you want to log out?
                         </Text>
                         
-                        <View style={styles.button}>
+                        <View style={{}}>
                             <TouchableOpacity onPress={SignOut}>
-                                <View style={styles.button} >
+                                <View style={styles.buttonlayout} >
                                     {/* {isUploading ? (
                                         <ActivityIndicator size="small" color="#00ffff"/>
                                     ) :  */}
@@ -146,9 +159,31 @@ const Settings = ({navigation} : any) => {
             
             <View style={{ marginHorizontal: 20, marginVertical: 20}}>
                 <Text style={styles.paragraph}>
+                    My Information
+                </Text>
+            </View>
+
+            <View style={istyles.optionslist}>
+                <View style={istyles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', }}>
+                                System
+                            </Text>
+                            <Text style={{fontSize: 16, color: '#000'}}>
+                                {userInfo?.system?.name}
+                            </Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={{alignSelf: 'center', backgroundColor: 'black', height: 1, width: Dimensions.get('window').width - 80}}/>
+            
+            <View style={{ marginHorizontal: 20, marginVertical: 20}}>
+                <Text style={styles.paragraph}>
                     Options
                 </Text>
             </View>
+
             <View style={istyles.optionslist}>
                 <View style={istyles.optionsitem}>
                     <View style={istyles.subblock}>

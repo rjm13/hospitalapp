@@ -8,11 +8,13 @@ import {
     TouchableOpacity,
     ScrollView,
     TouchableWithoutFeedback,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createHospitalUser } from '../../src/graphql/mutations';
+import { createHospitalUser, deleteHospitalUser } from '../../src/graphql/mutations';
+import { getUser } from '../../src/graphql/queries';
 import { getSystem } from '../../src/graphql/queries';
 
 import { AppContext } from '../../AppContext';
@@ -23,6 +25,8 @@ import {styles} from '../../styles'
 
 
 const SelectHospital = ({navigation, route} : any) => {
+
+    const [processing, setProcessing] = useState(false);
 
     const {systemID} = route.params
 
@@ -55,9 +59,25 @@ const SelectHospital = ({navigation, route} : any) => {
 
     const Proceed = async () => {
 
+        if (hospitalIDs.length === 0) {
+            alert('Please select a hospital you work at. If you do not see your hospital here, please contact your hospital administration to get added to our system')
+            return;
+        }
+
         if (hospitalIDs.length !== 0) {
+            setProcessing(true);
             console.log(hospitalIDs)
             const userInfo = await Auth.currentAuthenticatedUser();
+
+            const repo = await API.graphql(graphqlOperation(
+                getUser, {id: userInfo.attributes.sub}
+            ))
+
+            for (let i = 0; i < repo.data.getUser.hospital.items.length; i++) {
+                await API.graphql(graphqlOperation(
+                    deleteHospitalUser, {input :{id: repo.data.getUser.hospital.items[i].id }})
+                )
+            }
 
             for (let i = 0; i < hospitalIDs.length; i++) {
                 const response = await API.graphql(
@@ -69,17 +89,15 @@ const SelectHospital = ({navigation, route} : any) => {
                 )
                 console.log(response);
                 navigation.navigate('SelectDept', {systemID: systemID, systemImageUri: sys.imageUri, systemName: sys.name});
-                
+                setProcessing(false);
             }
-
-            
-        } else {
-            alert('Please select a hospital you work at. If you do not see your hospital here, please contact your hospital administration to get added to our system')
         }
     }
     
     return (
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
+            
+            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
             <View style={{marginTop: 0, alignItems: 'center'}}>
             <View style={{width: SCREEN_WIDTH - 40, alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
                 {sys.imageUri.length > 1 ? (
@@ -97,7 +115,6 @@ const SelectHospital = ({navigation, route} : any) => {
                 Select your hospital(s):
                 </Text>
             </View> 
-            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
                 {hospitals.map(({id, name, color, abbreviation, streetNum, streetAddress, city, state, postalCode, imageUri}, index) => {
 
                 const AddTo = ({hospid} : any) => {
@@ -109,7 +126,7 @@ const SelectHospital = ({navigation, route} : any) => {
                 }
 
                 return (
-                    <TouchableWithoutFeedback onPress={() => AddTo({hospid: id})}>
+                    <TouchableWithoutFeedback key={id} onPress={() => AddTo({hospid: id})}>
                         <View style={{ margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
                             borderColor: hospitalIDs.includes(id) === true ? 'maroon' : '#fff', 
                             backgroundColor: hospitalIDs.includes(id) === true ? '#fff' : '#fff',
@@ -159,18 +176,23 @@ const SelectHospital = ({navigation, route} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={Proceed}>
-                    <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
-                        <FontAwesome5 
-                            name='chevron-right'
-                            color='#fff'
-                            size={24}
-                            style={{
-                                
-                            }}
-                        />
+
+                {processing ? (
+                    <View style={[{backgroundColor: 'gray', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <ActivityIndicator size='small' color='#fff'/>
                     </View>
-                </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={Proceed}>
+                        <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                            <FontAwesome5 
+                                name='chevron-right'
+                                color='#fff'
+                                size={24}
+                                style={{}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
             </View>
         </LinearGradient>
         </View>

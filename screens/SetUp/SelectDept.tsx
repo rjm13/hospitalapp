@@ -6,57 +6,24 @@ import {
     Text, 
     Dimensions, 
     TouchableOpacity,
-    TextInput,
-    FlatList,
     ScrollView,
     TouchableWithoutFeedback,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { getUser, getDepartment } from '../../src/graphql/queries';
+import { getUser } from '../../src/graphql/queries';
 import { updateUser } from '../../src/graphql/mutations';
-import {Modal, Provider, Portal} from 'react-native-paper';
 import { AppContext } from '../../AppContext';
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import {styles} from '../../styles'
 
-const departments = [
-    {
-        id: '1',
-        name: 'Emergency Department',
-        abbreviation: 'ED',
-    },
-    {
-        id: '2',
-        name: 'Intensive Care Unit',
-        abbreviation: 'ICU'
-    },
-    {
-        id: '3',
-        name: 'Med Surge',
-        abbreviation: 'MS'
-    },
-    {
-        id: '4',
-        name: 'Emergency Department',
-        abbreviation: 'ED',
-    },
-    {
-        id: '5',
-        name: 'Intensive Care Unit',
-        abbreviation: 'ICU'
-    },
-    {
-        id: '6',
-        name: 'Med Surge',
-        abbreviation: 'MS'
-    },
-]
-
 const SelectDept = ({navigation, route} : any) => {
+
+    const [processing, setProcessing] = useState(false);
 
     const {systemID, systemImageUri, systemName} = route.params;
 
@@ -72,12 +39,6 @@ const SelectDept = ({navigation, route} : any) => {
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
     const SCREEN_WIDTH = Dimensions.get('window').width
-
-    const [systemData, setSystemData] = useState({
-        id: systemID,
-        name: systemName,
-        imageUri: systemImageUri,
-    });
 
     const [hospitalData, setHospitalData] = useState([
         {
@@ -104,7 +65,7 @@ const SelectDept = ({navigation, route} : any) => {
                 })
             )
             
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < getIt.data.getUser.hospital.items.length; i++) {
                 hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
 
                 for (let k = 0; k < getIt.data.getUser.hospital.items[i].hospital.departments.items.length; k++) {
@@ -117,15 +78,10 @@ const SelectDept = ({navigation, route} : any) => {
         fetchUser();
     }, [])
 
-    useEffect(() => {
-        const fetchDepartments = async () => {
-
-        }
-        fetchDepartments();
-    }, [])
-
     const Proceed = async () => {
         if (departmentID) {
+
+            setProcessing(true);
 
             const userInfo = await Auth.currentAuthenticatedUser();
 
@@ -139,12 +95,13 @@ const SelectDept = ({navigation, route} : any) => {
             )
             console.log(response)
             navigation.navigate('SelectRole', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})
+            setProcessing(false)
         }
     }
-
     
     return (
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
+            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
             <View style={{marginTop: 0, alignItems: 'center'}}>
                 <View style={{alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
                     {systemImageUri.length > 1 ? (
@@ -175,7 +132,6 @@ const SelectDept = ({navigation, route} : any) => {
                     </Text>
                 
             </View> 
-            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
                 {departments.map(({id, name, abbreviation}, index) => {
 
                 const AddTo = ({deptid} : any) => {
@@ -183,7 +139,7 @@ const SelectDept = ({navigation, route} : any) => {
                 }
 
                 return (
-                    <TouchableWithoutFeedback onPress={() => AddTo({deptid: id})}>
+                    <TouchableWithoutFeedback key={id} onPress={() => AddTo({deptid: id})}>
                         <View style={{margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
                             borderColor: departmentID === id ? 'maroon' : '#fff', 
                             //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
@@ -217,18 +173,22 @@ const SelectDept = ({navigation, route} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={Proceed}>
-                    <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
-                        <FontAwesome5 
-                            name='chevron-right'
-                            color='#fff'
-                            size={24}
-                            style={{
-                                
-                            }}
-                        />
+                {processing ? (
+                    <View style={[{backgroundColor: 'gray', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <ActivityIndicator size='small' color='#fff'/>
                     </View>
-                </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={Proceed}>
+                        <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                            <FontAwesome5 
+                                name='chevron-right'
+                                color='#fff'
+                                size={24}
+                                style={{}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
             </View>
         </LinearGradient>
         </View>

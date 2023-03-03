@@ -6,17 +6,15 @@ import {
     Text, 
     Dimensions, 
     TouchableOpacity,
-    TextInput,
-    FlatList,
     ScrollView,
     TouchableWithoutFeedback,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { updateUser, createQualUser } from '../../src/graphql/mutations';
+import { createQualUser, deleteQualUser } from '../../src/graphql/mutations';
 import { getUser, getRole } from '../../src/graphql/queries';
-import {Modal, Provider, Portal} from 'react-native-paper';
 import { AppContext } from '../../AppContext';
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -24,14 +22,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {styles} from '../../styles'
 
 const SelectQuals = ({navigation, route} : any) => {
+
+    const [processing, setProcessing] = useState(false);
     
     const {systemID, systemImageUri, systemName} = route.params
-
-    const [systemData, setSystemData] = useState({
-        id: systemID,
-        name: systemName,
-        imageUri: systemImageUri,
-    });
 
     const [hospitalData, setHospitalData] = useState([
         {
@@ -70,7 +64,7 @@ const SelectQuals = ({navigation, route} : any) => {
                         id: userInfo.attributes.sub,
                     })
             )
-            console.log(getIt.data.getUser.department)
+            //console.log(getIt.data.getUser.department)
             
             for (let i = 0; i < 1; i++) {
                 hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
@@ -95,7 +89,20 @@ const SelectQuals = ({navigation, route} : any) => {
 
     const Proceed = async () => {
 
+            setProcessing(true);
+
             const userInfo = await Auth.currentAuthenticatedUser();
+
+            const repo = await API.graphql(graphqlOperation(
+                getUser, {id: userInfo.attributes.sub}
+            ))
+
+            for (let i = 0; i < repo.data.getUser.quals.items.length; i++) {
+                const rep = await API.graphql(graphqlOperation(
+                    deleteQualUser, {input :{id: repo.data.getUser.quals.items[i].id }})
+                )
+                //console.log(rep)
+            }
 
             for (let i = 0; i < qualIDs.length; i++) {
                 const response = await API.graphql(
@@ -106,10 +113,11 @@ const SelectQuals = ({navigation, route} : any) => {
                         }     
                     })
                 )
-                console.log(response)
+                //console.log(response)
             }
 
             navigation.navigate('ConfirmSetUp', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})
+            setProcessing(false);
     }
 
     const [qualIDs, setQualIDs] = useState([])
@@ -119,6 +127,8 @@ const SelectQuals = ({navigation, route} : any) => {
     
     return (
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
+             
+            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
             <View style={{marginTop: 0, alignItems: 'center'}}>
                 <View style={{alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
                     {systemImageUri.length > 1 ? (
@@ -159,8 +169,7 @@ const SelectQuals = ({navigation, route} : any) => {
                 <Text style={[styles.title, {fontSize: 20, marginTop: 30, marginBottom: 20}]}>
                     Please select your qualifications:
                 </Text>
-            </View>  
-            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
+            </View> 
                 {quals.map(({id, title, abbreviation}, index) => {
 
                 const AddTo = ({qualid} : any) => {
@@ -172,7 +181,7 @@ const SelectQuals = ({navigation, route} : any) => {
                 }
 
                 return (
-                    <TouchableWithoutFeedback onPress={() => AddTo({qualid: id})}>
+                    <TouchableWithoutFeedback key={id} onPress={() => AddTo({qualid: id})}>
                         <View style={{ margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
                             borderColor: qualIDs.includes(id) === true ? 'maroon' : '#fff', 
                             //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
@@ -208,18 +217,22 @@ const SelectQuals = ({navigation, route} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={Proceed}>
-                    <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
-                        <FontAwesome5 
-                            name='chevron-right'
-                            color='#fff'
-                            size={24}
-                            style={{
-                                
-                            }}
-                        />
+                {processing ? (
+                    <View style={[{backgroundColor: 'gray', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <ActivityIndicator size='small' color='#fff'/>
                     </View>
-                </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={Proceed}>
+                        <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                            <FontAwesome5 
+                                name='chevron-right'
+                                color='#fff'
+                                size={24}
+                                style={{}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
             </View>
         </LinearGradient>
         </View>

@@ -4,7 +4,8 @@ import {
     Text, 
     Dimensions, 
     TouchableOpacity,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
@@ -18,10 +19,11 @@ import {styles} from '../../styles'
 
 const Welcome = ({navigation} : any) => {
 
-    const SCREEN_HEIGHT = Dimensions.get('window').height
+    const [ready, setReady] = useState(false);
 
-    const { theme } = useContext(AppContext);
-    const { userID } = useContext(AppContext);
+    const [processing, setProcessing] = useState(false);
+
+    const SCREEN_HEIGHT = Dimensions.get('window').height
 
     //const { systemID } = useContext(AppContext);
     const [systemID, setSystemID] = useState('')
@@ -45,7 +47,15 @@ const Welcome = ({navigation} : any) => {
 
     const Proceed = async () => {
 
+        if (ready === false) {
+            alert("Please fill out the required fields.")
+            return;
+        }
+
         if (data.firstName !== '' && data.lastName !== '') {
+            setProcessing(true);
+            navigation.navigate('SelectHospital', {systemID: systemID})
+
             const userInfo = await Auth.currentAuthenticatedUser();
             const changeUser = await API.graphql(
                 graphqlOperation(
@@ -57,13 +67,19 @@ const Welcome = ({navigation} : any) => {
             )
 
             console.log(changeUser)
-
-            if (changeUser) {
-                navigation.navigate('SelectHospital', {systemID: systemID})
-            }
+            
+            // if (changeUser) {
+            //     navigation.navigate('SelectHospital', {systemID: systemID})
+            // }
+            setProcessing(false);
         } 
     }
 
+    useEffect(() => {
+        if (data.firstName.length > 1 && data.lastName.length > 1) {
+            setReady(true)
+        }
+    }, [data])
     
 
     const handleNameChange = (val : any) => {
@@ -145,18 +161,23 @@ const Welcome = ({navigation} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={Proceed}>
-                    <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
-                        <FontAwesome5 
-                            name='chevron-right'
-                            color='#fff'
-                            size={24}
-                            style={{
-                                
-                            }}
-                        />
+                {processing ? (
+                    <View style={[{backgroundColor: 'gray', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <ActivityIndicator size='small' color='#fff'/>
                     </View>
-                </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={Proceed}>
+                        <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                            <FontAwesome5 
+                                name='chevron-right'
+                                color='#fff'
+                                size={24}
+                                style={{}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
+                
         </View>
         </View>
     )

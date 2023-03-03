@@ -6,91 +6,26 @@ import {
     Text, 
     Dimensions, 
     TouchableOpacity,
-    TextInput,
-    FlatList,
     ScrollView,
     Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    ActivityIndicator
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { getUser, getDepartment } from '../../src/graphql/queries';
 import { updateUser } from '../../src/graphql/mutations';
-import {Modal, Provider, Portal} from 'react-native-paper';
 import { AppContext } from '../../AppContext';
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import {styles} from '../../styles'
 
-const roles = [
-    {
-        id: '1',
-        title: 'Nurse',
-        acronym: 'RN',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '2',
-        title: 'Emergency Medical Technician',
-        acronym: 'EMT',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '3',
-        title: 'Doctor',
-        acronym: 'MD',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '4',
-        title: 'Medic',
-        acronym: 'Medic',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '5',
-        title: 'Nurse',
-        acronym: 'RN',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '6',
-        title: 'Emergency Medical Technician',
-        acronym: 'EMT',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '7',
-        title: 'Doctor',
-        acronym: 'MD',
-        icon: '',
-        color: '',
-        details: '',
-    },
-    {
-        id: '8',
-        title: 'Medic',
-        acronym: 'Medic',
-        icon: '',
-        color: '',
-        details: '',
-    },
-]
-
 const SelectRole = ({navigation, route} : any) => {
+
+    const [ready, setReady] = useState(false);
+
+    const [processing, setProcessing] = useState(false);
 
     const [roles, setRoles] = useState([
         {
@@ -105,12 +40,6 @@ const SelectRole = ({navigation, route} : any) => {
     ]);
 
     const {systemID, systemImageUri, systemName} = route.params
-
-    const [systemData, setSystemData] = useState({
-        id: systemID,
-        name: systemName,
-        imageUri: systemImageUri,
-    });
 
     const [hospitalData, setHospitalData] = useState([
         {
@@ -165,6 +94,8 @@ const SelectRole = ({navigation, route} : any) => {
     const Proceed = async () => {
         if (roleIDs.length > 0) {
 
+            setProcessing(true);
+
             const userInfo = await Auth.currentAuthenticatedUser();
 
             const response = await API.graphql(
@@ -177,6 +108,10 @@ const SelectRole = ({navigation, route} : any) => {
             )
             console.log(response)
             navigation.navigate('SelectQuals', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})
+            setProcessing(false)
+        } else {
+            alert("Please select your role")
+            return;
         }
     }
 
@@ -185,6 +120,7 @@ const SelectRole = ({navigation, route} : any) => {
     
     return (
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
+            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
             <View style={{marginTop: 0, alignItems: 'center'}}>
                 <View style={{alignItems: 'center', marginTop: 60, backgroundColor: 'transparent', borderRadius: 20, paddingHorizontal: 20, paddingBottom: 20}}>
                     {systemImageUri.length > 1 ? (
@@ -220,7 +156,6 @@ const SelectRole = ({navigation, route} : any) => {
                     Please select your role(s):
                 </Text>
             </View> 
-            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} contentContainerStyle={{justifyContent: 'flex-start'}}>
                 {roles.map(({id, title, acronym}, index) => {
 
                 const AddTo = ({roleid} : any) => {
@@ -232,13 +167,13 @@ const SelectRole = ({navigation, route} : any) => {
                 }
 
                 return (
-                    <TouchableWithoutFeedback onPress={() => AddTo({roleid: id})}>
+                    <TouchableWithoutFeedback key={id} onPress={() => AddTo({roleid: id})}>
                         <View style={{margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
                             borderColor: roleIDs.includes(id) === true ? 'maroon' : '#fff', 
                             //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
                         }}>
-                            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '600', color: '#474747', textTransform: 'capitalize'}}>
-                                {title} ({acronym})
+                            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '600', color: '#474747'}}>
+                            {acronym !== null ? (title + ' (' + acronym + ')') : title}
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
@@ -254,7 +189,7 @@ const SelectRole = ({navigation, route} : any) => {
             end={{ x: 0, y: 0 }}
         >
             <View style={{marginBottom: 20, flexDirection: 'row', width: SCREEN_WIDTH, justifyContent: 'space-between', paddingHorizontal: 40}}>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectDept')}>
+                <TouchableOpacity onPress={() =>  navigation.navigate('SelectDept', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})}>
                     <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
                         <FontAwesome5 
                             name='chevron-left'
@@ -266,18 +201,22 @@ const SelectRole = ({navigation, route} : any) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={Proceed}>
-                    <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
-                        <FontAwesome5 
-                            name='chevron-right'
-                            color='#fff'
-                            size={24}
-                            style={{
-                                
-                            }}
-                        />
+                {processing ? (
+                    <View style={[{backgroundColor: 'gray', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                        <ActivityIndicator size='small' color='#fff'/>
                     </View>
-                </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={Proceed}>
+                        <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
+                            <FontAwesome5 
+                                name='chevron-right'
+                                color='#fff'
+                                size={24}
+                                style={{}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
             </View>
         </LinearGradient>
         </View>

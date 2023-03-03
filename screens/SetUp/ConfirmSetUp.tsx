@@ -25,12 +25,6 @@ const ConfirmSetUp = ({navigation, route} : any) => {
 
     const {systemID, systemImageUri, systemName} = route.params
 
-    const [systemData, setSystemData] = useState({
-        id: systemID,
-        name: systemName,
-        imageUri: systemImageUri,
-    });
-
     const [hospitalData, setHospitalData] = useState([
         {
             id: '',
@@ -72,7 +66,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                         id: userInfo.attributes.sub,
                     })
             )
-            console.log(getIt.data.getUser.department)
+            //console.log(getIt.data.getUser.department)
             
             for (let i = 0; i < 1; i++) {
                 hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
@@ -108,7 +102,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                     </Text>
                 )}
 
-                <View style={{marginTop: 20}}>
+                <View style={{marginVertical: 20}}>
                     <Text style={[styles.title, {fontSize: 26, textTransform: 'capitalize'}]}>
                         Welcome {userInfo?.firstName}!
                     </Text>
@@ -195,7 +189,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
             end={{ x: 0, y: 0 }}
         >
             <View style={{marginBottom: 20, flexDirection: 'row', width: SCREEN_WIDTH, justifyContent: 'space-between', paddingHorizontal: 40}}>
-                <TouchableOpacity onPress={() =>  navigation.navigate('SelectQuals')}>
+                <TouchableOpacity onPress={() =>  navigation.navigate('SelectQuals', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})}>
                     <View style={[{backgroundColor: 'maroon', width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25}]}>
                         <FontAwesome5 
                             name='chevron-left'
