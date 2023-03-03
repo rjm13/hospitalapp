@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator, Dimensions, TouchableWithoutFeedback, Pl
 import { AppContext } from '../../AppContext';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../../src/graphql/queries';
+import { updateUser } from '../../src/graphql/mutations';
 import { StatusBar } from 'expo-status-bar';
 import {styles} from '../../styles';
 
@@ -39,6 +40,16 @@ const Redirect = ({route, navigation} : any) => {
                     const userData = await API.graphql(graphqlOperation(
                         getUser,{ id: userInfo.attributes.sub}))
                     console.log(userData.data.getUser)
+
+                    if (userData.data.getUser.system === null) {
+                        const resp = await API.graphql(graphqlOperation(
+                            updateUser, {input: {
+                                id: userInfo.attributes.sub,
+                                systemID: userInfo.attributes.zoneinfo
+                            }}
+                        ))
+                        console.log(resp)
+                    }
         
                     if (userData.data.getUser) {
                         setUserID(userData.data.getUser);

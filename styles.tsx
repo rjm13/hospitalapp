@@ -26,6 +26,10 @@ const styles = StyleSheet.create ({
         fontWeight: 'bold',
         color: '#000',
       },
+      infotext: {
+        fontSize: 14,
+        color: '#000000a5',
+      },
     paragraph: {
       fontSize: 14,
       color: '#000',

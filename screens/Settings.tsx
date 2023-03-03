@@ -27,7 +27,7 @@ const Settings = ({navigation} : any) => {
     const { setTheme } = useContext(AppContext);
     const { theme } = useContext(AppContext);
 
-    const [userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] = useState()
 
 //theme switch
     const [isSwitchOn, setIsSwitchOn] = useState<boolean>(theme);
@@ -50,14 +50,24 @@ const Settings = ({navigation} : any) => {
         }
     }, [theme]);
 
+    const [quals, setQuals] = useState([{}]);
+
     //get the user info
     useEffect(() => {
         const fetchUser = async () => {
+            let qualsarr = [];
             const userAtts = await Auth.currentAuthenticatedUser();
             const response = await API.graphql(graphqlOperation(
                 getUser, {id: userAtts.attributes.sub}
             ))
-            setUserInfo(response.data.getUser)
+            console.log(response.data.getUser)
+            setUserInfo(response.data.getUser);
+            
+            for (let i =0; i < response.data.getUser.quals.items.length; i++) {
+                qualsarr.push(response.data.getUser.quals.items[i].qual)
+            }
+            setQuals(qualsarr);
+
         }
         fetchUser();
     }, [])
@@ -169,9 +179,69 @@ const Settings = ({navigation} : any) => {
                             <Text style={{fontSize: 16, color: '#000', }}>
                                 System
                             </Text>
-                            <Text style={{fontSize: 16, color: '#000'}}>
+                            <Text style={styles.infotext}>
                                 {userInfo?.system?.name}
                             </Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={istyles.optionslist}>
+                <View style={istyles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', }}>
+                                Hospital
+                            </Text>
+                            <Text style={styles.infotext}>
+                                {userInfo?.hospital?.items[0].hospital.name}
+                            </Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={istyles.optionslist}>
+                <View style={istyles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', }}>
+                                Department
+                            </Text>
+                            <Text style={styles.infotext}>
+                                {userInfo?.department?.name}
+                            </Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={istyles.optionslist}>
+                <View style={istyles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', }}>
+                                Role
+                            </Text>
+                            <Text style={styles.infotext}>
+                                {userInfo?.primaryRole?.title}
+                            </Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={istyles.optionslist}>
+                <View style={istyles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', marginRight: 40 }}>
+                                Qualifications
+                            </Text>
+                            <ScrollView contentContainerStyle={{}} style={{width: 180,  }}>
+                                {quals.map(({abbreviation, title, id} : any, index : any) => {
+                                
+                                return (
+                                    <Text style={[styles.infotext, {flexWrap: 'wrap'}]}>
+                                        {title}
+                                    </Text>
+                                )})}
+                            </ScrollView>
+                            
+                            
                     </View>
                 </View>
             </View>
