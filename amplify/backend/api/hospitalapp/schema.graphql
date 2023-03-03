@@ -32,7 +32,8 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   messageRec: [Message] @hasMany(indexName: "byOtherUser", fields: "id")
   announcements: [Announcement] @hasMany(indexName: "byCreatedBy", fields: "id")
   events: [Event] @manyToMany (relationName: "EventUser")
-}
+  primaryRoleID: ID @index(name: "byPrimaryRole", sortKeyFields: ["id"])
+  primaryRole: Role @hasOne (fields: ["primaryRoleID"]) }
 
 type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
@@ -45,7 +46,13 @@ type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   color: String
   imageUri: String
   acronym: String
+  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospital: Hospital @hasOne (fields: ["hospitalID"])
+  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  department: Department @hasOne (fields: ["departmentID"])
   people: [User] @manyToMany (relationName: "RoleUser")
+  peeps: [User] @hasMany(indexName: "byPrimaryRole", fields: "id")
+  quals: [Qual] @hasMany(indexName: "byRole", fields: "id")
 }
 
 type Qual @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
@@ -54,6 +61,8 @@ type Qual @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
   title: String #CCT, charge, ems, manager
+  roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
+  role: Role @hasOne (fields: ["roleID"])
   abbreviation: String
   details: String 
   people: [User] @manyToMany (relationName: "QualUser")
@@ -89,6 +98,7 @@ type Hospital @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedO
   phone: String
   color: String
   imageUri: String
+  roles: [Role] @hasMany(indexName: "byHospital", fields: "id")
 }
 
 type Department @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
@@ -100,6 +110,7 @@ type Department @model (timestamps: { createdAt: "createdOn", updatedAt: "update
   abbreviation: String
   hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
   hospital: Hospital @hasOne (fields: ["hospitalID"])
+  roles: [Role] @hasMany(indexName: "byDepartment", fields: "id")
   members: [User] @hasMany(indexName: "byDepartment", fields: "id")
   color: String
   imageUri: String

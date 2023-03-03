@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     View, 
     Text, 
@@ -7,12 +7,13 @@ import {
     TextInput,
     FlatList,
     ScrollView,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Image
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createMessage } from '../../src/graphql/mutations';
-import {Modal, Provider, Portal} from 'react-native-paper';
+import { updateUser, createQualUser } from '../../src/graphql/mutations';
+import { getUser, getRole } from '../../src/graphql/queries';
 import { AppContext } from '../../AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -20,46 +21,103 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {styles} from '../../styles'
 
 
-const ConfirmSetUp = ({navigation} : any) => {
+const ConfirmSetUp = ({navigation, route} : any) => {
+
+    const {systemID, systemImageUri, systemName} = route.params
+
+    const [systemData, setSystemData] = useState({
+        id: systemID,
+        name: systemName,
+        imageUri: systemImageUri,
+    });
+
+    const [hospitalData, setHospitalData] = useState([
+        {
+            id: '',
+            name: '',
+        }
+    ]);
+
+    const [department, setDepartment] = useState({
+        id: '',
+        name: '',
+    });
+
+    const [role, setRole] = useState({
+        id: '',
+        title: '',
+    });
+
+    const [quals, setQuals] = useState([
+        {id: '',
+        title: '',
+        abbreviation: '',
+    }]);
+
+    const [userInfo, setUserInfo] = useState({})
+
+    useEffect(() => {
+
+        const fetchUser = async () => {
+
+            const userInfo = await Auth.currentAuthenticatedUser();
+
+            let hosparr = [];
+
+            let qualarr = []
+
+            const getIt = await API.graphql(
+                graphqlOperation(
+                    getUser, {
+                        id: userInfo.attributes.sub,
+                    })
+            )
+            console.log(getIt.data.getUser.department)
+            
+            for (let i = 0; i < 1; i++) {
+                hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
+            }
+
+            for (let i = 0; i < getIt.data.getUser.quals.items.length; i++) {
+                qualarr.push(getIt.data.getUser.quals.items[i].qual)
+            }
+
+            setHospitalData(hosparr)
+            setDepartment(getIt.data.getUser.department)
+            setRole(getIt.data.getUser.primaryRole)
+            setQuals(qualarr)
+            setUserInfo(getIt.data.getUser)
+        }
+        fetchUser();
+    }, [])
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
     const SCREEN_WIDTH = Dimensions.get('window').width
-
-    //modal
-    const [visible, setVisible] = useState(false);
-    const showModal = () => {setVisible(true)}
-    const hideModal = () => setVisible(false);
-    const containerStyle = {backgroundColor: '#363636', borderRadius: 15, paddingVertical: 40};
-
     
     return (
-        <Provider>
-            <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                <View>
-
-                </View>
-                </Modal>
-            </Portal>
-        <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
-            <View style={{marginTop: 0, alignItems: 'center'}}>
-
-                <View style={{marginTop: 80}}>
-                    <Text style={[styles.title, {fontSize: 26}]}>
-                        Welcome firstName!
+        <View style={[styles.container, {}]}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{}} contentContainerStyle={{alignItems: 'center'}}>
+                {systemImageUri.length > 1 ? (
+                    <Image
+                        style={{marginTop: 60, height: 100, width: SCREEN_WIDTH - 100, resizeMode: 'contain'}}
+                        source={{uri: systemImageUri}}
+                    />
+                ) : (
+                    <Text style={[styles.title, {fontSize: 26, marginTop: 20}]}>
+                        {systemName}
                     </Text>
-                    <Text style={[styles.subtext, {textAlign: 'center'}]}>
-                        firstName lastName
-                    </Text>
-                </View>
+                )}
 
-                <View style={{marginTop: 40}}>
-                    <Text style={[styles.title, {fontWeight: '600'}]}>
-                        Harris Health
+                <View style={{marginTop: 20}}>
+                    <Text style={[styles.title, {fontSize: 26, textTransform: 'capitalize'}]}>
+                        Welcome {userInfo?.firstName}!
+                    </Text>
+                    <Text style={[styles.subtext, {textAlign: 'center', textTransform: 'capitalize'}]}>
+                        {userInfo.firstName + "  " + userInfo.lastName}
                     </Text>
                 </View>
 
-                <View style={{alignItems: 'center', marginTop: 20}}>
+            <View style={{alignItems: 'center', marginTop: 20}}>
 
                 <View>
                     <Text style={styles.subtext}>
@@ -68,13 +126,17 @@ const ConfirmSetUp = ({navigation} : any) => {
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 
-                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10, fontWeight: '600'}]}>
-                        LBJ
-                    </Text>
-                    <Text style={[styles.title, {marginVertical: 10, fontWeight: '600'}]}>
-                        Ben Taub
-                    </Text>
+                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
+                    <View>
+                        {hospitalData.map(({id, name}, index) => {
+                            return (
+                                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                    <Text style={[styles.paragraph, {marginVertical: 0}]}>
+                                        {name}
+                                    </Text>
+                                </View>
+                            )})}
+                    </View>
                 </View>
 
                 <View>
@@ -83,9 +145,10 @@ const ConfirmSetUp = ({navigation} : any) => {
                     </Text>
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
-                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10, fontWeight: '600'}]}>
-                        Emergency Department
+                
+                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                    <Text style={[styles.paragraph, {marginVertical: 0}]}>
+                        {department?.name}
                     </Text>
                 </View>
 
@@ -95,9 +158,9 @@ const ConfirmSetUp = ({navigation} : any) => {
                     </Text>
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
-                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center', fontWeight: '600'}]}>
-                        Nurse (RN)
+                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                    <Text style={[styles.paragraph, {marginVertical: 0, textTransform: 'capitalize'}]}>
+                        {role?.title}
                     </Text>
                 </View>
 
@@ -107,18 +170,23 @@ const ConfirmSetUp = ({navigation} : any) => {
                     </Text>
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
-                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 40, justifyContent: 'space-around'}}>
-                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center', fontWeight: '600'}]}>
-                        CCT
-                    </Text>
-                    <Text style={[styles.title, {marginVertical: 10, textAlign: 'center', fontWeight: '600'}]}>
-                        Charge
-                    </Text>
+
+                <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
+                    <View>
+                        {quals.map(({id, title}, index) => {
+                            return (
+                                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                    <Text style={[styles.paragraph, {marginVertical: 0}]}>
+                                        {title}
+                                    </Text>
+                                </View>
+                            )})}
+                    </View>
                 </View>
             </View>
-        </View> 
+            <View style={{height: 100}}/>
+            </ScrollView> 
         
-        <View style={{height: 160}}/>
 {/* FOOTER */}
         <LinearGradient
             colors={['#fff','#fff', '#ffffffa5','transparent']}
@@ -154,7 +222,6 @@ const ConfirmSetUp = ({navigation} : any) => {
             </View>
         </LinearGradient>
         </View>
-        </Provider>
     )
 }
 
