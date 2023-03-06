@@ -41,12 +41,12 @@ const SelectRole = ({navigation, route} : any) => {
 
     const {systemID, systemImageUri, systemName} = route.params
 
-    const [hospitalData, setHospitalData] = useState([
+    const [hospitalData, setHospitalData] = useState(
         {
             id: '',
             name: '',
         }
-    ]);
+    );
 
     const [department, setDepartment] = useState({
         id: '',
@@ -71,10 +71,10 @@ const SelectRole = ({navigation, route} : any) => {
             )
             console.log(getIt.data.getUser.department)
             
-            for (let i = 0; i < 1; i++) {
-                hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
-            }
-            setHospitalData(hosparr)
+            // for (let i = 0; i < 1; i++) {
+            //     hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
+            // }
+            setHospitalData(getIt.data.getUser.hosp)
             setDepartment(getIt.data.getUser.department)
 
             if (getIt.data.getUser.departmentID) {
@@ -135,14 +135,14 @@ const SelectRole = ({navigation, route} : any) => {
                     )}
                     <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
                         <View>
-                            {hospitalData.map(({id, name}, index) => {
-                                return (
+                            {/* {hospitalData.map(({id, name}, index) => {
+                                return ( */}
                                     <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                         <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                                            {name}
+                                            {hospitalData.name}
                                         </Text>
                                     </View>
-                                )})}
+                                {/* )})} */}
                         </View>
                     </View>
 
@@ -153,7 +153,7 @@ const SelectRole = ({navigation, route} : any) => {
                     </View>
                 </View>
                 <Text style={[styles.title, {fontSize: 20, marginTop: 30, marginBottom: 20}]}>
-                    Please select your role(s):
+                    Please select your role:
                 </Text>
             </View> 
                 {roles.map(({id, title, acronym}, index) => {

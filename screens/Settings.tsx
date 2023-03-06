@@ -30,25 +30,21 @@ const Settings = ({navigation} : any) => {
     const [userInfo, setUserInfo] = useState()
 
 //theme switch
-    const [isSwitchOn, setIsSwitchOn] = useState<boolean>(theme);
+    const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
 
-    const onToggleSwitch = () => {
-        if (theme === true) {
-            setIsSwitchOn(false); setTheme(false);
-        } else if (theme === false) {
-            setIsSwitchOn(true); setTheme(true);
-        }
+    const onToggleSwitch = async () => {
+        setIsSwitchOn(!isSwitchOn);
+        setTheme(!theme);
+        const userInfo = await Auth.currentAuthenticatedUser();
+
+        const response = await API.graphql(
+            graphqlOperation(
+                updateUser, {input: {
+                    id: userInfo.attributes.sub,
+                    Setting1: !theme,
+        }}))
+        console.log(response)
     }  
-
-    const [switchColor, setSwitchColor] = useState('#363636')
-    const [trackColor, setTrackColor] = useState('gray')
-
-    useEffect(() => {
-        if (theme === true) {
-            setSwitchColor('maroon');
-            setTrackColor('gray')
-        }
-    }, [theme]);
 
     const [quals, setQuals] = useState([{}]);
 
@@ -60,14 +56,15 @@ const Settings = ({navigation} : any) => {
             const response = await API.graphql(graphqlOperation(
                 getUser, {id: userAtts.attributes.sub}
             ))
-            console.log(response.data.getUser)
+            //console.log(response.data.getUser)
             setUserInfo(response.data.getUser);
             
             for (let i =0; i < response.data.getUser.quals.items.length; i++) {
                 qualsarr.push(response.data.getUser.quals.items[i].qual)
             }
             setQuals(qualsarr);
-
+            //setTheme(response.data.getUser.Setting1);
+            
         }
         fetchUser();
     }, [])
@@ -134,11 +131,11 @@ const Settings = ({navigation} : any) => {
                             size={20}
                         />
                     </View>
-                    </TouchableWithoutFeedback>
-                <Text style={[styles.title, { marginHorizontal: 40, marginVertical: 20,}]}>
+                </TouchableWithoutFeedback>
+                <Text style={[styles.title, { marginHorizontal: 40, marginVertical: 20, }]}>
                     Settings
                 </Text>
-                <View />
+                <View style={{width: 50}}/>
             </View>
 
             <View style={{ marginHorizontal: 20, marginVertical: 20}}>
@@ -147,8 +144,8 @@ const Settings = ({navigation} : any) => {
                 </Text>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
+            <View>
+                <View style={styles.optionsitem}>
                     <View style={istyles.subblock}>
                         <Text style={{fontSize: 16, color: '#000'}}>
                             Dark Mode
@@ -156,8 +153,8 @@ const Settings = ({navigation} : any) => {
                     </View>
                     
                     <Switch
-                        trackColor={{ false: trackColor, true: trackColor }}
-                        thumbColor={isSwitchOn ? switchColor : "#474747"}
+                        trackColor={{ false: 'gray', true: 'gray' }}
+                        thumbColor={isSwitchOn ? 'maroon' : "#474747"}
                         ios_backgroundColor="maroon"
                         onValueChange={onToggleSwitch}
                         value={isSwitchOn}
@@ -173,8 +170,21 @@ const Settings = ({navigation} : any) => {
                 </Text>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
+            <View >
+                <View style={styles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', }}>
+                                Name
+                            </Text>
+                            <Text style={[styles.infotext, {textTransform: 'capitalize'}]}>
+                                {userInfo?.firstName + ' ' + userInfo?.lastName}
+                            </Text>
+                    </View>
+                </View>
+            </View>
+
+            <View >
+                <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
                             <Text style={{fontSize: 16, color: '#000', }}>
                                 System
@@ -186,21 +196,21 @@ const Settings = ({navigation} : any) => {
                 </View>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
+            <View >
+                <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
                             <Text style={{fontSize: 16, color: '#000', }}>
                                 Hospital
                             </Text>
                             <Text style={styles.infotext}>
-                                {userInfo?.hospital?.items[0].hospital.name}
+                                {userInfo?.hosp?.name}
                             </Text>
                     </View>
                 </View>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
+            <View >
+                <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
                             <Text style={{fontSize: 16, color: '#000', }}>
                                 Department
@@ -212,8 +222,8 @@ const Settings = ({navigation} : any) => {
                 </View>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
+            <View >
+                <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
                             <Text style={{fontSize: 16, color: '#000', }}>
                                 Role
@@ -225,17 +235,17 @@ const Settings = ({navigation} : any) => {
                 </View>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
-                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', marginRight: 40 }}>
+            <View >
+                <View style={styles.optionsitem}>
+                    <View style={[istyles.subblock, {width: '100%', flexDirection: 'column', justifyContent: 'space-between'}]}>
+                            <Text style={{fontSize: 16, color: '#000', marginBottom:10 }}>
                                 Qualifications
                             </Text>
-                            <ScrollView contentContainerStyle={{}} style={{width: 180,  }}>
+                            <ScrollView contentContainerStyle={{}} style={{ }}>
                                 {quals.map(({abbreviation, title, id} : any, index : any) => {
                                 
                                 return (
-                                    <Text style={[styles.infotext, {flexWrap: 'wrap'}]}>
+                                    <Text key={id} style={[styles.infotext]}>
                                         {title}
                                     </Text>
                                 )})}
@@ -254,8 +264,8 @@ const Settings = ({navigation} : any) => {
                 </Text>
             </View>
 
-            <View style={istyles.optionslist}>
-                <View style={istyles.optionsitem}>
+            <View >
+                <View style={styles.optionsitem}>
                     <View style={istyles.subblock}>
                         <TouchableWithoutFeedback onPress={showModal}>
                             <Text style={{fontSize: 16, color: '#000', }}>
@@ -273,45 +283,11 @@ const Settings = ({navigation} : any) => {
 }
 
 const istyles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
-      backgroundColor: '#363636a5'
-    },
-    headertop: {
-        color: '#fff',
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginHorizontal: 40,
-        marginVertical: 20,
-    },
-    header: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
+
     subblock: {
         width: '75%',
     },
-    optionslist: {
 
-    },
-    optionsitem: {
-        flexDirection: 'row', 
-        justifyContent: 'space-between',
-        marginLeft: 40,
-        marginRight: 40,
-        marginBottom: 30,
-    },
-    paragraph: {
-        fontSize: 16,
-        color: '#ffffff'
-    },
-    subparagraph: {
-        fontSize: 12,
-        color: '#ffffffa5'
-    },
 });
 
 export default Settings;

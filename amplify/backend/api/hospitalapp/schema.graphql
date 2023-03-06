@@ -14,7 +14,7 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   imageUri: String
   bio: String
   status: String
-  Setting1: String
+  Setting1: String #theme true === light
   Setting2: String
   Setting3: String
   Setting4: Boolean
@@ -22,6 +22,8 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
   system: System @hasOne (fields: ["systemID"])
   hospital: [Hospital] @manyToMany (relationName: "HospitalUser")
+  hospID: ID @index(name: "byHosp", sortKeyFields: ["id"])
+  hosp: Hospital @hasOne (fields: ["hospID"])
   groups: [Group] @manyToMany (relationName: "GroupUser")
   departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
   department: Department @hasOne (fields: ["departmentID"])
@@ -152,6 +154,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   numNeeded: Int
   trade: Boolean
   giveUp: Boolean
+  approved: String
 }
 
 type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])

@@ -105,8 +105,8 @@ const SignIn = ({navigation} : any) => {
             .then (CreateUser)
         } 
         catch (error) {
-            console.log('error signing in', error)
-            setErr(error)
+            console.log(error.message)
+            setErr(error?.message)
             setIsErr(true);
             setSigningIn(false);
         }

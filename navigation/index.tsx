@@ -1,9 +1,11 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
+import {View} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -47,22 +49,71 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false, 
-    }} initialRouteName="Redirect">
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+    <Stack.Navigator 
+      screenOptions={{ 
+        headerStyle: {
+          backgroundColor: 'maroon',
+        },
+        title: '',
+        headerTintColor: '#fff',
+        header: ({navigation}) =>
+        (
+          <View style={{ height: 60, backgroundColor: 'maroon', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <FontAwesome 
+                  name='ambulance'
+                  size={20}
+                  color='#fff'
+                  backgroundColor='#155843'
+                  style={{ paddingHorizontal: 20 }}
+                  //onPress={() => { navigation.toggleDrawer() }}
+              />
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <FontAwesome
+                  name='calendar'
+                  size={18}
+                  color={'#fff'}
+                  backgroundColor='#155843'
+                  style={{ paddingHorizontal: 12 }}
+                  //onPress={() => { navigation.navigate('SearchScreen'); setSelectedId(0) }}
+              />
+              <FontAwesome 
+                  name='envelope'
+                  size={20}
+                  color={'#fff'}
+                  backgroundColor='#155843'
+                  style={{ paddingHorizontal: 12 }}
+                  //onPress={() => { navigation.navigate('ScoresHome'); setSelectedId(1) }}
+              />
+              <FontAwesome 
+                  name='gear'
+                  size={22}
+                  color={'#fff'}
+                  backgroundColor='#155843'
+                  style={{ paddingHorizontal: 12, marginRight: 10 }}
+                  onPress={() => { navigation.navigate('Settings')}}
+              />           
+        </View>
+          </View>
+        ), 
+      }} 
+      initialRouteName="Redirect"
+    >
+      <Stack.Screen name="Root" component={TopTabNavigator} options={{  }} />
       <Stack.Screen name="SignIn" component={SignIn}/>
       <Stack.Screen name="SignUp" component={SignUp}/>
       <Stack.Screen name="ConfirmAccount" component={ConfirmAccount}/>
       <Stack.Screen name="ConfirmPassword" component={ConfirmPassword}/>
       <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-      <Stack.Screen name="Redirect" component={Redirect}/>
+      <Stack.Screen name="Redirect" component={Redirect} options={{ headerShown: false }}/>
       <Stack.Screen name="Welcome" component={Welcome}/>
       <Stack.Screen name="SelectDept" component={SelectDept}/>
       <Stack.Screen name="SelectHospital" component={SelectHospital}/>
       <Stack.Screen name="SelectQuals" component={SelectQuals}/>
       <Stack.Screen name="SelectRole" component={SelectRole}/>
       <Stack.Screen name="ConfirmSetUp" component={ConfirmSetUp}/>
-      <Stack.Screen name="Settings" component={Settings}/>
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -75,48 +126,60 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const TopTab = createMaterialTopTabNavigator<RootTabParamList>();
 
-function BottomTabNavigator() {
+function TopTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
-    <BottomTab.Navigator
+    <TopTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: '#fff',
+        tabBarLabelStyle: { fontSize: 12 },
+        tabBarStyle: { backgroundColor: 'maroon' },
+        tabBarContentContainerStyle: {alignItems: 'flex-end'},
+        
       }}>
-      <BottomTab.Screen
+      <TopTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Settings')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+          title: 'shifts',
+          //tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate('Settings')}
+          //     style={({ pressed }) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}>
+          //     <FontAwesome
+          //       name="info-circle"
+          //       size={25}
+          //       color={Colors[colorScheme].text}
+          //       style={{ marginRight: 15 }}
+          //     />
+          //   </Pressable>
+          // ),
         })}
       />
-      <BottomTab.Screen
+      <TopTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'mine',
+          //tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
-    </BottomTab.Navigator>
+      <TopTab.Screen
+        name="TabThree"
+        component={Settings}
+        options={{
+          title: 'talk',
+          //tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+    </TopTab.Navigator>
   );
 }
 

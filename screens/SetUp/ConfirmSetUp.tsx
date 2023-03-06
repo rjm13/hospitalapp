@@ -25,12 +25,12 @@ const ConfirmSetUp = ({navigation, route} : any) => {
 
     const {systemID, systemImageUri, systemName} = route.params
 
-    const [hospitalData, setHospitalData] = useState([
+    const [hospitalData, setHospitalData] = useState(
         {
             id: '',
             name: '',
         }
-    ]);
+    );
 
     const [department, setDepartment] = useState({
         id: '',
@@ -68,15 +68,15 @@ const ConfirmSetUp = ({navigation, route} : any) => {
             )
             //console.log(getIt.data.getUser.department)
             
-            for (let i = 0; i < 1; i++) {
-                hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
-            }
+            // for (let i = 0; i < 1; i++) {
+            //     hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
+            // }
 
             for (let i = 0; i < getIt.data.getUser.quals.items.length; i++) {
                 qualarr.push(getIt.data.getUser.quals.items[i].qual)
             }
 
-            setHospitalData(hosparr)
+            setHospitalData(getIt.data.getUser.hosp)
             setDepartment(getIt.data.getUser.department)
             setRole(getIt.data.getUser.primaryRole)
             setQuals(qualarr)
@@ -115,21 +115,21 @@ const ConfirmSetUp = ({navigation, route} : any) => {
 
                 <View>
                     <Text style={styles.subtext}>
-                        My Hospital(s)
+                        My Hospital
                     </Text>
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 
                 <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 0}}>
                     <View>
-                        {hospitalData.map(({id, name}, index) => {
-                            return (
+                        {/* {hospitalData.map(({id, name}, index) => {
+                            return ( */}
                                 <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                     <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                                        {name}
+                                        {hospitalData?.name}
                                     </Text>
                                 </View>
-                            )})}
+                            {/* )})} */}
                     </View>
                 </View>
 
@@ -148,7 +148,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
 
                 <View>
                     <Text style={styles.subtext}>
-                        My Role(s)
+                        My Role
                     </Text>
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
@@ -169,7 +169,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                     <View>
                         {quals.map(({id, title}, index) => {
                             return (
-                                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                <View key={id} style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                     <Text style={[styles.paragraph, {marginVertical: 0}]}>
                                         {title}
                                     </Text>

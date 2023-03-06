@@ -20,6 +20,7 @@ const Redirect = ({route, navigation} : any) => {
 
     const { userID } = useContext(AppContext);
     const { setUserID } = useContext(AppContext);
+    const { setTheme } = useContext(AppContext);
 
     useEffect(() => {
 
@@ -53,11 +54,19 @@ const Redirect = ({route, navigation} : any) => {
         
                     if (userData.data.getUser) {
                         setUserID(userData.data.getUser);
-                        navigation.reset({
-                            //index: 0,
-                            routes: [{ name: 'Root' }],
-                        });
-                    
+                        setTheme(userData.data.getUser.Setting1);
+
+                        if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null) {
+                            navigation.reset({
+                                //index: 0,
+                                routes: [{ name: 'Welcome' }],
+                            });
+                        } else {
+                            navigation.reset({
+                                //index: 0,
+                                routes: [{ name: 'Root' }],
+                            });
+                        }
                     } else {
                         setUserID(null);
                         navigation.reset({
@@ -86,7 +95,7 @@ const Redirect = ({route, navigation} : any) => {
                     </Text>
                     <TouchableWithoutFeedback onPress={() => setTryAgain(!tryAgain)}>
                        <View style={{margin: 20, padding: 20}}>
-                            <Text style={[styles.paragraph, {color: 'cyan'}]}>
+                            <Text style={[styles.paragraph, {color: 'maroon'}]}>
                                 Try Again
                             </Text>
                         </View> 

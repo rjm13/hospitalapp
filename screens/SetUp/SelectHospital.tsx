@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createHospitalUser, deleteHospitalUser } from '../../src/graphql/mutations';
+import { createHospitalUser, deleteHospitalUser, updateUser } from '../../src/graphql/mutations';
 import { getUser } from '../../src/graphql/queries';
 import { getSystem } from '../../src/graphql/queries';
 
@@ -32,13 +32,15 @@ const SelectHospital = ({navigation, route} : any) => {
 
     const [hospitals, setHospitals] = useState([])
 
+    const [hospID, setHospID] = useState([])
+
     const [sys, setSys] = useState({
         id: '',
         name: '',
         imageUri: '',
     })
 
-    const [hospitalIDs, setHospitalIDs] = useState([])
+    //const [hospitalIDs, setHospitalIDs] = useState([])
 
     const SCREEN_HEIGHT = Dimensions.get('window').height
     const SCREEN_WIDTH = Dimensions.get('window').width
@@ -59,38 +61,37 @@ const SelectHospital = ({navigation, route} : any) => {
 
     const Proceed = async () => {
 
-        if (hospitalIDs.length === 0) {
+        if (hospID.length === 0) {
             alert('Please select a hospital you work at. If you do not see your hospital here, please contact your hospital administration to get added to our system')
             return;
         }
 
-        if (hospitalIDs.length !== 0) {
+        if (hospID.length !== 0) {
             setProcessing(true);
-            console.log(hospitalIDs)
             const userInfo = await Auth.currentAuthenticatedUser();
 
-            const repo = await API.graphql(graphqlOperation(
-                getUser, {id: userInfo.attributes.sub}
-            ))
+            // const repo = await API.graphql(graphqlOperation(
+            //     getUser, {id: userInfo.attributes.sub}
+            // ))
 
-            for (let i = 0; i < repo.data.getUser.hospital.items.length; i++) {
-                await API.graphql(graphqlOperation(
-                    deleteHospitalUser, {input :{id: repo.data.getUser.hospital.items[i].id }})
-                )
-            }
+            // for (let i = 0; i < repo.data.getUser.hospital.items.length; i++) {
+            //     await API.graphql(graphqlOperation(
+            //         deleteHospitalUser, {input :{id: repo.data.getUser.hospital.items[i].id }})
+            //     )
+            // }
 
-            for (let i = 0; i < hospitalIDs.length; i++) {
+            //for (let i = 0; i < hospitalIDs.length; i++) {
                 const response = await API.graphql(
                     graphqlOperation(
-                    createHospitalUser, {input :{
-                        userID: userInfo.attributes.sub,
-                        hospitalID: hospitalIDs[i]
+                    updateUser, {input :{
+                        id: userInfo.attributes.sub,
+                        hospID: hospID
                     }})
                 )
                 console.log(response);
                 navigation.navigate('SelectDept', {systemID: systemID, systemImageUri: sys.imageUri, systemName: sys.name});
                 setProcessing(false);
-            }
+            //}
         }
     }
     
@@ -112,24 +113,30 @@ const SelectHospital = ({navigation, route} : any) => {
                 )}
             </View> 
             <Text style={[styles.title, {fontSize: 20, marginTop: 10, marginBottom: 20}]}>
-                Select your hospital(s):
+                Select your hospital:
                 </Text>
             </View> 
                 {hospitals.map(({id, name, color, abbreviation, streetNum, streetAddress, city, state, postalCode, imageUri}, index) => {
 
+                // const AddTo = ({hospid} : any) => {
+                //     if (hospitalIDs.includes(hospid)) {
+                //         setHospitalIDs(hospitalIDs.filter(item => item !== id))
+                //     } else {
+                //         setHospitalIDs([...hospitalIDs,hospid])
+                //     }
+                // }
+
                 const AddTo = ({hospid} : any) => {
-                    if (hospitalIDs.includes(hospid)) {
-                        setHospitalIDs(hospitalIDs.filter(item => item !== id))
-                    } else {
-                        setHospitalIDs([...hospitalIDs,hospid])
-                    }
+                    setHospID(hospid)
                 }
 
                 return (
                     <TouchableWithoutFeedback key={id} onPress={() => AddTo({hospid: id})}>
                         <View style={{ margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
-                            borderColor: hospitalIDs.includes(id) === true ? 'maroon' : '#fff', 
-                            backgroundColor: hospitalIDs.includes(id) === true ? '#fff' : '#fff',
+                            // borderColor: hospitalIDs.includes(id) === true ? 'maroon' : '#fff', 
+                            // backgroundColor: hospitalIDs.includes(id) === true ? '#fff' : '#fff',
+                            borderColor: hospID === id ? 'maroon' : '#fff', 
+                            backgroundColor: hospID === id ? '#fff' : '#fff',
                         }}>
                             <View style={{borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
                                 <Image

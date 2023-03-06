@@ -40,12 +40,12 @@ const SelectDept = ({navigation, route} : any) => {
     const SCREEN_HEIGHT = Dimensions.get('window').height
     const SCREEN_WIDTH = Dimensions.get('window').width
 
-    const [hospitalData, setHospitalData] = useState([
+    const [hospitalData, setHospitalData] = useState(
         {
             id: '',
             name: '',
         }
-    ]);
+    );
 
     //fetch the user and set their hospitals
     useEffect(() => {
@@ -54,9 +54,9 @@ const SelectDept = ({navigation, route} : any) => {
 
             const userInfo = await Auth.currentAuthenticatedUser();
 
-            let hosparr = [];
+            //let hosparr = [];
 
-            let deptarr = [];
+            //let deptarr = [];
 
             const getIt = await API.graphql(
                 graphqlOperation(
@@ -65,15 +65,17 @@ const SelectDept = ({navigation, route} : any) => {
                 })
             )
             
-            for (let i = 0; i < getIt.data.getUser.hospital.items.length; i++) {
-                hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
+            // for (let i = 0; i < getIt.data.getUser.hospital.items.length; i++) {
+            //     hosparr.push(getIt.data.getUser.hospital.items[i].hospital)
 
-                for (let k = 0; k < getIt.data.getUser.hospital.items[i].hospital.departments.items.length; k++) {
-                    deptarr.push(getIt.data.getUser.hospital.items[i].hospital.departments.items[k])
-                }
-            }
-            setHospitalData(hosparr);
-            setDepartments(deptarr)
+            //     for (let k = 0; k < getIt.data.getUser.hospital.items[i].hospital.departments.items.length; k++) {
+            //         deptarr.push(getIt.data.getUser.hospital.items[i].hospital.departments.items[k])
+            //     }
+            // }
+            // setHospitalData(hosparr);
+            // setDepartments(deptarr)
+            setDepartments(getIt.data.getUser.hosp.departments.items);
+            setHospitalData(getIt.data.getUser.hosp);
         }
         fetchUser();
     }, [])
@@ -115,14 +117,14 @@ const SelectDept = ({navigation, route} : any) => {
                         </Text>
                     )}
                     <View>
-                        {hospitalData.map(({id, name}, index) => {
-                            return (
+                        {/* {hospitalData.map(({id, name}, index) => { */}
+                            {/* return ( */}
                                 <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                     <Text style={[styles.paragraph, {marginVertical: 0}]}>
-                                        {name}
+                                        {hospitalData.name}
                                     </Text>
                                 </View>
-                            )})}
+                            {/* )})} */}
                     </View>
                     
                 </View>

@@ -68,7 +68,14 @@ const styles = StyleSheet.create ({
       fontWeight: '800',
       color: '#fff',
       textAlign: 'center'
-    }
+    },
+    optionsitem: {
+      flexDirection: 'row', 
+      justifyContent: 'space-between',
+      marginLeft: 40,
+      marginRight: 40,
+      marginBottom: 30,
+  },
 });
 
 export { styles }
