@@ -5,6 +5,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import React, {useContext, useEffect, useState} from 'react';
 import Accordion from 'react-native-collapsible/Accordion';
 
+import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
+import { updateUser } from '../src/graphql/mutations';
+import { getUser, getRole } from '../src/graphql/queries';
+
 const TabOneScreen = ({ navigation }: any) => {
 
   const [activeSections, setActiveSections] = useState([])
@@ -12,14 +16,9 @@ const TabOneScreen = ({ navigation }: any) => {
   const [didUpdate, setDidUpdate] = useState(false)
 
   const dummyshifts = [
-    {
-      id: '1',
-      title: 'March 8th',
-      key: '03092023',
-      data : [
         {
         id: '1',
-        title: 'March 8th',
+        title: 'March 8th 2023',
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'Some Manager',
@@ -61,8 +60,8 @@ const TabOneScreen = ({ navigation }: any) => {
         shiftType: 'night'
       },
       {
-        id: '1',
-        title: 'March 8th',
+        id: '2',
+        title: 'March 8th 2023',
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'Some Manager',
@@ -103,17 +102,9 @@ const TabOneScreen = ({ navigation }: any) => {
         approved: 'na',
         shiftType: 'night',
       },
-    ]
-      
-    },
-    {
-      id: '2',
-      title: 'March 9th',
-      key: '03082023',
-      data: [
         {
-          id: '1',
-          title: 'March 9th',
+          id: '3',
+          title: 'March 9th 2023',
           createdAt: new Date(),
           updatedAt: new Date(),
           createdBy: 'Some Manager',
@@ -154,16 +145,9 @@ const TabOneScreen = ({ navigation }: any) => {
         approved: 'na',
         shiftType: 'day'
         },
-      ]
-    },
-    {
-      id: '3',
-      title: 'March 10th',
-      key: '03072023',
-      data: [
         {
-          id: '1',
-          title: 'March 10th',
+          id: '4',
+          title: 'March 10th 2023',
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'Some Manager',
@@ -204,9 +188,227 @@ const TabOneScreen = ({ navigation }: any) => {
         approved: 'na',
         shiftType: 'day'
       },
-    ]
-    },
+      {
+        id: '1',
+        title: 'March 8th 2023',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: 'Some Manager',
+        name: 'CCT',
+        notes: 'random notes about the shift.',
+        system: 'Harris Health',
+        hospital: 'Lyndon B. Johnson',
+        department: 'Emergency Room',
+        role: 'nurse',
+        announcement: 'this is an announcement',
+        qual: [
+          {
+            id: '1',
+            name: 'Certified Flight Nurse',
+            abberviation: 'CFFN',
+          },
+          {
+            id: '2',
+            name: 'Pediatric Advanced Life Support',
+            abberviation: 'PALS',
+          },
+        ],
+        date: new Date(),
+        month: 'July',
+        year: '2023',
+        startTime: '700',
+        startAMPM: 'AM',
+        endTime: '1900',
+        endAMPM: 'PM',
+        payMultiplier: 1.5,
+        payRate: '20',
+        status: 'open',
+        user: 'none',
+        priority: 'urgent',
+        numNeeded: 1,
+        trade: false,
+        giveUp: false,
+        approved: 'na',
+        shiftType: 'night'
+      },
+      {
+        id: '2',
+        title: 'March 8th 2023',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: 'Some Manager',
+        name: 'CCT',
+        notes: 'random notes about the shift.',
+        system: 'Harris Health',
+        hospital: 'Lyndon B. Johnson',
+        department: 'Emergency Room',
+        role: 'nurse',
+        announcement: 'this is an announcement',
+        qual: [
+          {
+            id: '1',
+            name: 'Certified Flight Nurse',
+            abberviation: 'CFFN',
+          },
+          {
+            id: '2',
+            name: 'Pediatric Advanced Life Support',
+            abberviation: 'PALS',
+          },
+        ],
+        date: new Date(),
+        month: 'July',
+        year: '2023',
+        startTime: '700',
+        startAMPM: 'AM',
+        endTime: '1900',
+        endAMPM: 'PM',
+        payMultiplier: 1.5,
+        payRate: '20',
+        status: 'open',
+        user: 'none',
+        priority: 'urgent',
+        numNeeded: 1,
+        trade: false,
+        giveUp: false,
+        approved: 'na',
+        shiftType: 'night',
+      },
+        {
+          id: '3',
+          title: 'March 9th 2023',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          createdBy: 'Some Manager',
+          name: 'Charge',
+          notes: 'random notes about the shift.',
+          system: 'Harris Health',
+          hospital: 'Lyndon B. Johnson',
+          department: 'Emergency Room',
+          role: 'nurse',
+          announcement: 'this is an announcement',
+          qual: [
+          {
+            id: '1',
+            name: 'Certified Flight Nurse',
+            abberviation: 'CFFN',
+          },
+          {
+            id: '2',
+            name: 'Pediatric Advanced Life Support',
+            abberviation: 'PALS',
+          },
+        ],
+        date: new Date(),
+        month: 'July',
+        year: '2023',
+        startTime: '700',
+        startAMPM: 'AM',
+        endTime: '1900',
+        endAMPM: 'PM',
+        payMultiplier: 1.5,
+        payRate: '20',
+        status: 'open',
+        user: 'none',
+        priority: 'none',
+        numNeeded: 1,
+        trade: false,
+        giveUp: false,
+        approved: 'na',
+        shiftType: 'day'
+        },
+        {
+          id: '4',
+          title: 'March 10th 2023',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: 'Some Manager',
+        name: 'Shock Room',
+        notes: 'random notes about the shift.',
+        system: 'Harris Health',
+        hospital: 'Lyndon B. Johnson',
+        department: 'Emergency Room',
+        role: 'nurse',
+        announcement: 'this is an announcement',
+        qual: [
+          {
+            id: '1',
+            name: 'Certified Flight Nurse',
+            abberviation: 'CFFN',
+          },
+          {
+            id: '2',
+            name: 'Pediatric Advanced Life Support',
+            abberviation: 'PALS',
+          },
+        ],
+        date: new Date(),
+        month: 'July',
+        year: '2023',
+        startTime: '700',
+        startAMPM: 'AM',
+        endTime: '1900',
+        endAMPM: 'PM',
+        payMultiplier: 1.5,
+        payRate: '20',
+        status: 'open',
+        user: 'none',
+        priority: 'urgent',
+        numNeeded: 1,
+        trade: false,
+        giveUp: false,
+        approved: 'na',
+        shiftType: 'day'
+      },
   ];
+
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+
+    let arr = []
+
+    const today = new Date();
+
+    for (let i = 0; i < 60; i++) {
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const day = today.getDate();
+      const c = new Date(year, month, day + i);
+      const formatted = format((c), "MMMM do yyyy")
+      arr.push({id: i.toString(), title: formatted, data: []})
+    }
+
+    const fetchShifts = async () => {
+
+      // const userInfo = await Auth.currentAuthenticatedUser();
+
+      // const response = await API.graphql(graphqlOperation(
+      //   getUser, {id: userInfo.attributes.sub}
+      // ))
+      // const resp = await API.graphql(graphqlOperation(
+      //   getRole, {id: response.data.getUser.primaryRoleID}
+      // ))
+
+      // for (let i = 0; i < resp.data.getRole.shifts.items.length; i++) {
+      //   let index = arr.findIndex((obj => obj.title === resp.data.getRole.shifts.items[i].date));
+      //   if (index !== -1) {
+      //     arr[index].data.push(resp.data.getRole.shifts.items[i]);
+      //   }
+      // }
+
+      for (let i = 0; i < dummyshifts.length; i++) {
+        let index = arr.findIndex((obj => obj.title === dummyshifts[i].title));
+        console.log(arr[0])
+        if (index !== -1) {
+          arr[index].data.push(dummyshifts[i]);
+        }
+      }
+      //console.log(arr)
+      setSections(arr)
+    }
+    fetchShifts();
+  }, [])
 
   const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
       const [vis, setVis] = useState(true);
@@ -342,7 +544,7 @@ const TabOneScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <SectionList
         style={{alignSelf: 'center'}}
-        sections={dummyshifts}
+        sections={sections}
         keyExtractor={(item, index) => item + index}
         extraData={didUpdate}
         renderItem={({ item } : any) => 

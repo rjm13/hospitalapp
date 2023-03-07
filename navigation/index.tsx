@@ -194,7 +194,7 @@ function TopTabNavigator() {
       />
       <TopTab.Screen
         name="TabThree"
-        component={Settings}
+        component={TabTwoScreen}
         options={{
           title: 'talk',
           //tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,

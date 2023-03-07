@@ -55,6 +55,7 @@ type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   people: [User] @manyToMany (relationName: "RoleUser")
   peeps: [User] @hasMany(indexName: "byPrimaryRole", fields: "id")
   quals: [Qual] @hasMany(indexName: "byRole", fields: "id")
+  activeShifts: [Shift] @hasMany(indexName: "byRole", fields: "id")
 }
 
 type Qual @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
