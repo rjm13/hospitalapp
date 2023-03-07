@@ -1,5 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,6 +7,7 @@ import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 import {View} from 'react-native';
 
+import { DrawerContent } from './DrawerContent';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
@@ -22,6 +23,7 @@ import SignUp from '../screens/Auth/SignUp';
 import Welcome from '../screens/Auth/Welcome';
 import ForgotPassword from '../screens/Auth/ForgotPassword';
 import Settings from '../screens/Settings';
+import Inbox from '../screens/Inbox';
 import SelectDept from '../screens/SetUp/SelectDept'
 import SelectHospital from '../screens/SetUp/SelectHospital'
 import SelectQuals from '../screens/SetUp/SelectQuals'
@@ -31,12 +33,27 @@ import ConfirmSetUp from '../screens/SetUp/ConfirmSetUp'
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
+const Drawer = createDrawerNavigator ();
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      <Drawer.Navigator
+          drawerContent={props => <DrawerContent { ...props} />}
+          screenOptions={{
+            headerShown: false
+          }}
+          //drawerPosition='left'
+          initialRouteName='RootNav'
+      >
+        <Drawer.Screen
+          name='RootNav'
+          component={RootNavigator}
+      />
+      </Drawer.Navigator>
+      {/* <RootNavigator /> */}
     </NavigationContainer>
   );
 }
@@ -47,7 +64,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+function RootNavigator({navigation} : any) {
   return (
     <Stack.Navigator 
       screenOptions={{ 
@@ -56,7 +73,7 @@ function RootNavigator() {
         },
         title: '',
         headerTintColor: '#fff',
-        header: ({navigation}) =>
+        header: () =>
         (
           <View style={{ height: 60, backgroundColor: 'maroon', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -66,7 +83,7 @@ function RootNavigator() {
                   color='#fff'
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 20 }}
-                  //onPress={() => { navigation.toggleDrawer() }}
+                  onPress={() => { navigation.toggleDrawer() }}
               />
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -84,7 +101,7 @@ function RootNavigator() {
                   color={'#fff'}
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 12 }}
-                  //onPress={() => { navigation.navigate('ScoresHome'); setSelectedId(1) }}
+                  onPress={() => { navigation.navigate('Inbox')}}
               />
               <FontAwesome 
                   name='gear'
@@ -114,6 +131,7 @@ function RootNavigator() {
       <Stack.Screen name="SelectRole" component={SelectRole}/>
       <Stack.Screen name="ConfirmSetUp" component={ConfirmSetUp}/>
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
+      <Stack.Screen name="Inbox" component={Inbox} options={{ headerShown: false }}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -136,9 +154,12 @@ function TopTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: '#fff',
-        tabBarLabelStyle: { fontSize: 12 },
+        tabBarLabelStyle: { fontSize: 14, fontWeight: '600' },
         tabBarStyle: { backgroundColor: 'maroon' },
         tabBarContentContainerStyle: {alignItems: 'flex-end'},
+        tabBarIndicatorStyle: {backgroundColor: 'white'},
+        tabBarAndroidRipple: { borderless: false },
+        tabBarPressColor: 'transparent'
         
       }}>
       <TopTab.Screen
@@ -167,7 +188,7 @@ function TopTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'mine',
+          title: 'trade',
           //tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

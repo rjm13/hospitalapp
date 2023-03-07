@@ -136,7 +136,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
   role: Role @hasOne (fields: ["roleID"])
   announcementID: ID @index(name: "byAnnouncement", sortKeyFields: ["id"])
-  roannouncementle: Announcement @hasOne (fields: ["announcementID"])
+  announcement: Announcement @hasOne (fields: ["announcementID"])
   qual: [Qual]
   date: String
   month: Int
@@ -155,6 +155,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   trade: Boolean
   giveUp: Boolean
   approved: String
+  shiftType: String
 }
 
 type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])

@@ -28,15 +28,15 @@ const SelectRole = ({navigation, route} : any) => {
     const [processing, setProcessing] = useState(false);
 
     const [roles, setRoles] = useState([
-        {
-        id: '',
-        title: '',
-        acronym: '',
-        icon: '',
-        color: '',
-        details: '',
+        // {
+        // id: '',
+        // title: '',
+        // acronym: '',
+        // icon: '',
+        // color: '',
+        // details: '',
 
-        }
+        // }
     ]);
 
     const {systemID, systemImageUri, systemName} = route.params

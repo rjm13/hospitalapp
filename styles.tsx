@@ -39,6 +39,10 @@ const styles = StyleSheet.create ({
       fontWeight: '600',
       color: '#000000a5',
     },
+    itemtext: {
+      marginLeft: 30,
+        fontSize: 16
+    },
     textInputTitle: {
       color: '#fff',
       fontWeight: 'normal',

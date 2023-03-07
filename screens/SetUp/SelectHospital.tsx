@@ -116,6 +116,11 @@ const SelectHospital = ({navigation, route} : any) => {
                 Select your hospital:
                 </Text>
             </View> 
+                {processing === true ? (
+                    <View>
+                        <ActivityIndicator size='small' color='maroon'/>
+                    </View>
+                ) : null }
                 {hospitals.map(({id, name, color, abbreviation, streetNum, streetAddress, city, state, postalCode, imageUri}, index) => {
 
                 // const AddTo = ({hospid} : any) => {

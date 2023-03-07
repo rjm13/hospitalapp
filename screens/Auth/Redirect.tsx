@@ -37,6 +37,8 @@ const Redirect = ({route, navigation} : any) => {
                     navigation.navigate('SignIn')
                 }
 
+                //if the user has an account, but is not authenticated, redirect to confirm account screen
+
                 else {
                     const userData = await API.graphql(graphqlOperation(
                         getUser,{ id: userInfo.attributes.sub}))

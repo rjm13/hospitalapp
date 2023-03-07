@@ -29,6 +29,7 @@ export type RootStackParamList = {
   SelectHospital: undefined;
   SelectQuals: undefined;
   Settings: undefined;
+  Inbox: undefined;
   ConfirmSetUp: undefined;
 };
 
