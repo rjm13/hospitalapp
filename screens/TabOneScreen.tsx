@@ -1,10 +1,15 @@
-import { StyleSheet, TouchableOpacity, Text, View, FlatList, Dimensions, SectionList } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, FlatList, Dimensions, SectionList, TouchableWithoutFeedback } from 'react-native';
 //import {styles} from '../styles';
 import { format, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import React, {useContext, useEffect, useState} from 'react';
+import Accordion from 'react-native-collapsible/Accordion';
 
 const TabOneScreen = ({ navigation }: any) => {
 
+  const [activeSections, setActiveSections] = useState([])
+
+  const [didUpdate, setDidUpdate] = useState(false)
 
   const dummyshifts = [
     {
@@ -14,7 +19,7 @@ const TabOneScreen = ({ navigation }: any) => {
       data : [
         {
         id: '1',
-        title: 'March 9',
+        title: 'March 8th',
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'Some Manager',
@@ -57,7 +62,7 @@ const TabOneScreen = ({ navigation }: any) => {
       },
       {
         id: '1',
-        title: 'March 9',
+        title: 'March 8th',
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'Some Manager',
@@ -108,7 +113,7 @@ const TabOneScreen = ({ navigation }: any) => {
       data: [
         {
           id: '1',
-          title: 'March 9',
+          title: 'March 9th',
           createdAt: new Date(),
           updatedAt: new Date(),
           createdBy: 'Some Manager',
@@ -157,6 +162,8 @@ const TabOneScreen = ({ navigation }: any) => {
       key: '03072023',
       data: [
         {
+          id: '1',
+          title: 'March 10th',
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: 'Some Manager',
@@ -201,9 +208,17 @@ const TabOneScreen = ({ navigation }: any) => {
     },
   ];
 
-  const Item = ({id, date, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+  const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+      const [vis, setVis] = useState(true);
+      useEffect(() => {
+        console.log('this ran')
+        if (activeSections.includes(title) === true) {
+          setVis(false);
+        }
+      }, [])
+      
     return (
-      <View style={{alignSelf: 'center', paddingHorizontal: 20, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderBottomRightRadius: 10, borderBottomLeftRadius: 10, width: Dimensions.get('window').width - 40}}>
+      <View style={{height:  vis ? undefined : 0, alignSelf: 'center', paddingHorizontal: 20, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderBottomRightRadius: 10, borderBottomLeftRadius: 10, width: Dimensions.get('window').width - 40}}>
           <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             {priority === 'urgent' ? (
@@ -280,13 +295,57 @@ const TabOneScreen = ({ navigation }: any) => {
     )
   }
 
+  const SectionHeader = ({title, data} : any) => {
+
+    const [vis, setVis] = useState(true)
+
+    useEffect(() => {
+      console.log('this ran')
+      if (activeSections.includes(title) === true) {
+        setVis(false);
+      }
+    }, [])
+
+    const AddToArray = () => {
+      
+      let arr = activeSections;
+      const index = arr.indexOf(title)
+
+      if (arr.includes(title)) {
+        arr.splice(index, 1);
+        setVis(!vis);
+        setActiveSections(arr)
+        setDidUpdate(!didUpdate)
+      } else {
+        setVis(!vis);
+        arr.push(title)
+        setActiveSections(arr)
+        setDidUpdate(!didUpdate)
+      }
+    }
+
+    return (
+      <TouchableWithoutFeedback onPress={() => AddToArray()}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 10, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+          <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
+            <FontAwesome5 name={vis ? 'caret-down' : 'caret-right'} size={16} style={{width: 20, paddingHorizontal: 4}}/>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+      
+    )
+  }
+
   return (
     <View style={styles.container}>
       <SectionList
         style={{alignSelf: 'center'}}
         sections={dummyshifts}
         keyExtractor={(item, index) => item + index}
-        renderItem={({ item } : any) =>
+        extraData={didUpdate}
+        renderItem={({ item } : any) => 
           <Item 
             id={item.id}
             name={item.name}
@@ -301,14 +360,18 @@ const TabOneScreen = ({ navigation }: any) => {
             priority={item.priority}
             notes={item.notes}
             shiftType={item.shiftType}
+            title={item.title}
           />
         }
-        renderSectionHeader={({ section: { title, data } }) => (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 10, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
-              <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
-              <Text style={{fontWeight: '400', fontSize: 14}}>{data.length + ' ' + 'shift'}</Text>
-            </View>
-        )}
+        //ItemSeparatorComponent={() => <View style={styles.separator} />}
+        renderSectionHeader={({ section: { title, data } }) => {
+          if (data.length === 0) {
+            return null
+          }
+          return (
+            <SectionHeader title={title} data={data}/>
+          )
+        }}
         ListFooterComponent={ () => (
             <View>
             </View>
