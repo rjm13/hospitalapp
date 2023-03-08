@@ -41,7 +41,8 @@ const styles = StyleSheet.create ({
     },
     itemtext: {
       marginLeft: 30,
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: '700'
     },
     textInputTitle: {
       color: '#fff',

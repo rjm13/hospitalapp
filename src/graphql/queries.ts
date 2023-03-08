@@ -67,10 +67,7 @@ export const getUser = /* GraphQL */ `
           updatedOn
         }
         departments {
-          items {
-            id
-            name
-          }
+          nextToken
         }
         people {
           nextToken
@@ -156,6 +153,7 @@ export const getUser = /* GraphQL */ `
           qual {
             id
             title
+            abbreviation
           }
           createdAt
           updatedAt
@@ -191,6 +189,8 @@ export const getUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -326,6 +326,9 @@ export const getUser = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -601,6 +604,42 @@ export const getRole = /* GraphQL */ `
         }
         nextToken
       }
+      activeShifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -665,6 +704,9 @@ export const listRoles = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -735,6 +777,9 @@ export const getQual = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -1413,11 +1458,14 @@ export const getShift = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
       announcementID
-      roannouncementle {
+      announcement {
         id
         type
         createdAt
@@ -1687,6 +1735,8 @@ export const getShift = /* GraphQL */ `
       numNeeded
       trade
       giveUp
+      approved
+      shiftType
       createdOn
       updatedOn
     }
@@ -1795,7 +1845,7 @@ export const listShifts = /* GraphQL */ `
           updatedOn
         }
         announcementID
-        roannouncementle {
+        announcement {
           id
           type
           createdAt
@@ -1868,6 +1918,8 @@ export const listShifts = /* GraphQL */ `
         numNeeded
         trade
         giveUp
+        approved
+        shiftType
         createdOn
         updatedOn
       }
@@ -2142,6 +2194,9 @@ export const getAnnouncement = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2213,6 +2268,8 @@ export const getAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -3903,6 +3960,9 @@ export const getEvent = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4745,6 +4805,9 @@ export const getRoleUser = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn

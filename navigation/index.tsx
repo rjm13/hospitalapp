@@ -24,6 +24,7 @@ import Welcome from '../screens/Auth/Welcome';
 import ForgotPassword from '../screens/Auth/ForgotPassword';
 import Settings from '../screens/Settings';
 import Inbox from '../screens/Inbox';
+import CreateShift from '../screens/CreateShift';
 import SelectDept from '../screens/SetUp/SelectDept'
 import SelectHospital from '../screens/SetUp/SelectHospital'
 import SelectQuals from '../screens/SetUp/SelectQuals'
@@ -132,6 +133,7 @@ function RootNavigator({navigation} : any) {
       <Stack.Screen name="ConfirmSetUp" component={ConfirmSetUp}/>
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
       <Stack.Screen name="Inbox" component={Inbox} options={{ headerShown: false }}/>
+      <Stack.Screen name="CreateShift" component={CreateShift} options={{ headerShown: false }}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

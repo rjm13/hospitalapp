@@ -2,12 +2,15 @@ import { StyleSheet, TouchableOpacity, Text, View, FlatList, Dimensions, Section
 //import {styles} from '../styles';
 import { format, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import React, {useContext, useEffect, useState} from 'react';
 import Accordion from 'react-native-collapsible/Accordion';
 
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import { updateUser } from '../src/graphql/mutations';
 import { getUser, getRole } from '../src/graphql/queries';
+import { ActivityIndicator } from 'react-native-paper';
 
 const TabOneScreen = ({ navigation }: any) => {
 
@@ -399,7 +402,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
       for (let i = 0; i < dummyshifts.length; i++) {
         let index = arr.findIndex((obj => obj.title === dummyshifts[i].title));
-        console.log(arr[0])
+       
         if (index !== -1) {
           arr[index].data.push(dummyshifts[i]);
         }
@@ -413,49 +416,18 @@ const TabOneScreen = ({ navigation }: any) => {
   const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
       const [vis, setVis] = useState(true);
       useEffect(() => {
-        console.log('this ran')
         if (activeSections.includes(title) === true) {
           setVis(false);
         }
       }, [])
       
     return (
-      <View style={{height:  vis ? undefined : 0, alignSelf: 'center', paddingHorizontal: 20, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderBottomRightRadius: 10, borderBottomLeftRadius: 10, width: Dimensions.get('window').width - 40}}>
+      <View style={{height:  vis ? undefined : 0, alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
           <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {priority === 'urgent' ? (
-              <FontAwesome5 
-                name='exclamation-triangle'
-                color='tomato'
-                size={12}
-                style={{marginRight: 4}}
-              />
-            ) : null}
-          </View>
-            <Text style={{fontSize: 16, fontWeight: '500'}}>
-              {startTime + ' '}
-            </Text>
-            <Text style={{fontSize: 16, fontWeight: '500'}}>
-              {startAMPM}
-            </Text>
-            <Text style={{marginHorizontal: 4, fontSize: 16}}>
-              -
-            </Text>
-            <Text style={{fontSize: 16, fontWeight: '500'}}>
-              {endTime + ' '}
-            </Text>
-            <Text style={{fontSize: 16, fontWeight: '500'}}>
-              {endAMPM}
-            </Text>
-          </View>
-          
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{}}>
-            {name}
-          </Text>
           {shiftType === 'night' ? (
-            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-              <FontAwesome5 
+            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
+              <Ionicons 
                 name='moon'
                 color='darkblue'
                 size={12}
@@ -463,8 +435,32 @@ const TabOneScreen = ({ navigation }: any) => {
               />
             </View>
           ) : null}
+          </View>
+            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
+              {startTime + ' '}
+            </Text>
+            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
+              {startAMPM}
+            </Text>
+            <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' ? 'darkblue': '#000'}}>
+              -
+            </Text>
+            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
+              {endTime + ' '}
+            </Text>
+            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
+              {endAMPM}
+            </Text>
+          </View>
           
-          <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+          <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
+            <Text style={{}}>
+              {name}
+            </Text>
+          </View>
+          
+          <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
             <FontAwesome5 
               name='bolt'
               color='green'
@@ -472,10 +468,11 @@ const TabOneScreen = ({ navigation }: any) => {
               style={{marginRight: 4}}
             />
             <Text style={{fontSize: 14}}>
-              {payMultiplier}
+              {payMultiplier}x
             </Text>
           </View>
-        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+
+        <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
           <FontAwesome5 
             name='dollar-sign'
             color='green'
@@ -502,7 +499,6 @@ const TabOneScreen = ({ navigation }: any) => {
     const [vis, setVis] = useState(true)
 
     useEffect(() => {
-      console.log('this ran')
       if (activeSections.includes(title) === true) {
         setVis(false);
       }
@@ -528,7 +524,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 10, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 0, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
@@ -544,9 +540,11 @@ const TabOneScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <SectionList
         style={{alignSelf: 'center'}}
+        showsVerticalScrollIndicator={false}
         sections={sections}
         keyExtractor={(item, index) => item + index}
         extraData={didUpdate}
+        stickySectionHeadersEnabled
         renderItem={({ item } : any) => 
           <Item 
             id={item.id}
@@ -578,6 +576,11 @@ const TabOneScreen = ({ navigation }: any) => {
             <View>
             </View>
         )}
+        ListEmptyComponent={ () => (
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <ActivityIndicator size='large' color='maroon'/>
+          </View>
+      )}
       />
     </View>
   );

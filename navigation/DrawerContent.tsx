@@ -77,7 +77,21 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => setGamesExpanded(!gamesExpanded)}>
+                        <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                <View style={istyles.box}>
+                                    {/* <MaterialCommunityIcons name='grid' color='#636363' size={22} /> */}
+                                    <Text style={styles.itemtext}>
+                                        Groups
+                                    </Text>
+                                </View>
+                                {/* <Feather name={scorecardExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
+                            </View>
+                        </TouchableWithoutFeedback>
+
+                        <View style={{backgroundColor: 'lightgray', height: 1, marginVertical: 10}}/>
+
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateShift')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     {/* <MaterialCommunityIcons name='cards-playing-outline' color='#636363' size={25} /> */}
@@ -114,17 +128,6 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='grid' color='#636363' size={22} /> */}
-                                    <Text style={styles.itemtext}>
-                                        Groups
-                                    </Text>
-                                </View>
-                                {/* <Feather name={scorecardExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
-                            </View>
-                        </TouchableWithoutFeedback>
                     {/* </Drawer.Section> */}
                 </View>
             </DrawerContentScrollView>

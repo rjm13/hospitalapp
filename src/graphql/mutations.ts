@@ -187,6 +187,8 @@ export const createUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -322,6 +324,9 @@ export const createUser = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -517,6 +522,8 @@ export const updateUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -652,6 +659,9 @@ export const updateUser = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -847,6 +857,8 @@ export const deleteUser = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -982,6 +994,9 @@ export const deleteUser = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -1139,6 +1154,42 @@ export const createRole = /* GraphQL */ `
         }
         nextToken
       }
+      activeShifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -1286,6 +1337,42 @@ export const updateRole = /* GraphQL */ `
           roleID
           abbreviation
           details
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      activeShifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -1443,6 +1530,42 @@ export const deleteRole = /* GraphQL */ `
         }
         nextToken
       }
+      activeShifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -1512,6 +1635,9 @@ export const createQual = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -1600,6 +1726,9 @@ export const updateQual = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1684,6 +1813,9 @@ export const deleteQual = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -2668,11 +2800,14 @@ export const createShift = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
       announcementID
-      roannouncementle {
+      announcement {
         id
         type
         createdAt
@@ -2942,6 +3077,8 @@ export const createShift = /* GraphQL */ `
       numNeeded
       trade
       giveUp
+      approved
+      shiftType
       createdOn
       updatedOn
     }
@@ -3219,11 +3356,14 @@ export const updateShift = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
       announcementID
-      roannouncementle {
+      announcement {
         id
         type
         createdAt
@@ -3493,6 +3633,8 @@ export const updateShift = /* GraphQL */ `
       numNeeded
       trade
       giveUp
+      approved
+      shiftType
       createdOn
       updatedOn
     }
@@ -3770,11 +3912,14 @@ export const deleteShift = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
       announcementID
-      roannouncementle {
+      announcement {
         id
         type
         createdAt
@@ -4044,6 +4189,8 @@ export const deleteShift = /* GraphQL */ `
       numNeeded
       trade
       giveUp
+      approved
+      shiftType
       createdOn
       updatedOn
     }
@@ -4319,6 +4466,9 @@ export const createAnnouncement = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4390,6 +4540,8 @@ export const createAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -4671,6 +4823,9 @@ export const updateAnnouncement = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4742,6 +4897,8 @@ export const updateAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -5023,6 +5180,9 @@ export const deleteAnnouncement = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5094,6 +5254,8 @@ export const deleteAnnouncement = /* GraphQL */ `
           numNeeded
           trade
           giveUp
+          approved
+          shiftType
           createdOn
           updatedOn
         }
@@ -8502,6 +8664,9 @@ export const createEvent = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8741,6 +8906,9 @@ export const updateEvent = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8978,6 +9146,9 @@ export const deleteEvent = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn
@@ -10285,6 +10456,9 @@ export const createRoleUser = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -10466,6 +10640,9 @@ export const updateRoleUser = /* GraphQL */ `
         quals {
           nextToken
         }
+        activeShifts {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -10645,6 +10822,9 @@ export const deleteRoleUser = /* GraphQL */ `
           nextToken
         }
         quals {
+          nextToken
+        }
+        activeShifts {
           nextToken
         }
         createdOn

@@ -31,6 +31,7 @@ export type RootStackParamList = {
   Settings: undefined;
   Inbox: undefined;
   ConfirmSetUp: undefined;
+  CreateShift: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
