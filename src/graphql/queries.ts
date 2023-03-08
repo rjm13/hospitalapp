@@ -125,7 +125,11 @@ export const getUser = /* GraphQL */ `
           updatedOn
         }
         roles {
-          nextToken
+          items {
+            id
+            title
+            acronym
+          }
         }
         members {
           nextToken

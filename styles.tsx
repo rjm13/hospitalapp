@@ -81,6 +81,10 @@ const styles = StyleSheet.create ({
       marginRight: 40,
       marginBottom: 30,
   },
+  timeselect: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
 });
 
 export { styles }
