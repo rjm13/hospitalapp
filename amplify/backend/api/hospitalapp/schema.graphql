@@ -157,6 +157,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   giveUp: Boolean
   approved: String
   shiftType: String
+  incentiveType: String
 }
 
 type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])

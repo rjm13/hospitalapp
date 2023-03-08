@@ -10,6 +10,7 @@ import {
     Dimensions
 } from 'react-native';
 
+import { format, parseISO } from "date-fns";
 import DatePicker from 'react-native-date-picker'
 
 import { StatusBar } from 'expo-status-bar';
@@ -52,7 +53,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
             roleID: '',
             announcementID: '',
             qual: [], //what quals are needed
-            date: '', //start date of the shift, format (March 8th 2023)
+            date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
             month: 0, //month integer
             year: 0, //year integer
             startTime: 0,
@@ -71,6 +72,8 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
             shiftType: '', // day or night
     });
 
+    console.log(data.date)
+
     useEffect(() => {
         const fetchInfo = async () => {
             const userInfo = await Auth.currentAuthenticatedUser();
@@ -88,7 +91,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                 //roleID: '',
                 //announcementID: '',
                 //qual: [], //what quals are needed
-                date: '', //start date of the shift, format (March 8th 2023)
+                date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
                 month: 0, //month integer
                 year: 0, //year integer
                 startTime: 0,
@@ -134,6 +137,13 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
         setData({
             ... data,
             notes: val
+        });
+    };
+
+    const handlePay = (val : any) => {
+        setData({
+            ... data,
+            payRate: parseFloat(val)
         });
     };
 
@@ -193,6 +203,24 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
         borderRadius: 15,
         paddingVertical: 10
     };
+
+    const dateplus = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth();
+        const day = today.getDate();
+        const c = new Date(year, month + 4, day);
+        return c;
+    }
+
+    const dateminus = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth();
+        const day = today.getDate();
+        const c = new Date(year, month, day - 1);
+        return c;
+    }
     
     return (
         <Provider>
@@ -230,7 +258,15 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* Date Modal */}
                 <Modal visible={visible3} onDismiss={hideDateModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
-                        <DatePicker date={date} onDateChange={setDate} />
+                        <DatePicker 
+                            date={date} 
+                            onDateChange={setDate} 
+                            maximumDate={new Date(dateplus())}
+                            minimumDate={new Date(dateminus())}
+                            mode='date'
+                            textColor='#000'
+                            //is24hourSource='device'
+                        />
                     </View>
                 </Modal>
 {/* start time Modal */}
@@ -278,6 +314,21 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* payrate Modal */}
                 <Modal visible={visible7} onDismiss={hidePayModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
+                    <View style={[styles.inputfield, {alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 60, backgroundColor: 'white', width: '50%'}]}>
+                        <Text style={{fontSize: 20}}>
+                            $
+                        </Text>
+                        <TextInput 
+                            placeholder='--'
+                            placeholderTextColor='#000000a5'
+                            style={[styles.textInputTitle, {color: '#000', fontSize: 30, textAlign: 'center'}]}
+                            maxLength={6}
+                            onChangeText={(val) => handlePay(val)}
+                            autoCapitalize='none'
+                            multiline={true}
+                            keyboardType={"number-pad"}
+                        />
+                    </View>
                     </View>
                 </Modal>
 {/* priority Modal */}
@@ -398,11 +449,13 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                     <ScrollView style={{ }} showsVerticalScrollIndicator={false}>
                         <View style={{justifyContent: 'space-between'}}>
 {/* header */}
-                            <View style={{flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
+                            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
                                 <FontAwesome 
                                     name='close'
                                     color='#000'
                                     size={20}
+                                    style={{padding: 20, margin: -20}}
+                                    onPress={() => navigation.goBack()}
                                 />
                                 <Text style={styles.title}>
                                     Shift Template
@@ -446,7 +499,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                         </Text>
                                         <View>
                                             <Text style={[styles.title, {color: 'gray'}]}>
-                                                Select Date
+                                                {format(date, "MMMM do yyyy") === format(new Date(), "MMMM do yyyy") ? 'Today' : format(date, "MMMM do yyyy") }
                                             </Text>
                                         </View>
                                     </View>

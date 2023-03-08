@@ -549,7 +549,7 @@ const TabOneScreen = ({ navigation }: any) => {
           <Item 
             id={item.id}
             name={item.name}
-            date={format((item.date), "MMMM do")}
+            date={format((item.date), "MMMM do yyyy")}
             startTime={item.startTime}
             endTime={item.endTime}
             numNeeded={item.numNeeded}
