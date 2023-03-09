@@ -276,6 +276,8 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
         setQuals(response.data.getRole.quals.items);
         }
 
+
+
     
     return (
         <Provider>
@@ -490,7 +492,9 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* confirm Modal */}
                 <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
-                        <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+                    {
+        Array.from({ length: data.numNeeded }, (_, k) => (
+          <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
                             <View style={{flexDirection: 'row'}}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     {data.shiftType === 'night' ? (
@@ -553,6 +557,12 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
             </Text>
             </View>
                         </View>
+        ))
+      }
+                                    
+                                    
+                                
+                        
                     </View>
                 </Modal>
             </Portal>
