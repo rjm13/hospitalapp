@@ -59,7 +59,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
     const [data, setData] = useState({
             type: 'Shift',
             createdByID: '', //the id of the manager who created the shift
-            name: '', //type of shift - CCT, charge, 
+            name: 'Regular', //type of shift - CCT, charge, 
             notes: '',
             systemID: '',
             hospitalID: '',
@@ -124,7 +124,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                 trade: false, //is the shift for trade
                 giveUp: false, //is this someone giving up their shift
                 approved: false, //approved or denied
-                shiftType: '', // day or night
+                shiftType: 'day', // day or night
                 jobType: 'Regular',
             })
 
@@ -143,10 +143,52 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 
         console.log(data)
 
+        for (let i = 0; i < data.numNeeded; i++) {
+            const response = await API.graphql(graphqlOperation(
+                createShift, {input: {
+                    type: 'Shift',
+                    createdByID: data.createdByID, //the id of the manager who created the shift
+                    name: data.name, //type of shift - CCT, charge, 
+                    notes: data.notes,
+                    systemID: data.systemID,
+                    hospitalID: data.hospitalID,
+                    departmentID: data.departmentID,
+                    roleID: data.roleID,
+                    //quals: [], //what quals are needed
+                    date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+                    //month: 0, //month integer
+                    //year: 0, //year integer
+                    startTime: format(startTime, "p"),
+                    //startAMPM: 'AM', //AM or PM
+                    endTime: format(endTime, "p"),
+                    //endAMPM: 'PM', //AM or PM
+                    payMultiplier: data.payMultiplier, //must be a decimal
+                    payRate: data.payRate, //float, whatever that means
+                    //payAddToShift: 0,
+                    //payAddToHour: 0,
+                    status: 'open', //open, filled, pending
+                    //userID: null, //person working the shift
+                    priority: data.priority, //urgent, high needs, normal
+                    numNeeded: data.numNeeded, //how many of the same shift are need. will loop and create multiple
+                    trade: false, //is the shift for trade
+                    giveUp: false, //is this someone giving up their shift
+                    approved: false, //approved or denied
+                    shiftType: data.shiftType, // day or night
+                    //jobType: 'Regular',
+                }}
+            ))
+            console.log(response)
+            if (response && i === data.numNeeded - 1) {
+                navigation.goBack();
+            }
+        }
+
         setCreating(false);
+
 
         } catch (e) {
             console.log(e)
+            setCreating(false);
             alert(e.toString())
         }
     }
@@ -266,6 +308,17 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
         }
     },  [endTime])
 
+    useEffect(() => {
+        const starthours = startTime.getHours();
+        const endhours = endTime.getHours();
+
+        if (endhours < 8 || starthours > 18 ) {
+            setData({...data, shiftType: 'night'})
+        } else {
+            setData({...data, shiftType: 'day'})
+        }
+    }, [startTime, endTime])
+
     const GetQuals = async ({id, title } : any) => {
         const response = await API.graphql(graphqlOperation(
             getRole, {id: id}
@@ -302,7 +355,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                     <View style={{ alignItems: 'center'}}>
                         {shiftTypes.map((item, index) => {
                             return (
-                                <TouchableOpacity onPress={() => {hideTypeModal(); setData({...data, jobType: shiftTypes[index]});}}>
+                                <TouchableOpacity onPress={() => {hideTypeModal(); setData({...data, name: shiftTypes[index]});}}>
                                     <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
                                         {item}
                                     </Text> 
@@ -428,7 +481,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                             <View>
                             {quals.map(({id, title, abbreviation}, index) => {
 
-                        console.log(quals)
+                        //console.log(quals)
 
                         const AddTo = ({qualid} : any) => {
                             if (qualIDs.includes(qualid)) {
@@ -492,78 +545,109 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* confirm Modal */}
                 <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
-                    {
-        Array.from({ length: data.numNeeded }, (_, k) => (
-          <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    {data.shiftType === 'night' ? (
-                                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
-                                        <Ionicons 
-                                            name='moon'
-                                            color='darkblue'
-                                            size={12}
-                                            style={{marginRight: 4}}
-                                        />
-                                        </View>
-                                    ) : null}
-            </View>
-                <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {format(startTime, "p")}
-                </Text>
-                <Text style={{marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                -
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                {format(endTime, "p")}
-                </Text>
-            </View>
-            
-            <View style={{flexDirection: 'row', alignItems: 'center',}}>
-            <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
-                <Text style={{}}>
-                {data.jobType}
-                </Text>
-            </View>
-            
-            <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-                <FontAwesome5 
-                name='bolt'
-                color='green'
-                size={12}
-                style={{marginRight: 4}}
-                />
-                <Text style={{fontSize: 14}}>
-                {data.payMultiplier}x
-                </Text>
-            </View>
-
-            <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-            <FontAwesome5 
-                name='dollar-sign'
-                color='green'
-                size={12}
-                style={{marginRight: 4}}
-            />
-            <Text style={{fontSize: 14}}>
-                {'+' + '' + data.payRate}
-            </Text>
-            </View>
-            </View>
-
-            <View style={{marginVertical: 4}}>
-            <Text style={{}}>
-                {data.notes}
-            </Text>
-            </View>
-                        </View>
-        ))
-      }
-                                    
-                                    
+                        <ScrollView style={{height: '70%'}} showsVerticalScrollIndicator={false}>
+                            <Text style={[styles.title, {textAlign: 'center', color: '#000'}]}>
+                                Create these shifts?
+                            </Text>
+                            <Text style={{textAlign: 'center'}}>
+                                For {roleTitle.toLowerCase()}s on {format(date, "MMMM do yyyy")}?
+                            </Text>
+                            <View style={{alignSelf: 'center', height: 1, backgroundColor: '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
+                        {
+                            Array.from({ length: data.numNeeded }, (_, k) => (
+                            <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0.5, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                                        {data.shiftType === 'night' ? (
+                                                            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
+                                                            <Ionicons 
+                                                                name='moon'
+                                                                color='darkblue'
+                                                                size={12}
+                                                                style={{marginRight: 4}}
+                                                            />
+                                                            </View>
+                                                        ) : null}
+                                </View>
+                                    <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                        {format(startTime, "p")}
+                                    </Text>
+                                    <Text style={{marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    -
+                                    </Text>
+                                    <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    {format(endTime, "p")}
+                                    </Text>
+                                </View>
                                 
-                        
+                                <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                                <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
+                                    <Text style={{}}>
+                                    {data.name}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                                    <FontAwesome5 
+                                    name='bolt'
+                                    color='green'
+                                    size={12}
+                                    style={{marginRight: 4}}
+                                    />
+                                    <Text style={{fontSize: 14}}>
+                                    {data.payMultiplier}x
+                                    </Text>
+                                </View>
+
+                                <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                                <FontAwesome5 
+                                    name='dollar-sign'
+                                    color='green'
+                                    size={12}
+                                    style={{marginRight: 4}}
+                                />
+                                <Text style={{fontSize: 14}}>
+                                    {'+' + '' + data.payRate}
+                                </Text>
+                                </View>
+                                </View>
+
+                                <View style={{marginVertical: 4}}>
+                                {data.notes.length > 0 ? (
+                                    <Text style={{}}>
+                                        {data.notes}
+                                    </Text>
+                                ) : null}
+                                </View>
+                            </View>
+                            ))
+                        } 
+                        <View style={{height: 100}}/>
+                        </ScrollView>
+                        <LinearGradient
+                        colors={['#fff','#fff', '#ffffffa5','transparent']}
+                        style={{position: 'absolute', bottom: 0 }}
+                        start={{ x: 0, y: 1 }}
+                        end={{ x: 0, y: 0 }}
+                    >
+                        <View style={{marginBottom: 0, flexDirection: 'row', width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 0}}>
+                            {creating ? (
+                                <View style={[{width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                                    <ActivityIndicator size='small' color='maroon'/>
+                                </View>
+                            ) : (
+                                <TouchableOpacity onPress={Create}>
+                                    <View style={styles.buttonlayout}>
+                                            <Text style={styles.buttontext}>
+                                                Create
+                                            </Text> 
+                                        </View>  
+                                </TouchableOpacity>
+                            )}
+                        </View>
+                    </LinearGradient>
                     </View>
+
                 </Modal>
             </Portal>
         
@@ -610,7 +694,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                         </Text>
                                         <View>
                                             <Text style={[styles.title, {color: 'gray'}]}>
-                                                {data.jobType}
+                                                {data.name}
                                             </Text>
                                         </View>
                                     </View>
@@ -747,11 +831,11 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
                                         Notes
                                     </Text>
-                                    <View style={[styles.inputfield, {height: 60}]}>
+                                    <View style={[styles.inputfield, {height: 100, backgroundColor: 'white', borderWidth: 1}]}>
                                         <TextInput 
                                             placeholder='...'
-                                            placeholderTextColor='#ffffffa5'
-                                            style={styles.textInputTitle}
+                                            placeholderTextColor='#000000a5'
+                                            style={[styles.textInputTitle, {color: '#000]'}]}
                                             maxLength={200}
                                             onChangeText={(val) => handleNote(val)}
                                             autoCapitalize='none'

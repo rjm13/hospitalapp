@@ -178,6 +178,8 @@ export const onCreateUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -510,6 +512,8 @@ export const onUpdateUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -842,6 +846,8 @@ export const onDeleteUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1165,6 +1171,8 @@ export const onCreateRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1350,6 +1358,8 @@ export const onUpdateRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1535,6 +1545,8 @@ export const onDeleteRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -2904,6 +2916,8 @@ export const onCreateShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -3457,6 +3471,8 @@ export const onUpdateShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -4010,6 +4026,8 @@ export const onDeleteShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -4468,6 +4486,8 @@ export const onCreateAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -4822,6 +4842,8 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -5176,6 +5198,8 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority

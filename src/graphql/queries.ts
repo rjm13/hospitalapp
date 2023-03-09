@@ -154,11 +154,6 @@ export const getUser = /* GraphQL */ `
           id
           userID
           qualID
-          qual {
-            id
-            title
-            abbreviation
-          }
           createdAt
           updatedAt
         }
@@ -187,6 +182,8 @@ export const getUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -631,6 +628,8 @@ export const getRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1623,6 +1622,8 @@ export const getShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -1892,6 +1893,8 @@ export const listShifts = /* GraphQL */ `
         endAMPM
         payMultiplier
         payRate
+        payAddToShift
+        payAddToHour
         status
         userID
         user {
@@ -2266,6 +2269,8 @@ export const getAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority

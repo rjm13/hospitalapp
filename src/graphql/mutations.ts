@@ -181,6 +181,8 @@ export const createUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -516,6 +518,8 @@ export const updateUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -851,6 +855,8 @@ export const deleteUser = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1177,6 +1183,8 @@ export const createRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1365,6 +1373,8 @@ export const updateRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -1553,6 +1563,8 @@ export const deleteRole = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -2961,6 +2973,8 @@ export const createShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -3517,6 +3531,8 @@ export const updateShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -4073,6 +4089,8 @@ export const deleteShift = /* GraphQL */ `
       endAMPM
       payMultiplier
       payRate
+      payAddToShift
+      payAddToHour
       status
       userID
       user {
@@ -4534,6 +4552,8 @@ export const createAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -4891,6 +4911,8 @@ export const updateAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority
@@ -5248,6 +5270,8 @@ export const deleteAnnouncement = /* GraphQL */ `
           endAMPM
           payMultiplier
           payRate
+          payAddToShift
+          payAddToHour
           status
           userID
           priority

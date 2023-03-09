@@ -367,6 +367,8 @@ const TabOneScreen = ({ navigation }: any) => {
 
   const [sections, setSections] = useState([]);
 
+  const [empty, setEmpty] = useState(false)
+
   useEffect(() => {
 
     let arr = []
@@ -384,31 +386,36 @@ const TabOneScreen = ({ navigation }: any) => {
 
     const fetchShifts = async () => {
 
-      // const userInfo = await Auth.currentAuthenticatedUser();
+      const userInfo = await Auth.currentAuthenticatedUser();
 
-      // const response = await API.graphql(graphqlOperation(
-      //   getUser, {id: userInfo.attributes.sub}
-      // ))
-      // const resp = await API.graphql(graphqlOperation(
-      //   getRole, {id: response.data.getUser.primaryRoleID}
-      // ))
+      const response = await API.graphql(graphqlOperation(
+        getUser, {id: userInfo.attributes.sub}
+      ))
+      const resp = await API.graphql(graphqlOperation(
+        getRole, {id: response.data.getUser.primaryRoleID}
+      ))
 
-      // for (let i = 0; i < resp.data.getRole.shifts.items.length; i++) {
-      //   let index = arr.findIndex((obj => obj.title === resp.data.getRole.shifts.items[i].date));
-      //   if (index !== -1) {
-      //     arr[index].data.push(resp.data.getRole.shifts.items[i]);
-      //   }
-      // }
-
-      for (let i = 0; i < dummyshifts.length; i++) {
-        let index = arr.findIndex((obj => obj.title === dummyshifts[i].title));
-       
+      for (let i = 0; i < resp.data.getRole.activeShifts.items.length; i++) {
+        let index = arr.findIndex((obj => obj.title === resp.data.getRole.activeShifts.items[i].date));
         if (index !== -1) {
-          arr[index].data.push(dummyshifts[i]);
+          arr[index].data.push(resp.data.getRole.activeShifts.items[i]);
         }
       }
+
+      // for (let i = 0; i < dummyshifts.length; i++) {
+      //   let index = arr.findIndex((obj => obj.title === dummyshifts[i].title));
+       
+      //   if (index !== -1) {
+      //     arr[index].data.push(dummyshifts[i]);
+      //   }
+      // }
       //console.log(arr)
       setSections(arr)
+      if (resp.data.getRole.activeShifts.items.length === 0) {
+        setEmpty(true);
+      } else {
+        setEmpty(false)
+      }
     }
     fetchShifts();
   }, [])
@@ -416,7 +423,8 @@ const TabOneScreen = ({ navigation }: any) => {
   const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
       const [vis, setVis] = useState(true);
       useEffect(() => {
-        if (activeSections.includes(title) === true) {
+        if (activeSections.includes(date) === true) {
+        
           setVis(false);
         }
       }, [])
@@ -549,7 +557,7 @@ const TabOneScreen = ({ navigation }: any) => {
           <Item 
             id={item.id}
             name={item.name}
-            date={format((item.date), "MMMM do yyyy")}
+            date={item.date}
             startTime={item.startTime}
             endTime={item.endTime}
             numNeeded={item.numNeeded}
@@ -574,11 +582,16 @@ const TabOneScreen = ({ navigation }: any) => {
         }}
         ListFooterComponent={ () => (
             <View>
+              {empty === true ? (
+                <Text style={{marginVertical: 80}}>
+                  There are no open shifts posted at this time.
+                </Text>
+              ) : null}
             </View>
         )}
         ListEmptyComponent={ () => (
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <ActivityIndicator size='large' color='maroon'/>
+          <View style={{alignItems: 'center', justifyContent: 'center', marginVertical: 40}}>
+            <ActivityIndicator size='small' color='maroon'/>
           </View>
       )}
       />
