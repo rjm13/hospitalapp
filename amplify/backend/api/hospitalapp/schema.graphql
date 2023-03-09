@@ -148,6 +148,8 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   endAMPM: String
   payMultiplier: Float
   payRate: Float
+  payAddToShift: Float
+  payAddToHour: Float
   status: String
   userID: ID @index(name: "byUser", sortKeyFields: ["id"])
   user: User @hasOne (fields: ["userID"]) #this is who is working the shift

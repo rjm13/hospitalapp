@@ -7,7 +7,8 @@ import {
     Keyboard, 
     TouchableWithoutFeedback,
     ScrollView,
-    Dimensions
+    Dimensions,
+    ImageBackground
 } from 'react-native';
 
 import { format, parseISO } from "date-fns";
@@ -24,7 +25,7 @@ import {Provider, Portal, Modal} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { getUser, getDepartment} from '../src/graphql/queries';
+import { getUser, getRole} from '../src/graphql/queries';
 import { createShift} from '../src/graphql/mutations';
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -32,15 +33,28 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 
     const { theme } = useContext(AppContext);
 
+    const dayimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
+    const nightimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
+
     const [creating, setCreating] = useState(false);
 
     const [roles, setRoles] = useState([])
     const [roleTitle, setRoleTitle] = useState('Select Role');
 
     const [date, setDate] = useState(new Date());
+    const [startTime, setStartTime] = useState(new Date('2023-01-15T13:00:00'));
+    const [endTime, setEndTime] = useState(new Date('2023-01-15T01:00:00'));
 
     const howmany = [1, 2, 3, 4, 5, 6, 7, 8];
     const multiplier = [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0];
+
+    const [shiftTypes, setShiftTypes] = useState(['Regular', 'CCT', 'Charge', 'Manager' ])
+
+    const priority = ['normal', 'high needs'];
+
+    const [quals, setQuals] = useState([]);
+
+    const [qualIDs, setQualIDs] = useState([])
 
     const [data, setData] = useState({
             type: 'Shift',
@@ -52,7 +66,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
             departmentID: '',
             roleID: '',
             announcementID: '',
-            qual: [], //what quals are needed
+            quals: [], //what quals are needed
             date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
             month: 0, //month integer
             year: 0, //year integer
@@ -62,17 +76,18 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
             endAMPM: 'PM', //AM or PM
             payMultiplier: 1.0, //must be a decimal
             payRate: 0, //float, whatever that means
+            payAddToShift: 0,
+            payAddToHour: 0,
             status: '', //open, filled, pending
             userID: '', //person working the shift
-            priority: 'regular', //urgent, high needs, normal
+            priority: 'normal', //urgent, high needs, normal
             numNeeded: 1, //how many of the same shift are need. will loop and create multiple
             trade: false, //is the shift for trade
             giveUp: false, //is this someone giving up their shift
             approved: false, //approved or denied
-            shiftType: '', // day or night
+            shiftType: 'day', // day or night
+            jobType: 'Regular',
     });
-
-    console.log(data.date)
 
     useEffect(() => {
         const fetchInfo = async () => {
@@ -90,7 +105,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                 departmentID: response.data.getUser.departmentID,
                 //roleID: '',
                 //announcementID: '',
-                //qual: [], //what quals are needed
+                //quals: [], //what quals are needed
                 date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
                 month: 0, //month integer
                 year: 0, //year integer
@@ -100,14 +115,17 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                 endAMPM: 'PM', //AM or PM
                 payMultiplier: 1.0, //must be a decimal
                 payRate: 0, //float, whatever that means
+                payAddToShift: 0,
+                payAddToHour: 0,
                 status: '', //open, filled, pending
                 userID: '', //person working the shift
-                priority: 'regular', //urgent, high needs, normal
-                numNeeded: 0, //how many of the same shift are need. will loop and create multiple
+                priority: 'normal', //urgent, high needs, normal
+                numNeeded: 1, //how many of the same shift are need. will loop and create multiple
                 trade: false, //is the shift for trade
                 giveUp: false, //is this someone giving up their shift
                 approved: false, //approved or denied
                 shiftType: '', // day or night
+                jobType: 'Regular',
             })
 
             setRoles(response.data.getUser.department.roles.items)
@@ -197,6 +215,11 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
     const showConfirmModal = () => {setVisible10(true);}
     const hideConfirmModal = () => setVisible10(false);
 
+    //confirm modal
+    const [visible11, setVisible11] = useState(false);
+    const showQualsModal = () => {setVisible11(true);}
+    const hideQualsModal = () => setVisible11(false);
+
 //modal container style
     const containerStyle = {
         backgroundColor: '#fff', 
@@ -221,6 +244,38 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
         const c = new Date(year, month, day - 1);
         return c;
     }
+
+    const [isStartDayNight, setIsStartDayNight] = useState('day');
+    const [isEndDayNight, setIsEndDayNight] = useState('night');
+
+    useEffect(() => {
+        const hours = startTime.getHours();
+        if (hours > 0 && hours < 7 || hours > 18) {
+            setIsStartDayNight('day');
+        } else {
+            setIsStartDayNight('night')
+        }
+    }, [startTime])
+
+    useEffect(() => {
+        const hours = endTime.getHours();
+        if (hours > 0 && hours < 7 || hours > 18) {
+            setIsEndDayNight('day');
+        } else {
+            setIsEndDayNight('night')
+        }
+    },  [endTime])
+
+    const GetQuals = async ({id, title } : any) => {
+        const response = await API.graphql(graphqlOperation(
+            getRole, {id: id}
+        ))
+        hideRoleModal(); 
+        setData({...data, roleID: id}); 
+        setRoleTitle(title);
+        setQuals(response.data.getRole.quals.items);
+        }
+
     
     return (
         <Provider>
@@ -230,7 +285,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                     <View style={{ alignItems: 'center'}}>
                         {roles.map(({id, acronym, title} : any) => {
                             return (
-                                <TouchableOpacity onPress={() => {hideRoleModal(); setData({...data, roleID: id}); setRoleTitle(title)}}>
+                                <TouchableOpacity onPress={() => GetQuals({id, title})}>
                                     <Text key={id} style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000'}}>
                                         {title}
                                     </Text> 
@@ -243,11 +298,11 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* Type of Shift Modal */}
                 <Modal visible={visible2} onDismiss={hideTypeModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
-                        {roles.map(({id, acronym, title} : any) => {
+                        {shiftTypes.map((item, index) => {
                             return (
-                                <TouchableOpacity onPress={() => {hideTypeModal()}}>
-                                    <Text key={id} style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000'}}>
-                                        {acronym} CCT
+                                <TouchableOpacity onPress={() => {hideTypeModal(); setData({...data, jobType: shiftTypes[index]});}}>
+                                    <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                        {item}
                                     </Text> 
                                 </TouchableOpacity>
                                 
@@ -272,11 +327,25 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* start time Modal */}
                 <Modal visible={visible4} onDismiss={hideStartModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
+                        <DatePicker 
+                            date={startTime} 
+                            onDateChange={setStartTime}
+                            mode='time'
+                            textColor='#000'
+                            //is24hourSource='device'
+                        />
                     </View>
                 </Modal>
 {/* end time Modal */}
                 <Modal visible={visible5} onDismiss={hideEndModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
+                        <DatePicker 
+                            date={endTime} 
+                            onDateChange={setEndTime}
+                            mode='time'
+                            textColor='#000'
+                            //is24hourSource='device'
+                        />
                     </View>
                 </Modal>
 {/* multiplier Modal */}
@@ -334,8 +403,59 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* priority Modal */}
                 <Modal visible={visible8} onDismiss={hidePriorityModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
+                        {priority.map((item, index) => {
+                            return (
+                                <TouchableOpacity onPress={() => {hidePriorityModal(); setData({...data, priority: priority[index]});}}>
+                                    <Text style={{textTransform: 'capitalize', fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                        {item}
+                                    </Text> 
+                                </TouchableOpacity>
+                                
+                            )
+                        })}
                     </View>
                 </Modal>
+{/* quals Modal */}
+                <Modal visible={visible11} onDismiss={hideQualsModal} contentContainerStyle={containerStyle}>
+                    <View style={{ alignItems: 'center'}}>
+                        {quals.length === 0 ? (
+                            <Text>
+                                Please select a role
+                            </Text>
+                        ): (
+                            <View>
+                            {quals.map(({id, title, abbreviation}, index) => {
+
+                        console.log(quals)
+
+                        const AddTo = ({qualid} : any) => {
+                            if (qualIDs.includes(qualid)) {
+                                setQualIDs(qualIDs.filter(item => item !== id))
+                            } else {
+                                setQualIDs([...qualIDs,qualid])
+                            }
+                        }
+
+                        return (
+                                <TouchableWithoutFeedback key={id} onPress={() => AddTo({qualid: id})}>
+                                    <View style={{ margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
+                                        borderColor: qualIDs.includes(id) === true ? 'maroon' : '#fff', 
+                                        //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
+                                    }}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>                     
+                                            <Text style={{marginLeft: 10, color: '#474747', fontSize: 18, fontWeight: '600', textAlign: 'center'}}>
+                                                {abbreviation !== null ? (title + ' (' + abbreviation + ')') : title}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                        )})}
+                        </View>
+                        )}
+                    
+                    </View>
+                </Modal>
+
 {/* how many Modal */}
                 <Modal visible={visible9} onDismiss={hideHowManyModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center', }}>
@@ -385,26 +505,20 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     ) : null}
             </View>
                 <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                {data.startTime + ' '}
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                {data.startAMPM}
+                    {format(startTime, "p")}
                 </Text>
                 <Text style={{marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
                 -
                 </Text>
                 <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                {data.endTime + ' '}
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
-                {data.endAMPM}
+                {format(endTime, "p")}
                 </Text>
             </View>
             
             <View style={{flexDirection: 'row', alignItems: 'center',}}>
             <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
                 <Text style={{}}>
-                {data.name}
+                {data.jobType}
                 </Text>
             </View>
             
@@ -486,7 +600,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                         </Text>
                                         <View>
                                             <Text style={[styles.title, {color: 'gray'}]}>
-                                                Select Shift Type
+                                                {data.jobType}
                                             </Text>
                                         </View>
                                     </View>
@@ -508,16 +622,20 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
     {/* select am/pm */}
                                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20}}>
                                     <View>
-                                        <TouchableWithoutFeedback onPress={showStartModal}>
-                                           <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
-                                                <Text style={styles.timeselect}>
-                                                    7:00
-                                                </Text>
-                                                <Text style={styles.timeselect}>
-                                                    AM
-                                                </Text>
-                                            </View> 
-                                        </TouchableWithoutFeedback> 
+                                        <TouchableOpacity activeOpacity={0.8} onPress={showStartModal}>
+                                            <ImageBackground
+                                                source={isStartDayNight === 'night' ? nightimage : isStartDayNight === 'day' ? dayimage : dayimage}
+                                                style={{backgroundColor: '#fff', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,borderRadius: 10, height: 80, width: 120, overflow: 'hidden'}}
+                                                //borderRadius={0}
+                                                resizeMode="cover"
+                                            >
+                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                                                        <Text style={styles.timeselect}>
+                                                            {format(startTime, "p")}
+                                                        </Text>
+                                                    </View> 
+                                            </ImageBackground>
+                                        </TouchableOpacity>
                                     </View>
 
                                     <View style={{justifyContent: 'center'}}>
@@ -528,16 +646,20 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     
                                     
                                     <View>
-                                        <TouchableWithoutFeedback onPress={showEndModal}>
-                                            <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
-                                                <Text style={styles.timeselect}>
-                                                    7:00
-                                                </Text>
-                                                <Text style={styles.timeselect}>
-                                                    PM
-                                                </Text>
-                                            </View>
-                                        </TouchableWithoutFeedback>
+                                        <TouchableOpacity activeOpacity={0.8} onPress={showEndModal}>
+                                            <ImageBackground
+                                                source={isEndDayNight === 'night' ? nightimage : isEndDayNight === 'day' ? dayimage : dayimage}
+                                                style={{backgroundColor: '#fff', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,borderRadius: 10, height: 80, width: 120, overflow: 'hidden'}}
+                                                //borderRadius={0}
+                                                resizeMode="cover"
+                                            >
+                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                                                        <Text style={[styles.timeselect, {color: '#000'}]}>
+                                                            {format(endTime, "p")}
+                                                        </Text>
+                                                    </View> 
+                                            </ImageBackground>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>  
 
@@ -591,21 +713,21 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             Priority
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
-                                                Regular
+                                            <Text style={[styles.title, {color: 'gray', textTransform: 'capitalize'}]}>
+                                                {data.priority}
                                             </Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity> 
     {/* special quals needed */}
-                                <TouchableOpacity onPress={showRoleModal}>
+                                <TouchableOpacity onPress={showQualsModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
-                                            Quals
+                                            Required Quals
                                         </Text>
                                         <View>
                                             <Text style={[styles.title, {color: 'gray'}]}>
-                                                Select Quals
+                                                {qualIDs.length + ' ' + 'selected'}
                                             </Text>
                                         </View>
                                     </View>
@@ -647,7 +769,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                         
                     </ScrollView>
                     </TouchableWithoutFeedback> 
-
+{/* button */}
                     <LinearGradient
                         colors={['#fff','#fff', '#ffffffa5','transparent']}
                         style={{position: 'absolute', bottom: 0 }}
