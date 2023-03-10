@@ -1,4 +1,15 @@
-import { StyleSheet, TouchableOpacity, Text, View, FlatList, Dimensions, SectionList, TouchableWithoutFeedback } from 'react-native';
+import { 
+  StyleSheet, 
+  TouchableOpacity, 
+  Text, 
+  View, 
+  FlatList, 
+  Dimensions, 
+  SectionList, 
+  TouchableWithoutFeedback,
+  RefreshControl,
+  ActivityIndicator
+ } from 'react-native';
 //import {styles} from '../styles';
 import { format, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -10,360 +21,23 @@ import Accordion from 'react-native-collapsible/Accordion';
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import { updateUser } from '../src/graphql/mutations';
 import { getUser, getRole } from '../src/graphql/queries';
-import { ActivityIndicator } from 'react-native-paper';
 
 const TabOneScreen = ({ navigation }: any) => {
 
   const [activeSections, setActiveSections] = useState([])
 
-  const [didUpdate, setDidUpdate] = useState(false)
+  const [didUpdate, setDidUpdate] = useState(false);
 
-  const dummyshifts = [
-        {
-        id: '1',
-        title: 'March 8th 2023',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: 'Some Manager',
-        name: 'CCT',
-        notes: 'random notes about the shift.',
-        system: 'Harris Health',
-        hospital: 'Lyndon B. Johnson',
-        department: 'Emergency Room',
-        role: 'nurse',
-        announcement: 'this is an announcement',
-        qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'urgent',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'night'
-      },
-      {
-        id: '2',
-        title: 'March 8th 2023',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: 'Some Manager',
-        name: 'CCT',
-        notes: 'random notes about the shift.',
-        system: 'Harris Health',
-        hospital: 'Lyndon B. Johnson',
-        department: 'Emergency Room',
-        role: 'nurse',
-        announcement: 'this is an announcement',
-        qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'urgent',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'night',
-      },
-        {
-          id: '3',
-          title: 'March 9th 2023',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          createdBy: 'Some Manager',
-          name: 'Charge',
-          notes: 'random notes about the shift.',
-          system: 'Harris Health',
-          hospital: 'Lyndon B. Johnson',
-          department: 'Emergency Room',
-          role: 'nurse',
-          announcement: 'this is an announcement',
-          qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'none',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'day'
-        },
-        {
-          id: '4',
-          title: 'March 10th 2023',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: 'Some Manager',
-        name: 'Shock Room',
-        notes: 'random notes about the shift.',
-        system: 'Harris Health',
-        hospital: 'Lyndon B. Johnson',
-        department: 'Emergency Room',
-        role: 'nurse',
-        announcement: 'this is an announcement',
-        qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'urgent',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'day'
-      },
-      {
-        id: '1',
-        title: 'March 8th 2023',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: 'Some Manager',
-        name: 'CCT',
-        notes: 'random notes about the shift.',
-        system: 'Harris Health',
-        hospital: 'Lyndon B. Johnson',
-        department: 'Emergency Room',
-        role: 'nurse',
-        announcement: 'this is an announcement',
-        qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'urgent',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'night'
-      },
-      {
-        id: '2',
-        title: 'March 8th 2023',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: 'Some Manager',
-        name: 'CCT',
-        notes: 'random notes about the shift.',
-        system: 'Harris Health',
-        hospital: 'Lyndon B. Johnson',
-        department: 'Emergency Room',
-        role: 'nurse',
-        announcement: 'this is an announcement',
-        qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'urgent',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'night',
-      },
-        {
-          id: '3',
-          title: 'March 9th 2023',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          createdBy: 'Some Manager',
-          name: 'Charge',
-          notes: 'random notes about the shift.',
-          system: 'Harris Health',
-          hospital: 'Lyndon B. Johnson',
-          department: 'Emergency Room',
-          role: 'nurse',
-          announcement: 'this is an announcement',
-          qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'none',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'day'
-        },
-        {
-          id: '4',
-          title: 'March 10th 2023',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: 'Some Manager',
-        name: 'Shock Room',
-        notes: 'random notes about the shift.',
-        system: 'Harris Health',
-        hospital: 'Lyndon B. Johnson',
-        department: 'Emergency Room',
-        role: 'nurse',
-        announcement: 'this is an announcement',
-        qual: [
-          {
-            id: '1',
-            name: 'Certified Flight Nurse',
-            abberviation: 'CFFN',
-          },
-          {
-            id: '2',
-            name: 'Pediatric Advanced Life Support',
-            abberviation: 'PALS',
-          },
-        ],
-        date: new Date(),
-        month: 'July',
-        year: '2023',
-        startTime: '700',
-        startAMPM: 'AM',
-        endTime: '1900',
-        endAMPM: 'PM',
-        payMultiplier: 1.5,
-        payRate: '20',
-        status: 'open',
-        user: 'none',
-        priority: 'urgent',
-        numNeeded: 1,
-        trade: false,
-        giveUp: false,
-        approved: 'na',
-        shiftType: 'day'
-      },
-  ];
+  //refresh state of the flatlist
+  const [isFetching, setIsFetching] = useState(false);
+
+  const onRefresh = () => {
+      setIsFetching(true);
+      setDidUpdate(!didUpdate)
+      setTimeout(() => {
+          setIsFetching(false);
+      }, 2000);
+      }
 
   const [sections, setSections] = useState([]);
 
@@ -430,6 +104,7 @@ const TabOneScreen = ({ navigation }: any) => {
       }, [])
       
     return (
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
       <View style={{height:  vis ? undefined : 0, alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
           <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -499,6 +174,7 @@ const TabOneScreen = ({ navigation }: any) => {
           </Text>
         </View>
       </View>
+      </TouchableWithoutFeedback>
     )
   }
 
@@ -553,6 +229,12 @@ const TabOneScreen = ({ navigation }: any) => {
         keyExtractor={(item, index) => item + index}
         extraData={didUpdate}
         stickySectionHeadersEnabled
+        refreshControl={
+          <RefreshControl
+          refreshing={isFetching}
+          onRefresh={onRefresh}
+          />
+        }
         renderItem={({ item } : any) => 
           <Item 
             id={item.id}

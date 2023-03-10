@@ -154,6 +154,11 @@ export const getUser = /* GraphQL */ `
           id
           userID
           qualID
+          qual {
+            id
+            title
+            abbreviation
+          }
           createdAt
           updatedAt
         }
