@@ -8,7 +8,8 @@ import {
     TouchableWithoutFeedback,
     ScrollView,
     Dimensions,
-    ImageBackground
+    ImageBackground,
+    ActivityIndicator
 } from 'react-native';
 
 import { format, parseISO } from "date-fns";
@@ -27,14 +28,13 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getUser, getRole} from '../src/graphql/queries';
 import { createShift} from '../src/graphql/mutations';
-import { ActivityIndicator } from 'react-native-paper';
 
 const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 
     const { theme } = useContext(AppContext);
 
-    const dayimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
-    const nightimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
+    const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
+    const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
 
     const [creating, setCreating] = useState(false);
 
@@ -125,7 +125,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                 giveUp: false, //is this someone giving up their shift
                 approved: false, //approved or denied
                 shiftType: 'day', // day or night
-                jobType: 'Regular',
+                jobType: 'Regular',//this does not exist in the schema
             })
 
             setRoles(response.data.getUser.department.roles.items)
@@ -293,18 +293,18 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
     useEffect(() => {
         const hours = startTime.getHours();
         if (hours > 0 && hours < 7 || hours > 18) {
-            setIsStartDayNight('day');
+            setIsStartDayNight('night');
         } else {
-            setIsStartDayNight('night')
+            setIsStartDayNight('day')
         }
     }, [startTime])
 
     useEffect(() => {
         const hours = endTime.getHours();
         if (hours > 0 && hours < 7 || hours > 18) {
-            setIsEndDayNight('day');
+            setIsEndDayNight('night');
         } else {
-            setIsEndDayNight('night')
+            setIsEndDayNight('day')
         }
     },  [endTime])
 

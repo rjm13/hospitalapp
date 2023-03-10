@@ -159,6 +159,8 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   giveUp: Boolean
   approved: String
   shiftType: String
+  isStartDayNight: String
+  isEndDayNIght: String
 }
 
 type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
