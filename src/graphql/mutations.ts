@@ -127,6 +127,9 @@ export const createUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -173,6 +176,7 @@ export const createUser = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -191,6 +195,8 @@ export const createUser = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -464,6 +470,9 @@ export const updateUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -510,6 +519,7 @@ export const updateUser = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -528,6 +538,8 @@ export const updateUser = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -801,6 +813,9 @@ export const deleteUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -847,6 +862,7 @@ export const deleteUser = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -865,6 +881,8 @@ export const deleteUser = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -1097,6 +1115,9 @@ export const createRole = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -1175,6 +1196,7 @@ export const createRole = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -1193,6 +1215,8 @@ export const createRole = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -1287,6 +1311,9 @@ export const updateRole = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -1365,6 +1392,7 @@ export const updateRole = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -1383,6 +1411,8 @@ export const updateRole = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -1477,6 +1507,9 @@ export const deleteRole = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -1555,6 +1588,7 @@ export const deleteRole = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -1573,6 +1607,8 @@ export const deleteRole = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -2277,6 +2313,47 @@ export const createDepartment = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      shifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNIght
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       roles {
         items {
           type
@@ -2382,6 +2459,47 @@ export const updateDepartment = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      shifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNIght
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       roles {
         items {
           type
@@ -2486,6 +2604,47 @@ export const deleteDepartment = /* GraphQL */ `
         }
         createdOn
         updatedOn
+      }
+      shifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNIght
+          createdOn
+          updatedOn
+        }
+        nextToken
       }
       roles {
         items {
@@ -2746,6 +2905,9 @@ export const createShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -2965,6 +3127,7 @@ export const createShift = /* GraphQL */ `
         updatedOn
       }
       date
+      dateOrder
       month
       year
       startTime
@@ -3093,6 +3256,8 @@ export const createShift = /* GraphQL */ `
       giveUp
       approved
       shiftType
+      isStartDayNight
+      isEndDayNIght
       createdOn
       updatedOn
     }
@@ -3304,6 +3469,9 @@ export const updateShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -3523,6 +3691,7 @@ export const updateShift = /* GraphQL */ `
         updatedOn
       }
       date
+      dateOrder
       month
       year
       startTime
@@ -3651,6 +3820,8 @@ export const updateShift = /* GraphQL */ `
       giveUp
       approved
       shiftType
+      isStartDayNight
+      isEndDayNIght
       createdOn
       updatedOn
     }
@@ -3862,6 +4033,9 @@ export const deleteShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -4081,6 +4255,7 @@ export const deleteShift = /* GraphQL */ `
         updatedOn
       }
       date
+      dateOrder
       month
       year
       startTime
@@ -4209,6 +4384,8 @@ export const deleteShift = /* GraphQL */ `
       giveUp
       approved
       shiftType
+      isStartDayNight
+      isEndDayNIght
       createdOn
       updatedOn
     }
@@ -4418,6 +4595,9 @@ export const createAnnouncement = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -4544,6 +4724,7 @@ export const createAnnouncement = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -4562,6 +4743,8 @@ export const createAnnouncement = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -4777,6 +4960,9 @@ export const updateAnnouncement = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -4903,6 +5089,7 @@ export const updateAnnouncement = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -4921,6 +5108,8 @@ export const updateAnnouncement = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -5136,6 +5325,9 @@ export const deleteAnnouncement = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -5262,6 +5454,7 @@ export const deleteAnnouncement = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -5280,6 +5473,8 @@ export const deleteAnnouncement = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -8622,6 +8817,9 @@ export const createEvent = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -8864,6 +9062,9 @@ export const updateEvent = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -9105,6 +9306,9 @@ export const deleteEvent = /* GraphQL */ `
           imageUri
           createdOn
           updatedOn
+        }
+        shifts {
+          nextToken
         }
         roles {
           nextToken

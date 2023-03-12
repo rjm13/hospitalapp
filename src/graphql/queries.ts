@@ -124,6 +124,9 @@ export const getUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           items {
             id
@@ -179,6 +182,7 @@ export const getUser = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -197,6 +201,8 @@ export const getUser = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -547,6 +553,9 @@ export const getRole = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -625,6 +634,7 @@ export const getRole = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -643,6 +653,8 @@ export const getRole = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -1095,6 +1107,47 @@ export const getDepartment = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      shifts {
+        items {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNIght
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       roles {
         items {
           type
@@ -1181,6 +1234,9 @@ export const listDepartments = /* GraphQL */ `
           imageUri
           createdOn
           updatedOn
+        }
+        shifts {
+          nextToken
         }
         roles {
           nextToken
@@ -1399,6 +1455,9 @@ export const getShift = /* GraphQL */ `
           imageUri
           createdOn
           updatedOn
+        }
+        shifts {
+          nextToken
         }
         roles {
           nextToken
@@ -1619,6 +1678,7 @@ export const getShift = /* GraphQL */ `
         updatedOn
       }
       date
+      dateOrder
       month
       year
       startTime
@@ -1747,6 +1807,8 @@ export const getShift = /* GraphQL */ `
       giveUp
       approved
       shiftType
+      isStartDayNight
+      isEndDayNIght
       createdOn
       updatedOn
     }
@@ -1890,6 +1952,7 @@ export const listShifts = /* GraphQL */ `
           updatedOn
         }
         date
+        dateOrder
         month
         year
         startTime
@@ -1932,6 +1995,8 @@ export const listShifts = /* GraphQL */ `
         giveUp
         approved
         shiftType
+        isStartDayNight
+        isEndDayNIght
         createdOn
         updatedOn
       }
@@ -2140,6 +2205,9 @@ export const getAnnouncement = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shifts {
+          nextToken
+        }
         roles {
           nextToken
         }
@@ -2266,6 +2334,7 @@ export const getAnnouncement = /* GraphQL */ `
           roleID
           announcementID
           date
+          dateOrder
           month
           year
           startTime
@@ -2284,6 +2353,8 @@ export const getAnnouncement = /* GraphQL */ `
           giveUp
           approved
           shiftType
+          isStartDayNight
+          isEndDayNIght
           createdOn
           updatedOn
         }
@@ -3907,6 +3978,9 @@ export const getEvent = /* GraphQL */ `
           imageUri
           createdOn
           updatedOn
+        }
+        shifts {
+          nextToken
         }
         roles {
           nextToken

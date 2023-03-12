@@ -32,6 +32,9 @@ export type RootStackParamList = {
   Inbox: undefined;
   ConfirmSetUp: undefined;
   CreateShift: undefined;
+  MyShifts: undefined;
+  ApprovalRequests: undefined;
+  ShiftApproval: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

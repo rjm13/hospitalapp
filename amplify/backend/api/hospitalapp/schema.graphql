@@ -113,6 +113,7 @@ type Department @model (timestamps: { createdAt: "createdOn", updatedAt: "update
   abbreviation: String
   hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
   hospital: Hospital @hasOne (fields: ["hospitalID"])
+  shifts: [Shift] @hasMany (indexName: "byDepartment", fields: "id")
   roles: [Role] @hasMany(indexName: "byDepartment", fields: "id")
   members: [User] @hasMany(indexName: "byDepartment", fields: "id")
   color: String
@@ -140,6 +141,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   announcement: Announcement @hasOne (fields: ["announcementID"])
   qual: [Qual]
   date: String
+  dateOrder: AWSDateTime
   month: Int
   year: Int
   startTime: String

@@ -11,25 +11,16 @@ import { getUser } from '../src/graphql/queries'
 import { API, graphqlOperation, Auth } from "aws-amplify";
 
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import uuid from 'react-native-uuid';
 
 import { AppContext } from '../AppContext';
 
 export function DrawerContent({navigation} : any) {
 
-    const [user, setUser] = useState();
-
-    const { userID } = useContext(AppContext);
-    const { setUserID } = useContext(AppContext);
-
-    const [CurrentCard, setCurrentCard] = useState(1);
-
-    const [gamesExpanded, setGamesExpanded] = useState(false);
-
     const [scorecardExpanded, setScorecardExpanded] = useState(false);
 
-
+    const [hasPending, setHasPending] = useState(false)
 
     return(
         <View style={{ flex:1 }}>
@@ -51,11 +42,8 @@ export function DrawerContent({navigation} : any) {
                             </View>
                             </View>
                     </View> */}
-                    
-                        
-
                     {/* <Drawer.Section style={istyles.drawerSection}> */}
-                    <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('MyShifts')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     {/* <MaterialCommunityIcons name='grid' color='#636363' size={22} /> */}
@@ -100,6 +88,18 @@ export function DrawerContent({navigation} : any) {
                                     </Text>
                                 </View>
                                 {/* <Feather name={gamesExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
+                            </View>
+                        </TouchableWithoutFeedback>
+
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('ApprovalRequests')}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                <View style={istyles.box}>
+                                    {/* <MaterialCommunityIcons name='cards-playing-outline' color='#636363' size={25} /> */}
+                                    <Text style={styles.itemtext}>
+                                        Approval Requests
+                                    </Text>
+                                </View>
+                                <FontAwesome5 name='exclamation-circle' color='tomato' size={20} />
                             </View>
                         </TouchableWithoutFeedback>
                 
