@@ -6,7 +6,8 @@ import {
     Dimensions, 
     TouchableWithoutFeedback, 
     Platform,
-    FlatList
+    FlatList,
+    RefreshControl
 } from "react-native";
 
 import { AppContext } from '../AppContext';
@@ -25,9 +26,24 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
-const ApprovalRequests = ({navigation} : any) => {
+const ApprovalRequests = ({navigation, route} : any) => {
+
+    const {trigger} = route.params;
 
     const [shifts, setShifts] = useState([]);
+
+    const [didUpdate, setDidUpdate] = useState(false);
+
+    //refresh state of the flatlist
+    const [isFetching, setIsFetching] = useState(false);
+
+    const onRefresh = () => {
+        setIsFetching(true);
+        setDidUpdate(!didUpdate)
+        setTimeout(() => {
+            setIsFetching(false);
+        }, 2000);
+        }
 
     useEffect(() => {
 
@@ -53,10 +69,10 @@ const ApprovalRequests = ({navigation} : any) => {
             setShifts(shiftarr)
         }
         fetchDepartment();
-    }, []);
+    }, [didUpdate, trigger]);
 
   
-        const Item = ({id, date, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+        const Item = ({id, date, firstName, lastName, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
           
             
           return (
@@ -130,9 +146,9 @@ const ApprovalRequests = ({navigation} : any) => {
                 </View>
                 </View>
       
-                <View style={{marginVertical: 4}}>
-                    <Text style={{}}>
-                    {notes}
+                <View style={{marginTop: 20, marginBottom: 4}}>
+                    <Text style={{textTransform: 'capitalize'}}>
+                    For {firstName + ' ' + lastName}
                     </Text>
                 </View>
                 </View>
@@ -161,6 +177,13 @@ const ApprovalRequests = ({navigation} : any) => {
             <FlatList 
                 data={shifts}
                 keyExtractor={item => item.id}
+                refreshControl={
+                    <RefreshControl
+                    refreshing={isFetching}
+                    onRefresh={onRefresh}
+                    />
+                  }
+                  extraData={[didUpdate, trigger]}
                 renderItem={({item} : any) =>
                 <Item 
                     id={item.id}
@@ -178,6 +201,8 @@ const ApprovalRequests = ({navigation} : any) => {
                     shiftType={item.shiftType}
                     title={item.title}
                     status={item.status}
+                    firstName={item.user.firstName}
+                    lastName={item.user.lastName}
                 />
                 }
                 ListFooterComponent={

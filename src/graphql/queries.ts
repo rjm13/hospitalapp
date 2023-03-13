@@ -1135,6 +1135,11 @@ export const getDepartment = /* GraphQL */ `
           payAddToHour
           status
           userID
+          user {
+            id
+            firstName
+            lastName
+          }
           priority
           numNeeded
           trade

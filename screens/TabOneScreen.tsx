@@ -43,6 +43,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
   const [empty, setEmpty] = useState(false)
 
+//fetch the data
   useEffect(() => {
 
     let arr = []
@@ -71,7 +72,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
       for (let i = 0; i < resp.data.getRole.activeShifts.items.length; i++) {
         let index = arr.findIndex((obj => obj.title === resp.data.getRole.activeShifts.items[i].date));
-        if (index !== -1) {
+        if (index !== -1 && resp.data.getRole.activeShifts.items[i].status === 'open') {
           arr[index].data.push(resp.data.getRole.activeShifts.items[i]);
         }
       }
@@ -92,7 +93,7 @@ const TabOneScreen = ({ navigation }: any) => {
       }
     }
     fetchShifts();
-  }, [])
+  }, [didUpdate])
 
   const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
       const [vis, setVis] = useState(true);
@@ -268,7 +269,11 @@ const TabOneScreen = ({ navigation }: any) => {
                 <Text style={{marginVertical: 80}}>
                   There are no open shifts posted at this time.
                 </Text>
-              ) : null}
+              ) : (
+                <View style={{height: 80}}>
+
+                </View>
+              )}
             </View>
         )}
         ListEmptyComponent={ () => (

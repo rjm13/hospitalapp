@@ -91,7 +91,7 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('ApprovalRequests')}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('ApprovalRequests', {trigger: Math.random()})}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     {/* <MaterialCommunityIcons name='cards-playing-outline' color='#636363' size={25} /> */}

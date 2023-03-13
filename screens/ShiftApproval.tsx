@@ -83,6 +83,11 @@ const ShiftApproval = ({navigation, route} : any) => {
   const showConfirmModal = () => {setVisible10(true);}
   const hideConfirmModal = () => setVisible10(false);
 
+  //deny modal
+  const [visible9, setVisible9] = useState(false);
+  const showDenyModal = () => {setVisible9(true);}
+  const hideDenyModal = () => setVisible9(false);
+
   //modal container style
   const containerStyle = {
     backgroundColor: '#fff', 
@@ -98,7 +103,7 @@ const ApproveShift = async () => {
         getShift, {id: id}
       ))
 
-      if (init.data.getShift.status !== 'open') {
+      if (init.data.getShift.status !== 'pending') {
         alert('Oops! It looks like you were beat to the punch. Someone else has already requested to pick up this shift.')
         setProcessing(false)
       } else {
@@ -112,8 +117,8 @@ const ApproveShift = async () => {
         ))
         console.log(response)
         if (response) {
-          alert('A pickup request has been sent to your manager.')
-          navigation.goBack();
+          alert('Shift approved.')
+          navigation.navigate('ApprovalRequests', {trigger: Math.random()});
           setProcessing(false)
         }
       }
@@ -131,8 +136,8 @@ const DenyShift = async () => {
         getShift, {id: id}
       ))
 
-      if (init.data.getShift.status !== 'open') {
-        alert('Oops! It looks like you were beat to the punch. Someone else has already requested to pick up this shift.')
+      if (init.data.getShift.status !== 'pending') {
+        alert('Oops! It looks like someone has already approved this shift.')
         setProcessing(false)
       } else {
         const userInfo = await Auth.currentAuthenticatedUser();
@@ -140,13 +145,13 @@ const DenyShift = async () => {
         const response = await API.graphql(graphqlOperation(
             updateShift, {input: {
               id: id,
-              status: 'approved',
+              status: 'open',
             }}
         ))
         console.log(response)
         if (response) {
-          alert('A pickup request has been sent to your manager.')
-          navigation.goBack();
+          alert('Shift pickup denied.')
+          navigation.navigate('ApprovalRequests', {trigger: Math.random()});
           setProcessing(false)
         }
       }
@@ -167,13 +172,13 @@ const DenyShift = async () => {
           <Text style={{textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}}>
             for
           </Text>
-          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20, textTransform: 'capitalize'}}>
+          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}}>
             {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
           </Text>
 
           <LinearGradient
         colors={['#fff','#fff', '#ffffffa5','transparent']}
-        style={{position: 'absolute', bottom: -50 }}
+        style={{position: 'absolute', bottom: -70 }}
         start={{ x: 0, y: 1 }}
         end={{ x: 0, y: 0 }}
       >
@@ -187,6 +192,46 @@ const DenyShift = async () => {
                     <View style={styles.buttonlayout}>
                             <Text style={styles.buttontext}>
                                 Approve
+                            </Text> 
+                        </View>  
+                </TouchableOpacity>
+            )}
+            <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+              {/* This shift pick up will not be final until it has been approved by your manager. */}
+            </Text>
+        </View>
+        
+      </LinearGradient>
+        </View>
+      </Modal>
+      <Modal visible={visible9} onDismiss={hideDenyModal} contentContainerStyle={containerStyle}>
+        <View style={{height: '50%'}}>
+          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
+            DENY this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
+          </Text>
+          <Text style={{textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}}>
+            for
+          </Text>
+          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}}>
+            {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
+          </Text>
+
+          <LinearGradient
+        colors={['#fff','#fff', '#ffffffa5','transparent']}
+        style={{position: 'absolute', bottom: -70 }}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
+      >
+        <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+            {processing ? (
+                <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                    <ActivityIndicator size='small' color='maroon'/>
+                </View>
+            ) : (
+                <TouchableOpacity onPress={DenyShift}>
+                    <View style={[styles.buttonlayout, {backgroundColor: 'darkgray'}]}>
+                            <Text style={styles.buttontext}>
+                                Deny
                             </Text> 
                         </View>  
                 </TouchableOpacity>
@@ -328,7 +373,7 @@ const DenyShift = async () => {
           </TouchableOpacity>
         </View>
         <View style={{marginBottom: 20, width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-          <TouchableOpacity onPress={showConfirmModal}>
+          <TouchableOpacity onPress={showDenyModal}>
               <View style={[styles.buttonlayout, {backgroundColor: 'lightgray'}]}>
                       <Text style={styles.buttontext}>
                           Deny

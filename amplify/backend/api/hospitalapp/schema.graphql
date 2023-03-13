@@ -152,7 +152,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   payRate: Float
   payAddToShift: Float
   payAddToHour: Float
-  status: String
+  status: String #open, pending, approved, denied, expired
   userID: ID @index(name: "byUser", sortKeyFields: ["id"])
   user: User @hasOne (fields: ["userID"]) #this is who is working the shift
   priority: String
@@ -163,6 +163,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   shiftType: String
   isStartDayNight: String
   isEndDayNIght: String
+  pickUpNote: String
 }
 
 type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])
