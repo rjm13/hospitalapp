@@ -156,7 +156,7 @@ const PickUpShift = async () => {
 {/* header icon row */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 40}}>
         <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={'#000'} style={{padding: 20, margin: -20}}/>
-        <FontAwesome name='edit' size={20} color={'#000'} style={{padding: 20, margin: -20}}/>
+        <FontAwesome name='edit' size={20} color={'#000'} style={{padding: 20, margin: -20}} onPress={() => navigation.navigate('EditShift', {id: id})}/>
       </View>
 {/* date title */}
       <View style={{alignItems: 'center', marginBottom: 20, marginTop: 40}}>

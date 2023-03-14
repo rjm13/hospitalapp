@@ -35,6 +35,8 @@ export type RootStackParamList = {
   MyShifts: undefined;
   ApprovalRequests: undefined;
   ShiftApproval: undefined;
+  FilledShifts: undefined;
+  EditShift: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
