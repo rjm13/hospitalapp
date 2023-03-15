@@ -18,6 +18,14 @@ export default function App() {
 
   const [userID, setUserID] = useState<string|null>(null);
 
+  const [systemID, setSystemID] = useState<string|null>(null);
+
+  const [hospID, setHospID] = useState<string|null>(null);
+
+  const [departID, setDepartID] = useState<string|null>(null);
+
+  const [userRoleID, setUserRoleID] = useState<string|null>(null);
+
   const [isRootScreen, setIsRootScreen] = useState<boolean|null>(null);
 
   const [theme, setTheme] = useState<boolean>(false);
@@ -34,7 +42,15 @@ export default function App() {
       <SafeAreaProvider>
         <AppContext.Provider value={{
           userID,
-          setUserID: (val: {}) => setUserID(''),
+          setUserID: (val: string | null) => setUserID(val),
+          systemID,
+          setSystemID: (val: string | null) => setSystemID(val),
+          hospID,
+          setHospID: (val: string | null) => setHospID(val),
+          departID,
+          setDepartID: (val: string | null) => setDepartID(val),
+          userRoleID,
+          setUserRoleID: (val: string | null) => setUserRoleID(val),
           isRootScreen,
           setIsRootScreen: (val: boolean) => setIsRootScreen(val),
           deepLink,

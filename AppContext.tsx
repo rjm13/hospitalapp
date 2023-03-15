@@ -6,7 +6,19 @@ const context = {
     setIsRootScreen: (val: boolean | null) => {},
 
     userID: null,
-    setUserID: (id: string | null) => {},
+    setUserID: (val: string | null) => {},
+
+    systemID: null,
+    setSystemID: (val: string | null) => {},
+
+    hospID: null,
+    setHospID: (val: string | null) => {},
+
+    departID: null,
+    setDepartID: (val: string | null) => {},
+
+    userRoleID: null,
+    setUserRoleID: (val: string | null) => {},
 
     deepLink: null,
     setDeepLink: () => {},

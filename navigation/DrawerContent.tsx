@@ -6,8 +6,9 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Caption, Paragraph, Drawer, Text } from 'react-native-paper';
 //import * as Animatable from 'react-native-animatable';
 import { styles } from '../styles';
+import { useDrawerStatus } from '@react-navigation/drawer'
 
-import { getUser } from '../src/graphql/queries'
+import { getUser, getDepartment } from '../src/graphql/queries'
 import { API, graphqlOperation, Auth } from "aws-amplify";
 
 import Feather from 'react-native-vector-icons/Feather';
@@ -18,9 +19,41 @@ import { AppContext } from '../AppContext';
 
 export function DrawerContent({navigation} : any) {
 
+    const status = useDrawerStatus()
+
     const [scorecardExpanded, setScorecardExpanded] = useState(false);
 
+    const [didUpdate, setDidUpdate] = useState(false)
+
     const [hasPending, setHasPending] = useState(false)
+
+    useEffect(() => {
+        const countShifts = async () => {
+
+            let countarr = []
+
+            if (status === "open") {
+                const userInfo = await Auth.currentAuthenticatedUser();
+                const response = await API.graphql(graphqlOperation(
+                    getUser, {id: userInfo.attributes.sub}
+                ))
+                const resp = await API.graphql(graphqlOperation(
+                    getDepartment, {id: response.data.getUser.departmentID}
+                ))
+
+                for (let i = 0; i < resp.data.getDepartment.shifts.items.length; i++) {
+                    if (resp.data.getDepartment.shifts.items[i].status === 'pending') {
+                        countarr.push(resp.data.getDepartment.shifts.items[i])
+                    }
+                }
+                
+                if (countarr.length > 0) {
+                setHasPending(true)
+                } else {setHasPending(false)}
+            }
+        }
+        countShifts();
+    }, [status])
 
     return(
         <View style={{ flex:1 }}>
@@ -99,7 +132,9 @@ export function DrawerContent({navigation} : any) {
                                         Approval Requests
                                     </Text>
                                 </View>
+                                {hasPending === true ? (
                                 <FontAwesome5 name='exclamation-circle' color='tomato' size={20} />
+                                ) : null}
                             </View>
                         </TouchableWithoutFeedback>
 

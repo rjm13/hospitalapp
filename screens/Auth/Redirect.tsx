@@ -18,9 +18,12 @@ const Redirect = ({route, navigation} : any) => {
 
     const trigger = route.params
 
-    const { userID } = useContext(AppContext);
     const { setUserID } = useContext(AppContext);
     const { setTheme } = useContext(AppContext);
+    const { setSystemID } = useContext(AppContext);
+    const { setHospID } = useContext(AppContext);
+    const { setDepartID } = useContext(AppContext);
+    const { setUserRoleID } = useContext(AppContext);
 
     useEffect(() => {
 
@@ -36,8 +39,6 @@ const Redirect = ({route, navigation} : any) => {
                 if (userInfo === 'The user is not authenticated') {
                     navigation.navigate('SignIn')
                 }
-
-                //if the user has an account, but is not authenticated, redirect to confirm account screen
 
                 else {
                     const userData = await API.graphql(graphqlOperation(
@@ -56,9 +57,13 @@ const Redirect = ({route, navigation} : any) => {
         
                     if (userData.data.getUser) {
                         setUserID(userData.data.getUser);
+                        setSystemID(userData.data.getUser.systemID)
+                        setHospID(userData.data.getUser.hospID)
+                        setDepartID(userData.data.getUser.departID)
+                        setUserRoleID(userData.data.getUser.primaryRoleID)
                         setTheme(userData.data.getUser.Setting1);
 
-                        if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null) {
+                        if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null || userData.data.getUser.lastName === null) {
                             navigation.reset({
                                 //index: 0,
                                 routes: [{ name: 'Welcome' }],

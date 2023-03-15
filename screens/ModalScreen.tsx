@@ -52,7 +52,11 @@ const ShiftModal = ({navigation, route} : any) => {
     },
     createdOn: new Date(),
     priority: '',
-    status: 'open',
+    status: '',
+    user: {
+      firstName: '',
+      lastName: ''
+    }
   })
 
   const [processing, setProcessing] = useState(false);
@@ -72,6 +76,11 @@ const ShiftModal = ({navigation, route} : any) => {
   const [visible10, setVisible10] = useState(false);
   const showConfirmModal = () => {setVisible10(true);}
   const hideConfirmModal = () => setVisible10(false);
+
+  //confirm modal
+  const [visible11, setVisible11] = useState(false);
+  const showReOpenModal = () => {setVisible11(true);}
+  const hideReOpenModal = () => setVisible11(false);
 
   //modal container style
   const containerStyle = {
@@ -114,6 +123,40 @@ const PickUpShift = async () => {
     }
 }
 
+const ReOpenShift = async () => {
+  setProcessing(true);
+  try {
+
+    const init = await API.graphql(graphqlOperation(
+      getShift, {id: id}
+    ))
+
+    if (init.data.getShift.status !== 'approved') {
+      alert('Oops! It looks like you were beat to the punch. This shift is either expierd or no longer approved.')
+      setProcessing(false)
+    } else {
+      const userInfo = await Auth.currentAuthenticatedUser();
+
+      const response = await API.graphql(graphqlOperation(
+          updateShift, {input: {
+            id: id,
+            status: 'open',
+            userID: null
+          }}
+      ))
+      console.log(response)
+      if (response) {
+        alert('Shift has been re-opened')
+        navigation.navigate('FilledShifts', {trigger: Math.random()});
+        setProcessing(false)
+      }
+    }
+  } catch (e) {
+    setProcessing(false)
+    alert(e.toString())
+  }
+}
+
   return (
     <Provider>
       <Portal>
@@ -144,6 +187,39 @@ const PickUpShift = async () => {
             )}
             <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
               This shift pick up will not be final until it has been approved by your manager.
+            </Text>
+        </View>
+        
+      </LinearGradient>
+        </View>
+      </Modal>
+      <Modal visible={visible11} onDismiss={hideReOpenModal} contentContainerStyle={containerStyle}>
+        <View style={{height: '50%'}}>
+          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
+            Cancel this approval for {shift?.user?.firstName.toUpperCase()} {shift?.user?.lastName.toUpperCase()} and re-open this shift on {shift.date} from {shift.startTime} to {shift.endTime}?
+          </Text>
+          <LinearGradient
+        colors={['#fff','#fff', '#ffffffa5','transparent']}
+        style={{position: 'absolute', bottom: -50 }}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
+      >
+        <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+            {processing ? (
+                <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                    <ActivityIndicator size='small' color='maroon'/>
+                </View>
+            ) : (
+                <TouchableOpacity onPress={ReOpenShift}>
+                    <View style={styles.buttonlayout}>
+                            <Text style={styles.buttontext}>
+                                Re-open
+                            </Text> 
+                        </View>  
+                </TouchableOpacity>
+            )}
+            <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+              This will cancel the shift pick up and re-open the shift for others. To cancel the shift, click on the edit icon.
             </Text>
         </View>
         
@@ -267,37 +343,50 @@ const PickUpShift = async () => {
         </Text>
       </View>
 {/* button */}
-      <LinearGradient
-        colors={['#fff','#fff', '#ffffffa5','transparent']}
-        style={{position: 'absolute', bottom: 0 }}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-      >
-        <View style={{marginBottom: 20, width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-          <TouchableOpacity onPress={showConfirmModal}>
-              <View style={styles.buttonlayout}>
-                      <Text style={styles.buttontext}>
-                          Pick Up
-                      </Text> 
-                  </View>  
-          </TouchableOpacity>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 4, }}>
-          <Text style={{textAlign: 'center'}}>
-            {'Created by' + ' '}
-          </Text>
-          <Text style={{textAlign: 'center', textTransform: 'capitalize'}}>
-            {shift.createdBy.firstName + ' '}
-          </Text>
-          <Text style={{textAlign: 'center'}}>
-            on {format(new Date(shift.createdOn), 'MMM do yyyy')}
-          </Text>
-        </View>
-        <Text style={{textAlign: 'center', color: 'gray', marginBottom: 20}}>
-          Status: {shift.status}
-        </Text>
-        
-      </LinearGradient>
+          <LinearGradient
+            colors={['#fff','#fff', '#ffffffa5','transparent']}
+            style={{position: 'absolute', bottom: 0 }}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 0, y: 0 }}
+          >
+            {shift.status === 'open' ? (
+            <View style={{marginBottom: 20, width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+              <TouchableOpacity onPress={showConfirmModal}>
+                  <View style={styles.buttonlayout}>
+                          <Text style={styles.buttontext}>
+                              Pick Up
+                          </Text> 
+                      </View>  
+              </TouchableOpacity>
+            </View>
+            ) : (
+              <TouchableOpacity onPress={showReOpenModal}>
+                <View style={{justifyContent: 'center', marginTop: 20, marginBottom: 40, overflow: 'hidden', borderRadius: 24, borderWidth: 1, paddingVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
+                    <FontAwesome5 name= 'user-nurse' size={20} style={{marginRight: 6}}/>
+                    <Text style={{textTransform: 'capitalize', fontSize: 20}}>
+                        {shift?.user?.firstName + ' ' + shift?.user?.lastName}
+                    </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 4, }}>
+              <Text style={{textAlign: 'center'}}>
+                {'Created by' + ' '}
+              </Text>
+              <Text style={{textAlign: 'center', textTransform: 'capitalize'}}>
+                {shift.createdBy?.firstName + ' '}
+              </Text>
+              <Text style={{textAlign: 'center'}}>
+                on {format(new Date(shift.createdOn), 'MMM do yyyy')}
+              </Text>
+            </View>
+            <Text style={{textAlign: 'center', color: 'gray', marginBottom: 20}}>
+              Status: {shift.status}
+            </Text>
+            
+          </LinearGradient>
+      
 
       <StatusBar style="dark" backgroundColor='transparent'/>
     </View>

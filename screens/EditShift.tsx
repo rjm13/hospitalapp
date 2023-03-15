@@ -26,8 +26,8 @@ import {Provider, Portal, Modal} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { getUser, getRole} from '../src/graphql/queries';
-import { createShift} from '../src/graphql/mutations';
+import { getShift, getRole, getUser} from '../src/graphql/queries';
+import { updateShift} from '../src/graphql/mutations';
 
 const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
 
@@ -44,8 +44,8 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
     const [roleTitle, setRoleTitle] = useState('Select Role');
 
     const [date, setDate] = useState(new Date());
-    const [startTime, setStartTime] = useState(new Date('2023-01-15T13:00:00'));
-    const [endTime, setEndTime] = useState(new Date('2023-01-15T01:00:00'));
+    const [startTime, setStartTime] = useState(new Date('2023-01-15T12:00:00'));
+    const [endTime, setEndTime] = useState(new Date('2023-01-15T00:00:00'));
 
     const howmany = [1, 2, 3, 4, 5, 6, 7, 8];
     const multiplier = [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0];
@@ -91,53 +91,108 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
             jobType: 'Regular',
     });
 
+    const [shift, setShift] = useState()
+
     useEffect(() => {
         const fetchInfo = async () => {
             const userInfo = await Auth.currentAuthenticatedUser();
-            const response = await API.graphql(graphqlOperation(
+            const userresponse = await API.graphql(graphqlOperation(
                 getUser, {id: userInfo.attributes.sub}
             ))
+            // setData({...data, 
+            //     type: 'Shift',
+            //     createdByID: userInfo.attributes.sub, //the id of the manager who created the shift
+            //     //name: '', //type of shift - CCT, charge, 
+            //     //notes: '',
+            //     systemID: userInfo.attributes.zoneinfo,
+            //     hospitalID: response.data.getUser.hospID,
+            //     departmentID: response.data.getUser.departmentID,
+            //     //roleID: '',
+            //     //announcementID: '',
+            //     //quals: [], //what quals are needed
+            //     date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+            //     month: 0, //month integer
+            //     year: 0, //year integer
+            //     startTime: 0,
+            //     startAMPM: 'AM', //AM or PM
+            //     endTime: 0,
+            //     endAMPM: 'PM', //AM or PM
+            //     payMultiplier: 1.0, //must be a decimal
+            //     payRate: 0, //float, whatever that means
+            //     payAddToShift: 0,
+            //     payAddToHour: 0,
+            //     status: '', //open, filled, pending
+            //     userID: '', //person working the shift
+            //     priority: 'normal', //urgent, high needs, normal
+            //     numNeeded: 1, //how many of the same shift are need. will loop and create multiple
+            //     trade: false, //is the shift for trade
+            //     giveUp: false, //is this someone giving up their shift
+            //     approved: false, //approved or denied
+            //     shiftType: 'day', // day or night
+            //     jobType: 'Regular',//this does not exist in the schema
+            // })
+
+            // setRoles(response.data.getUser.department.roles.items)
+
+            const response = await API.graphql(graphqlOperation(
+                getShift, {id: id}
+            ))
+
+//completely unnecessary code, could have just updated the schema
+            let endhour = response.data.getShift.endTime.charAt(1) === ':' ? response.data.getShift.endTime.charAt(0) : response.data.getShift.endTime.slice(0, 2);
+            let endhours = response.data.getShift.endTime.slice(-2) === 'AM' ? +endhour : +endhour + 12
+            let endminute = response.data.getShift.endTime.charAt(1) === ':' ? response.data.getShift.endTime.slice(2, 2) : response.data.getShift.endTime.slice(3, 2);
+            
+            let starthour = response.data.getShift.startTime.charAt(1) === ':' ? response.data.getShift.startTime.charAt(0) : response.data.getShift.startTime.slice(0, 2);
+            let starthours = response.data.getShift.startTime.slice(-2) === 'AM' ? +starthour : +starthour + 12
+            let startminute = response.data.getShift.startTime.charAt(1) === ':' ? response.data.getShift.startTime.slice(2, 2) : response.data.getShift.startTime.slice(3, 2);
+            
+            const endresult = (new Date(2014, 8, 0, endhours, endminute, 0))
+            const startresult = (new Date(2014, 8, 0, starthours, startminute, 0))
+
+            setShift(response.data.getShift)
+            setStartTime(startresult)
+            setEndTime(endresult)
             setData({...data, 
                 type: 'Shift',
                 createdByID: userInfo.attributes.sub, //the id of the manager who created the shift
                 //name: '', //type of shift - CCT, charge, 
-                //notes: '',
+                notes: response.data.getShift.notes,
                 systemID: userInfo.attributes.zoneinfo,
-                hospitalID: response.data.getUser.hospID,
-                departmentID: response.data.getUser.departmentID,
+                hospitalID: userresponse.data.getUser.hospID,
+                departmentID: userresponse.data.getUser.departmentID,
                 //roleID: '',
                 //announcementID: '',
                 //quals: [], //what quals are needed
-                date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+                date: response.data.getShift.date, //start date of the shift, format (March 8th 2023)
                 month: 0, //month integer
                 year: 0, //year integer
                 startTime: 0,
-                startAMPM: 'AM', //AM or PM
+                startAMPM: response.data.getShift.startAMPM, //AM or PM
                 endTime: 0,
-                endAMPM: 'PM', //AM or PM
-                payMultiplier: 1.0, //must be a decimal
-                payRate: 0, //float, whatever that means
+                endAMPM: response.data.getShift.endAMPM, //AM or PM
+                payMultiplier: response.data.getShift.payMultiplier, //must be a decimal
+                payRate: response.data.getShift.payRate, //float, whatever that means
                 payAddToShift: 0,
                 payAddToHour: 0,
-                status: '', //open, filled, pending
-                userID: '', //person working the shift
-                priority: 'normal', //urgent, high needs, normal
+                status: response.data.getShift.status, //open, filled, pending
+                userID: response.data.getShift.userID, //person working the shift
+                priority: response.data.getShift.priority, //urgent, high needs, normal
                 numNeeded: 1, //how many of the same shift are need. will loop and create multiple
                 trade: false, //is the shift for trade
                 giveUp: false, //is this someone giving up their shift
                 approved: false, //approved or denied
-                shiftType: 'day', // day or night
-                jobType: 'Regular',//this does not exist in the schema
+                shiftType: response.data.getShift.shiftType, // day or night
+                jobType: response.data.getShift.jobType,//this does not exist in the schema
             })
 
-            setRoles(response.data.getUser.department.roles.items)
 
         }
         
         fetchInfo();
     }, [])
 
-    const Create = async () => {
+    const Update = async () => {
 
         setCreating(true);
         
@@ -147,17 +202,18 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
 
         for (let i = 0; i < data.numNeeded; i++) {
             const response = await API.graphql(graphqlOperation(
-                createShift, {input: {
+                updateShift, {input: {
+                    id: id,
                     type: 'Shift',
-                    createdByID: data.createdByID, //the id of the manager who created the shift
-                    name: data.name, //type of shift - CCT, charge, 
+                    //createdByID: data.createdByID, //the id of the manager who created the shift
+                    //name: data.name, //type of shift - CCT, charge, 
                     notes: data.notes,
-                    systemID: data.systemID,
-                    hospitalID: data.hospitalID,
-                    departmentID: data.departmentID,
-                    roleID: data.roleID,
+                    //systemID: data.systemID,
+                    //hospitalID: data.hospitalID,
+                    //departmentID: data.departmentID,
+                    //roleID: data.roleID,
                     //quals: [], //what quals are needed
-                    date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+                    //date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
                     //month: 0, //month integer
                     //year: 0, //year integer
                     startTime: format(startTime, "p"),
@@ -168,20 +224,20 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                     payRate: data.payRate, //float, whatever that means
                     //payAddToShift: 0,
                     //payAddToHour: 0,
-                    status: 'open', //open, filled, pending
+                    //status: 'open', //open, filled, pending
                     //userID: null, //person working the shift
                     priority: data.priority, //urgent, high needs, normal
-                    numNeeded: data.numNeeded, //how many of the same shift are need. will loop and create multiple
-                    trade: false, //is the shift for trade
-                    giveUp: false, //is this someone giving up their shift
-                    approved: false, //approved or denied
+                    //numNeeded: data.numNeeded, //how many of the same shift are need. will loop and create multiple
+                    //trade: false, //is the shift for trade
+                    //giveUp: false, //is this someone giving up their shift
+                    //approved: false, //approved or denied
                     shiftType: data.shiftType, // day or night
                     //jobType: 'Regular',
                 }}
             ))
             console.log(response)
             if (response && i === data.numNeeded - 1) {
-                navigation.goBack();
+                navigation.navigate('FilledShifts', {trigger: Math.random()});
             }
         }
 
@@ -549,10 +605,10 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                     <View style={{ alignItems: 'center'}}>
                         <ScrollView style={{height: '70%'}} showsVerticalScrollIndicator={false}>
                             <Text style={[styles.title, {textAlign: 'center', color: '#000'}]}>
-                                Create these shifts?
+                                Update this shift?
                             </Text>
                             <Text style={{textAlign: 'center'}}>
-                                For {roleTitle.toLowerCase()}s on {format(date, "MMMM do yyyy")}?
+                               {format(date, "MMMM do yyyy")}
                             </Text>
                             <View style={{alignSelf: 'center', height: 1, backgroundColor: '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
                         {
@@ -638,10 +694,10 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     <ActivityIndicator size='small' color='maroon'/>
                                 </View>
                             ) : (
-                                <TouchableOpacity onPress={Create}>
+                                <TouchableOpacity onPress={Update}>
                                     <View style={styles.buttonlayout}>
                                             <Text style={styles.buttontext}>
-                                                Create
+                                                Update
                                             </Text> 
                                         </View>  
                                 </TouchableOpacity>
@@ -668,14 +724,14 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     onPress={() => navigation.goBack()}
                                 />
                                 <Text style={styles.title}>
-                                    Shift Template
+                                    Edit Shift
                                 </Text>
                                 <View />
                             </View>
 {/* body */}
                             <View style={{marginTop: 40}}>
     {/*role */}
-                                <TouchableOpacity onPress={showRoleModal}>
+                                {/* <TouchableOpacity onPress={showRoleModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
                                             Role
@@ -686,10 +742,10 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             </Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
 
     {/* type of shift (name) */}
-                                <TouchableOpacity onPress={showTypeModal}>
+                                {/* <TouchableOpacity onPress={showTypeModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
                                             Type
@@ -700,20 +756,20 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             </Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
     {/* select day */}
-                                <TouchableOpacity onPress={showDateModal}>
+                                {/* <TouchableOpacity onPress={showDateModal}> */}
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
                                             Date
                                         </Text>
                                         <View>
                                             <Text style={[styles.title, {color: 'gray'}]}>
-                                                {format(date, "MMMM do yyyy") === format(new Date(), "MMMM do yyyy") ? 'Today' : format(date, "MMMM do yyyy") }
+                                                {shift?.date === format(new Date(), "MMMM do yyyy") ? 'Today' : shift?.date }
                                             </Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
+                                {/* </TouchableOpacity> */}
     {/* select start/end time */}
     {/* select am/pm */}
                                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20}}>
@@ -816,7 +872,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     </View>
                                 </TouchableOpacity> 
     {/* special quals needed */}
-                                <TouchableOpacity onPress={showQualsModal}>
+                                {/* <TouchableOpacity onPress={showQualsModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
                                             Required Quals
@@ -827,7 +883,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             </Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
     {/* notes */}   
                                 <View style={{marginVertical: 20}}>
                                     <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
@@ -835,18 +891,19 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     </Text>
                                     <View style={[styles.inputfield, {height: 100, backgroundColor: 'white', borderWidth: 1}]}>
                                         <TextInput 
-                                            placeholder='...'
-                                            placeholderTextColor='#000000a5'
+                                            // placeholder={data.notes}
+                                            // placeholderTextColor='#000000a5'
                                             style={[styles.textInputTitle, {color: '#000]'}]}
                                             maxLength={200}
                                             onChangeText={(val) => handleNote(val)}
                                             autoCapitalize='none'
                                             multiline={true}
+                                            defaultValue={data.notes}
                                         />
                                     </View>
                                 </View>
     {/* numneeded, how many of this shift to create */}
-                                <TouchableOpacity onPress={showHowManyModal}>
+                                {/* <TouchableOpacity onPress={showHowManyModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
                                             How Many?
@@ -857,7 +914,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             </Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>       
+                                </TouchableOpacity>        */}
                             </View>
     {/* footer */}
                             <View style={{height: 160}}/>
@@ -881,7 +938,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                 <TouchableOpacity onPress={showConfirmModal}>
                                     <View style={styles.buttonlayout}>
                                             <Text style={styles.buttontext}>
-                                                Create Shift
+                                                Update Shift
                                             </Text> 
                                         </View>  
                                 </TouchableOpacity>
