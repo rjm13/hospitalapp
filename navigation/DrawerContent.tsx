@@ -5,7 +5,8 @@ import { View, StyleSheet, TouchableOpacity, TouchableHighlight, TouchableWithou
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Caption, Paragraph, Drawer, Text } from 'react-native-paper';
 //import * as Animatable from 'react-native-animatable';
-import { styles } from '../styles';
+//import { styles } from '../styles';
+import useStyles from '../styles';
 import { useDrawerStatus } from '@react-navigation/drawer'
 
 import { getUser, getDepartment } from '../src/graphql/queries'
@@ -18,6 +19,10 @@ import uuid from 'react-native-uuid';
 import { AppContext } from '../AppContext';
 
 export function DrawerContent({navigation} : any) {
+
+    const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const status = useDrawerStatus()
 

@@ -9,7 +9,8 @@ import {AppContext} from '../AppContext';
 
 import Colors from '../constants/Colors'
 
-import {styles} from '../styles';
+//import {styles} from '../styles';
+import useStyles from '../styles';
 
 import { useRoute } from '@react-navigation/native';
 
@@ -26,6 +27,9 @@ const Settings = ({navigation} : any) => {
 
     const { setTheme } = useContext(AppContext);
     const { theme } = useContext(AppContext);
+    const { userID } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [userInfo, setUserInfo] = useState()
 
@@ -33,17 +37,26 @@ const Settings = ({navigation} : any) => {
     const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
 
     const onToggleSwitch = async () => {
-        setIsSwitchOn(!isSwitchOn);
-        setTheme(!theme);
-        const userInfo = await Auth.currentAuthenticatedUser();
 
-        const response = await API.graphql(
-            graphqlOperation(
-                updateUser, {input: {
-                    id: userInfo.attributes.sub,
-                    Setting1: !theme,
-        }}))
-        console.log(response)
+        if (theme === true) {
+            setIsSwitchOn(false);
+            setTheme(false);
+            await API.graphql(
+                graphqlOperation(
+                    updateUser, {input: {
+                        id: userID,
+                        Setting1: false,
+            }}))
+        } else {
+            setIsSwitchOn(true);
+            setTheme(true);
+            await API.graphql(
+                graphqlOperation(
+                    updateUser, {input: {
+                        id: userID,
+                        Setting1: true,
+            }}))
+        }
     }  
 
     const [quals, setQuals] = useState([{}]);
@@ -127,7 +140,7 @@ const Settings = ({navigation} : any) => {
                     <View style={{padding: 30, margin:-30}}>
                         <FontAwesome5 
                             name='chevron-left'
-                            color='#000'
+                            color={theme === true ? '#fff' : '#000'}
                             size={20}
                         />
                     </View>
@@ -147,7 +160,7 @@ const Settings = ({navigation} : any) => {
             <View>
                 <View style={styles.optionsitem}>
                     <View style={istyles.subblock}>
-                        <Text style={{fontSize: 16, color: '#000'}}>
+                        <Text style={styles.settingsitem}>
                             Dark Mode
                         </Text>
                     </View>
@@ -173,7 +186,7 @@ const Settings = ({navigation} : any) => {
             <View >
                 <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', }}>
+                            <Text style={styles.settingsitem}>
                                 Name
                             </Text>
                             <Text style={[styles.infotext, {textTransform: 'capitalize'}]}>
@@ -186,7 +199,7 @@ const Settings = ({navigation} : any) => {
             <View >
                 <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', }}>
+                            <Text style={styles.settingsitem}>
                                 System
                             </Text>
                             <Text style={styles.infotext}>
@@ -199,7 +212,7 @@ const Settings = ({navigation} : any) => {
             <View >
                 <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', }}>
+                            <Text style={styles.settingsitem}>
                                 Hospital
                             </Text>
                             <Text style={styles.infotext}>
@@ -212,7 +225,7 @@ const Settings = ({navigation} : any) => {
             <View >
                 <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', }}>
+                            <Text style={styles.settingsitem}>
                                 Department
                             </Text>
                             <Text style={styles.infotext}>
@@ -225,7 +238,7 @@ const Settings = ({navigation} : any) => {
             <View >
                 <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', }}>
+                            <Text style={styles.settingsitem}>
                                 Role
                             </Text>
                             <Text style={styles.infotext}>
@@ -238,7 +251,7 @@ const Settings = ({navigation} : any) => {
             <View >
                 <View style={styles.optionsitem}>
                     <View style={[istyles.subblock, {width: '100%', flexDirection: 'column', justifyContent: 'space-between'}]}>
-                            <Text style={{fontSize: 16, color: '#000', marginBottom:10 }}>
+                            <Text style={[styles.settingsitem, { marginBottom:10}]}>
                                 Qualifications
                             </Text>
                             <ScrollView contentContainerStyle={{}} style={{ }}>
@@ -268,7 +281,7 @@ const Settings = ({navigation} : any) => {
                 <View style={styles.optionsitem}>
                     <View style={istyles.subblock}>
                         <TouchableWithoutFeedback onPress={showModal}>
-                            <Text style={{fontSize: 16, color: '#000', }}>
+                            <Text style={styles.settingsitem}>
                                 Sign Out
                             </Text>
                         </TouchableWithoutFeedback>

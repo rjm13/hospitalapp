@@ -5,7 +5,8 @@ import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../../src/graphql/queries';
 import { updateUser } from '../../src/graphql/mutations';
 import { StatusBar } from 'expo-status-bar';
-import {styles} from '../../styles';
+//import {styles} from '../../styles';
+import useStyles from '../../styles';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -18,12 +19,15 @@ const Redirect = ({route, navigation} : any) => {
 
     const trigger = route.params
 
+    const { theme } = useContext(AppContext);
     const { setUserID } = useContext(AppContext);
     const { setTheme } = useContext(AppContext);
     const { setSystemID } = useContext(AppContext);
     const { setHospID } = useContext(AppContext);
     const { setDepartID } = useContext(AppContext);
     const { setUserRoleID } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     useEffect(() => {
 
@@ -34,7 +38,7 @@ const Redirect = ({route, navigation} : any) => {
             try {
                 const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true }).catch(err=>err)
 
-                console.log(userInfo)
+                //console.log(userInfo)
 
                 if (userInfo === 'The user is not authenticated') {
                     navigation.navigate('SignIn')
@@ -43,7 +47,7 @@ const Redirect = ({route, navigation} : any) => {
                 else {
                     const userData = await API.graphql(graphqlOperation(
                         getUser,{ id: userInfo.attributes.sub}))
-                    console.log(userData.data.getUser)
+                    //console.log(userData.data.getUser)
 
                     if (userData.data.getUser.system === null) {
                         const resp = await API.graphql(graphqlOperation(
@@ -52,14 +56,14 @@ const Redirect = ({route, navigation} : any) => {
                                 systemID: userInfo.attributes.zoneinfo
                             }}
                         ))
-                        console.log(resp)
+                        //console.log(resp)
                     }
         
                     if (userData.data.getUser) {
-                        setUserID(userData.data.getUser);
+                        setUserID(userData.data.getUser.id);
                         setSystemID(userData.data.getUser.systemID)
                         setHospID(userData.data.getUser.hospID)
-                        setDepartID(userData.data.getUser.departID)
+                        setDepartID(userData.data.getUser.departmentID)
                         setUserRoleID(userData.data.getUser.primaryRoleID)
                         setTheme(userData.data.getUser.Setting1);
 

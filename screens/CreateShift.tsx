@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import DatePicker from 'react-native-date-picker'
 
 import { StatusBar } from 'expo-status-bar';
@@ -26,12 +26,16 @@ import {Provider, Portal, Modal} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { getUser, getRole} from '../src/graphql/queries';
+import { getDepartment, getRole} from '../src/graphql/queries';
 import { createShift} from '../src/graphql/mutations';
 
-const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
+const CreateShift = ({navigation} : {navigation: any}) => {
 
     const { theme } = useContext(AppContext);
+    const { userID } = useContext(AppContext);
+    const { systemID } = useContext(AppContext);
+    const { departID } = useContext(AppContext);
+    const { hospID } = useContext(AppContext);
 
     const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
     const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
@@ -61,13 +65,14 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
             createdByID: '', //the id of the manager who created the shift
             name: 'Regular', //type of shift - CCT, charge, 
             notes: '',
-            systemID: '',
-            hospitalID: '',
-            departmentID: '',
+            systemID: systemID,
+            hospitalID: hospID,
+            departmentID: departID,
             roleID: '',
             announcementID: '',
             quals: [], //what quals are needed
             date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+            dateOrder: date.toISOString(),
             month: 0, //month integer
             year: 0, //year integer
             startTime: 0,
@@ -90,23 +95,20 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
     });
 
     useEffect(() => {
+        
         const fetchInfo = async () => {
-            const userInfo = await Auth.currentAuthenticatedUser();
+            //const userInfo = await Auth.currentAuthenticatedUser();
             const response = await API.graphql(graphqlOperation(
-                getUser, {id: userInfo.attributes.sub}
+                getDepartment, {id: departID}
             ))
             setData({...data, 
                 type: 'Shift',
-                createdByID: userInfo.attributes.sub, //the id of the manager who created the shift
-                //name: '', //type of shift - CCT, charge, 
-                //notes: '',
-                systemID: userInfo.attributes.zoneinfo,
-                hospitalID: response.data.getUser.hospID,
-                departmentID: response.data.getUser.departmentID,
-                //roleID: '',
-                //announcementID: '',
-                //quals: [], //what quals are needed
+                createdByID: userID, //the id of the manager who created the shift
+                systemID: systemID,
+                hospitalID: hospID,
+                departmentID: departID,
                 date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+                dateOrder: date.toISOString(),
                 month: 0, //month integer
                 year: 0, //year integer
                 startTime: 0,
@@ -128,7 +130,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                 jobType: 'Regular',//this does not exist in the schema
             })
 
-            setRoles(response.data.getUser.department.roles.items)
+            setRoles(response.data.getDepartment.roles.items)
 
         }
         
@@ -328,10 +330,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
         setRoleTitle(title);
         setQuals(response.data.getRole.quals.items);
         }
-
-
-
-    
+  
     return (
         <Provider>
             <Portal>
@@ -650,10 +649,8 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
 
                 </Modal>
             </Portal>
-        
-           
-                <View style={[styles.container]}>
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={[styles.container]}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <ScrollView style={{ }} showsVerticalScrollIndicator={false}>
                         <View style={{justifyContent: 'space-between'}}>
 {/* header */}
@@ -862,7 +859,7 @@ const CreateShift = ({navigation, route} : {navigation: any, route : any}) => {
                         </View>
                         
                     </ScrollView>
-                    </TouchableWithoutFeedback> 
+                </TouchableWithoutFeedback> 
 {/* button */}
                     <LinearGradient
                         colors={['#fff','#fff', '#ffffffa5','transparent']}

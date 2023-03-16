@@ -153,7 +153,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   payAddToShift: Float
   payAddToHour: Float
   status: String #open, pending, approved, denied, expired
-  userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+  userID: ID @index(name: "byUser", sortKeyFields: ["dateOrder"])
   user: User @hasOne (fields: ["userID"]) #this is who is working the shift
   priority: String
   numNeeded: Int

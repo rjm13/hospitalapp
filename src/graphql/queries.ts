@@ -128,11 +128,7 @@ export const getUser = /* GraphQL */ `
           nextToken
         }
         roles {
-          items {
-            id
-            title
-            acronym
-          }
+          nextToken
         }
         members {
           nextToken
@@ -203,6 +199,7 @@ export const getUser = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -655,6 +652,7 @@ export const getRole = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -1135,11 +1133,6 @@ export const getDepartment = /* GraphQL */ `
           payAddToHour
           status
           userID
-          user {
-            id
-            firstName
-            lastName
-          }
           priority
           numNeeded
           trade
@@ -1148,6 +1141,7 @@ export const getDepartment = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -1814,6 +1808,7 @@ export const getShift = /* GraphQL */ `
       shiftType
       isStartDayNight
       isEndDayNIght
+      pickUpNote
       createdOn
       updatedOn
     }
@@ -2002,6 +1997,7 @@ export const listShifts = /* GraphQL */ `
         shiftType
         isStartDayNight
         isEndDayNIght
+        pickUpNote
         createdOn
         updatedOn
       }
@@ -2360,6 +2356,7 @@ export const getAnnouncement = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }

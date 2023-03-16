@@ -197,6 +197,7 @@ export const createUser = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -540,6 +541,7 @@ export const updateUser = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -883,6 +885,7 @@ export const deleteUser = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -1217,6 +1220,7 @@ export const createRole = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -1413,6 +1417,7 @@ export const updateRole = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -1609,6 +1614,7 @@ export const deleteRole = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -2349,6 +2355,7 @@ export const createDepartment = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -2495,6 +2502,7 @@ export const updateDepartment = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -2641,6 +2649,7 @@ export const deleteDepartment = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -3258,6 +3267,7 @@ export const createShift = /* GraphQL */ `
       shiftType
       isStartDayNight
       isEndDayNIght
+      pickUpNote
       createdOn
       updatedOn
     }
@@ -3822,6 +3832,7 @@ export const updateShift = /* GraphQL */ `
       shiftType
       isStartDayNight
       isEndDayNIght
+      pickUpNote
       createdOn
       updatedOn
     }
@@ -4386,6 +4397,7 @@ export const deleteShift = /* GraphQL */ `
       shiftType
       isStartDayNight
       isEndDayNIght
+      pickUpNote
       createdOn
       updatedOn
     }
@@ -4745,6 +4757,7 @@ export const createAnnouncement = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -5110,6 +5123,7 @@ export const updateAnnouncement = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -5475,6 +5489,7 @@ export const deleteAnnouncement = /* GraphQL */ `
           shiftType
           isStartDayNight
           isEndDayNIght
+          pickUpNote
           createdOn
           updatedOn
         }

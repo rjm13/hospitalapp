@@ -17,12 +17,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import React, {useContext, useEffect, useState} from 'react';
 import Accordion from 'react-native-collapsible/Accordion';
+import { AppContext } from '../AppContext';
 
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import { updateUser } from '../src/graphql/mutations';
 import { getUser, getRole } from '../src/graphql/queries';
 
 const TabOneScreen = ({ navigation }: any) => {
+
+  const { userID } = useContext(AppContext);
+  const { systemID } = useContext(AppContext);
+  const { departID } = useContext(AppContext);
+  const { userRoleID } = useContext(AppContext);
+  const { hospID } = useContext(AppContext);
 
   const [activeSections, setActiveSections] = useState([])
 
