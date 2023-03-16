@@ -1,27 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { View, StyleSheet, Text, Dimensions, Switch, ScrollView, TouchableWithoutFeedback, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, 
+        StyleSheet, 
+        Text, 
+        Dimensions, 
+        Switch, 
+        ScrollView, 
+        TouchableWithoutFeedback, 
+        TouchableOpacity, 
+        ActivityIndicator
+    } from 'react-native';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-//import { Switch } from 'react-native-paper';
-//import ToggleSwitch from 'toggle-switch-react-native'
 
 import {AppContext} from '../AppContext';
 
-import Colors from '../constants/Colors'
-
-//import {styles} from '../styles';
 import useStyles from '../styles';
-
-import { useRoute } from '@react-navigation/native';
 
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import { updateUser } from '../src/graphql/mutations';
 import { getUser } from '../src/graphql/queries';
 
-import { StatusBar } from 'expo-status-bar';
-
 import { Modal, Portal, Provider } from 'react-native-paper';
-import uuid from 'react-native-uuid';
 
 const Settings = ({navigation} : any) => {
 
@@ -34,7 +33,7 @@ const Settings = ({navigation} : any) => {
     const [userInfo, setUserInfo] = useState()
 
 //theme switch
-    const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
+    const [isSwitchOn, setIsSwitchOn] = useState<boolean>(theme);
 
     const onToggleSwitch = async () => {
 
@@ -65,42 +64,43 @@ const Settings = ({navigation} : any) => {
     useEffect(() => {
         const fetchUser = async () => {
             let qualsarr = [];
-            const userAtts = await Auth.currentAuthenticatedUser();
             const response = await API.graphql(graphqlOperation(
-                getUser, {id: userAtts.attributes.sub}
+                getUser, {id: userID}
             ))
-            //console.log(response.data.getUser)
             setUserInfo(response.data.getUser);
             
             for (let i =0; i < response.data.getUser.quals.items.length; i++) {
                 qualsarr.push(response.data.getUser.quals.items[i].qual)
             }
             setQuals(qualsarr);
-            //setTheme(response.data.getUser.Setting1);
-            
         }
         fetchUser();
     }, [])
 
+
+
+    const [signingout, setSigningout] = useState(false)
+
     //sign out function
     async function SignOut() {
+        setSigningout(true);
         try {
             await Auth.signOut()
             .then(() => navigation.replace('SignIn'))
+            setSigningout(false)
         } catch (error) {
             console.log('error signing out: ', error);
             alert("error signing out")
+            setSigningout(false)
         }
     }
 
     const [visible, setVisible] = useState(false);
-    const showModal = () => {
-        setVisible(true);
-    }
+    const showModal = () => {setVisible(true);}
     const hideModal = () => setVisible(false);
 
     const containerStyle = {
-        backgroundColor: '#363636', 
+        backgroundColor: theme === true ? '#000' : '#fff', 
         borderRadius: 15,
         paddingVertical: 40
     };
@@ -110,24 +110,19 @@ const Settings = ({navigation} : any) => {
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
                 <View style={{ alignItems: 'center'}}>
-                        <Text style={{
-                            fontSize: 16,
-                            paddingVertical: 16,
-                            color: '#fff'
-                        }}>
+                        <Text style={[styles.settingsitem, {paddingVertical: 16}]}>
                             Are you sure you want to log out?
                         </Text>
-                        
                         <View style={{}}>
-                            <TouchableOpacity onPress={SignOut}>
-                                <View style={styles.buttonlayout} >
-                                    {/* {isUploading ? (
-                                        <ActivityIndicator size="small" color="#00ffff"/>
-                                    ) :  */}
+                            {signingout ? (
+                                <ActivityIndicator size="small" color="#00ffff"/>
+                            ) : (
+                               <TouchableOpacity onPress={SignOut}>
+                                    <View style={styles.buttonlayout} >
                                         <Text style={styles.buttontext}>Log Out</Text> 
-                                    {/* }  */}
-                                </View>
-                            </TouchableOpacity>
+                                    </View>
+                                </TouchableOpacity> 
+                            )}
                         </View>
                     </View>
                 </Modal>

@@ -20,7 +20,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../constants/Colors'
-import {styles} from '../styles';
+import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 import {Provider, Portal, Modal} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -36,6 +36,8 @@ const CreateShift = ({navigation} : {navigation: any}) => {
     const { systemID } = useContext(AppContext);
     const { departID } = useContext(AppContext);
     const { hospID } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
     const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
@@ -97,7 +99,6 @@ const CreateShift = ({navigation} : {navigation: any}) => {
     useEffect(() => {
         
         const fetchInfo = async () => {
-            //const userInfo = await Auth.currentAuthenticatedUser();
             const response = await API.graphql(graphqlOperation(
                 getDepartment, {id: departID}
             ))
@@ -131,7 +132,6 @@ const CreateShift = ({navigation} : {navigation: any}) => {
             })
 
             setRoles(response.data.getDepartment.roles.items)
-
         }
         
         fetchInfo();
@@ -266,7 +266,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
 
 //modal container style
     const containerStyle = {
-        backgroundColor: '#fff', 
+        backgroundColor: theme === true ? '#000' : '#fff', 
         borderRadius: 15,
         paddingVertical: 10
     };
@@ -340,7 +340,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         {roles.map(({id, acronym, title} : any) => {
                             return (
                                 <TouchableOpacity onPress={() => GetQuals({id, title})}>
-                                    <Text key={id} style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000'}}>
+                                    <Text key={id} style={[styles.title, {fontSize: 20, paddingVertical: 16}]}>
                                         {title}
                                     </Text> 
                                 </TouchableOpacity>
@@ -355,7 +355,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         {shiftTypes.map((item, index) => {
                             return (
                                 <TouchableOpacity onPress={() => {hideTypeModal(); setData({...data, name: shiftTypes[index]});}}>
-                                    <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                    <Text style={[styles.title, {fontSize: 20, paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                         {item}
                                     </Text> 
                                 </TouchableOpacity>
@@ -373,7 +373,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             maximumDate={new Date(dateplus())}
                             minimumDate={new Date(dateminus())}
                             mode='date'
-                            textColor='#000'
+                            textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -385,7 +385,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             date={startTime} 
                             onDateChange={setStartTime}
                             mode='time'
-                            textColor='#000'
+                            textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -397,7 +397,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             date={endTime} 
                             onDateChange={setEndTime}
                             mode='time'
-                            textColor='#000'
+                            textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -411,7 +411,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             {multiplier.map((multiplier) => {
                                 return (
                                     <TouchableOpacity onPress={() => {hideMultiplierModal(); setData({...data, payMultiplier: multiplier});}}>
-                                        <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                        <Text style={[styles.title, {fontSize: 20, paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                             {multiplier}x
                                         </Text> 
                                     </TouchableOpacity>
@@ -444,7 +444,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         <TextInput 
                             placeholder='--'
                             placeholderTextColor='#000000a5'
-                            style={[styles.textInputTitle, {color: '#000', fontSize: 30, textAlign: 'center'}]}
+                            style={[styles.textInputTitle, {color: theme === true ? '#fff' : '#000', fontSize: 30, textAlign: 'center'}]}
                             maxLength={6}
                             onChangeText={(val) => handlePay(val)}
                             autoCapitalize='none'
@@ -460,7 +460,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         {priority.map((item, index) => {
                             return (
                                 <TouchableOpacity onPress={() => {hidePriorityModal(); setData({...data, priority: priority[index]});}}>
-                                    <Text style={{textTransform: 'capitalize', fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                    <Text style={[styles.title, {textTransform: 'capitalize', fontSize: 20, paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                         {item}
                                     </Text> 
                                 </TouchableOpacity>
@@ -473,7 +473,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                 <Modal visible={visible11} onDismiss={hideQualsModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
                         {quals.length === 0 ? (
-                            <Text>
+                            <Text style={styles.paragraph}>
                                 Please select a role
                             </Text>
                         ): (
@@ -518,7 +518,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         {howmany.map((num) => {
                                 return (
                                     <TouchableOpacity style={{}} onPress={() => {hideHowManyModal(); setData({...data, numNeeded: num});}}>
-                                        <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                        <Text style={[styles.title, {fontSize: 20, paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                             {num}
                                         </Text> 
                                     </TouchableOpacity>
@@ -528,13 +528,13 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         <View style={{height: 80}}/>
                     </ScrollView> 
                     <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', top: 0, height: 100, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}
                     />
                     <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', bottom: 0, height: 100, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -548,10 +548,10 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             <Text style={[styles.title, {textAlign: 'center', color: '#000'}]}>
                                 Create these shifts?
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={[styles.paragraph, {textAlign: 'center'}]}>
                                 For {roleTitle.toLowerCase()}s on {format(date, "MMMM do yyyy")}?
                             </Text>
-                            <View style={{alignSelf: 'center', height: 1, backgroundColor: '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
+                            <View style={{alignSelf: 'center', height: 1, backgroundColor: theme === true ? '#fff' : '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
                         {
                             Array.from({ length: data.numNeeded }, (_, k) => (
                             <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0.5, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
@@ -568,13 +568,13 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                                             </View>
                                                         ) : null}
                                 </View>
-                                    <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    <Text style={{color: theme === true ? '#fff' : '#000', fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
                                         {format(startTime, "p")}
                                     </Text>
-                                    <Text style={{marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    <Text style={{color: theme === true ? '#fff' : '#000', marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
                                     -
                                     </Text>
-                                    <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    <Text style={{color: theme === true ? '#fff' : '#000', fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
                                     {format(endTime, "p")}
                                     </Text>
                                 </View>
@@ -605,7 +605,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                     size={12}
                                     style={{marginRight: 4}}
                                 />
-                                <Text style={{fontSize: 14}}>
+                                <Text style={styles.paragraph}>
                                     {'+' + '' + data.payRate}
                                 </Text>
                                 </View>
@@ -613,7 +613,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
 
                                 <View style={{marginVertical: 4}}>
                                 {data.notes.length > 0 ? (
-                                    <Text style={{}}>
+                                    <Text style={styles.paragraph}>
                                         {data.notes}
                                     </Text>
                                 ) : null}
@@ -624,7 +624,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         <View style={{height: 100}}/>
                         </ScrollView>
                         <LinearGradient
-                        colors={['#fff','#fff', '#ffffffa5','transparent']}
+                        colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
                         style={{position: 'absolute', bottom: 0 }}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}
@@ -657,7 +657,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
                                 <FontAwesome 
                                     name='close'
-                                    color='#000'
+                                    color={theme === true ? '#fff' : '#000'}
                                     size={20}
                                     style={{padding: 20, margin: -20}}
                                     onPress={() => navigation.goBack()}
@@ -676,7 +676,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Role
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
+                                            <Text style={[styles.title, {color: roleTitle === 'Select Role' ? 'gray' : 'maroon'}]}>
                                                 {roleTitle}
                                             </Text>
                                         </View>
@@ -690,7 +690,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Type
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
+                                            <Text style={[styles.title, {color: data.name === 'Regular' ? 'gray' : 'maroon'}]}>
                                                 {data.name}
                                             </Text>
                                         </View>
@@ -804,7 +804,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Priority
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray', textTransform: 'capitalize'}]}>
+                                            <Text style={[styles.title, {color: data.priority === 'normal' ? 'gray' : 'maroon', textTransform: 'capitalize'}]}>
                                                 {data.priority}
                                             </Text>
                                         </View>
@@ -817,7 +817,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Required Quals
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
+                                            <Text style={[styles.title, {color: qualIDs.length > 0 ? 'gray' : 'maroon'}]}>
                                                 {qualIDs.length + ' ' + 'selected'}
                                             </Text>
                                         </View>
@@ -847,7 +847,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             How Many?
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
+                                            <Text style={[styles.title, {color: data.numNeeded === 1 ? 'gray' : 'maroon'}]}>
                                                 {data.numNeeded}
                                             </Text>
                                         </View>
