@@ -12,18 +12,18 @@ import {
     ActivityIndicator
 } from 'react-native';
 
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import DatePicker from 'react-native-date-picker'
 
 import { StatusBar } from 'expo-status-bar';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../constants/Colors'
-import {styles} from '../styles';
-import { AppContext } from '../AppContext';
 import {Provider, Portal, Modal} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
+
+import useStyles from '../styles';
+import { AppContext } from '../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift, getRole, getUser} from '../src/graphql/queries';
@@ -34,6 +34,12 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
     const { id } = route.params
 
     const { theme } = useContext(AppContext);
+    const { userID } = useContext(AppContext);
+    const { systemID } = useContext(AppContext);
+    const { departID } = useContext(AppContext);
+    const { hospID } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
     const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
@@ -91,48 +97,14 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
             jobType: 'Regular',
     });
 
-    const [shift, setShift] = useState()
+    const [shift, setShift] = useState();
+
+    const [processing, setProcessing] = useState(false)
 
     useEffect(() => {
         const fetchInfo = async () => {
-            const userInfo = await Auth.currentAuthenticatedUser();
-            const userresponse = await API.graphql(graphqlOperation(
-                getUser, {id: userInfo.attributes.sub}
-            ))
-            // setData({...data, 
-            //     type: 'Shift',
-            //     createdByID: userInfo.attributes.sub, //the id of the manager who created the shift
-            //     //name: '', //type of shift - CCT, charge, 
-            //     //notes: '',
-            //     systemID: userInfo.attributes.zoneinfo,
-            //     hospitalID: response.data.getUser.hospID,
-            //     departmentID: response.data.getUser.departmentID,
-            //     //roleID: '',
-            //     //announcementID: '',
-            //     //quals: [], //what quals are needed
-            //     date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
-            //     month: 0, //month integer
-            //     year: 0, //year integer
-            //     startTime: 0,
-            //     startAMPM: 'AM', //AM or PM
-            //     endTime: 0,
-            //     endAMPM: 'PM', //AM or PM
-            //     payMultiplier: 1.0, //must be a decimal
-            //     payRate: 0, //float, whatever that means
-            //     payAddToShift: 0,
-            //     payAddToHour: 0,
-            //     status: '', //open, filled, pending
-            //     userID: '', //person working the shift
-            //     priority: 'normal', //urgent, high needs, normal
-            //     numNeeded: 1, //how many of the same shift are need. will loop and create multiple
-            //     trade: false, //is the shift for trade
-            //     giveUp: false, //is this someone giving up their shift
-            //     approved: false, //approved or denied
-            //     shiftType: 'day', // day or night
-            //     jobType: 'Regular',//this does not exist in the schema
-            // })
 
-            // setRoles(response.data.getUser.department.roles.items)
+            setProcessing(true)
 
             const response = await API.graphql(graphqlOperation(
                 getShift, {id: id}
@@ -155,12 +127,12 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
             setEndTime(endresult)
             setData({...data, 
                 type: 'Shift',
-                createdByID: userInfo.attributes.sub, //the id of the manager who created the shift
+                createdByID: userID, //the id of the manager who created the shift
                 //name: '', //type of shift - CCT, charge, 
                 notes: response.data.getShift.notes,
-                systemID: userInfo.attributes.zoneinfo,
-                hospitalID: userresponse.data.getUser.hospID,
-                departmentID: userresponse.data.getUser.departmentID,
+                systemID: systemID,
+                hospitalID: hospID,
+                departmentID: departID,
                 //roleID: '',
                 //announcementID: '',
                 //quals: [], //what quals are needed
@@ -185,8 +157,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                 shiftType: response.data.getShift.shiftType, // day or night
                 jobType: response.data.getShift.jobType,//this does not exist in the schema
             })
-
-
+            setProcessing(false)
         }
         
         fetchInfo();
@@ -205,34 +176,13 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                 updateShift, {input: {
                     id: id,
                     type: 'Shift',
-                    //createdByID: data.createdByID, //the id of the manager who created the shift
-                    //name: data.name, //type of shift - CCT, charge, 
                     notes: data.notes,
-                    //systemID: data.systemID,
-                    //hospitalID: data.hospitalID,
-                    //departmentID: data.departmentID,
-                    //roleID: data.roleID,
-                    //quals: [], //what quals are needed
-                    //date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
-                    //month: 0, //month integer
-                    //year: 0, //year integer
                     startTime: format(startTime, "p"),
-                    //startAMPM: 'AM', //AM or PM
                     endTime: format(endTime, "p"),
-                    //endAMPM: 'PM', //AM or PM
                     payMultiplier: data.payMultiplier, //must be a decimal
                     payRate: data.payRate, //float, whatever that means
-                    //payAddToShift: 0,
-                    //payAddToHour: 0,
-                    //status: 'open', //open, filled, pending
-                    //userID: null, //person working the shift
                     priority: data.priority, //urgent, high needs, normal
-                    //numNeeded: data.numNeeded, //how many of the same shift are need. will loop and create multiple
-                    //trade: false, //is the shift for trade
-                    //giveUp: false, //is this someone giving up their shift
-                    //approved: false, //approved or denied
                     shiftType: data.shiftType, // day or night
-                    //jobType: 'Regular',
                 }}
             ))
             console.log(response)
@@ -242,7 +192,6 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
         }
 
         setCreating(false);
-
 
         } catch (e) {
             console.log(e)
@@ -322,7 +271,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
 
 //modal container style
     const containerStyle = {
-        backgroundColor: '#fff', 
+        backgroundColor: theme === true ? '#000' : '#fff', 
         borderRadius: 15,
         paddingVertical: 10
     };
@@ -386,10 +335,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
         setRoleTitle(title);
         setQuals(response.data.getRole.quals.items);
         }
-
-
-
-    
+ 
     return (
         <Provider>
             <Portal>
@@ -399,7 +345,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                         {roles.map(({id, acronym, title} : any) => {
                             return (
                                 <TouchableOpacity onPress={() => GetQuals({id, title})}>
-                                    <Text key={id} style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000'}}>
+                                    <Text key={id} style={[styles.paragraph, {fontSize: 20, fontWeight: 'bold', paddingVertical: 16}]}>
                                         {title}
                                     </Text> 
                                 </TouchableOpacity>
@@ -414,7 +360,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                         {shiftTypes.map((item, index) => {
                             return (
                                 <TouchableOpacity onPress={() => {hideTypeModal(); setData({...data, name: shiftTypes[index]});}}>
-                                    <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                    <Text style={[styles.paragraph, {fontSize: 20, fontWeight: 'bold', paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                         {item}
                                     </Text> 
                                 </TouchableOpacity>
@@ -432,7 +378,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             maximumDate={new Date(dateplus())}
                             minimumDate={new Date(dateminus())}
                             mode='date'
-                            textColor='#000'
+                            textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -444,7 +390,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             date={startTime} 
                             onDateChange={setStartTime}
                             mode='time'
-                            textColor='#000'
+                            textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -456,7 +402,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             date={endTime} 
                             onDateChange={setEndTime}
                             mode='time'
-                            textColor='#000'
+                            textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -470,7 +416,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             {multiplier.map((multiplier) => {
                                 return (
                                     <TouchableOpacity onPress={() => {hideMultiplierModal(); setData({...data, payMultiplier: multiplier});}}>
-                                        <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: 'bold', paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                             {multiplier}x
                                         </Text> 
                                     </TouchableOpacity>
@@ -480,13 +426,13 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             <View style={{height: 140}}/>
                         </ScrollView>
                         <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', top: 0, height: 120, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}
                     />
                     <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', bottom: 0, height: 120, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -519,7 +465,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                         {priority.map((item, index) => {
                             return (
                                 <TouchableOpacity onPress={() => {hidePriorityModal(); setData({...data, priority: priority[index]});}}>
-                                    <Text style={{textTransform: 'capitalize', fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                    <Text style={[styles.paragraph, {textTransform: 'capitalize', fontSize: 20, fontWeight: 'bold', paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                         {item}
                                     </Text> 
                                 </TouchableOpacity>
@@ -532,7 +478,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                 <Modal visible={visible11} onDismiss={hideQualsModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
                         {quals.length === 0 ? (
-                            <Text>
+                            <Text style={styles.paragraph}>
                                 Please select a role
                             </Text>
                         ): (
@@ -577,7 +523,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                         {howmany.map((num) => {
                                 return (
                                     <TouchableOpacity style={{}} onPress={() => {hideHowManyModal(); setData({...data, numNeeded: num});}}>
-                                        <Text style={{fontSize: 20, fontWeight: 'bold', paddingVertical: 16, color: '#000', width: Dimensions.get('window').width, textAlign: 'center'}}>
+                                        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: 'bold', paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
                                             {num}
                                         </Text> 
                                     </TouchableOpacity>
@@ -587,13 +533,13 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                         <View style={{height: 80}}/>
                     </ScrollView> 
                     <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', top: 0, height: 100, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}
                     />
                     <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', bottom: 0, height: 100, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -604,10 +550,10 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                 <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
                         <ScrollView style={{height: '70%'}} showsVerticalScrollIndicator={false}>
-                            <Text style={[styles.title, {textAlign: 'center', color: '#000'}]}>
+                            <Text style={[styles.title, {textAlign: 'center'}]}>
                                 Update this shift?
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={[styles.paragraph, {textAlign: 'center'}]}>
                                {format(date, "MMMM do yyyy")}
                             </Text>
                             <View style={{alignSelf: 'center', height: 1, backgroundColor: '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
@@ -710,7 +656,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
             </Portal>
         
            
-                <View style={[styles.container]}>
+            <View style={[styles.container]}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <ScrollView style={{ }} showsVerticalScrollIndicator={false}>
                         <View style={{justifyContent: 'space-between'}}>
@@ -718,7 +664,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
                                 <FontAwesome 
                                     name='close'
-                                    color='#000'
+                                    color={theme === true ? '#fff' : '#000'}
                                     size={20}
                                     style={{padding: 20, margin: -20}}
                                     onPress={() => navigation.goBack()}

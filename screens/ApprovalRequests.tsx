@@ -1,27 +1,23 @@
-import React, {useState, useEffect, useContext, useLayoutEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { 
     View, 
     Text, 
     ActivityIndicator, 
     Dimensions, 
-    TouchableWithoutFeedback, 
-    Platform,
+    TouchableWithoutFeedback,
     FlatList,
     RefreshControl
 } from "react-native";
 
+import useStyles from '../styles';
 import { AppContext } from '../AppContext';
-import {styles} from '../styles';
 
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { getDepartment, getUser } from '../src/graphql/queries';
-import { updateUser } from '../src/graphql/mutations';
+import { getDepartment } from '../src/graphql/queries';
 
-import { StatusBar } from 'expo-status-bar';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -29,6 +25,11 @@ const SCREEN_HEIGHT = Dimensions.get('window').height
 const ApprovalRequests = ({navigation, route} : any) => {
 
     const {trigger} = route.params;
+
+    const { theme } = useContext(AppContext);
+    const { departID } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [shifts, setShifts] = useState([]);
 
@@ -45,19 +46,17 @@ const ApprovalRequests = ({navigation, route} : any) => {
         }, 2000);
         }
 
+//fetch all of the pending shifts for a department
     useEffect(() => {
+
+        setIsFetching(true);
 
         let shiftarr = [];
 
         const fetchDepartment = async () => {
-            const userInfo = await Auth.currentAuthenticatedUser();
-
-            const response = await API.graphql(graphqlOperation(
-                getUser, {id: userInfo.attributes.sub}
-            ))
 
             const resp = await API.graphql(graphqlOperation(
-                getDepartment, {id: response.data.getUser.departmentID}
+                getDepartment, {id: departID}
             ))
 
             for (let i = 0; i < resp.data.getDepartment.shifts.items.length; i++) {
@@ -67,16 +66,16 @@ const ApprovalRequests = ({navigation, route} : any) => {
             }
             
             setShifts(shiftarr)
+            setIsFetching(false)
         }
         fetchDepartment();
     }, [didUpdate, trigger]);
 
   
-        const Item = ({id, date, firstName, lastName, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
-          
-            
-          return (
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('ShiftApproval', {id: id})}>
+    const Item = ({id, date, firstName, lastName, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+         
+        return (
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('ShiftApproval', {id: id})}>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', elevation: 6, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20, paddingVertical: 10, overflow: 'hidden', backgroundColor: '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
                 <View>
                     <View>
@@ -132,7 +131,7 @@ const ApprovalRequests = ({navigation, route} : any) => {
                         {payMultiplier}x
                     </Text>
                     </View>
-      
+        
                 <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                     <FontAwesome5 
                     name='dollar-sign'
@@ -145,7 +144,7 @@ const ApprovalRequests = ({navigation, route} : any) => {
                     </Text>
                 </View>
                 </View>
-      
+        
                 <View style={{marginTop: 20, marginBottom: 4}}>
                     <Text style={{textTransform: 'capitalize'}}>
                     For {firstName + ' ' + lastName}
@@ -159,9 +158,9 @@ const ApprovalRequests = ({navigation, route} : any) => {
                     </Text>
                 </View>
             </View>
-            </TouchableWithoutFeedback>
-          )
-        }
+        </TouchableWithoutFeedback>
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -183,7 +182,7 @@ const ApprovalRequests = ({navigation, route} : any) => {
                     onRefresh={onRefresh}
                     />
                   }
-                  extraData={[didUpdate, trigger]}
+                extraData={[didUpdate, trigger]}
                 renderItem={({item} : any) =>
                 <Item 
                     id={item.id}
@@ -213,6 +212,17 @@ const ApprovalRequests = ({navigation, route} : any) => {
                 ListHeaderComponent={
                     <View style={{height: 20}}>
                        
+                    </View>
+                }
+                ListEmptyComponent={
+                    <View style={{height: 20}}>
+                        {isFetching === true ? (
+                            <ActivityIndicator size='small' color='maroon'/>
+                        ) : (
+                            <Text style={styles.paragraph}>
+                                There are no pending shift requests at this time.
+                            </Text>
+                        )}
                     </View>
                 }
             />

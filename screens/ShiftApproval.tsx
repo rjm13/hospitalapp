@@ -1,23 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { 
-  Platform, 
-  StyleSheet,
   Text,
   View,
   Dimensions,
-  ImageBackground,
   ActivityIndicator,
   TouchableOpacity
 } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
-import { styles } from '../styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {format, parseISO} from 'date-fns'
+import {format} from 'date-fns'
 import {LinearGradient} from 'expo-linear-gradient';
 import {Provider, Portal, Modal} from 'react-native-paper';
+
+import useStyles from '../styles';
+import { AppContext } from '../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift} from '../src/graphql/queries';
@@ -27,9 +25,10 @@ const ShiftApproval = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
-  const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
+  const { theme } = useContext(AppContext);
 
+  const styles = useStyles(theme);
+  
   const [shift, setShift] = useState({
     id: id,
     date: '',
@@ -90,7 +89,7 @@ const ShiftApproval = ({navigation, route} : any) => {
 
   //modal container style
   const containerStyle = {
-    backgroundColor: '#fff', 
+    backgroundColor: theme ===true ? '#000' : '#fff', 
     borderRadius: 15,
     paddingVertical: 10
 };
@@ -107,7 +106,6 @@ const ApproveShift = async () => {
         alert('Oops! It looks like you were beat to the punch. Someone else has already requested to pick up this shift.')
         setProcessing(false)
       } else {
-        const userInfo = await Auth.currentAuthenticatedUser();
 
         const response = await API.graphql(graphqlOperation(
             updateShift, {input: {
@@ -140,7 +138,6 @@ const DenyShift = async () => {
         alert('Oops! It looks like someone has already approved this shift.')
         setProcessing(false)
       } else {
-        const userInfo = await Auth.currentAuthenticatedUser();
 
         const response = await API.graphql(graphqlOperation(
             updateShift, {input: {
@@ -164,97 +161,100 @@ const DenyShift = async () => {
   return (
     <Provider>
       <Portal>
-      <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
-        <View style={{height: '50%'}}>
-          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
-            Approve this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
-          </Text>
-          <Text style={{textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}}>
-            for
-          </Text>
-          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}}>
-            {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
-          </Text>
 
-          <LinearGradient
-        colors={['#fff','#fff', '#ffffffa5','transparent']}
-        style={{position: 'absolute', bottom: -70 }}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-      >
-        <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-            {processing ? (
-                <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
-                    <ActivityIndicator size='small' color='maroon'/>
-                </View>
-            ) : (
-                <TouchableOpacity onPress={ApproveShift}>
-                    <View style={styles.buttonlayout}>
-                            <Text style={styles.buttontext}>
-                                Approve
-                            </Text> 
-                        </View>  
-                </TouchableOpacity>
-            )}
-            <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
-              {/* This shift pick up will not be final until it has been approved by your manager. */}
+        <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
+          <View style={{height: '50%'}}>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              Approve this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
             </Text>
-        </View>
-        
-      </LinearGradient>
-        </View>
-      </Modal>
-      <Modal visible={visible9} onDismiss={hideDenyModal} contentContainerStyle={containerStyle}>
-        <View style={{height: '50%'}}>
-          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
-            DENY this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
-          </Text>
-          <Text style={{textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}}>
-            for
-          </Text>
-          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}}>
-            {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
-          </Text>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
+              for
+            </Text>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}]}>
+              {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
+            </Text>
 
-          <LinearGradient
-        colors={['#fff','#fff', '#ffffffa5','transparent']}
-        style={{position: 'absolute', bottom: -70 }}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-      >
-        <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-            {processing ? (
-                <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
-                    <ActivityIndicator size='small' color='maroon'/>
-                </View>
-            ) : (
-                <TouchableOpacity onPress={DenyShift}>
-                    <View style={[styles.buttonlayout, {backgroundColor: 'darkgray'}]}>
-                            <Text style={styles.buttontext}>
-                                Deny
-                            </Text> 
-                        </View>  
-                </TouchableOpacity>
-            )}
-            <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
-              {/* This shift pick up will not be final until it has been approved by your manager. */}
+            <LinearGradient
+          colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+          style={{position: 'absolute', bottom: -70 }}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+        >
+          <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+              {processing ? (
+                  <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                      <ActivityIndicator size='small' color='maroon'/>
+                  </View>
+              ) : (
+                  <TouchableOpacity onPress={ApproveShift}>
+                      <View style={styles.buttonlayout}>
+                              <Text style={styles.buttontext}>
+                                  Approve
+                              </Text> 
+                          </View>  
+                  </TouchableOpacity>
+              )}
+              <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+                {/* This shift pick up will not be final until it has been approved by your manager. */}
+              </Text>
+          </View>
+          
+        </LinearGradient>
+          </View>
+        </Modal>
+
+        <Modal visible={visible9} onDismiss={hideDenyModal} contentContainerStyle={containerStyle}>
+          <View style={{height: '50%'}}>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              DENY this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
             </Text>
-        </View>
-        
-      </LinearGradient>
-        </View>
-      </Modal>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
+              for
+            </Text>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}]}>
+              {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
+            </Text>
+
+            <LinearGradient
+          colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+          style={{position: 'absolute', bottom: -70 }}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+        >
+          <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+              {processing ? (
+                  <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                      <ActivityIndicator size='small' color='maroon'/>
+                  </View>
+              ) : (
+                  <TouchableOpacity onPress={DenyShift}>
+                      <View style={[styles.buttonlayout, {backgroundColor: 'darkgray'}]}>
+                              <Text style={styles.buttontext}>
+                                  Deny
+                              </Text> 
+                          </View>  
+                  </TouchableOpacity>
+              )}
+              <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+                {/* This shift pick up will not be final until it has been approved by your manager. */}
+              </Text>
+          </View>
+          
+        </LinearGradient>
+          </View>
+        </Modal>
+
       </Portal>
     <View style={styles.container}>
       <View style={{height: 60}}/>
 {/* header icon row */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 40}}>
-        <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={'#000'} style={{padding: 20, margin: -20}}/>
-        <FontAwesome name='edit' size={20} color={'#000'} style={{padding: 20, margin: -20}}/>
+        <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}}/>
+        <FontAwesome name='edit' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}}/>
       </View>
 {/* date title */}
       <View style={{alignItems: 'center', marginBottom: 0, marginTop: 20}}>
-        <Text style={{fontWeight: '800', fontSize: 30}}>
+        <Text style={[styles.paragraph, {fontWeight: '800', fontSize: 30}]}>
           {shift.date.substring(0, shift.date.length - 5)}
         </Text>
       </View>
@@ -270,14 +270,14 @@ const DenyShift = async () => {
           </View>
 
           <View style={{justifyContent: 'center'}}>
-              <Text style={{}}>
+              <Text style={styles.paragraph}>
                   to
               </Text>
           </View>
 
           <View>
                 <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                    <Text style={[styles.timeselect, {color: '#000'}]}>
+                    <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
                         {shift.endTime}
                     </Text>
                 </View> 
@@ -349,16 +349,16 @@ const DenyShift = async () => {
       </View>
 {/* request by section */}
     <View style={{marginVertical: 60, borderRadius: 10, borderWidth: 1, borderColor: 'darkgray', paddingVertical: 20, width: Dimensions.get('window').width - 40}}>
-        <Text style={{textAlign: 'center'}}>
+        <Text style={[styles.paragraph, {textAlign: 'center'}]}>
             Pickup Requested by:
         </Text>
-        <Text style={{textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}}>
+        <Text style={[styles.paragraph, {textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
             {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
         </Text>
     </View>
 {/* button */}
       <LinearGradient
-        colors={['#fff','#fff', '#ffffffa5','transparent']}
+        colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
         style={{position: 'absolute', bottom: 0 }}
         start={{ x: 0, y: 1 }}
         end={{ x: 0, y: 0 }}
@@ -382,17 +382,17 @@ const DenyShift = async () => {
           </TouchableOpacity>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 4, }}>
-          <Text style={{textAlign: 'center'}}>
+          <Text style={[styles.paragraph, {textAlign: 'center'}]}>
             {'Created by' + ' '}
           </Text>
-          <Text style={{textAlign: 'center', textTransform: 'capitalize'}}>
+          <Text style={[styles.paragraph, {textAlign: 'center', textTransform: 'capitalize'}]}>
             {shift.createdBy.firstName + ' '}
           </Text>
-          <Text style={{textAlign: 'center'}}>
+          <Text style={[styles.paragraph, {textAlign: 'center'}]}>
             on {format(new Date(shift.createdOn), 'MMM do yyyy')}
           </Text>
         </View>
-        <Text style={{textAlign: 'center', color: 'gray', marginBottom: 20}}>
+        <Text style={[styles.paragraph, {textAlign: 'center', color: 'gray', marginBottom: 20}]}>
           Status: {shift.status}
         </Text>
         

@@ -14,16 +14,15 @@ import {
 
 import { format } from "date-fns";
 import DatePicker from 'react-native-date-picker'
-
 import { StatusBar } from 'expo-status-bar';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../constants/Colors'
-import useStyles from '../styles';
-import { AppContext } from '../AppContext';
 import {Provider, Portal, Modal} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
+
+import useStyles from '../styles';
+import { AppContext } from '../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getDepartment, getRole} from '../src/graphql/queries';

@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { 
-  Platform, 
-  StyleSheet,
   Text,
   View,
   Dimensions,
@@ -11,11 +9,11 @@ import {
 } from 'react-native';
 
 import { StatusBar } from 'expo-status-bar';
-import { styles } from '../styles';
+import useStyles from '../styles';
+import { AppContext } from '../AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {format, parseISO} from 'date-fns'
+import {format} from 'date-fns'
 import {LinearGradient} from 'expo-linear-gradient';
 import {Provider, Portal, Modal} from 'react-native-paper';
 
@@ -26,6 +24,11 @@ import { updateShift} from '../src/graphql/mutations';
 const ShiftModal = ({navigation, route} : any) => {
 
   const {id} = route.params;
+
+  const { theme } = useContext(AppContext);
+  const { userID } = useContext(AppContext);
+
+  const styles = useStyles(theme);
 
   const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
   const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
@@ -84,7 +87,7 @@ const ShiftModal = ({navigation, route} : any) => {
 
   //modal container style
   const containerStyle = {
-    backgroundColor: '#fff', 
+    backgroundColor: theme === true ? '#000' : '#fff', 
     borderRadius: 15,
     paddingVertical: 10
 };
@@ -101,13 +104,12 @@ const PickUpShift = async () => {
         alert('Oops! It looks like you were beat to the punch. Someone else has already requested to pick up this shift.')
         setProcessing(false)
       } else {
-        const userInfo = await Auth.currentAuthenticatedUser();
 
         const response = await API.graphql(graphqlOperation(
             updateShift, {input: {
               id: id,
               status: 'pending',
-              userID: userInfo.attributes.sub
+              userID: userID
             }}
         ))
         console.log(response)
@@ -135,7 +137,6 @@ const ReOpenShift = async () => {
       alert('Oops! It looks like you were beat to the punch. This shift is either expierd or no longer approved.')
       setProcessing(false)
     } else {
-      const userInfo = await Auth.currentAuthenticatedUser();
 
       const response = await API.graphql(graphqlOperation(
           updateShift, {input: {
@@ -160,95 +161,97 @@ const ReOpenShift = async () => {
   return (
     <Provider>
       <Portal>
-      <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
-        <View style={{height: '50%'}}>
-          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
-            Pick up this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
-          </Text>
-          <LinearGradient
-        colors={['#fff','#fff', '#ffffffa5','transparent']}
-        style={{position: 'absolute', bottom: -50 }}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-      >
-        <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-            {processing ? (
-                <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
-                    <ActivityIndicator size='small' color='maroon'/>
-                </View>
-            ) : (
-                <TouchableOpacity onPress={PickUpShift}>
-                    <View style={styles.buttonlayout}>
-                            <Text style={styles.buttontext}>
-                                Request Pick Up
-                            </Text> 
-                        </View>  
-                </TouchableOpacity>
-            )}
-            <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
-              This shift pick up will not be final until it has been approved by your manager.
+
+        <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
+          <View style={{height: '50%'}}>
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              Pick up this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
             </Text>
-        </View>
-        
-      </LinearGradient>
-        </View>
-      </Modal>
-      <Modal visible={visible11} onDismiss={hideReOpenModal} contentContainerStyle={containerStyle}>
-        <View style={{height: '50%'}}>
-          <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
-            Cancel this approval for {shift?.user?.firstName.toUpperCase()} {shift?.user?.lastName.toUpperCase()} and re-open this shift on {shift.date} from {shift.startTime} to {shift.endTime}?
-          </Text>
-          <LinearGradient
-        colors={['#fff','#fff', '#ffffffa5','transparent']}
-        style={{position: 'absolute', bottom: -50 }}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-      >
-        <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-            {processing ? (
-                <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
-                    <ActivityIndicator size='small' color='maroon'/>
-                </View>
-            ) : (
-                <TouchableOpacity onPress={ReOpenShift}>
-                    <View style={styles.buttonlayout}>
-                            <Text style={styles.buttontext}>
-                                Re-open
-                            </Text> 
-                        </View>  
-                </TouchableOpacity>
-            )}
-            <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
-              This will cancel the shift pick up and re-open the shift for others. To cancel the shift, click on the edit icon.
+            <LinearGradient
+          colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+          style={{position: 'absolute', bottom: -50 }}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+        >
+          <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+              {processing ? (
+                  <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                      <ActivityIndicator size='small' color='maroon'/>
+                  </View>
+              ) : (
+                  <TouchableOpacity onPress={PickUpShift}>
+                      <View style={styles.buttonlayout}>
+                              <Text style={styles.buttontext}>
+                                  Request Pick Up
+                              </Text> 
+                          </View>  
+                  </TouchableOpacity>
+              )}
+              <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+                This shift pick up will not be final until it has been approved by your manager.
+              </Text>
+          </View>
+          
+        </LinearGradient>
+          </View>
+        </Modal>
+
+        <Modal visible={visible11} onDismiss={hideReOpenModal} contentContainerStyle={containerStyle}>
+          <View style={{height: '50%'}}>
+            <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
+              Cancel this approval for {shift?.user?.firstName.toUpperCase()} {shift?.user?.lastName.toUpperCase()} and re-open this shift on {shift.date} from {shift.startTime} to {shift.endTime}?
             </Text>
-        </View>
-        
-      </LinearGradient>
-        </View>
-      </Modal>
+            <LinearGradient
+          colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+          style={{position: 'absolute', bottom: -50 }}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+        >
+          <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+              {processing ? (
+                  <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                      <ActivityIndicator size='small' color='maroon'/>
+                  </View>
+              ) : (
+                  <TouchableOpacity onPress={ReOpenShift}>
+                      <View style={styles.buttonlayout}>
+                              <Text style={styles.buttontext}>
+                                  Re-open
+                              </Text> 
+                          </View>  
+                  </TouchableOpacity>
+              )}
+              <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+                This will cancel the shift pick up and re-open the shift for others. To cancel the shift, click on the edit icon.
+              </Text>
+          </View>
+          
+        </LinearGradient>
+          </View>
+        </Modal>
       </Portal>
     <View style={styles.container}>
       <View style={{height: 60}}/>
 {/* header icon row */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 40}}>
         <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={'#000'} style={{padding: 20, margin: -20}}/>
-        <FontAwesome name='edit' size={20} color={'#000'} style={{padding: 20, margin: -20}} onPress={() => navigation.navigate('EditShift', {id: id})}/>
+        <FontAwesome name='edit' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}} onPress={() => navigation.navigate('EditShift', {id: id})}/>
       </View>
 {/* date title */}
       <View style={{alignItems: 'center', marginBottom: 20, marginTop: 40}}>
-        <Text style={{fontWeight: '800', fontSize: 30}}>
+        <Text style={{color: theme === true ? '#fff' : '#000', fontWeight: '800', fontSize: 30}}>
           {shift.date.substring(0, shift.date.length - 5)}
         </Text>
       </View>
 {/* shift type */}
       <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={{fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}]}>
           {(shift.priority === 'normal' ? '' : shift.priority + ' ') + (shift.name === 'Regular' ? '' : shift.name + ' ')}
         </Text>
-        <Text style={{fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue'}}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue'}]}>
           {shift.role.acronym + ' '}
         </Text>
-        <Text style={{fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}]}>
           {shift.shiftType +' Shift'}
         </Text>
       </View>
@@ -271,7 +274,7 @@ const ReOpenShift = async () => {
           </View>
 
           <View style={{justifyContent: 'center'}}>
-              <Text style={{}}>
+              <Text style={styles.paragraph}>
                   to
               </Text>
           </View>
@@ -284,7 +287,7 @@ const ReOpenShift = async () => {
                 resizeMode="cover"
             >
                 <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                        <Text style={[styles.timeselect, {color: '#000'}]}>
+                        <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
                             {shift.endTime}
                         </Text>
                     </View> 
@@ -328,7 +331,7 @@ const ReOpenShift = async () => {
           </View>
           {shift.payRate === 0 && shift.payMultiplier === 1.0 ? (
             <View>
-              <Text style={{fontSize: 20}}>
+              <Text style={[styles.paragraph, {fontSize: 20}]}>
                 No additional incentives
               </Text>
             </View>
@@ -338,13 +341,13 @@ const ReOpenShift = async () => {
       </View>
 {/* notes */}
       <View style={{marginVertical: 10}}>
-        <Text>
+        <Text style={styles.paragraph}>
           {shift.notes}
         </Text>
       </View>
 {/* button */}
           <LinearGradient
-            colors={['#fff','#fff', '#ffffffa5','transparent']}
+            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
             style={{position: 'absolute', bottom: 0 }}
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
@@ -362,8 +365,8 @@ const ReOpenShift = async () => {
             ) : (
               <TouchableOpacity onPress={showReOpenModal}>
                 <View style={{justifyContent: 'center', marginTop: 20, marginBottom: 40, overflow: 'hidden', borderRadius: 24, borderWidth: 1, paddingVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
-                    <FontAwesome5 name= 'user-nurse' size={20} style={{marginRight: 6}}/>
-                    <Text style={{textTransform: 'capitalize', fontSize: 20}}>
+                    <FontAwesome5 name= 'user-nurse' color={theme === true ? '#fff' : '#000'} size={20} style={{marginRight: 6}}/>
+                    <Text style={[styles.paragraph, {textTransform: 'capitalize', fontSize: 20}]}>
                         {shift?.user?.firstName + ' ' + shift?.user?.lastName}
                     </Text>
                 </View>
@@ -371,17 +374,17 @@ const ReOpenShift = async () => {
             )}
 
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 4, }}>
-              <Text style={{textAlign: 'center'}}>
+              <Text style={[styles.paragraph, {textAlign: 'center'}]}>
                 {'Created by' + ' '}
               </Text>
-              <Text style={{textAlign: 'center', textTransform: 'capitalize'}}>
+              <Text style={[styles.paragraph, {textAlign: 'center', textTransform: 'capitalize'}]}>
                 {shift.createdBy?.firstName + ' '}
               </Text>
-              <Text style={{textAlign: 'center'}}>
+              <Text style={[styles.paragraph, {textAlign: 'center'}]}>
                 on {format(new Date(shift.createdOn), 'MMM do yyyy')}
               </Text>
             </View>
-            <Text style={{textAlign: 'center', color: 'gray', marginBottom: 20}}>
+            <Text style={[styles.paragraph, {textAlign: 'center', color: 'gray', marginBottom: 20}]}>
               Status: {shift.status}
             </Text>
             
