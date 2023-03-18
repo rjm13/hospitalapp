@@ -50,6 +50,7 @@ const MyShifts = ({navigation} : any) => {
                 getUser, {id: userID}
             ))
             setShifts(response.data.getUser.shifts.items)
+            console.log(response.data.getUser.shifts.items)
         }
         fetchUser();
     }, []);

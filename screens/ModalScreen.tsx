@@ -41,7 +41,7 @@ const ShiftModal = ({navigation, route} : any) => {
     startTime: '',
     endTime: '',
     isStartDayNight: '',
-    isEndDayNight: '',
+    isEndDayNIght: '',
     payRate: 0,
     payMultiplier: 0,
     notes: '',
@@ -281,7 +281,7 @@ const ReOpenShift = async () => {
 
           <View>
             <ImageBackground
-                source={shift.isEndDayNight === 'night' ? nightimage : shift.isEndDayNight === 'day' ? dayimage : nightimage}
+                source={shift.isEndDayNIght === 'night' ? nightimage : shift.isEndDayNIght === 'day' ? dayimage : nightimage}
                 style={{backgroundColor: '#fff', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,borderRadius: 10, height: 80, width: 120, overflow: 'hidden'}}
                 //borderRadius={0}
                 resizeMode="cover"

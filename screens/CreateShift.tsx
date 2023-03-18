@@ -93,6 +93,8 @@ const CreateShift = ({navigation} : {navigation: any}) => {
             approved: false, //approved or denied
             shiftType: 'day', // day or night
             jobType: 'Regular',
+            isEndDayNight: 'night',
+            isStartDayNight: 'day'
     });
 
     useEffect(() => {
@@ -157,6 +159,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                     roleID: data.roleID,
                     //quals: [], //what quals are needed
                     date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+                    dateOrder: date.toISOString(),
                     //month: 0, //month integer
                     //year: 0, //year integer
                     startTime: format(startTime, "p"),
@@ -175,6 +178,8 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                     giveUp: false, //is this someone giving up their shift
                     approved: false, //approved or denied
                     shiftType: data.shiftType, // day or night
+                    isStartDayNight: isStartDayNight,
+                    isEndDayNIght: isEndDayNight,
                     //jobType: 'Regular',
                 }}
             ))

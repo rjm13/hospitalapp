@@ -162,7 +162,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   approved: String
   shiftType: String
   isStartDayNight: String
-  isEndDayNIght: String
+  isEndDayNight: String
   pickUpNote: String
 }
 
