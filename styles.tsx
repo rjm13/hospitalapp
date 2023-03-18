@@ -41,8 +41,9 @@ return StyleSheet.create ({
     },
     itemtext: {
       marginLeft: 30,
-        fontSize: 16,
-        fontWeight: '700'
+      fontSize: 16,
+      fontWeight: '700',
+      color: theme === true ? '#fff' : '#000',
     },
     textInputTitle: {
       color: theme === true ? '#000' : '#fff',

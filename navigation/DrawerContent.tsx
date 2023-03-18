@@ -61,42 +61,22 @@ export function DrawerContent({navigation} : any) {
     }, [status])
 
     return(
-        <View style={{ flex:1 }}>
+        <View style={{ flex:1 , backgroundColor: theme === true ? '#000' : '#fff'}}>
             <DrawerContentScrollView>
                 <View style={{marginTop: 30}}>
-                    {/* <View style={styles.userInfoSection} >
-                            <View style={{ marginTop: 45 }}>
-                                <View style={{alignSelf: 'center', height: 104, width: 104, backgroundColor: '#fff', borderRadius: 52, alignItems: 'center', justifyContent: 'center'}}>
-                                    <Avatar.Image
-                                        source={{ uri: user?.imageUri || 'https://hieumobile.com/wp-content/uploads/avatar-among-us-2.jpg'}}
-                                        size={100}
-                                    />
-                                </View>
-                                
-                            <View style={{ alignSelf: 'center' }}>
-                                <Text style={styles.title}>
-                                    {!!user ? user?.name : 'Player One'}
-                                </Text>
-                            </View>
-                            </View>
-                    </View> */}
-                    {/* <Drawer.Section style={istyles.drawerSection}> */}
                     <TouchableWithoutFeedback onPress={() => navigation.navigate('MyShifts')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='grid' color='#636363' size={22} /> */}
                                     <Text style={styles.itemtext}>
                                         My Shifts
                                     </Text>
                                 </View>
-                                {/* <Feather name={scorecardExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('Profile')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <Feather name='user' color='#636363' size={25} /> */}
-                                    <Text style={styles.itemtext}>
+                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
                                        Trade Shift
                                     </Text>
                                 </View>
@@ -106,12 +86,10 @@ export function DrawerContent({navigation} : any) {
                         <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='grid' color='#636363' size={22} /> */}
-                                    <Text style={styles.itemtext}>
+                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
                                         Groups
                                     </Text>
                                 </View>
-                                {/* <Feather name={scorecardExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
                             </View>
                         </TouchableWithoutFeedback>
 
@@ -120,19 +98,16 @@ export function DrawerContent({navigation} : any) {
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateShift')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='cards-playing-outline' color='#636363' size={25} /> */}
                                     <Text style={styles.itemtext}>
                                         Create Open Shift 
                                     </Text>
                                 </View>
-                                {/* <Feather name={gamesExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
                             </View>
                         </TouchableWithoutFeedback>
 
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('ApprovalRequests', {trigger: Math.random()})}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='cards-playing-outline' color='#636363' size={25} /> */}
                                     <Text style={styles.itemtext}>
                                         Approval Requests
                                     </Text>
@@ -146,7 +121,6 @@ export function DrawerContent({navigation} : any) {
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('FilledShifts', {trigger: Math.random()})}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='cards-playing-outline' color='#636363' size={25} /> */}
                                     <Text style={styles.itemtext}>
                                         Filled Shifts
                                     </Text>
@@ -158,12 +132,10 @@ export function DrawerContent({navigation} : any) {
                         <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <MaterialCommunityIcons name='grid' color='#636363' size={22} /> */}
-                                    <Text style={styles.itemtext}>
+                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
                                         Create Announcement
                                     </Text>
                                 </View>
-                                {/* <Feather name={scorecardExpanded ? 'chevron-down' : 'chevron-right'} color='#636363' size={20} /> */}
                             </View>
                         </TouchableWithoutFeedback>
                 
@@ -171,15 +143,12 @@ export function DrawerContent({navigation} : any) {
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('Help')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    {/* <Feather name='help-circle' color='#636363' size={22} /> */}
-                                    <Text style={styles.itemtext}>
+                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
                                         Create Event
                                     </Text>
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
-
-                    {/* </Drawer.Section> */}
                 </View>
             </DrawerContentScrollView>
 
