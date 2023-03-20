@@ -19,13 +19,14 @@ import { AppContext } from '../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift} from '../src/graphql/queries';
-import { updateShift} from '../src/graphql/mutations';
+import { updateShift, createMessage} from '../src/graphql/mutations';
 
 const ShiftApproval = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
   const { theme } = useContext(AppContext);
+  const { userID } = useContext(AppContext);
 
   const styles = useStyles(theme);
   
@@ -94,6 +95,71 @@ const ShiftApproval = ({navigation, route} : any) => {
     paddingVertical: 10
 };
 
+const SendApprovalMessage = async () => {
+
+  const Title = 'Your pick up request for' + ' ' +
+                  shift.date + ' ' +
+                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime + ' ' +
+                  'has been approved.' + ' '
+
+  const Subtitle = 'Incentives for this shift:' + ' ' + (shift.payMultiplier !== 1 ? (shift.payMultiplier + 'x' + 'multiplier') : (null) + ' ' + (shift.payRate !== 0 ? ('plus' + shift.payRate + 'dollats per hour') : (null)))
+
+
+  const Content = shift.date + ' ' +
+                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime
+
+  try {
+    await API.graphql(graphqlOperation(
+      createMessage, {input: {
+        type: 'Message',
+        title: Title,
+        subtitle: Subtitle,
+        content: Content,
+        messageType: 'Shift Approved',
+        isReadBySender: true,
+        isReadByReceiver: false,
+        senderID: userID,
+        receiverID: shift.userID,
+        status: 'Approved'
+      }}
+    ))
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const SendDenialMessage = async () => {
+
+  const Title = 'Your pick up request for' + ' ' +
+                  shift.date + ' ' +
+                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime + ' ' +
+                  'has been denied.' + ' '
+
+  const Subtitle = ''
+
+  const Content = shift.date + ' ' +
+                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime
+
+  try {
+    await API.graphql(graphqlOperation(
+      createMessage, {input: {
+        type: 'Message',
+        title: Title,
+        subtitle: Subtitle,
+        content: Content,
+        messageType: 'Shift Denied',
+        isReadBySender: true,
+        isReadByReceiver: false,
+        senderID: userID,
+        receiverID: shift.userID,
+        status: 'Denied',
+      }}
+    ))
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 const ApproveShift = async () => {
     setProcessing(true);
     try {
@@ -115,6 +181,7 @@ const ApproveShift = async () => {
         ))
         console.log(response)
         if (response) {
+          SendApprovalMessage()
           alert('Shift approved.')
           navigation.navigate('ApprovalRequests', {trigger: Math.random()});
           setProcessing(false)
@@ -147,6 +214,7 @@ const DenyShift = async () => {
         ))
         console.log(response)
         if (response) {
+          SendDenialMessage();
           alert('Shift pickup denied.')
           navigation.navigate('ApprovalRequests', {trigger: Math.random()});
           setProcessing(false)

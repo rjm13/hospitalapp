@@ -30,12 +30,14 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   role: [Role] @manyToMany (relationName: "RoleUser")
   quals: [Qual] @manyToMany (relationName: "QualUser")
   shifts: [Shift] @hasMany(indexName: "byUser", fields: "id")
-  messageSent: [Message] @hasMany(indexName: "byUser", fields: "id")
-  messageRec: [Message] @hasMany(indexName: "byOtherUser", fields: "id")
+  messagesOut: [Message] @hasMany(indexName: "bySender", fields: "id")
+  messagesIn: [Message] @hasMany(indexName: "byReceiver", fields: "id")
   announcements: [Announcement] @hasMany(indexName: "byCreatedBy", fields: "id")
   events: [Event] @manyToMany (relationName: "EventUser")
   primaryRoleID: ID @index(name: "byPrimaryRole", sortKeyFields: ["id"])
-  primaryRole: Role @hasOne (fields: ["primaryRoleID"]) }
+  primaryRole: Role @hasOne (fields: ["primaryRoleID"]) 
+}
+
 
 type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
@@ -56,6 +58,7 @@ type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   peeps: [User] @hasMany(indexName: "byPrimaryRole", fields: "id")
   quals: [Qual] @hasMany(indexName: "byRole", fields: "id")
   activeShifts: [Shift] @hasMany(indexName: "byRole", fields: "id")
+  messages: [Message] @hasMany(indexName: "byRole", fields: "id")
 }
 
 type Qual @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
@@ -80,6 +83,7 @@ type System @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn"
   hospitals: [Hospital] @hasMany(indexName: "bySystem", fields: "id")
   website: String
   imageUri: String
+  messages: [Message] @hasMany(indexName: "bySystem", fields: "id")
 }
 
 type Hospital @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
@@ -102,6 +106,7 @@ type Hospital @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedO
   color: String
   imageUri: String
   roles: [Role] @hasMany(indexName: "byHospital", fields: "id")
+  messages: [Message] @hasMany(indexName: "byHosp", fields: "id")
 }
 
 type Department @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
@@ -118,6 +123,7 @@ type Department @model (timestamps: { createdAt: "createdOn", updatedAt: "update
   members: [User] @hasMany(indexName: "byDepartment", fields: "id")
   color: String
   imageUri: String
+  messages: [Message] @hasMany(indexName: "byDepartment", fields: "id")
 }
 
 type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
@@ -210,36 +216,47 @@ type Reaction @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedO
   announcementID: ID @index(name: "byAnnouncement", sortKeyFields: ["id"])
   event: Event @hasOne (fields: ["eventID"])
   eventID: ID @index(name: "byEvent", sortKeyFields: ["id"])
+  message: Message @hasOne (fields: ["messageID"])
+  messageID: ID @index(name: "byMessage", sortKeyFields: ["id"])
 }
 
 type Message @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
   {
     id: ID!
     type: String 
-      @index(name: "messagesByDate", queryField: "messagesByDate", sortKeyFields: ["createdAt"]  )
-      @index(name: "messagesByUpdatedDate", queryField: "messagesByUpdatedDate", sortKeyFields: ["updatedAt"]  )
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
     title: String
     subtitle: String
     content: String
-    user: User @hasOne (fields: ["userID"])
-    userID: ID @index(name: "byUser", sortKeyFields: ["id"])
+    messageType: String
+    status: String
+    isReadBySender: Boolean
+    isReadByReceiver: Boolean
+    sender: User @hasOne (fields: ["senderID"])
+    senderID: ID @index(name: "bySender", sortKeyFields: ["updatedAt"])
+    receiver: User @hasOne (fields: ["receiverID"])
+    receiverID: ID @index(name: "byReceiver", sortKeyFields: ["updatedAt"])
+    groupID: ID @index(name: "byGroup", sortKeyFields: ["updatedAt"])
+    group: Group @hasOne (fields: ["groupID"])
+    systemID: ID @index(name: "bySystem", sortKeyFields: ["updatedAt"])
+    system: System @hasOne (fields: ["systemID"])
+    hospID: ID @index(name: "byHosp", sortKeyFields: ["updatedAt"])
+    hosp: Hospital @hasOne (fields: ["hospID"])
+    departmentID: ID @index(name: "byDepartment", sortKeyFields: ["updatedAt"])
+    department: Department @hasOne (fields: ["departmentID"])
+    roleID: ID @index(name: "byRole", sortKeyFields: ["updatedAt"])
+    role: Role @hasOne (fields: ["roleID"])
+    replies: [MessageReply] @hasMany(indexName: "byMessage", fields: ["id"])
+    reactions: [Reaction] @hasMany(indexName: "byMessage", fields: ["id"])
     otherUserID: ID @index(name: "byOtherUser", sortKeyFields: ["id"])
     otherUser: User @hasOne (fields: ["otherUserID"])
-    isReadbyUser: Boolean
-    isReadByOtherUser: Boolean
-    replies: [MessageReply] @hasMany(indexName: "byMessage", fields: ["id"])
-    request: String
-    status: String
-    groupID: ID @index(name: "byGroup", sortKeyFields: ["id"])
-    group: Group @hasOne (fields: ["groupID"])
 }
 
 type MessageReply @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])
   {
     id: ID!
-    type: String @index(name: "repliesByDate", queryField: "repliesByDate", sortKeyFields: ["createdAt"]  )
+    type: String
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
     content: String

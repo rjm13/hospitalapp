@@ -36,6 +36,9 @@ export const createUser = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -84,6 +87,9 @@ export const createUser = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -138,6 +144,9 @@ export const createUser = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -196,14 +205,14 @@ export const createUser = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
         }
         nextToken
       }
-      messageSent {
+      messagesOut {
         items {
           id
           type
@@ -212,19 +221,24 @@ export const createUser = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
         nextToken
       }
-      messageRec {
+      messagesIn {
         items {
           id
           type
@@ -233,13 +247,18 @@ export const createUser = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -336,6 +355,9 @@ export const createUser = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -380,6 +402,9 @@ export const updateUser = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -428,6 +453,9 @@ export const updateUser = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -482,6 +510,9 @@ export const updateUser = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -540,14 +571,14 @@ export const updateUser = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
         }
         nextToken
       }
-      messageSent {
+      messagesOut {
         items {
           id
           type
@@ -556,19 +587,24 @@ export const updateUser = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
         nextToken
       }
-      messageRec {
+      messagesIn {
         items {
           id
           type
@@ -577,13 +613,18 @@ export const updateUser = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -680,6 +721,9 @@ export const updateUser = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -724,6 +768,9 @@ export const deleteUser = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -772,6 +819,9 @@ export const deleteUser = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -826,6 +876,9 @@ export const deleteUser = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -884,14 +937,14 @@ export const deleteUser = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
         }
         nextToken
       }
-      messageSent {
+      messagesOut {
         items {
           id
           type
@@ -900,19 +953,24 @@ export const deleteUser = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
         nextToken
       }
-      messageRec {
+      messagesIn {
         items {
           id
           type
@@ -921,13 +979,18 @@ export const deleteUser = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -1024,6 +1087,9 @@ export const deleteUser = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -1087,6 +1153,9 @@ export const createRole = /* GraphQL */ `
         roles {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1129,6 +1198,9 @@ export const createRole = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1219,8 +1291,34 @@ export const createRole = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -1284,6 +1382,9 @@ export const updateRole = /* GraphQL */ `
         roles {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1326,6 +1427,9 @@ export const updateRole = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1416,8 +1520,34 @@ export const updateRole = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -1481,6 +1611,9 @@ export const deleteRole = /* GraphQL */ `
         roles {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1523,6 +1656,9 @@ export const deleteRole = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1613,8 +1749,34 @@ export const deleteRole = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -1692,6 +1854,9 @@ export const createQual = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -1783,6 +1948,9 @@ export const updateQual = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1872,6 +2040,9 @@ export const deleteQual = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -1927,6 +2098,32 @@ export const createSystem = /* GraphQL */ `
       }
       website
       imageUri
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -1967,6 +2164,32 @@ export const updateSystem = /* GraphQL */ `
       }
       website
       imageUri
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -2007,6 +2230,32 @@ export const deleteSystem = /* GraphQL */ `
       }
       website
       imageUri
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -2036,6 +2285,9 @@ export const createHospital = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2087,6 +2339,32 @@ export const createHospital = /* GraphQL */ `
           acronym
           hospitalID
           departmentID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -2121,6 +2399,9 @@ export const updateHospital = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2172,6 +2453,32 @@ export const updateHospital = /* GraphQL */ `
           acronym
           hospitalID
           departmentID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -2206,6 +2513,9 @@ export const deleteHospital = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2257,6 +2567,32 @@ export const deleteHospital = /* GraphQL */ `
           acronym
           hospitalID
           departmentID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -2316,6 +2652,9 @@ export const createDepartment = /* GraphQL */ `
         roles {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2354,7 +2693,7 @@ export const createDepartment = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
@@ -2409,6 +2748,32 @@ export const createDepartment = /* GraphQL */ `
       }
       color
       imageUri
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -2463,6 +2828,9 @@ export const updateDepartment = /* GraphQL */ `
         roles {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2501,7 +2869,7 @@ export const updateDepartment = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
@@ -2556,6 +2924,32 @@ export const updateDepartment = /* GraphQL */ `
       }
       color
       imageUri
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -2610,6 +3004,9 @@ export const deleteDepartment = /* GraphQL */ `
         roles {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2648,7 +3045,7 @@ export const deleteDepartment = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
@@ -2703,6 +3100,32 @@ export const deleteDepartment = /* GraphQL */ `
       }
       color
       imageUri
+      messages {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          title
+          subtitle
+          content
+          messageType
+          status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
+          groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -2797,10 +3220,10 @@ export const createShift = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -2843,6 +3266,9 @@ export const createShift = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2881,6 +3307,9 @@ export const createShift = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -2925,6 +3354,9 @@ export const createShift = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -2984,6 +3416,9 @@ export const createShift = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -3227,10 +3662,10 @@ export const createShift = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -3266,7 +3701,7 @@ export const createShift = /* GraphQL */ `
       approved
       shiftType
       isStartDayNight
-      isEndDayNIght
+      isEndDayNight
       pickUpNote
       createdOn
       updatedOn
@@ -3362,10 +3797,10 @@ export const updateShift = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -3408,6 +3843,9 @@ export const updateShift = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -3446,6 +3884,9 @@ export const updateShift = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -3490,6 +3931,9 @@ export const updateShift = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -3549,6 +3993,9 @@ export const updateShift = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -3792,10 +4239,10 @@ export const updateShift = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -3831,7 +4278,7 @@ export const updateShift = /* GraphQL */ `
       approved
       shiftType
       isStartDayNight
-      isEndDayNIght
+      isEndDayNight
       pickUpNote
       createdOn
       updatedOn
@@ -3927,10 +4374,10 @@ export const deleteShift = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -3973,6 +4420,9 @@ export const deleteShift = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4011,6 +4461,9 @@ export const deleteShift = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -4055,6 +4508,9 @@ export const deleteShift = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4114,6 +4570,9 @@ export const deleteShift = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -4357,10 +4816,10 @@ export const deleteShift = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -4396,7 +4855,7 @@ export const deleteShift = /* GraphQL */ `
       approved
       shiftType
       isStartDayNight
-      isEndDayNIght
+      isEndDayNight
       pickUpNote
       createdOn
       updatedOn
@@ -4492,10 +4951,10 @@ export const createAnnouncement = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -4536,6 +4995,9 @@ export const createAnnouncement = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4574,6 +5036,9 @@ export const createAnnouncement = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -4618,6 +5083,9 @@ export const createAnnouncement = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4679,6 +5147,9 @@ export const createAnnouncement = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4697,6 +5168,7 @@ export const createAnnouncement = /* GraphQL */ `
           icon
           announcementID
           eventID
+          messageID
           createdOn
           updatedOn
         }
@@ -4756,7 +5228,7 @@ export const createAnnouncement = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
@@ -4858,10 +5330,10 @@ export const updateAnnouncement = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -4902,6 +5374,9 @@ export const updateAnnouncement = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4940,6 +5415,9 @@ export const updateAnnouncement = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -4984,6 +5462,9 @@ export const updateAnnouncement = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5045,6 +5526,9 @@ export const updateAnnouncement = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5063,6 +5547,7 @@ export const updateAnnouncement = /* GraphQL */ `
           icon
           announcementID
           eventID
+          messageID
           createdOn
           updatedOn
         }
@@ -5122,7 +5607,7 @@ export const updateAnnouncement = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
@@ -5224,10 +5709,10 @@ export const deleteAnnouncement = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -5268,6 +5753,9 @@ export const deleteAnnouncement = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5306,6 +5794,9 @@ export const deleteAnnouncement = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -5350,6 +5841,9 @@ export const deleteAnnouncement = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5411,6 +5905,9 @@ export const deleteAnnouncement = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5429,6 +5926,7 @@ export const deleteAnnouncement = /* GraphQL */ `
           icon
           announcementID
           eventID
+          messageID
           createdOn
           updatedOn
         }
@@ -5488,7 +5986,7 @@ export const deleteAnnouncement = /* GraphQL */ `
           approved
           shiftType
           isStartDayNight
-          isEndDayNIght
+          isEndDayNight
           pickUpNote
           createdOn
           updatedOn
@@ -5590,10 +6088,10 @@ export const createReaction = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -5844,6 +6342,178 @@ export const createReaction = /* GraphQL */ `
         updatedOn
       }
       eventID
+      message {
+        id
+        type
+        createdAt
+        updatedAt
+        title
+        subtitle
+        content
+        messageType
+        status
+        isReadBySender
+        isReadByReceiver
+        sender {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        senderID
+        receiver {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        receiverID
+        groupID
+        group {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        replies {
+          nextToken
+        }
+        reactions {
+          nextToken
+        }
+        otherUserID
+        otherUser {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      messageID
       createdOn
       updatedOn
     }
@@ -5938,10 +6608,10 @@ export const updateReaction = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -6192,6 +6862,178 @@ export const updateReaction = /* GraphQL */ `
         updatedOn
       }
       eventID
+      message {
+        id
+        type
+        createdAt
+        updatedAt
+        title
+        subtitle
+        content
+        messageType
+        status
+        isReadBySender
+        isReadByReceiver
+        sender {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        senderID
+        receiver {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        receiverID
+        groupID
+        group {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        replies {
+          nextToken
+        }
+        reactions {
+          nextToken
+        }
+        otherUserID
+        otherUser {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      messageID
       createdOn
       updatedOn
     }
@@ -6286,10 +7128,10 @@ export const deleteReaction = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -6540,6 +7382,178 @@ export const deleteReaction = /* GraphQL */ `
         updatedOn
       }
       eventID
+      message {
+        id
+        type
+        createdAt
+        updatedAt
+        title
+        subtitle
+        content
+        messageType
+        status
+        isReadBySender
+        isReadByReceiver
+        sender {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        senderID
+        receiver {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        receiverID
+        groupID
+        group {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        replies {
+          nextToken
+        }
+        reactions {
+          nextToken
+        }
+        otherUserID
+        otherUser {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      messageID
       createdOn
       updatedOn
     }
@@ -6558,7 +7572,11 @@ export const createMessage = /* GraphQL */ `
       title
       subtitle
       content
-      user {
+      messageType
+      status
+      isReadBySender
+      isReadByReceiver
+      sender {
         type
         id
         createdAt
@@ -6636,10 +7654,10 @@ export const createMessage = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -6668,7 +7686,338 @@ export const createMessage = /* GraphQL */ `
         createdOn
         updatedOn
       }
-      userID
+      senderID
+      receiver {
+        type
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      receiverID
+      groupID
+      group {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      systemID
+      system {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        hospitals {
+          nextToken
+        }
+        website
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      hospID
+      hosp {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departments {
+          nextToken
+        }
+        people {
+          nextToken
+        }
+        streetNum
+        streetAddress
+        city
+        state
+        postalCode
+        phone
+        color
+        imageUri
+        roles {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      departmentID
+      department {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        shifts {
+          nextToken
+        }
+        roles {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      roleID
+      role {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        details
+        icon
+        color
+        imageUri
+        acronym
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        people {
+          nextToken
+        }
+        peeps {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        activeShifts {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      replies {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          content
+          isRead
+          messageID
+          userID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      reactions {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          userID
+          reaction
+          icon
+          announcementID
+          eventID
+          messageID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       otherUserID
       otherUser {
         type
@@ -6748,10 +8097,10 @@ export const createMessage = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -6776,43 +8125,6 @@ export const createMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
-        }
-        createdOn
-        updatedOn
-      }
-      isReadbyUser
-      isReadByOtherUser
-      replies {
-        items {
-          id
-          type
-          createdAt
-          updatedAt
-          content
-          isRead
-          messageID
-          userID
-          createdOn
-          updatedOn
-        }
-        nextToken
-      }
-      request
-      status
-      groupID
-      group {
-        type
-        id
-        createdAt
-        updatedAt
-        name
-        members {
-          nextToken
-        }
-        color
-        imageUri
-        messages {
-          nextToken
         }
         createdOn
         updatedOn
@@ -6835,7 +8147,11 @@ export const updateMessage = /* GraphQL */ `
       title
       subtitle
       content
-      user {
+      messageType
+      status
+      isReadBySender
+      isReadByReceiver
+      sender {
         type
         id
         createdAt
@@ -6913,10 +8229,10 @@ export const updateMessage = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -6945,7 +8261,338 @@ export const updateMessage = /* GraphQL */ `
         createdOn
         updatedOn
       }
-      userID
+      senderID
+      receiver {
+        type
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      receiverID
+      groupID
+      group {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      systemID
+      system {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        hospitals {
+          nextToken
+        }
+        website
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      hospID
+      hosp {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departments {
+          nextToken
+        }
+        people {
+          nextToken
+        }
+        streetNum
+        streetAddress
+        city
+        state
+        postalCode
+        phone
+        color
+        imageUri
+        roles {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      departmentID
+      department {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        shifts {
+          nextToken
+        }
+        roles {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      roleID
+      role {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        details
+        icon
+        color
+        imageUri
+        acronym
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        people {
+          nextToken
+        }
+        peeps {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        activeShifts {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      replies {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          content
+          isRead
+          messageID
+          userID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      reactions {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          userID
+          reaction
+          icon
+          announcementID
+          eventID
+          messageID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       otherUserID
       otherUser {
         type
@@ -7025,10 +8672,10 @@ export const updateMessage = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -7053,43 +8700,6 @@ export const updateMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
-        }
-        createdOn
-        updatedOn
-      }
-      isReadbyUser
-      isReadByOtherUser
-      replies {
-        items {
-          id
-          type
-          createdAt
-          updatedAt
-          content
-          isRead
-          messageID
-          userID
-          createdOn
-          updatedOn
-        }
-        nextToken
-      }
-      request
-      status
-      groupID
-      group {
-        type
-        id
-        createdAt
-        updatedAt
-        name
-        members {
-          nextToken
-        }
-        color
-        imageUri
-        messages {
-          nextToken
         }
         createdOn
         updatedOn
@@ -7112,7 +8722,11 @@ export const deleteMessage = /* GraphQL */ `
       title
       subtitle
       content
-      user {
+      messageType
+      status
+      isReadBySender
+      isReadByReceiver
+      sender {
         type
         id
         createdAt
@@ -7190,10 +8804,10 @@ export const deleteMessage = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -7222,7 +8836,338 @@ export const deleteMessage = /* GraphQL */ `
         createdOn
         updatedOn
       }
-      userID
+      senderID
+      receiver {
+        type
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      receiverID
+      groupID
+      group {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      systemID
+      system {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        hospitals {
+          nextToken
+        }
+        website
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      hospID
+      hosp {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departments {
+          nextToken
+        }
+        people {
+          nextToken
+        }
+        streetNum
+        streetAddress
+        city
+        state
+        postalCode
+        phone
+        color
+        imageUri
+        roles {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      departmentID
+      department {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        shifts {
+          nextToken
+        }
+        roles {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      roleID
+      role {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        details
+        icon
+        color
+        imageUri
+        acronym
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        people {
+          nextToken
+        }
+        peeps {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        activeShifts {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      replies {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          content
+          isRead
+          messageID
+          userID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      reactions {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          userID
+          reaction
+          icon
+          announcementID
+          eventID
+          messageID
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       otherUserID
       otherUser {
         type
@@ -7302,10 +9247,10 @@ export const deleteMessage = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -7330,43 +9275,6 @@ export const deleteMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
-        }
-        createdOn
-        updatedOn
-      }
-      isReadbyUser
-      isReadByOtherUser
-      replies {
-        items {
-          id
-          type
-          createdAt
-          updatedAt
-          content
-          isRead
-          messageID
-          userID
-          createdOn
-          updatedOn
-        }
-        nextToken
-      }
-      request
-      status
-      groupID
-      group {
-        type
-        id
-        createdAt
-        updatedAt
-        name
-        members {
-          nextToken
-        }
-        color
-        imageUri
-        messages {
-          nextToken
         }
         createdOn
         updatedOn
@@ -7397,7 +9305,11 @@ export const createMessageReply = /* GraphQL */ `
         title
         subtitle
         content
-        user {
+        messageType
+        status
+        isReadBySender
+        isReadByReceiver
+        sender {
           type
           id
           createdAt
@@ -7421,7 +9333,113 @@ export const createMessageReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
-        userID
+        senderID
+        receiver {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        receiverID
+        groupID
+        group {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        replies {
+          nextToken
+        }
+        reactions {
+          nextToken
+        }
         otherUserID
         otherUser {
           type
@@ -7444,25 +9462,6 @@ export const createMessageReply = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          createdOn
-          updatedOn
-        }
-        isReadbyUser
-        isReadByOtherUser
-        replies {
-          nextToken
-        }
-        request
-        status
-        groupID
-        group {
-          type
-          id
-          createdAt
-          updatedAt
-          name
-          color
-          imageUri
           createdOn
           updatedOn
         }
@@ -7547,10 +9546,10 @@ export const createMessageReply = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -7606,7 +9605,11 @@ export const updateMessageReply = /* GraphQL */ `
         title
         subtitle
         content
-        user {
+        messageType
+        status
+        isReadBySender
+        isReadByReceiver
+        sender {
           type
           id
           createdAt
@@ -7630,7 +9633,113 @@ export const updateMessageReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
-        userID
+        senderID
+        receiver {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        receiverID
+        groupID
+        group {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        replies {
+          nextToken
+        }
+        reactions {
+          nextToken
+        }
         otherUserID
         otherUser {
           type
@@ -7653,25 +9762,6 @@ export const updateMessageReply = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          createdOn
-          updatedOn
-        }
-        isReadbyUser
-        isReadByOtherUser
-        replies {
-          nextToken
-        }
-        request
-        status
-        groupID
-        group {
-          type
-          id
-          createdAt
-          updatedAt
-          name
-          color
-          imageUri
           createdOn
           updatedOn
         }
@@ -7756,10 +9846,10 @@ export const updateMessageReply = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -7815,7 +9905,11 @@ export const deleteMessageReply = /* GraphQL */ `
         title
         subtitle
         content
-        user {
+        messageType
+        status
+        isReadBySender
+        isReadByReceiver
+        sender {
           type
           id
           createdAt
@@ -7839,7 +9933,113 @@ export const deleteMessageReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
-        userID
+        senderID
+        receiver {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        receiverID
+        groupID
+        group {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        replies {
+          nextToken
+        }
+        reactions {
+          nextToken
+        }
         otherUserID
         otherUser {
           type
@@ -7862,25 +10062,6 @@ export const deleteMessageReply = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          createdOn
-          updatedOn
-        }
-        isReadbyUser
-        isReadByOtherUser
-        replies {
-          nextToken
-        }
-        request
-        status
-        groupID
-        group {
-          type
-          id
-          createdAt
-          updatedAt
-          name
-          color
-          imageUri
           createdOn
           updatedOn
         }
@@ -7965,10 +10146,10 @@ export const deleteMessageReply = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -8208,10 +10389,10 @@ export const createAnnouncementReply = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -8451,10 +10632,10 @@ export const updateAnnouncementReply = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -8694,10 +10875,10 @@ export const deleteAnnouncementReply = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -8761,6 +10942,9 @@ export const createEvent = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8799,6 +10983,9 @@ export const createEvent = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -8843,6 +11030,9 @@ export const createEvent = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8904,6 +11094,9 @@ export const createEvent = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8957,6 +11150,7 @@ export const createEvent = /* GraphQL */ `
           icon
           announcementID
           eventID
+          messageID
           createdOn
           updatedOn
         }
@@ -9006,6 +11200,9 @@ export const updateEvent = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9044,6 +11241,9 @@ export const updateEvent = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -9088,6 +11288,9 @@ export const updateEvent = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9149,6 +11352,9 @@ export const updateEvent = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9202,6 +11408,7 @@ export const updateEvent = /* GraphQL */ `
           icon
           announcementID
           eventID
+          messageID
           createdOn
           updatedOn
         }
@@ -9251,6 +11458,9 @@ export const deleteEvent = /* GraphQL */ `
         }
         website
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9289,6 +11499,9 @@ export const deleteEvent = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -9333,6 +11546,9 @@ export const deleteEvent = /* GraphQL */ `
         }
         color
         imageUri
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9394,6 +11610,9 @@ export const deleteEvent = /* GraphQL */ `
         activeShifts {
           nextToken
         }
+        messages {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9447,6 +11666,7 @@ export const deleteEvent = /* GraphQL */ `
           icon
           announcementID
           eventID
+          messageID
           createdOn
           updatedOn
         }
@@ -9499,13 +11719,18 @@ export const createGroup = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -9548,13 +11773,18 @@ export const updateGroup = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -9597,13 +11827,18 @@ export const deleteGroup = /* GraphQL */ `
           title
           subtitle
           content
-          userID
-          otherUserID
-          isReadbyUser
-          isReadByOtherUser
-          request
+          messageType
           status
+          isReadBySender
+          isReadByReceiver
+          senderID
+          receiverID
           groupID
+          systemID
+          hospID
+          departmentID
+          roleID
+          otherUserID
           createdOn
           updatedOn
         }
@@ -9701,10 +11936,10 @@ export const createHospitalUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -9767,6 +12002,9 @@ export const createHospitalUser = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -9864,10 +12102,10 @@ export const updateHospitalUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -9930,6 +12168,9 @@ export const updateHospitalUser = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -10027,10 +12268,10 @@ export const deleteHospitalUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -10093,6 +12334,9 @@ export const deleteHospitalUser = /* GraphQL */ `
         color
         imageUri
         roles {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -10190,10 +12434,10 @@ export const createGroupUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -10331,10 +12575,10 @@ export const updateGroupUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -10472,10 +12716,10 @@ export const deleteGroupUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -10613,10 +12857,10 @@ export const createRoleUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -10700,6 +12944,9 @@ export const createRoleUser = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -10797,10 +13044,10 @@ export const updateRoleUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -10884,6 +13131,9 @@ export const updateRoleUser = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -10981,10 +13231,10 @@ export const deleteRoleUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -11068,6 +13318,9 @@ export const deleteRoleUser = /* GraphQL */ `
           nextToken
         }
         activeShifts {
+          nextToken
+        }
+        messages {
           nextToken
         }
         createdOn
@@ -11165,10 +13418,10 @@ export const createQualUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -11320,10 +13573,10 @@ export const updateQualUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -11475,10 +13728,10 @@ export const deleteQualUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -11630,10 +13883,10 @@ export const createEventUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -11858,10 +14111,10 @@ export const updateEventUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {
@@ -12086,10 +14339,10 @@ export const deleteEventUser = /* GraphQL */ `
         shifts {
           nextToken
         }
-        messageSent {
+        messagesOut {
           nextToken
         }
-        messageRec {
+        messagesIn {
           nextToken
         }
         announcements {

@@ -179,7 +179,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                     approved: false, //approved or denied
                     shiftType: data.shiftType, // day or night
                     isStartDayNight: isStartDayNight,
-                    isEndDayNIght: isEndDayNight,
+                    isEndDayNight: isEndDayNight,
                     //jobType: 'Regular',
                 }}
             ))
