@@ -65,7 +65,6 @@ const FilledShifts = ({navigation, route} : any) => {
             }
             
             setShifts(shiftarr);
-            console.log(shiftarr)
             setIsFetching(false);
         }
         fetchDepartment();

@@ -47,12 +47,6 @@ const Inbox = ({navigation} : any) => {
                 getUser, {nextToken, id: userID}
             ))
 
-            // const response2 = await API.graphql(graphqlOperation(
-            //     listMessages
-            // ))
-
-            // console.log(response2.data.listMessages.items)
-
             if (response.data.getUser.messagesIn.items.length > 0) {
                 for (let i = 0; i < response.data.getUser.messagesIn.items.length; i++) {
                     Arr.push(response.data.getUser.messagesIn.items[i])
@@ -63,8 +57,6 @@ const Inbox = ({navigation} : any) => {
                     return;
                 }
             }
-            
-            console.log(Arr)
             setMessages(Arr);
             setIsLoading(false);
         }
