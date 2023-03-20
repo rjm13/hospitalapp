@@ -233,6 +233,7 @@ export const createUser = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -259,6 +260,7 @@ export const createUser = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -599,6 +601,7 @@ export const updateUser = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -625,6 +628,7 @@ export const updateUser = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -965,6 +969,7 @@ export const deleteUser = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -991,6 +996,7 @@ export const deleteUser = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -1319,6 +1325,7 @@ export const createRole = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -1548,6 +1555,7 @@ export const updateRole = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -1777,6 +1785,7 @@ export const deleteRole = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2119,6 +2128,7 @@ export const createSystem = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2185,6 +2195,7 @@ export const updateSystem = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2251,6 +2262,7 @@ export const deleteSystem = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2365,6 +2377,7 @@ export const createHospital = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2479,6 +2492,7 @@ export const updateHospital = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2593,6 +2607,7 @@ export const deleteHospital = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2769,6 +2784,7 @@ export const createDepartment = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -2945,6 +2961,7 @@ export const updateDepartment = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -3121,6 +3138,7 @@ export const deleteDepartment = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -6510,6 +6528,46 @@ export const createReaction = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shiftID
+        shift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          createdOn
+          updatedOn
+        }
         createdOn
         updatedOn
       }
@@ -7030,6 +7088,46 @@ export const updateReaction = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shiftID
+        shift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          createdOn
+          updatedOn
+        }
         createdOn
         updatedOn
       }
@@ -7547,6 +7645,46 @@ export const deleteReaction = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          createdOn
+          updatedOn
+        }
+        shiftID
+        shift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -8129,6 +8267,187 @@ export const createMessage = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      shiftID
+      shift {
+        type
+        id
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        name
+        notes
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        announcementID
+        announcement {
+          id
+          type
+          createdAt
+          updatedAt
+          createdByID
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          title
+          accouncement
+          notes
+          priority
+          duration
+          expire
+          category
+          link
+          sort
+          createdOn
+          updatedOn
+        }
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        date
+        dateOrder
+        month
+        year
+        startTime
+        startAMPM
+        endTime
+        endAMPM
+        payMultiplier
+        payRate
+        payAddToShift
+        payAddToHour
+        status
+        userID
+        user {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        priority
+        numNeeded
+        trade
+        giveUp
+        approved
+        shiftType
+        isStartDayNight
+        isEndDayNight
+        pickUpNote
+        createdOn
+        updatedOn
+      }
       createdOn
       updatedOn
     }
@@ -8701,6 +9020,187 @@ export const updateMessage = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        createdOn
+        updatedOn
+      }
+      shiftID
+      shift {
+        type
+        id
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        name
+        notes
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        announcementID
+        announcement {
+          id
+          type
+          createdAt
+          updatedAt
+          createdByID
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          title
+          accouncement
+          notes
+          priority
+          duration
+          expire
+          category
+          link
+          sort
+          createdOn
+          updatedOn
+        }
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        date
+        dateOrder
+        month
+        year
+        startTime
+        startAMPM
+        endTime
+        endAMPM
+        payMultiplier
+        payRate
+        payAddToShift
+        payAddToHour
+        status
+        userID
+        user {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        priority
+        numNeeded
+        trade
+        giveUp
+        approved
+        shiftType
+        isStartDayNight
+        isEndDayNight
+        pickUpNote
         createdOn
         updatedOn
       }
@@ -9279,6 +9779,187 @@ export const deleteMessage = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      shiftID
+      shift {
+        type
+        id
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        name
+        notes
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        announcementID
+        announcement {
+          id
+          type
+          createdAt
+          updatedAt
+          createdByID
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          title
+          accouncement
+          notes
+          priority
+          duration
+          expire
+          category
+          link
+          sort
+          createdOn
+          updatedOn
+        }
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        date
+        dateOrder
+        month
+        year
+        startTime
+        startAMPM
+        endTime
+        endAMPM
+        payMultiplier
+        payRate
+        payAddToShift
+        payAddToHour
+        status
+        userID
+        user {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        priority
+        numNeeded
+        trade
+        giveUp
+        approved
+        shiftType
+        isStartDayNight
+        isEndDayNight
+        pickUpNote
+        createdOn
+        updatedOn
+      }
       createdOn
       updatedOn
     }
@@ -9462,6 +10143,46 @@ export const createMessageReply = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          createdOn
+          updatedOn
+        }
+        shiftID
+        shift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -9765,6 +10486,46 @@ export const updateMessageReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        shiftID
+        shift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          createdOn
+          updatedOn
+        }
         createdOn
         updatedOn
       }
@@ -10062,6 +10823,46 @@ export const deleteMessageReply = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          createdOn
+          updatedOn
+        }
+        shiftID
+        shift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          startAMPM
+          endTime
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
           createdOn
           updatedOn
         }
@@ -11731,6 +12532,7 @@ export const createGroup = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -11785,6 +12587,7 @@ export const updateGroup = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }
@@ -11839,6 +12642,7 @@ export const deleteGroup = /* GraphQL */ `
           departmentID
           roleID
           otherUserID
+          shiftID
           createdOn
           updatedOn
         }

@@ -22,7 +22,6 @@ import { getUser, listMessages } from '../src/graphql/queries';
 
 const Inbox = ({navigation} : any) => {
 
-    const { setTheme } = useContext(AppContext);
     const { theme } = useContext(AppContext);
     const { userID } = useContext(AppContext);
 
@@ -48,15 +47,15 @@ const Inbox = ({navigation} : any) => {
                 getUser, {nextToken, id: userID}
             ))
 
-            const response2 = await API.graphql(graphqlOperation(
-                listMessages
-            ))
+            // const response2 = await API.graphql(graphqlOperation(
+            //     listMessages
+            // ))
 
-            console.log(response2.data.listMessages.items)
+            // console.log(response2.data.listMessages.items)
 
             if (response.data.getUser.messagesIn.items.length > 0) {
-                for (let i = 0; response.data.getUser.messagesIn.items.length; i++) {
-                    Arr.push(response.data.getUser.messagesIn.items)
+                for (let i = 0; i < response.data.getUser.messagesIn.items.length; i++) {
+                    Arr.push(response.data.getUser.messagesIn.items[i])
                 }
                 if (response.data.getUser.messagesIn.nextToken) {
                     setNextToken(response.data.getUser.messagesIn.nextToken)
@@ -65,42 +64,35 @@ const Inbox = ({navigation} : any) => {
                 }
             }
             
+            console.log(Arr)
             setMessages(Arr);
             setIsLoading(false);
         }
         getMessages();
     }, [didUpdate])
 
-    const Item = ({index, id, title, content, subtitle, senderID, senderFirstName, senderLastName, createdAt, isReadbyUser, isReadByOtherUser, status} : any) => {
+    const Item = ({index, id, title, content, subtitle, senderID, senderFirstName, senderLastName, createdAt, isReadbyUser, isReadBySender, isReadByReceiver, status} : any) => {
 
         return (
             <TouchableWithoutFeedback onPress={() => navigation.navigate('ViewMessage', {messageid: id})}>
-                <View style={{backgroundColor: index%2 === 0 ? '#303030a5' : 'transparent', alignItems: 'center', paddingVertical: 6, flexDirection: 'row', justifyContent: 'space-between'}}>
-                    {isReadbyUser === false ?  (
+                <View style={{backgroundColor: index%2 === 0 ? '#fff' : 'lightgray', alignItems: 'center', paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {isReadByReceiver === false ?  (
                         <View style={{}}>
                             <FontAwesome5 
                                 name='hand-point-right'
                                 size={20}
-                                color='#00ffffa5'
+                                color='maroon'
                                 style={{marginLeft: 20, marginRight: 0, alignSelf: 'center'}}
                             />
                         </View>
                     ) : null}
                     
-                    <View style={{marginRight: 20, marginVertical: 10, paddingHorizontal: 20, width: isReadbyUser === true && currentUserID === userID ? Dimensions.get('window').width : isReadbyUser === false && currentUserID === userID ? Dimensions.get('window').width - 40 : isReadByOtherUser === true && currentUserID !== userID ? Dimensions.get('window').width : isReadByOtherUser === false && currentUserID !== userID ? Dimensions.get('window').width - 40 : Dimensions.get('window').width}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{color: '#fff', fontSize: 12}}>
-                                {format(parseISO(createdAt), "MMM do")}
-                            </Text>
-                        </View>
-                        <Text style={{color: '#fff', fontSize: 12, marginTop: 4 }}>
+                    <View style={{marginRight: 20, marginVertical: 10, paddingHorizontal: 20, width: isReadByReceiver === true ? Dimensions.get('window').width : Dimensions.get('window').width - 40}}>
+                        <Text style={{color: '#000', fontSize: 13, fontWeight: 'bold'}}>
                             {title}
                         </Text>
-                        <Text style={{color: '#fff', fontSize: 12, marginTop: 4 }}>
-                            {subtitle}
-                        </Text>
-                        <Text numberOfLines={2} style={{color: 'gray', fontSize: 12 }}>
-                            {content}
+                        <Text style={{color: '#000', fontSize: 12, marginTop: 6 }}>
+                            {format(parseISO(createdAt), "MMMM do yyyy p")}
                         </Text>
                     </View>
                 </View>
@@ -120,10 +112,10 @@ const Inbox = ({navigation} : any) => {
                 senderID={item.userID}
                 receiverID={item.otherUserID}
                 createdAt={item.createdAt}
-                senderFirstName={item.sender.fistName}
-                senderLastName={item.sender.lastName}
-                isReadbyUser={item.isReadbyUser}
-                isReadByOtherUser={item.isReadByOtherUser}
+                senderFirstName={item.sender?.firstName}
+                senderLastName={item.sender?.lastName}
+                isReadbySender={item.isReadbySender}
+                isReadByReceiver={item.isReadByReceiver}
                 index={index}
                 updatedAt={item.updatedAt}
                 status={item.status}
@@ -180,7 +172,7 @@ const Inbox = ({navigation} : any) => {
                     }}
                     ListHeaderComponent={() => {
                         return (
-                            <View style={{height: 120}}/>
+                            <View style={{height: 20}}/>
                         )
                     }}
                     ListEmptyComponent={() => {

@@ -53,6 +53,7 @@ const ShiftApproval = ({navigation, route} : any) => {
     createdOn: new Date(),
     priority: '',
     status: 'open',
+    userID: '',
     user: {
         id: '',
         firstName: '',
@@ -99,14 +100,14 @@ const SendApprovalMessage = async () => {
 
   const Title = 'Your pick up request for' + ' ' +
                   shift.date + ' ' +
-                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime + ' ' +
+                  'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime + ' ' +
                   'has been approved.' + ' '
 
-  const Subtitle = 'Incentives for this shift:' + ' ' + (shift.payMultiplier !== 1 ? (shift.payMultiplier + 'x' + 'multiplier') : (null) + ' ' + (shift.payRate !== 0 ? ('plus' + shift.payRate + 'dollats per hour') : (null)))
+  const Subtitle = (shift.payMultiplier === 1 || shift.payRate === 0 ? 'No Incentives' : 'Incentives for this shift:' + ' ' + (shift.payMultiplier !== 1 ? (shift.payMultiplier + 'x' + 'multiplier') : (null) + ' ' + (shift.payRate !== 0 ? ('plus' + shift.payRate + 'dollats per hour') : (null))))
 
 
   const Content = shift.date + ' ' +
-                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime
+                  'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime
 
   try {
     await API.graphql(graphqlOperation(
@@ -120,7 +121,10 @@ const SendApprovalMessage = async () => {
         isReadByReceiver: false,
         senderID: userID,
         receiverID: shift.userID,
-        status: 'Approved'
+        status: 'Approved',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        shiftID: shift.id
       }}
     ))
   } catch (e) {
@@ -153,6 +157,9 @@ const SendDenialMessage = async () => {
         senderID: userID,
         receiverID: shift.userID,
         status: 'Denied',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        shiftID: shift.id,
       }}
     ))
   } catch (e) {

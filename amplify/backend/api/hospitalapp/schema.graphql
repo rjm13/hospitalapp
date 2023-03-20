@@ -251,6 +251,8 @@ type Message @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn
     reactions: [Reaction] @hasMany(indexName: "byMessage", fields: ["id"])
     otherUserID: ID @index(name: "byOtherUser", sortKeyFields: ["id"])
     otherUser: User @hasOne (fields: ["otherUserID"])
+    shiftID: ID @index(name: "byShift", sortKeyFields: ["id"])
+    shift: Shift @hasOne (fields: ["shiftID"])
 }
 
 type MessageReply @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}])

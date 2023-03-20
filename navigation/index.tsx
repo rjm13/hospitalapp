@@ -35,6 +35,7 @@ import ApprovalRequests from '../screens/ApprovalRequests'
 import ShiftApproval from '../screens/ShiftApproval'
 import FilledShifts from '../screens/FilledShifts'
 import EditShift from '../screens/EditShift'
+import ViewMessage from '../screens/ViewMessage'
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -138,6 +139,7 @@ function RootNavigator({navigation} : any) {
       <Stack.Screen name="ConfirmSetUp" component={ConfirmSetUp}/>
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
       <Stack.Screen name="Inbox" component={Inbox} options={{ headerShown: false }}/>
+      <Stack.Screen name="ViewMessage" component={ViewMessage} options={{ headerShown: false }} />
       <Stack.Screen name="CreateShift" component={CreateShift} options={{ headerShown: false }}/>
       <Stack.Screen name="MyShifts" component={MyShifts} options={{ headerShown: false }}/>
       <Stack.Screen name="ApprovalRequests" component={ApprovalRequests} options={{ headerShown: false }}/>
@@ -147,8 +149,6 @@ function RootNavigator({navigation} : any) {
         <Stack.Screen name="Modal" component={ModalScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ShiftApproval" component={ShiftApproval} options={{ headerShown: false }} />
         <Stack.Screen name="EditShift" component={EditShift} options={{ headerShown: false }} />
-
-
       </Stack.Group>
     </Stack.Navigator>
   );
