@@ -93,21 +93,15 @@ const FilledShifts = ({navigation, route} : any) => {
                 </View>
                 ) : null}
                 </View>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {startTime + ' '}
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {startAMPM}
-                </Text>
-                <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' ? 'darkblue': '#000'}}>
+                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                        {startTime}
+                    </Text>
+                    <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                     -
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {endTime + ' '}
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {endAMPM}
-                </Text>
+                    </Text>
+                    <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                    {endTime}
+                    </Text>
                 </View>
                 
             <View style={{flexDirection: 'row', alignItems: 'center',}}>
@@ -124,7 +118,7 @@ const FilledShifts = ({navigation, route} : any) => {
                     size={12}
                     style={{marginRight: 4}}
                 />
-                <Text style={{fontSize: 14}}>
+                <Text style={[styles.paragraph, {fontSize: 14}]}>
                     {payMultiplier}x
                 </Text>
                 </View>

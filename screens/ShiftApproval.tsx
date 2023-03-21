@@ -305,7 +305,7 @@ const DenyShift = async () => {
                   </View>
               ) : (
                   <TouchableOpacity onPress={DenyShift}>
-                      <View style={[styles.buttonlayout, {backgroundColor: 'darkgray'}]}>
+                      <View style={[styles.buttonlayout, {backgroundColor: theme === true ? '#363636' : 'darkgray'}]}>
                               <Text style={styles.buttontext}>
                                   Deny
                               </Text> 
@@ -339,7 +339,7 @@ const DenyShift = async () => {
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20, width: Dimensions.get('window').width - 40}}>
           <View>
-                <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
                     <Text style={styles.timeselect}>
                         {shift.startTime}
                     </Text>
@@ -353,7 +353,7 @@ const DenyShift = async () => {
           </View>
 
           <View>
-                <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
                     <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
                         {shift.endTime}
                     </Text>
@@ -363,13 +363,13 @@ const DenyShift = async () => {
       </View>
 {/* shift type */}
       <View style={{marginVertical: 0, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={{fontSize: 18, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}}>
+      <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
           {(shift.priority === 'normal' ? '' : shift.priority + ' ') + (shift.name === 'Regular' ? '' : shift.name + ' ')}
         </Text>
-        <Text style={{fontSize: 18, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue'}}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
           {shift.role.acronym + ' '}
         </Text>
-        <Text style={{fontSize: 18, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
           {shift.shiftType +' Shift'}
         </Text>
       </View>
@@ -451,7 +451,7 @@ const DenyShift = async () => {
         </View>
         <View style={{marginBottom: 20, width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
           <TouchableOpacity onPress={showDenyModal}>
-              <View style={[styles.buttonlayout, {backgroundColor: 'lightgray'}]}>
+              <View style={[styles.buttonlayout, {backgroundColor: theme === true ? '#363636' : 'lightgray'}]}>
                       <Text style={styles.buttontext}>
                           Deny
                       </Text> 

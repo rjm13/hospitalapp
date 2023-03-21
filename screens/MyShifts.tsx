@@ -13,13 +13,10 @@ import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { getUser, shiftsByUser } from '../src/graphql/queries';
+import { shiftsByUser } from '../src/graphql/queries';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const SCREEN_WIDTH = Dimensions.get('window').width
-const SCREEN_HEIGHT = Dimensions.get('window').height
 
 const MyShifts = ({navigation} : any) => {
 
@@ -65,41 +62,35 @@ const MyShifts = ({navigation} : any) => {
         
         return (
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', elevation: 6, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20, paddingVertical: 10, overflow: 'hidden', backgroundColor: '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', elevation: 6, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20, paddingVertical: 10, overflow: 'hidden', backgroundColor: theme === true ? '#363636' : '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
             <View style={{width: '80%'}}>
                 <View>
                     <Text style={styles.title}>
                         {date}
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row'}}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', marginVertical: 4}}>
+                <View style={{flexDirection: 'row', alignItems: 'center' }}>
                 {shiftType === 'night' ? (
                 <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
                     <Ionicons 
                     name='moon'
-                    color='darkblue'
+                    color={theme === true ? 'lightblue' : 'darkblue'}
                     size={12}
                     style={{marginRight: 4}}
                     />
                 </View>
                 ) : null}
                 </View>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {startTime + ' '}
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {startAMPM}
-                </Text>
-                <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' ? 'darkblue': '#000'}}>
+                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                        {startTime}
+                    </Text>
+                    <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                     -
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {endTime + ' '}
-                </Text>
-                <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' ? 'darkblue': '#000'}}>
-                    {endAMPM}
-                </Text>
+                    </Text>
+                    <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                    {endTime}
+                    </Text>
                 </View>
                 
             <View style={{flexDirection: 'row', alignItems: 'center',}}>
@@ -109,40 +100,40 @@ const MyShifts = ({navigation} : any) => {
                 </Text>
                 </View>
             
-                <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                 <FontAwesome5 
                     name='bolt'
                     color='green'
                     size={12}
                     style={{marginRight: 4}}
                 />
-                <Text style={{fontSize: 14}}>
+                <Text style={[styles.paragraph, {fontSize: 14}]}>
                     {payMultiplier}x
                 </Text>
                 </View>
     
-            <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+            <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                 <FontAwesome5 
                 name='dollar-sign'
                 color='green'
                 size={12}
                 style={{marginRight: 4}}
                 />
-                <Text style={{fontSize: 14}}>
+                <Text style={[styles.paragraph, {fontSize: 14}]}>
                 {'+' + '' + payRate}
                 </Text>
             </View>
             </View>
     
             <View style={{marginVertical: 4}}>
-                <Text numberOfLines={2} style={{}}>
+                <Text numberOfLines={2} style={styles.paragraph}>
                 {notes}
                 </Text>
             </View>
             </View>
             <View>
                 <FontAwesome5 name={status === 'pending' ? 'hourglass-half' : status === 'approved' ? 'check' : status === 'open' ? 'skull-crossbones' : 'hand-holding-medical'} size={26} color={status === 'pending' ? '#BAB9A8' : status === 'approved' ? 'green' : 'lightgray'} style={{paddingHorizontal: 20}} />
-                <Text style={{color: '#7F7D70', textAlign: 'center', fontSize: 12, marginTop: 6}}>
+                <Text style={{color: theme === true ? 'lightgray' : '#7F7D70', textAlign: 'center', fontSize: 12, marginTop: 6}}>
                     {status === 'open' ? 'denied' : status}
                 </Text>
             </View>
