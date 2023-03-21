@@ -13,7 +13,7 @@ import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { getDepartment } from '../src/graphql/queries';
+import { shiftsByDepartment } from '../src/graphql/queries';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -50,21 +50,19 @@ const FilledShifts = ({navigation, route} : any) => {
 
         setIsFetching(true);
 
-        let shiftarr = [];
-
         const fetchDepartment = async () => {
 
             const resp = await API.graphql(graphqlOperation(
-                getDepartment, {id: departID}
-            ))
-
-            for (let i = 0; i < resp.data.getDepartment.shifts.items.length; i++) {
-                if (resp.data.getDepartment.shifts.items[i].status === 'approved') {
-                    shiftarr.push(resp.data.getDepartment.shifts.items[i])
+                shiftsByDepartment, {
+                    departmentID: departID,
+                    filter: {
+                        status: {
+                            eq: "approved"
+                        }
+                    }
                 }
-            }
-            
-            setShifts(shiftarr);
+            ))
+            setShifts(resp.data.shiftsByDepartment.items);
             setIsFetching(false);
         }
         fetchDepartment();

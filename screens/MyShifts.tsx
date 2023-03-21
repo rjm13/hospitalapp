@@ -13,7 +13,7 @@ import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { getUser } from '../src/graphql/queries';
+import { getUser, shiftsByUser } from '../src/graphql/queries';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -47,10 +47,14 @@ const MyShifts = ({navigation} : any) => {
     useEffect(() => {
         const fetchUser = async () => {
             const response = await API.graphql(graphqlOperation(
-                getUser, {id: userID}
+                shiftsByUser, {
+                    userID: userID,
+                        dateOrder: {
+                            gt: new Date().toISOString()
+                        }
+                }
             ))
-            setShifts(response.data.getUser.shifts.items)
-            console.log(response.data.getUser.shifts.items)
+            setShifts(response.data.shiftsByUser.items)
         }
         fetchUser();
     }, []);

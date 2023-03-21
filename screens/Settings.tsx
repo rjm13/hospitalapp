@@ -35,6 +35,7 @@ const Settings = ({navigation} : any) => {
 //theme switch
     const [isSwitchOn, setIsSwitchOn] = useState<boolean>(theme);
 
+
     const onToggleSwitch = async () => {
 
         if (theme === true) {
@@ -76,8 +77,6 @@ const Settings = ({navigation} : any) => {
         }
         fetchUser();
     }, [])
-
-
 
     const [signingout, setSigningout] = useState(false)
 
@@ -161,8 +160,8 @@ const Settings = ({navigation} : any) => {
                     </View>
                     
                     <Switch
-                        trackColor={{ false: 'gray', true: 'gray' }}
-                        thumbColor={isSwitchOn ? 'maroon' : "#474747"}
+                        trackColor={{ false: 'gray', true: '#800000a5' }}
+                        thumbColor={isSwitchOn === true ? 'maroon' : isSwitchOn === false ? "#474747" : "#474747"}
                         ios_backgroundColor="maroon"
                         onValueChange={onToggleSwitch}
                         value={isSwitchOn}

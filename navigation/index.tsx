@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 import {View} from 'react-native';
 
@@ -72,6 +72,13 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator({navigation} : any) {
+
+  const [hasMessages, setHasMessages] = useState(false)
+
+  useEffect(() => {
+    setHasMessages(true)
+  }, [])
+
   return (
     <Stack.Navigator 
       screenOptions={{ 
@@ -105,7 +112,7 @@ function RootNavigator({navigation} : any) {
               <FontAwesome 
                   name='envelope'
                   size={20}
-                  color={'#fff'}
+                  color={hasMessages === true ? 'gold' : '#fff'}
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 12 }}
                   onPress={() => { navigation.navigate('Inbox')}}

@@ -184,6 +184,7 @@ const ApproveShift = async () => {
             updateShift, {input: {
               id: id,
               status: 'approved',
+              updatedAt: new Date().toISOString()
             }}
         ))
         console.log(response)
@@ -217,6 +218,7 @@ const DenyShift = async () => {
             updateShift, {input: {
               id: id,
               status: 'open',
+              updatedAt: new Date().toISOString(),
             }}
         ))
         console.log(response)

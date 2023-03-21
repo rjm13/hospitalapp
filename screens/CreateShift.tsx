@@ -377,6 +377,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             maximumDate={new Date(dateplus())}
                             minimumDate={new Date(dateminus())}
                             mode='date'
+                            fadeToColor={theme === true ? '#000' : '#fff'}
                             textColor={theme === true ? '#fff' : '#000'}
                             //is24hourSource='device'
                         />
@@ -390,6 +391,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             onDateChange={setStartTime}
                             mode='time'
                             textColor={theme === true ? '#fff' : '#000'}
+                            fadeToColor={theme === true ? '#000' : '#fff'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -402,6 +404,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             onDateChange={setEndTime}
                             mode='time'
                             textColor={theme === true ? '#fff' : '#000'}
+                            fadeToColor={theme === true ? '#000' : '#fff'}
                             //is24hourSource='device'
                         />
                     </View>
@@ -425,13 +428,13 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             <View style={{height: 140}}/>
                         </ScrollView>
                         <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', top: 0, height: 120, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}
                     />
                     <LinearGradient
-                        colors={['transparent', 'transparent', '#ffffffa5', '#fff']}
+                        colors={['transparent', 'transparent', theme === true ? '#000000a5' : '#ffffffa5', theme === true ? '#000' : '#fff']}
                         style={{ position: 'absolute', bottom: 0, height: 120, width: Dimensions.get('window').width}}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -441,13 +444,13 @@ const CreateShift = ({navigation} : {navigation: any}) => {
 {/* payrate Modal */}
                 <Modal visible={visible7} onDismiss={hidePayModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
-                    <View style={[styles.inputfield, {alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 60, backgroundColor: 'white', width: '50%'}]}>
-                        <Text style={{fontSize: 20}}>
+                    <View style={[styles.inputfield, {alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 60, backgroundColor: theme === true ? '#000' : 'white', width: '50%'}]}>
+                        <Text style={[styles.paragraph, {fontSize: 20}]}>
                             $
                         </Text>
                         <TextInput 
                             placeholder='--'
-                            placeholderTextColor='#000000a5'
+                            placeholderTextColor={theme === true ? '#ffffffa5' : '#000000a5'}
                             style={[styles.textInputTitle, {color: theme === true ? '#fff' : '#000', fontSize: 30, textAlign: 'center'}]}
                             maxLength={6}
                             onChangeText={(val) => handlePay(val)}
@@ -501,7 +504,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                         //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
                                     }}>
                                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>                     
-                                            <Text style={{marginLeft: 10, color: '#474747', fontSize: 18, fontWeight: '600', textAlign: 'center'}}>
+                                            <Text style={{marginLeft: 10, color: theme === true ? '#fff' : '#000', fontSize: 18, fontWeight: '600', textAlign: 'center'}}>
                                                 {abbreviation !== null ? (title + ' (' + abbreviation + ')') : title}
                                             </Text>
                                         </View>
@@ -549,7 +552,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                 <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
                         <ScrollView style={{height: '70%'}} showsVerticalScrollIndicator={false}>
-                            <Text style={[styles.title, {textAlign: 'center', color: '#000'}]}>
+                            <Text style={[styles.title, {textAlign: 'center'}]}>
                                 Create these shifts?
                             </Text>
                             <Text style={[styles.paragraph, {textAlign: 'center'}]}>
@@ -558,27 +561,27 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             <View style={{alignSelf: 'center', height: 1, backgroundColor: theme === true ? '#fff' : '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
                         {
                             Array.from({ length: data.numNeeded }, (_, k) => (
-                            <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0.5, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+                            <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0.5, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
                                                 <View style={{flexDirection: 'row'}}>
                                                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                                         {data.shiftType === 'night' ? (
                                                             <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
                                                             <Ionicons 
                                                                 name='moon'
-                                                                color='darkblue'
+                                                                color={theme === true ? 'lightblue' : 'darkblue'}
                                                                 size={12}
                                                                 style={{marginRight: 4}}
                                                             />
                                                             </View>
                                                         ) : null}
                                 </View>
-                                    <Text style={{color: theme === true ? '#fff' : '#000', fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' && theme === true ? 'lightblue' : data.shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                                         {format(startTime, "p")}
                                     </Text>
-                                    <Text style={{color: theme === true ? '#fff' : '#000', marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    <Text style={{marginHorizontal: 4, fontSize: 16, color: data.shiftType === 'night' && theme === true ? 'lightblue' : data.shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                                     -
                                     </Text>
-                                    <Text style={{color: theme === true ? '#fff' : '#000', fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' ? 'darkblue': '#000'}}>
+                                    <Text style={{fontSize: 16, fontWeight: '500', color: data.shiftType === 'night' && theme === true ? 'lightblue' : data.shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                                     {format(endTime, "p")}
                                     </Text>
                                 </View>
@@ -590,19 +593,19 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                     </Text>
                                 </View>
                                 
-                                <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                                <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                                     <FontAwesome5 
                                     name='bolt'
                                     color='green'
                                     size={12}
                                     style={{marginRight: 4}}
                                     />
-                                    <Text style={{fontSize: 14}}>
+                                    <Text style={[styles.paragraph, {fontSize: 14}]}>
                                     {data.payMultiplier}x
                                     </Text>
                                 </View>
 
-                                <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                                <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                                 <FontAwesome5 
                                     name='dollar-sign'
                                     color='green'
@@ -724,8 +727,8 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                                 //borderRadius={0}
                                                 resizeMode="cover"
                                             >
-                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
-                                                        <Text style={styles.timeselect}>
+                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                                                        <Text style={[styles.timeselect, {color: theme === true && isStartDayNight === 'night' ? '#fff' : theme === true && isStartDayNight === 'day' ? '#000' :'#000'} ]}>
                                                             {format(startTime, "p")}
                                                         </Text>
                                                     </View> 
@@ -748,8 +751,8 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                                 //borderRadius={0}
                                                 resizeMode="cover"
                                             >
-                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                                                        <Text style={[styles.timeselect, {color: '#000'}]}>
+                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                                                        <Text style={[styles.timeselect, {color: theme === true && isEndDayNight === 'night' ? '#fff' : theme === true && isEndDayNight === 'day' ? '#000' :'#000'}]}>
                                                             {format(endTime, "p")}
                                                         </Text>
                                                     </View> 
@@ -767,7 +770,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                     <View>
                                         <View>
                                         <TouchableWithoutFeedback onPress={showMultiplierModal}>
-                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
+                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
                                                 <FontAwesome5 
                                                     name='bolt'
                                                     size={18}
@@ -786,7 +789,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                        
                                         <View>
                                         <TouchableWithoutFeedback onPress={showPayModal}>
-                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
+                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
                                                 <FontAwesome5 
                                                     name='dollar-sign'
                                                     size={18}
@@ -794,7 +797,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                                     style={{marginHorizontal: 4}}
                                                 />
                                                 <Text style={styles.timeselect}>
-                                                    +{data.payRate}
+                                                    +{data.payRate}/hr
                                                 </Text>
                                             </View> 
                                         </TouchableWithoutFeedback> 
@@ -832,11 +835,11 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                     <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
                                         Notes
                                     </Text>
-                                    <View style={[styles.inputfield, {height: 100, backgroundColor: 'white', borderWidth: 1}]}>
+                                    <View style={[styles.inputfield, {height: 100, backgroundColor: theme === true ? '#363636' : 'white', borderWidth: 1}]}>
                                         <TextInput 
                                             placeholder='...'
-                                            placeholderTextColor='#000000a5'
-                                            style={[styles.textInputTitle, {color: '#000]'}]}
+                                            placeholderTextColor={theme === true ? '#ffffffa5' : '#000000a5'}
+                                            style={[styles.textInputTitle, {color: theme === true ? '#fff' : '#000]'}]}
                                             maxLength={200}
                                             onChangeText={(val) => handleNote(val)}
                                             autoCapitalize='none'
@@ -866,7 +869,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                 </TouchableWithoutFeedback> 
 {/* button */}
                     <LinearGradient
-                        colors={['#fff','#fff', '#ffffffa5','transparent']}
+                        colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
                         style={{position: 'absolute', bottom: 0 }}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}
@@ -888,7 +891,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         </View>
                     </LinearGradient>
 
-                    <StatusBar style="dark" backgroundColor='transparent'/>
+                    <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
             </View>
            
         </Provider>

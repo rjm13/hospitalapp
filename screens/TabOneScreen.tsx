@@ -30,6 +30,9 @@ const TabOneScreen = ({ navigation }: any) => {
   const { departID } = useContext(AppContext);
   const { userRoleID } = useContext(AppContext);
   const { hospID } = useContext(AppContext);
+  const { theme } = useContext(AppContext);
+
+  
 
   const [activeSections, setActiveSections] = useState([])
 

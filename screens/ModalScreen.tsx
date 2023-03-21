@@ -41,7 +41,7 @@ const ShiftModal = ({navigation, route} : any) => {
     startTime: '',
     endTime: '',
     isStartDayNight: '',
-    isEndDayNIght: '',
+    isEndDayNight: '',
     payRate: 0,
     payMultiplier: 0,
     notes: '',
@@ -109,7 +109,8 @@ const PickUpShift = async () => {
             updateShift, {input: {
               id: id,
               status: 'pending',
-              userID: userID
+              userID: userID,
+              updatedAt: new Date().toISOString()
             }}
         ))
         console.log(response)
@@ -142,7 +143,8 @@ const ReOpenShift = async () => {
           updateShift, {input: {
             id: id,
             status: 'open',
-            userID: null
+            userID: null,
+            updatedAt: new Date().toISOString()
           }}
       ))
       console.log(response)
@@ -234,7 +236,7 @@ const ReOpenShift = async () => {
       <View style={{height: 60}}/>
 {/* header icon row */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 40}}>
-        <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={'#000'} style={{padding: 20, margin: -20}}/>
+        <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}}/>
         <FontAwesome name='edit' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}} onPress={() => navigation.navigate('EditShift', {id: id})}/>
       </View>
 {/* date title */}
@@ -245,13 +247,13 @@ const ReOpenShift = async () => {
       </View>
 {/* shift type */}
       <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
           {(shift.priority === 'normal' ? '' : shift.priority + ' ') + (shift.name === 'Regular' ? '' : shift.name + ' ')}
         </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue'}]}>
           {shift.role.acronym + ' '}
         </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : 'darkblue', textTransform: 'capitalize'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
           {shift.shiftType +' Shift'}
         </Text>
       </View>
@@ -265,8 +267,8 @@ const ReOpenShift = async () => {
                 //borderRadius={0}
                 resizeMode="cover"
             >
-                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
-                        <Text style={styles.timeselect}>
+                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                <Text style={[styles.timeselect, {color: theme === true && shift.isStartDayNight === 'night' ? '#fff' : theme === true && shift.isStartDayNight === 'day' ? '#000' :'#000'} ]}>
                             {shift.startTime}
                         </Text>
                     </View> 
@@ -281,13 +283,13 @@ const ReOpenShift = async () => {
 
           <View>
             <ImageBackground
-                source={shift.isEndDayNIght === 'night' ? nightimage : shift.isEndDayNIght === 'day' ? dayimage : nightimage}
+                source={shift.isEndDayNight === 'night' ? nightimage : shift.isEndDayNight === 'day' ? dayimage : nightimage}
                 style={{backgroundColor: '#fff', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,borderRadius: 10, height: 80, width: 120, overflow: 'hidden'}}
                 //borderRadius={0}
                 resizeMode="cover"
             >
-                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                        <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
+                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                <Text style={[styles.timeselect, {color: theme === true && shift.isEndDayNight === 'night' ? '#fff' : theme === true && shift.isEndDayNight === 'day' ? '#000' :'#000'}]}>
                             {shift.endTime}
                         </Text>
                     </View> 

@@ -14,7 +14,7 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   imageUri: String
   bio: String
   status: String
-  Setting1: String #theme true === light
+  Setting1: Boolean #theme true === light
   Setting2: String
   Setting3: String
   Setting4: Boolean
@@ -139,7 +139,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   system: System @hasOne (fields: ["systemID"])
   hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
   hospital: Hospital @hasOne (fields: ["hospitalID"])
-  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  departmentID: ID @index(name: "byDepartment", queryField: "shiftsByDepartment", sortKeyFields: ["updatedAt"])
   department: Department @hasOne (fields: ["departmentID"])
   roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
   role: Role @hasOne (fields: ["roleID"])
@@ -159,7 +159,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   payAddToShift: Float
   payAddToHour: Float
   status: String #open, pending, approved, denied, expired
-  userID: ID @index(name: "byUser", sortKeyFields: ["dateOrder"])
+  userID: ID @index(name: "byUser", queryField: "shiftsByUser", sortKeyFields: ["dateOrder"])
   user: User @hasOne (fields: ["userID"]) #this is who is working the shift
   priority: String
   numNeeded: Int

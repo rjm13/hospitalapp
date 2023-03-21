@@ -60,7 +60,7 @@ export default function App() {
         }}>
         <Navigation colorScheme={colorScheme} />
         </AppContext.Provider>
-        <StatusBar style="dark" backgroundColor='transparent'/>
+        <StatusBar style={theme === true ? 'light' : "dark"} backgroundColor='transparent'/>
       </SafeAreaProvider>
     );
   }

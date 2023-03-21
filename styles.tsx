@@ -85,6 +85,7 @@ return StyleSheet.create ({
   timeselect: {
     fontSize: 18,
     fontWeight: '600',
+    color: theme === true ? '#fff' : '#000'
   },
   settingsitem: {
     fontSize: 16,
