@@ -73,7 +73,7 @@ export function DrawerContent({navigation} : any) {
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('Profile')}>
+                        <TouchableWithoutFeedback>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext, {color: 'gray'}]}>
@@ -129,10 +129,10 @@ export function DrawerContent({navigation} : any) {
                         </TouchableWithoutFeedback>
                 
 
-                        <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateAnnouncement')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
+                                    <Text style={[styles.itemtext]}>
                                         Create Announcement
                                     </Text>
                                 </View>

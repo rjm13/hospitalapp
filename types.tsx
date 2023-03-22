@@ -38,6 +38,7 @@ export type RootStackParamList = {
   FilledShifts: undefined;
   EditShift: undefined;
   ViewMessage: undefined;
+  CreateAnnouncement: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

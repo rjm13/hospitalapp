@@ -36,6 +36,9 @@ import ShiftApproval from '../screens/ShiftApproval'
 import FilledShifts from '../screens/FilledShifts'
 import EditShift from '../screens/EditShift'
 import ViewMessage from '../screens/ViewMessage'
+import CreateAnnouncement from '../screens/CreateAnnouncement'
+import Announcements from '../screens/Announcements'
+
 
 import { AppContext } from '../AppContext';
 
@@ -155,6 +158,7 @@ function RootNavigator({navigation} : any) {
       <Stack.Screen name="MyShifts" component={MyShifts} options={{ headerShown: false }}/>
       <Stack.Screen name="ApprovalRequests" component={ApprovalRequests} options={{ headerShown: false }}/>
       <Stack.Screen name="FilledShifts" component={FilledShifts} options={{ headerShown: false }}/>
+      <Stack.Screen name="CreateAnnouncement" component={CreateAnnouncement} options={{ headerShown: false }}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} options={{ headerShown: false }} />
@@ -221,7 +225,7 @@ function TopTabNavigator() {
       />
       <TopTab.Screen
         name="TabThree"
-        component={TabTwoScreen}
+        component={Announcements}
         options={{
           title: 'talk',
           //tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
