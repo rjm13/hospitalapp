@@ -2,18 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
     View, 
     Text, 
-    StyleSheet,
-    TouchableWithoutFeedback,  
-    FlatList,
     Dimensions,
-    RefreshControl
 } from 'react-native';
 
 import {AppContext} from '../AppContext';
 import useStyles from '../styles';
 
-import { LinearGradient } from 'expo-linear-gradient';
-import { format, parseISO } from "date-fns";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

@@ -455,7 +455,6 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                             maxLength={6}
                             onChangeText={(val) => handlePay(val)}
                             autoCapitalize='none'
-                            multiline={true}
                             keyboardType={"number-pad"}
                         />
                     </View>

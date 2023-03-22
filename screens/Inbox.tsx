@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
     View, 
     Text, 
-    StyleSheet,
     TouchableWithoutFeedback,  
     FlatList,
     Dimensions,
@@ -12,12 +11,11 @@ import {
 import {AppContext} from '../AppContext';
 import useStyles from '../styles';
 
-import { LinearGradient } from 'expo-linear-gradient';
 import { format, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import { API, graphqlOperation, Auth } from "aws-amplify";
-import { getUser, listMessages } from '../src/graphql/queries';
+import { API, graphqlOperation } from "aws-amplify";
+import { messagesByUser } from '../src/graphql/queries';
 
 
 const Inbox = ({navigation} : any) => {
@@ -44,15 +42,18 @@ const Inbox = ({navigation} : any) => {
         let getMessages = async () => {
 
             const response = await API.graphql(graphqlOperation(
-                getUser, {nextToken, id: userID}
+                messagesByUser, {
+                    nextToken, 
+                    receiverID: userID,
+                }
             ))
 
-            if (response.data.getUser.messagesIn.items.length > 0) {
-                for (let i = 0; i < response.data.getUser.messagesIn.items.length; i++) {
-                    Arr.push(response.data.getUser.messagesIn.items[i])
+            if (response.data.messagesByUser.items.length > 0) {
+                for (let i = 0; i < response.data.messagesByUser.items.length; i++) {
+                    Arr.push(response.data.messagesByUser.items[i])
                 }
-                if (response.data.getUser.messagesIn.nextToken) {
-                    setNextToken(response.data.getUser.messagesIn.nextToken)
+                if (response.data.messagesByUser.nextToken) {
+                    setNextToken(response.data.messagesByUser.nextToken)
                     getMessages();
                     return;
                 }
@@ -67,7 +68,7 @@ const Inbox = ({navigation} : any) => {
 
         return (
             <TouchableWithoutFeedback onPress={() => navigation.navigate('ViewMessage', {messageid: id})}>
-                <View style={{backgroundColor: index%2 === 0 ? '#fff' : 'lightgray', alignItems: 'center', paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{backgroundColor: index%2 === 0 ? 'transparent' : theme === true ? '#363636a5' : '#d3d3d3a5', alignItems: 'center', paddingVertical: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
                     {isReadByReceiver === false ?  (
                         <View style={{}}>
                             <FontAwesome5 
@@ -80,10 +81,10 @@ const Inbox = ({navigation} : any) => {
                     ) : null}
                     
                     <View style={{marginRight: 20, marginVertical: 10, paddingHorizontal: 20, width: isReadByReceiver === true ? Dimensions.get('window').width : Dimensions.get('window').width - 40}}>
-                        <Text style={{color: '#000', fontSize: 13, fontWeight: 'bold'}}>
+                        <Text style={[styles.paragraph, {fontSize: 13, fontWeight: 'bold'}]}>
                             {title}
                         </Text>
-                        <Text style={{color: '#000', fontSize: 12, marginTop: 6 }}>
+                        <Text style={[styles.paragraph, {fontSize: 12, marginTop: 6 }]}>
                             {format(parseISO(createdAt), "MMMM do yyyy p")}
                         </Text>
                     </View>

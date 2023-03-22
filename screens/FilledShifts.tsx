@@ -73,20 +73,20 @@ const FilledShifts = ({navigation, route} : any) => {
         
         return (
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', elevation: 6, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20, paddingVertical: 10, overflow: 'hidden', backgroundColor: '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', elevation: 6, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20, paddingVertical: 10, overflow: 'hidden', backgroundColor: theme === true ? '#363636a5' : '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
             <View>
                 <View>
                     <Text style={styles.title}>
                         {date}
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row', marginVertical: 6}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 {shiftType === 'night' ? (
                 <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
                     <Ionicons 
                     name='moon'
-                    color='darkblue'
+                    color={theme === true ? 'lightblue' : 'darkblue'}
                     size={12}
                     style={{marginRight: 4}}
                     />
@@ -111,7 +111,7 @@ const FilledShifts = ({navigation, route} : any) => {
                 </Text>
                 </View>
             
-                <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                 <FontAwesome5 
                     name='bolt'
                     color='green'
@@ -123,29 +123,29 @@ const FilledShifts = ({navigation, route} : any) => {
                 </Text>
                 </View>
     
-            <View style={{backgroundColor: '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+            <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
                 <FontAwesome5 
                 name='dollar-sign'
                 color='green'
                 size={12}
                 style={{marginRight: 4}}
                 />
-                <Text style={{fontSize: 14}}>
+                <Text style={[styles.paragraph, {fontSize: 14}]}>
                 {'+' + '' + payRate}
                 </Text>
             </View>
             </View>
     
             <View style={{marginTop: 20, marginBottom: 4, flexDirection: 'row', alignItems: 'center'}}>
-                <FontAwesome5 name= 'user-nurse' style={{marginRight: 6}}/>
-                <Text style={{textTransform: 'capitalize'}}>
+                <FontAwesome5 name= 'user-nurse' style={{marginRight: 6}} color={theme === true ? '#fff' : '#000'}/>
+                <Text style={[styles.paragraph, {textTransform: 'capitalize'}]}>
                     {firstName + ' ' + lastName}
                 </Text>
             </View>
             </View>
             <View>
                 <FontAwesome5 name={status === 'pending' ? 'hourglass-half' : status === 'approved' ? 'check' : status === 'open' ? 'skull-crossbones' : 'hand-holding-medical'} size={26} color={status === 'pending' ? '#BAB9A8' : status === 'approved' ? 'green' : 'lightgray'} style={{paddingHorizontal: 20}} />
-                <Text style={{color: '#7F7D70', textAlign: 'center', fontSize: 12, marginTop: 6}}>
+                <Text style={{color: theme === true ? 'lightgray' : '#7F7D70', textAlign: 'center', fontSize: 12, marginTop: 6}}>
                     {status === 'open' ? 'denied' : status}
                 </Text>
             </View>
@@ -158,7 +158,7 @@ const FilledShifts = ({navigation, route} : any) => {
         <View style={styles.container}>
 {/* header row */}
             <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 60, marginBottom: 10, justifyContent: 'space-between', width: Dimensions.get('window').width - 80}}>
-                <FontAwesome name='close' onPress={() => navigation.goBack()} size={20} style={{padding: 20, margin: -20}}/>
+                <FontAwesome name='close' color={theme === true ? '#fff' : '#000'} onPress={() => navigation.goBack()} size={20} style={{padding: 20, margin: -20}}/>
                 <Text style={styles.title}>
                     Filled Shifts
                 </Text>

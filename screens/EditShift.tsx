@@ -391,7 +391,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             onDateChange={setStartTime}
                             mode='time'
                             textColor={theme === true ? '#fff' : '#000'}
-                            //is24hourSource='device'
+                            fadeToColor={theme === true ? '#000' : '#fff'}
                         />
                     </View>
                 </Modal>
@@ -403,7 +403,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                             onDateChange={setEndTime}
                             mode='time'
                             textColor={theme === true ? '#fff' : '#000'}
-                            //is24hourSource='device'
+                            fadeToColor={theme === true ? '#000' : '#fff'}
                         />
                     </View>
                 </Modal>
@@ -442,20 +442,19 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
 {/* payrate Modal */}
                 <Modal visible={visible7} onDismiss={hidePayModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
-                    <View style={[styles.inputfield, {alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 60, backgroundColor: 'white', width: '50%'}]}>
-                        <Text style={{fontSize: 20}}>
+                    <View style={[styles.inputfield, {alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 60, backgroundColor: theme === true ? '#000' : 'white', width: '50%'}]}>
+                        <Text style={[styles.paragraph, {fontSize: 20}]}>
                             $
                         </Text>
-                        <TextInput 
-                            placeholder='--'
-                            placeholderTextColor='#000000a5'
-                            style={[styles.textInputTitle, {color: '#000', fontSize: 30, textAlign: 'center'}]}
-                            maxLength={6}
-                            onChangeText={(val) => handlePay(val)}
-                            autoCapitalize='none'
-                            multiline={true}
-                            keyboardType={"number-pad"}
-                        />
+                            <TextInput 
+                                placeholder='--'
+                                placeholderTextColor={theme === true ? '#ffffffa5' : '#000000a5'}
+                                style={[styles.textInputTitle, {color: theme === true ? '#fff' : '#000', fontSize: 30, textAlign: 'center'}]}
+                                maxLength={6}
+                                onChangeText={(val) => handlePay(val)}
+                                autoCapitalize='none'
+                                keyboardType={"number-pad"}
+                            />
                     </View>
                     </View>
                 </Modal>
@@ -727,8 +726,8 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                                 //borderRadius={0}
                                                 resizeMode="cover"
                                             >
-                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
-                                                        <Text style={styles.timeselect}>
+                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                                                    <Text style={[styles.timeselect, {color: theme === true && isStartDayNight === 'night' ? '#fff' : theme === true && isStartDayNight === 'day' ? '#000' :'#000'} ]}>
                                                             {format(startTime, "p")}
                                                         </Text>
                                                     </View> 
@@ -751,8 +750,8 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                                 //borderRadius={0}
                                                 resizeMode="cover"
                                             >
-                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                                                        <Text style={[styles.timeselect, {color: '#000'}]}>
+                                                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                                                        <Text style={[styles.timeselect, {color: theme === true && isEndDayNight === 'night' ? '#fff' : theme === true && isEndDayNight === 'day' ? '#000' :'#000'}]}>
                                                             {format(endTime, "p")}
                                                         </Text>
                                                     </View> 
@@ -770,7 +769,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     <View>
                                         <View>
                                         <TouchableWithoutFeedback onPress={showMultiplierModal}>
-                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
+                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
                                                 <FontAwesome5 
                                                     name='bolt'
                                                     size={18}
@@ -789,7 +788,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                        
                                         <View>
                                         <TouchableWithoutFeedback onPress={showPayModal}>
-                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
+                                           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
                                                 <FontAwesome5 
                                                     name='dollar-sign'
                                                     size={18}
@@ -835,11 +834,11 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
                                         Notes
                                     </Text>
-                                    <View style={[styles.inputfield, {height: 100, backgroundColor: 'white', borderWidth: 1}]}>
+                                    <View style={[styles.inputfield, {height: 100, backgroundColor: theme === true ? '#363636a5' : 'white', borderWidth: 1}]}>
                                         <TextInput 
                                             // placeholder={data.notes}
                                             // placeholderTextColor='#000000a5'
-                                            style={[styles.textInputTitle, {color: '#000]'}]}
+                                            style={[styles.textInputTitle, {color: theme === true ? '#fff' : '#000]'}]}
                                             maxLength={200}
                                             onChangeText={(val) => handleNote(val)}
                                             autoCapitalize='none'
@@ -848,19 +847,6 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                         />
                                     </View>
                                 </View>
-    {/* numneeded, how many of this shift to create */}
-                                {/* <TouchableOpacity onPress={showHowManyModal}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
-                                        <Text style={[styles.title, {}]}>
-                                            How Many?
-                                        </Text>
-                                        <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
-                                                {data.numNeeded}
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>        */}
                             </View>
     {/* footer */}
                             <View style={{height: 160}}/>
@@ -870,7 +856,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                     </TouchableWithoutFeedback> 
 {/* button */}
                     <LinearGradient
-                        colors={['#fff','#fff', '#ffffffa5','transparent']}
+                        colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
                         style={{position: 'absolute', bottom: 0 }}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 0, y: 0 }}

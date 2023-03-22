@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 import {View} from 'react-native';
 
@@ -36,6 +36,8 @@ import ShiftApproval from '../screens/ShiftApproval'
 import FilledShifts from '../screens/FilledShifts'
 import EditShift from '../screens/EditShift'
 import ViewMessage from '../screens/ViewMessage'
+
+import { AppContext } from '../AppContext';
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -75,6 +77,8 @@ function RootNavigator({navigation} : any) {
 
   const [hasMessages, setHasMessages] = useState(false)
 
+  const { theme } = useContext(AppContext);
+
   useEffect(() => {
     setHasMessages(true)
   }, [])
@@ -83,13 +87,13 @@ function RootNavigator({navigation} : any) {
     <Stack.Navigator 
       screenOptions={{ 
         headerStyle: {
-          backgroundColor: 'maroon',
+          backgroundColor: theme === true ? '#000' : 'maroon',
         },
         title: '',
         headerTintColor: '#fff',
         header: () =>
         (
-          <View style={{ height: 60, backgroundColor: 'maroon', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <View style={{ height: 60, backgroundColor: theme === true ? '#000' : 'maroon', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <FontAwesome 
                   name='ambulance'
@@ -170,13 +174,15 @@ const TopTab = createMaterialTopTabNavigator<RootTabParamList>();
 function TopTabNavigator() {
   const colorScheme = useColorScheme();
 
+  const { theme } = useContext(AppContext);
+
   return (
     <TopTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: '#fff',
         tabBarLabelStyle: { fontSize: 14, fontWeight: '600' },
-        tabBarStyle: { backgroundColor: 'maroon' },
+        tabBarStyle: { backgroundColor: theme === true ? '#000' : 'maroon' },
         tabBarContentContainerStyle: {alignItems: 'flex-end'},
         tabBarIndicatorStyle: {backgroundColor: 'white'},
         tabBarAndroidRipple: { borderless: false },
