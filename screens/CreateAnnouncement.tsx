@@ -57,7 +57,7 @@ const CreateAnnouncement = ({ navigation }: any) => {
     startTime: new Date(),
     endTime: new Date(),
     priority: 'normal',
-    content: '',
+    announcement: '',
     title: ''
   })
 
@@ -80,7 +80,7 @@ const CreateAnnouncement = ({ navigation }: any) => {
   const handleNote = (val : any) => {
     setData({
         ... data,
-        content: val
+        announcement: val
     });
 };
 
@@ -165,7 +165,7 @@ const Create = async () => {
                 date: date.toISOString(),
                 startTime: startTime.toISOString(),
                 endTime: endTime.toISOString(),
-                content: data.content,
+                announcement: data.announcement,
                 title: data.title,
             }}
         ))
@@ -321,9 +321,9 @@ const Create = async () => {
                         </View>
 
                         <View style={{marginVertical: 4}}>
-                        {data.content.length > 0 ? (
+                        {data.announcement.length > 0 ? (
                             <Text style={styles.paragraph}>
-                                {data.content}
+                                {data.announcement}
                             </Text>
                         ) : null}
                         </View>

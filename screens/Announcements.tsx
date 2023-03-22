@@ -36,7 +36,19 @@ const TabTwoScreen = ({ navigation }: any) => {
   //refresh state of the flatlist
   const [isFetching, setIsFetching] = useState(false);
 
-  const [announcements, setAnnouncements] = useState([])
+  const [announcements, setAnnouncements] = useState([
+    {
+        id: '1', 
+        type: 'Announcement',
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        date: new Date(),
+        startTime: new Date(),
+        endTime: new Date(),
+        title: 'Announcement 1',
+        announcement: 'Make sure when you make an announcement you are able to add paragraphs. If you dont it will just be 1 big jumbled mess of words.'
+    }
+  ])
 
   const onRefresh = () => {
       setIsFetching(true);
@@ -88,71 +100,37 @@ const TabTwoScreen = ({ navigation }: any) => {
     fetchShifts();
   }, [didUpdate])
 
-  const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
-     
-      
+  const Item = ({id, date, startTime, endTime, announcement, priority, title, createdAt} : any) => {
+    
     return (
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
-      <View style={{alignSelf: 'center', marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
-          <View style={{flexDirection: 'row'}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {shiftType === 'night' ? (
-            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
-              <Ionicons 
-                name='moon'
-                color={theme === true ? 'lightblue' : 'darkblue'}
-                size={12}
-                style={{marginRight: 4}}
-              />
-            </View>
-          ) : null}
-          </View>
-            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                {startTime}
+      <TouchableWithoutFeedback>
+      <View style={{alignSelf: 'center', marginVertical: 10, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+            <Text style={styles.title}>
+              {title}
             </Text>
-            <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+        </View>
+
+        <View style={{flexDirection: 'row'}}>
+            <Text style={styles.title}>
+              {format(date, "MMMM do yyyy")}
+            </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          </View>
+            <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
+                {format(startTime, "p")}
+            </Text>
+            <Text style={[styles.paragraph, {marginHorizontal: 4, fontSize: 16}]}>
             -
             </Text>
-            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-            {endTime}
-            </Text>
-          </View>
-          
-        <View style={{flexDirection: 'row', alignItems: 'center',}}>
-          <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
-            <Text style={{}}>
-              {name}
-            </Text>
-          </View>
-          
-          <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-            <FontAwesome5 
-              name='bolt'
-              color='green'
-              size={12}
-              style={{marginRight: 4}}
-            />
-            <Text style={[styles.paragraph, {fontSize: 14}]}>
-              {payMultiplier}x
+            <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
+            {format(endTime, "p")}
             </Text>
           </View>
 
-        <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-          <FontAwesome5 
-            name='dollar-sign'
-            color='green'
-            size={12}
-            style={{marginRight: 4}}
-          />
-          <Text style={[styles.paragraph, {fontSize: 14}]}>
-            {'+' + '' + payRate}
-          </Text>
-        </View>
-        </View>
-
-        <View style={{marginVertical: 4}}>
+        <View style={{marginVertical: 4, padding: 10}}>
           <Text style={styles.paragraph}>
-            {notes}
+            {announcement}
           </Text>
         </View>
       </View>
@@ -181,14 +159,9 @@ const TabTwoScreen = ({ navigation }: any) => {
             date={item.date}
             startTime={item.startTime}
             endTime={item.endTime}
-            numNeeded={item.numNeeded}
-            payMultiplier={item.payMultiplier}
-            endAMPM={item.endAMPM}
-            startAMPM={item.startAMPM}
-            payRate={item.payRate}
             priority={item.priority}
-            notes={item.notes}
-            shiftType={item.shiftType}
+            announcement={item.announcement}
+            type={item.type}
             title={item.title}
           />
         }
