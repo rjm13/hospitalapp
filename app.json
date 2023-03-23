@@ -8,7 +8,7 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets//images/splash.png",
+      "image": "./assets/hospitalappsplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -40,8 +40,6 @@
         "projectId": "a1c332a2-3601-4ffd-acff-8547d9228413"
       }
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    }
+    "runtimeVersion": "1.0.0"
   }
 }
