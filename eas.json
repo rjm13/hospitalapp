@@ -9,10 +9,10 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "staging"
+      "channel": "master"
     },
     "production": {
-      "channel": "main"
+      "channel": "master"
     }
   },
   "submit": {
