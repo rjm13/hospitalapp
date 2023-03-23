@@ -278,7 +278,7 @@ export const createUser = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -286,6 +286,9 @@ export const createUser = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -646,7 +649,7 @@ export const updateUser = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -654,6 +657,9 @@ export const updateUser = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -1014,7 +1020,7 @@ export const deleteUser = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -1022,6 +1028,9 @@ export const deleteUser = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -3537,7 +3546,7 @@ export const createShift = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -3554,6 +3563,9 @@ export const createShift = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -4114,7 +4126,7 @@ export const updateShift = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -4131,6 +4143,9 @@ export const updateShift = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -4691,7 +4706,7 @@ export const deleteShift = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -4708,6 +4723,9 @@ export const deleteShift = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -5172,7 +5190,7 @@ export const createAnnouncement = /* GraphQL */ `
         updatedOn
       }
       title
-      accouncement
+      announcement
       notes
       priority
       reactions {
@@ -5254,6 +5272,9 @@ export const createAnnouncement = /* GraphQL */ `
         nextToken
       }
       sort
+      date
+      startTime
+      endTime
       createdOn
       updatedOn
     }
@@ -5551,7 +5572,7 @@ export const updateAnnouncement = /* GraphQL */ `
         updatedOn
       }
       title
-      accouncement
+      announcement
       notes
       priority
       reactions {
@@ -5633,6 +5654,9 @@ export const updateAnnouncement = /* GraphQL */ `
         nextToken
       }
       sort
+      date
+      startTime
+      endTime
       createdOn
       updatedOn
     }
@@ -5930,7 +5954,7 @@ export const deleteAnnouncement = /* GraphQL */ `
         updatedOn
       }
       title
-      accouncement
+      announcement
       notes
       priority
       reactions {
@@ -6012,6 +6036,9 @@ export const deleteAnnouncement = /* GraphQL */ `
         nextToken
       }
       sort
+      date
+      startTime
+      endTime
       createdOn
       updatedOn
     }
@@ -6234,7 +6261,7 @@ export const createReaction = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -6251,6 +6278,9 @@ export const createReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -6794,7 +6824,7 @@ export const updateReaction = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -6811,6 +6841,9 @@ export const updateReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -7354,7 +7387,7 @@ export const deleteReaction = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -7371,6 +7404,9 @@ export const deleteReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -8375,7 +8411,7 @@ export const createMessage = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -8383,6 +8419,9 @@ export const createMessage = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -9131,7 +9170,7 @@ export const updateMessage = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -9139,6 +9178,9 @@ export const updateMessage = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -9887,7 +9929,7 @@ export const deleteMessage = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -9895,6 +9937,9 @@ export const deleteMessage = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -11092,7 +11137,7 @@ export const createAnnouncementReply = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -11109,6 +11154,9 @@ export const createAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -11335,7 +11383,7 @@ export const updateAnnouncementReply = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -11352,6 +11400,9 @@ export const updateAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -11578,7 +11629,7 @@ export const deleteAnnouncementReply = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -11595,6 +11646,9 @@ export const deleteAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }

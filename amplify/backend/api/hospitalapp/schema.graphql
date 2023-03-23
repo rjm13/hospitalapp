@@ -180,16 +180,16 @@ type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "upda
   updatedAt: AWSDateTime
   createdByID: ID @index(name: "byCreatedBy", sortKeyFields: ["id"])
   createdBy: User @hasOne (fields: ["createdByID"])
-  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  systemID: ID @index(name: "bySystem", queryField: "announcementsBySystem", sortKeyFields: ["createdAt"])
   system: System @hasOne (fields: ["systemID"])
-  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospitalID: ID @index(name: "byHospital", queryField: "announcementsByHospital", sortKeyFields: ["createdAt"])
   hospital: Hospital @hasOne (fields: ["hospitalID"])
-  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  departmentID: ID @index(name: "byDepartment", queryField: "announcementsByDepartment", sortKeyFields: ["createdAt"])
   department: Department @hasOne (fields: ["departmentID"])
-  roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
+  roleID: ID @index(name: "byRole", queryField: "announcementsByRole", sortKeyFields: ["createdAt"])
   role: Role @hasOne (fields: ["roleID"])
   title: String
-  accouncement: String
+  announcement: String
   notes: String
   priority: String
   reactions: [Reaction] @hasMany(indexName: "byAnnouncement", fields: ["id"])
@@ -200,6 +200,9 @@ type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "upda
   link: String
   shifts: [Shift] @hasMany(indexName: "byAnnouncement", fields: ["id"])
   sort: String #type of announcement
+  date: AWSDateTime
+  startTime: AWSDateTime
+  endTime: AWSDateTime
 }
 
 type Reaction @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])

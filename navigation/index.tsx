@@ -38,6 +38,7 @@ import EditShift from '../screens/EditShift'
 import ViewMessage from '../screens/ViewMessage'
 import CreateAnnouncement from '../screens/CreateAnnouncement'
 import Announcements from '../screens/Announcements'
+import CreateTrade from '../screens/CreateTrade'
 
 
 import { AppContext } from '../AppContext';
@@ -83,7 +84,7 @@ function RootNavigator({navigation} : any) {
   const { theme } = useContext(AppContext);
 
   useEffect(() => {
-    setHasMessages(true)
+    setHasMessages(false)
   }, [])
 
   return (
@@ -111,10 +112,10 @@ function RootNavigator({navigation} : any) {
               <FontAwesome
                   name='calendar'
                   size={18}
-                  color={'#fff'}
+                  color={'gray'}
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 12 }}
-                  //onPress={() => { navigation.navigate('SearchScreen'); setSelectedId(0) }}
+                  onPress={() => { alert('Calendar not set up yet') }}
               />
               <FontAwesome 
                   name='envelope'
@@ -155,6 +156,7 @@ function RootNavigator({navigation} : any) {
       <Stack.Screen name="Inbox" component={Inbox} options={{ headerShown: false }}/>
       <Stack.Screen name="ViewMessage" component={ViewMessage} options={{ headerShown: false }} />
       <Stack.Screen name="CreateShift" component={CreateShift} options={{ headerShown: false }}/>
+      <Stack.Screen name="CreateTrade" component={CreateTrade} options={{ headerShown: false }}/>
       <Stack.Screen name="MyShifts" component={MyShifts} options={{ headerShown: false }}/>
       <Stack.Screen name="ApprovalRequests" component={ApprovalRequests} options={{ headerShown: false }}/>
       <Stack.Screen name="FilledShifts" component={FilledShifts} options={{ headerShown: false }}/>

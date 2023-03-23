@@ -73,17 +73,17 @@ export function DrawerContent({navigation} : any) {
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateTrade')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
+                                    <Text style={[styles.itemtext]}>
                                        Trade Shift
                                     </Text>
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
+                        {/* <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext, {color: 'gray'}]}>
@@ -91,7 +91,7 @@ export function DrawerContent({navigation} : any) {
                                     </Text>
                                 </View>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback> */}
 
                         <View style={{backgroundColor: 'lightgray', height: 1, marginVertical: 10}}/>
 
@@ -134,17 +134,6 @@ export function DrawerContent({navigation} : any) {
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext]}>
                                         Create Announcement
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableWithoutFeedback>
-                
-
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('Help')}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
-                                        Create Event
                                     </Text>
                                 </View>
                             </View>

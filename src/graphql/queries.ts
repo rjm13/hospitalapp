@@ -280,7 +280,7 @@ export const getUser = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -288,6 +288,9 @@ export const getUser = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -1796,7 +1799,7 @@ export const getShift = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -1813,6 +1816,9 @@ export const getShift = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -2099,7 +2105,7 @@ export const listShifts = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -2107,6 +2113,9 @@ export const listShifts = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -2465,7 +2474,7 @@ export const getAnnouncement = /* GraphQL */ `
         updatedOn
       }
       title
-      accouncement
+      announcement
       notes
       priority
       reactions {
@@ -2547,6 +2556,9 @@ export const getAnnouncement = /* GraphQL */ `
         nextToken
       }
       sort
+      date
+      startTime
+      endTime
       createdOn
       updatedOn
     }
@@ -2653,7 +2665,7 @@ export const listAnnouncements = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -2670,6 +2682,9 @@ export const listAnnouncements = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -2891,7 +2906,7 @@ export const getReaction = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -2908,6 +2923,9 @@ export const getReaction = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -3284,7 +3302,7 @@ export const listReactions = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -3292,6 +3310,9 @@ export const listReactions = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -4031,7 +4052,7 @@ export const getMessage = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -4039,6 +4060,9 @@ export const getMessage = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -4843,7 +4867,7 @@ export const getAnnouncementReply = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -4860,6 +4884,9 @@ export const getAnnouncementReply = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -5009,7 +5036,7 @@ export const listAnnouncementReplies = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -5017,6 +5044,9 @@ export const listAnnouncementReplies = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -6783,7 +6813,7 @@ export const shiftsByDepartment = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -6791,6 +6821,9 @@ export const shiftsByDepartment = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -6984,7 +7017,7 @@ export const shiftsByRole = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -6992,6 +7025,9 @@ export const shiftsByRole = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -7185,7 +7221,7 @@ export const shiftsByUser = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -7193,6 +7229,9 @@ export const shiftsByUser = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }
@@ -7373,7 +7412,7 @@ export const announcementByDate = /* GraphQL */ `
           updatedOn
         }
         title
-        accouncement
+        announcement
         notes
         priority
         reactions {
@@ -7390,6 +7429,561 @@ export const announcementByDate = /* GraphQL */ `
           nextToken
         }
         sort
+        date
+        startTime
+        endTime
+        createdOn
+        updatedOn
+      }
+      nextToken
+    }
+  }
+`;
+export const announcementsBySystem = /* GraphQL */ `
+  query AnnouncementsBySystem(
+    $systemID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAnnouncementFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    announcementsBySystem(
+      systemID: $systemID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        title
+        announcement
+        notes
+        priority
+        reactions {
+          nextToken
+        }
+        replies {
+          nextToken
+        }
+        duration
+        expire
+        category
+        link
+        shifts {
+          nextToken
+        }
+        sort
+        date
+        startTime
+        endTime
+        createdOn
+        updatedOn
+      }
+      nextToken
+    }
+  }
+`;
+export const announcementsByHospital = /* GraphQL */ `
+  query AnnouncementsByHospital(
+    $hospitalID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAnnouncementFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    announcementsByHospital(
+      hospitalID: $hospitalID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        title
+        announcement
+        notes
+        priority
+        reactions {
+          nextToken
+        }
+        replies {
+          nextToken
+        }
+        duration
+        expire
+        category
+        link
+        shifts {
+          nextToken
+        }
+        sort
+        date
+        startTime
+        endTime
+        createdOn
+        updatedOn
+      }
+      nextToken
+    }
+  }
+`;
+export const announcementsByDepartment = /* GraphQL */ `
+  query AnnouncementsByDepartment(
+    $departmentID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAnnouncementFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    announcementsByDepartment(
+      departmentID: $departmentID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        title
+        announcement
+        notes
+        priority
+        reactions {
+          nextToken
+        }
+        replies {
+          nextToken
+        }
+        duration
+        expire
+        category
+        link
+        shifts {
+          nextToken
+        }
+        sort
+        date
+        startTime
+        endTime
+        createdOn
+        updatedOn
+      }
+      nextToken
+    }
+  }
+`;
+export const announcementsByRole = /* GraphQL */ `
+  query AnnouncementsByRole(
+    $roleID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAnnouncementFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    announcementsByRole(
+      roleID: $roleID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        title
+        announcement
+        notes
+        priority
+        reactions {
+          nextToken
+        }
+        replies {
+          nextToken
+        }
+        duration
+        expire
+        category
+        link
+        shifts {
+          nextToken
+        }
+        sort
+        date
+        startTime
+        endTime
         createdOn
         updatedOn
       }
@@ -7665,7 +8259,7 @@ export const announcementRepliesByDate = /* GraphQL */ `
           departmentID
           roleID
           title
-          accouncement
+          announcement
           notes
           priority
           duration
@@ -7673,6 +8267,9 @@ export const announcementRepliesByDate = /* GraphQL */ `
           category
           link
           sort
+          date
+          startTime
+          endTime
           createdOn
           updatedOn
         }

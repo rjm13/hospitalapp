@@ -9,7 +9,7 @@ import {
   ActivityIndicator
  } from 'react-native';
 
-import { format } from "date-fns";
+import { format, formatRelative, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -18,9 +18,9 @@ import useStyles from '../styles';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { updateUser } from '../src/graphql/mutations';
-import { getUser, shiftsByRole } from '../src/graphql/queries';
+import { announcementsBySystem, announcementsByHospital, announcementsByDepartment, announcementsByRole  } from '../src/graphql/queries';
 
-const TabTwoScreen = ({ navigation }: any) => {
+const Announcements = ({ navigation }: any) => {
 
   const { userID } = useContext(AppContext);
   const { departID } = useContext(AppContext);
@@ -36,19 +36,7 @@ const TabTwoScreen = ({ navigation }: any) => {
   //refresh state of the flatlist
   const [isFetching, setIsFetching] = useState(false);
 
-  const [announcements, setAnnouncements] = useState([
-    {
-        id: '1', 
-        type: 'Announcement',
-        updatedAt: new Date(),
-        createdAt: new Date(),
-        date: new Date(),
-        startTime: new Date(),
-        endTime: new Date(),
-        title: 'Announcement 1',
-        announcement: 'Make sure when you make an announcement you are able to add paragraphs. If you dont it will just be 1 big jumbled mess of words.'
-    }
-  ])
+  const [announcements, setAnnouncements] = useState([])
 
   const onRefresh = () => {
       setIsFetching(true);
@@ -61,47 +49,97 @@ const TabTwoScreen = ({ navigation }: any) => {
 //fetch the data
   useEffect(() => {
 
+    setIsFetching(true);
+
+    let today = new Date()
+
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const day = today.getDate();
+    const c = new Date(year, month - 1, day);
+
     let arr = []
 
-    const today = new Date();
+    // const fetchSystemAnnouncements = async () => {
 
-    for (let i = 0; i < 60; i++) {
-      const year = today.getFullYear();
-      const month = today.getMonth();
-      const day = today.getDate();
-      const c = new Date(year, month, day + i);
-      const formatted = format((c), "MMMM do yyyy")
-      arr.push({id: i.toString(), title: formatted, data: []})
-    }
+    //   const response = await API.graphql(graphqlOperation(
+    //     announcementsBySystem, {
+    //       systemID: systemID,
+    //     }
+    //   ))
 
-    const fetchShifts = async () => {
+    //   for (let i = 0; i < response.data.announcementsBySystem.items.length; i++) {
+    //     arr.push(response.data.announcementsBySystem.items.length)
+    //   }
+    // }
+    // const fetchHospitalAnnouncements = async () => {
 
-      const resp = await API.graphql(graphqlOperation(
-        shiftsByRole, {
-          dateOrder : {
-            gt: new Date().toISOString()
-          },
-          roleID: userRoleID,
-          filter : {
-            status: {
-              contains: 'open'
+    //     const response = await API.graphql(graphqlOperation(
+    //       announcementsByHospital, {
+    //         hospitalID: hospID,
+    //       }
+    //     ))
+  
+    //     for (let i = 0; i < response.data.announcementsByHospital.items.length; i++) {
+    //       arr.push(response.data.announcementsByHospital.items.length)
+    //     }
+    // }
+    // const fetchDepartmentAnnouncements = async () => {
+
+    // const response = await API.graphql(graphqlOperation(
+    //     announcementsByDepartment, {
+    //     departmentID: departID,
+    //     createdAt: {
+    //         gt: c.toISOString()
+    //     }
+    //     }
+    // ))
+
+    // for (let i = 0; i < response.data.announcementsByDepartment.items.length; i++) {
+    //     arr.push(response.data.announcementsByDepartment.items[i])
+    // }
+    // }  
+    
+    const fetchRoleAnnouncements = async () => {
+
+        const response = await API.graphql(graphqlOperation(
+            announcementsByRole, {
+            roleID: userRoleID,
+            createdAt: {
+                gt: c.toISOString()
             }
+            }
+        ))
+    
+        for (let i = 0; i < response.data.announcementsByRole.items.length; i++) {
+            arr.push(response.data.announcementsByRole.items[i])
+        }
+        const respon = await API.graphql(graphqlOperation(
+          announcementsByDepartment, {
+          departmentID: departID,
+          createdAt: {
+              gt: c.toISOString()
           }
-        }
+          }
       ))
+  
+      for (let i = 0; i < respon.data.announcementsByDepartment.items.length; i++) {
+          arr.push(respon.data.announcementsByDepartment.items[i])
+      } 
 
-      for (let i = 0; i < resp.data.shiftsByRole.items.length; i++) {
-        let index = arr.findIndex((obj => obj.title === resp.data.shiftsByRole.items[i].date));
-        if (index !== -1 && resp.data.shiftsByRole.items[i].status === 'open') {
-          arr[index].data.push(resp.data.shiftsByRole.items[i]);
-        }
-      }
-    }
-    fetchShifts();
+      arr.sort(function(a,b){return new Date(b.createdAt) - new Date(a.createdAt);});
+
+      setAnnouncements(arr);     
+
+    }  
+    fetchRoleAnnouncements();
+    setIsFetching(false);
   }, [didUpdate])
 
-  const Item = ({id, date, startTime, endTime, announcement, priority, title, createdAt} : any) => {
+  const Item = ({id, date, startTime, endTime, announcement, priority, type, title, createdAt} : any) => {
     
+    const createdDate = parseISO(createdAt)
+
     return (
       <TouchableWithoutFeedback>
       <View style={{alignSelf: 'center', marginVertical: 10, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
@@ -111,26 +149,33 @@ const TabTwoScreen = ({ navigation }: any) => {
             </Text>
         </View>
 
-        <View style={{flexDirection: 'row'}}>
-            <Text style={styles.title}>
-              {format(date, "MMMM do yyyy")}
+        {type === 'Event' ? (
+        <View style={{marginTop: 6}}>
+            <Text style={styles.paragraph}>
+              {format(parseISO(date), "MMMM do yyyy")}
             </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={[styles.paragraph, {}]}>
+                    {format(parseISO(startTime), "p")}
+                </Text>
+                <Text style={[styles.paragraph, {marginHorizontal: 4, fontSize: 16}]}>
+                -
+                </Text>
+                <Text style={[styles.paragraph, {}]}>
+                {format(parseISO(endTime), "p")}
+                </Text>
+            </View>
           </View>
-            <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
-                {format(startTime, "p")}
-            </Text>
-            <Text style={[styles.paragraph, {marginHorizontal: 4, fontSize: 16}]}>
-            -
-            </Text>
-            <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
-            {format(endTime, "p")}
-            </Text>
-          </View>
+        ) : null}
 
         <View style={{marginVertical: 4, padding: 10}}>
-          <Text style={styles.paragraph}>
+          <Text numberOfLines={20} style={[styles.paragraph, {color: '#d3d3d3', fontSize: 15, fontWeight: '300'}]}>
             {announcement}
+          </Text>
+        </View>
+        <View style={{marginVertical: 4, padding: 0}}>
+          <Text style={[styles.paragraph, {fontSize: 12, color: 'gray'}]}>
+            Created {formatRelative(createdDate, new Date())} by Meghan Myers 
           </Text>
         </View>
       </View>
@@ -163,6 +208,7 @@ const TabTwoScreen = ({ navigation }: any) => {
             announcement={item.announcement}
             type={item.type}
             title={item.title}
+            createdAt={item?.createdAt}
           />
         }
         ListFooterComponent={ () => (
@@ -172,9 +218,22 @@ const TabTwoScreen = ({ navigation }: any) => {
                 </View>
             </View>
         )}
+        ListHeaderComponent={ () => (
+            <View>
+                <View style={{height: 20}}>
+
+                </View>
+            </View>
+        )}
         ListEmptyComponent={ () => (
           <View style={{alignItems: 'center', justifyContent: 'center', marginVertical: 40}}>
-            <ActivityIndicator size='small' color='maroon'/>
+            {isFetching === true ? (
+                <ActivityIndicator size='small' color='maroon'/>
+            ) : (
+                <Text style={styles.paragraph}>
+                    There are no recent announcements
+                </Text>
+            )}
           </View>
       )}
       />
@@ -182,4 +241,4 @@ const TabTwoScreen = ({ navigation }: any) => {
   );
 }
 
-export default TabTwoScreen;
+export default Announcements;

@@ -75,6 +75,9 @@ const TabOneScreen = ({ navigation }: any) => {
           filter : {
             status: {
               contains: 'open'
+            },
+            trade: {
+              eq: false
             }
           }
         }
@@ -205,7 +208,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#d3d3d3a5' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 0, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#d3d3d3a5' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>

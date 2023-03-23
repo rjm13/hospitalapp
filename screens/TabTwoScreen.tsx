@@ -75,6 +75,9 @@ const TabTwoScreen = ({ navigation }: any) => {
           filter : {
             status: {
               contains: 'open'
+            },
+            trade: {
+              eq: true
             }
           }
         }
@@ -97,7 +100,7 @@ const TabTwoScreen = ({ navigation }: any) => {
     fetchShifts();
   }, [didUpdate])
 
-  const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+  const Item = ({id, date, firstName, lastName, title, giveUp, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
       const [vis, setVis] = useState(true);
       useEffect(() => {
         if (activeSections.includes(date) === true) {
@@ -109,8 +112,10 @@ const TabTwoScreen = ({ navigation }: any) => {
     return (
       <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
       <View style={{height:  vis ? undefined : 0, alignSelf: 'center', marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
-          <View style={{flexDirection: 'row'}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <View style={{width: '80%'}}>
+            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
           {shiftType === 'night' ? (
             <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
               <Ionicons 
@@ -121,7 +126,7 @@ const TabTwoScreen = ({ navigation }: any) => {
               />
             </View>
           ) : null}
-          </View>
+            </View>
             <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                 {startTime}
             </Text>
@@ -132,14 +137,12 @@ const TabTwoScreen = ({ navigation }: any) => {
             {endTime}
             </Text>
           </View>
-          
-        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+          <View style={{flexDirection: 'row', alignItems: 'center',}}>
           <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
             <Text style={{}}>
               {name}
             </Text>
           </View>
-          
           <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
             <FontAwesome5 
               name='bolt'
@@ -151,26 +154,50 @@ const TabTwoScreen = ({ navigation }: any) => {
               {payMultiplier}x
             </Text>
           </View>
-
-        <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-          <FontAwesome5 
-            name='dollar-sign'
-            color='green'
-            size={12}
-            style={{marginRight: 4}}
-          />
-          <Text style={[styles.paragraph, {fontSize: 14}]}>
-            {'+' + '' + payRate}
-          </Text>
+          <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+            <FontAwesome5 
+              name='dollar-sign'
+              color='green'
+              size={12}
+              style={{marginRight: 4}}
+            />
+            <Text style={[styles.paragraph, {fontSize: 14}]}>
+              {'+' + '' + payRate}
+            </Text>
         </View>
-        </View>
-
-        <View style={{marginVertical: 4}}>
-          <Text style={styles.paragraph}>
-            {notes}
-          </Text>
-        </View>
+          </View>
+          </View>
+          <View style={{alignItems: 'center', width: '20%', justifyContent: 'center'}}>
+            {giveUp === true ? (
+              <View style={{alignItems: 'center'}}>
+              <FontAwesome5 name='hands-helping' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
+              <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                Giving
+              </Text>
+              </View>
+            ) : (
+              <View style={{alignItems: 'center'}}>
+              <FontAwesome5 name='people-arrows' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
+              <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                Trading
+              </Text>
+              </View>
+            )}
+            
+          </View>
+          </View>
+          <View style={{marginVertical: 10}}>
+            <Text style={styles.paragraph}>
+              {notes}
+            </Text>
+          </View>
+          <View style={{marginVertical: 10}}>
+            <Text style={[styles.paragraph, {textTransform: 'capitalize', color: 'gray'}]}>
+              Posted by {firstName} {lastName}
+            </Text>
+          </View>
       </View>
+      
       </TouchableWithoutFeedback>
     )
   }
@@ -205,7 +232,7 @@ const TabTwoScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#d3d3d3a5' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 0, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#d3d3d3a5' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop:4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
@@ -248,6 +275,9 @@ const TabTwoScreen = ({ navigation }: any) => {
             notes={item.notes}
             shiftType={item.shiftType}
             title={item.title}
+            giveUp={item.giveUp}
+            firstName={item.createdBy.firstName}
+            lastName={item.createdBy.lastName}
           />
         }
         //ItemSeparatorComponent={() => <View style={styles.separator} />}
