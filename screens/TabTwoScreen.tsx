@@ -110,7 +110,7 @@ const TabTwoScreen = ({ navigation }: any) => {
       }, [])
       
     return (
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('TradeModalScreen', {id: id})}>
       <View style={{height:  vis ? undefined : 0, alignSelf: 'center', marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
             <View style={{width: '80%'}}>
@@ -141,17 +141,6 @@ const TabTwoScreen = ({ navigation }: any) => {
           <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
             <Text style={{}}>
               {name}
-            </Text>
-          </View>
-          <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-            <FontAwesome5 
-              name='bolt'
-              color='green'
-              size={12}
-              style={{marginRight: 4}}
-            />
-            <Text style={[styles.paragraph, {fontSize: 14}]}>
-              {payMultiplier}x
             </Text>
           </View>
           <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>

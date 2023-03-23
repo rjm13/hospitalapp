@@ -131,7 +131,7 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   id: ID!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
-  createdByID: ID @index(name: "byCreatedBy", sortKeyFields: ["id"])
+  createdByID: ID @index(name: "byCreatedBy", queryField: "shiftsByCreator", sortKeyFields: ["dateOrder"])
   createdBy: User @hasOne (fields: ["createdByID"])
   name: String
   notes: String

@@ -40,6 +40,10 @@ export type RootStackParamList = {
   ViewMessage: undefined;
   CreateAnnouncement: undefined;
   CreateTrade: undefined;
+  PostedShifts: undefined;
+  TradeModalScreen: undefined;
+  TradeApprovalRequests: undefined;
+  TradeShiftApproval: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

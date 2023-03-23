@@ -39,6 +39,10 @@ import ViewMessage from '../screens/ViewMessage'
 import CreateAnnouncement from '../screens/CreateAnnouncement'
 import Announcements from '../screens/Announcements'
 import CreateTrade from '../screens/CreateTrade'
+import PostedShifts from '../screens/PostedShifts'
+import TradeModalScreen from '../screens/TradeModalScreen'
+import TradeApprovalRequests from '../screens/TradeApprovalRequests'
+import TradeShiftApproval from '../screens/TradeShiftApproval'
 
 
 import { AppContext } from '../AppContext';
@@ -160,7 +164,14 @@ function RootNavigator({navigation} : any) {
       <Stack.Screen name="MyShifts" component={MyShifts} options={{ headerShown: false }}/>
       <Stack.Screen name="ApprovalRequests" component={ApprovalRequests} options={{ headerShown: false }}/>
       <Stack.Screen name="FilledShifts" component={FilledShifts} options={{ headerShown: false }}/>
+      <Stack.Screen name="PostedShifts" component={PostedShifts} options={{ headerShown: false }}/>
       <Stack.Screen name="CreateAnnouncement" component={CreateAnnouncement} options={{ headerShown: false }}/>
+      <Stack.Screen name="TradeModalScreen" component={TradeModalScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="TradeApprovalRequests" component={TradeApprovalRequests} options={{ headerShown: false }}/>
+      <Stack.Screen name="TradeShiftApproval" component={TradeShiftApproval} options={{ headerShown: false }}/>
+
+
+
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} options={{ headerShown: false }} />

@@ -21,7 +21,7 @@ import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift} from '../src/graphql/queries';
 import { updateShift, deleteShift} from '../src/graphql/mutations';
 
-const ShiftModal = ({navigation, route} : any) => {
+const TradeModal = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
@@ -113,7 +113,7 @@ const PickUpShift = async () => {
         const response = await API.graphql(graphqlOperation(
             updateShift, {input: {
               id: id,
-              status: 'pending',
+              status: 'tradepending',
               userID: userID,
               updatedAt: new Date().toISOString()
             }}
@@ -306,6 +306,23 @@ const DeleteShift = async () => {
           {shift.date.substring(0, shift.date.length - 5)}
         </Text>
       </View>
+      <View>
+          {shift?.giveUp === true ? (
+              <View style={{alignItems: 'center', marginTop: 20}}>
+              <FontAwesome5 name='hands-helping' size={30} color={theme=== true ? 'orange' : 'tomato'}/>
+              <Text style={{color: 'gray', fontSize: 12, textAlign: 'center'}}>
+                Giving
+              </Text>
+              </View>
+            ) : (
+              <View style={{alignItems: 'center'}}>
+              <FontAwesome5 name='people-arrows' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
+              <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                Trading
+              </Text>
+              </View>
+            )}
+          </View>
 {/* shift type */}
       <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center'}}>
         <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
@@ -473,4 +490,4 @@ const DeleteShift = async () => {
   )
 }
 
-export default ShiftModal;
+export default TradeModal;

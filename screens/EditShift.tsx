@@ -766,6 +766,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     Incentives
                                 </Text>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20}}>
+                                    {shift?.trade === false ? (
                                     <View>
                                         <View>
                                         <TouchableWithoutFeedback onPress={showMultiplierModal}>
@@ -783,7 +784,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                         </TouchableWithoutFeedback> 
                                     </View>
                                     </View>
-                                    
+                                    ) : null}
                                     <View>
                                        
                                         <View>
@@ -804,6 +805,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                     </View>
                                 </View>  
     {/* priority */}
+                                {shift?.trade === false ? (
                                 <TouchableOpacity onPress={showPriorityModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
@@ -816,6 +818,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                         </View>
                                     </View>
                                 </TouchableOpacity> 
+                                ) : null}
     {/* special quals needed */}
                                 {/* <TouchableOpacity onPress={showQualsModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>

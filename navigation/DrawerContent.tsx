@@ -83,15 +83,25 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        {/* <TouchableWithoutFeedback onPress={() => setScorecardExpanded(!scorecardExpanded)}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('PostedShifts')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
-                                    <Text style={[styles.itemtext, {color: 'gray'}]}>
-                                        Groups
+                                    <Text style={[styles.itemtext]}>
+                                        Posted Shifts
                                     </Text>
                                 </View>
                             </View>
-                        </TouchableWithoutFeedback> */}
+                        </TouchableWithoutFeedback>
+
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('TradeApprovalRequests', {trigger: Math.random()})}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                <View style={istyles.box}>
+                                    <Text style={[styles.itemtext]}>
+                                        Shift Responses
+                                    </Text>
+                                </View>
+                            </View>
+                        </TouchableWithoutFeedback>
 
                         <View style={{backgroundColor: 'lightgray', height: 1, marginVertical: 10}}/>
 
