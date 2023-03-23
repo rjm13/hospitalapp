@@ -270,7 +270,7 @@ const TabOneScreen = ({ navigation }: any) => {
                 </Text>
               ) : (
                 <View style={{height: 80}}>
-
+                 
                 </View>
               )}
             </View>
@@ -284,124 +284,5 @@ const TabOneScreen = ({ navigation }: any) => {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    //flex: 1,
-    //  `marginTop: Constants.statusBarHeight,
-  },
-  headerbox: {
-    backgroundColor: '#fff',
-    //height: 100,
-    elevation: 1,
-    padding: 16, 
-    
-},
-titlebox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-},
-  title: {
-    fontFamily: 'chalkboard-bold',
-    fontSize: 18,
-  },
-  titleblock: {
-
-},
-submittedby: {
-    fontFamily: 'chalkboard-regular',
-    color: '#155843',
-    fontSize: 14,
-  },
-iconbox: {
-    flexDirection: 'row',
-    //backgroundColor: 'green',
-    marginVertical: 8,
-    justifyContent: 'space-between',
-    width: 64,
-},
-category: {
-    fontFamily: 'chalkboard-light',
-    fontSize: 14,
-    color: '#155843',
-},
-footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 8
-},
-playersbutton: {
-    borderRadius: 4,
-    backgroundColor: '#B2D9BF',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-},
-variationsbutton: {
-    borderRadius: 4,
-    backgroundColor: '#D9D1B2',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-},
-footertext: {
-    fontFamily: 'chalkboard-regular',
-    fontSize: 14,
-},
-//   titlebox: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//   },
-  cardbox: {
-    marginHorizontal: 16,
-    marginTop: 16,
-    backgroundColor: '#fff',
-    elevation: 1,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  footerbox: {
-    marginHorizontal: 16,
-    backgroundColor: '#fff',
-    elevation: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  databox: {
-    marginHorizontal: 16,
-    backgroundColor: '#fff',
-    elevation: 1,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-    warningtext: {
-        fontFamily: 'chalkboard-regular',
-        fontSize: 14,
-  },
-  flattitlebox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-    marginTop: 16,
-},
-submitbutton: {
-    borderRadius: 4,
-    backgroundColor: '#D9D1B2',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    marginBottom: 8,
-},
-housefavbutton: {
-    marginVertical: 8,
-},
-bottombuttonbox: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginHorizontal: 16,
-    marginVertical: 16,
-},
-});
 
 export default TabOneScreen;

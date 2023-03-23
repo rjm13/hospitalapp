@@ -7,6 +7,7 @@ import { updateUser } from '../../src/graphql/mutations';
 import { StatusBar } from 'expo-status-bar';
 //import {styles} from '../../styles';
 import useStyles from '../../styles';
+import Ambulance from '../../components/ActivityAmbulance'
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -68,17 +69,20 @@ const Redirect = ({route, navigation} : any) => {
                         setTheme(userData.data.getUser.Setting1);
 
                         if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null || userData.data.getUser.lastName === null) {
+                            setIsLoading(false)
                             navigation.reset({
                                 //index: 0,
                                 routes: [{ name: 'Welcome' }],
                             });
                         } else {
+                            setIsLoading(false)
                             navigation.reset({
                                 //index: 0,
                                 routes: [{ name: 'Root' }],
                             });
                         }
                     } else {
+                        setIsLoading(false)
                         setUserID(null);
                         navigation.reset({
                             //index: 0,
@@ -98,7 +102,7 @@ const Redirect = ({route, navigation} : any) => {
     return (
         <View style={[styles.container, {alignContent: 'center', justifyContent: 'center'}]}>
             {isLoading === true ? (
-                <ActivityIndicator size="large" color="maroon" />
+                <Ambulance size={40} />
             ) : (
                 <View>
                     <Text style={styles.paragraph}>
