@@ -32,6 +32,19 @@ export function DrawerContent({navigation} : any) {
 
     const [hasPending, setHasPending] = useState(false)
 
+    const [isManager, setIsManager] = useState(false)
+
+    useEffect(() => {
+        const managerCheck = async () => {
+            const userInfo = await Auth.currentAuthenticatedUser();
+
+            if (userInfo.attributes.profile === 'manager') {
+                setIsManager(true)
+            }
+        }
+        managerCheck()
+    }, [])
+
     useEffect(() => {
         const countShifts = async () => {
 
@@ -103,51 +116,58 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <View style={{backgroundColor: 'lightgray', height: 1, marginVertical: 10}}/>
+                        {isManager === true ? (
+                            <View>
 
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateShift')}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    <Text style={styles.itemtext}>
-                                        Create Open Shift 
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableWithoutFeedback>
+                            <View style={{backgroundColor: 'lightgray', height: 1, marginVertical: 10}}/>
 
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('ApprovalRequests', {trigger: Math.random()})}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    <Text style={styles.itemtext}>
-                                        Approval Requests
-                                    </Text>
+                            <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateShift')}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                    <View style={istyles.box}>
+                                        <Text style={styles.itemtext}>
+                                            Create Open Shift 
+                                        </Text>
+                                    </View>
                                 </View>
-                                {hasPending === true ? (
-                                <FontAwesome5 name='exclamation-circle' color='tomato' size={20} />
-                                ) : null}
-                            </View>
-                        </TouchableWithoutFeedback>
+                            </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('FilledShifts', {trigger: Math.random()})}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    <Text style={styles.itemtext}>
-                                        Filled Shifts
-                                    </Text>
+                            <TouchableWithoutFeedback onPress={() => navigation.navigate('ApprovalRequests', {trigger: Math.random()})}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                    <View style={istyles.box}>
+                                        <Text style={styles.itemtext}>
+                                            Approval Requests
+                                        </Text>
+                                    </View>
+                                    {hasPending === true ? (
+                                    <FontAwesome5 name='exclamation-circle' color='tomato' size={20} />
+                                    ) : null}
                                 </View>
-                            </View>
-                        </TouchableWithoutFeedback>
-                
+                            </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateAnnouncement')}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    <Text style={[styles.itemtext]}>
-                                        Create Announcement
-                                    </Text>
+                            <TouchableWithoutFeedback onPress={() => navigation.navigate('FilledShifts', {trigger: Math.random()})}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                    <View style={istyles.box}>
+                                        <Text style={styles.itemtext}>
+                                            Filled Shifts
+                                        </Text>
+                                    </View>
                                 </View>
-                            </View>
-                        </TouchableWithoutFeedback>
+                            </TouchableWithoutFeedback>
+                    
+
+                            <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateAnnouncement')}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                    <View style={istyles.box}>
+                                        <Text style={[styles.itemtext]}>
+                                            Create Announcement
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableWithoutFeedback>
+
+                            </View>  
+                        ) : null}
+                        
                 </View>
             </DrawerContentScrollView>
 

@@ -7,9 +7,9 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "master": {
+    "staging": {
       "distribution": "internal",
-      "channel": "master"
+      "channel": "staging"
     },
     "production": {
       "channel": "main"
