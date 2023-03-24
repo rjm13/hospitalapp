@@ -5,14 +5,14 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
+      "distribution": "internal"
     },
-    "preview": {
+    "master": {
       "distribution": "internal",
       "channel": "master"
     },
     "production": {
-      "channel": "master"
+      "channel": "main"
     }
   },
   "submit": {
