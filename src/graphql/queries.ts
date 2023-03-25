@@ -70,7 +70,11 @@ export const getUser = /* GraphQL */ `
           updatedOn
         }
         departments {
-          nextToken
+          items {
+            id
+            name
+            abbreviation
+          }
         }
         people {
           nextToken

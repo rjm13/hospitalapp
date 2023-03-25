@@ -144,18 +144,18 @@ function RootNavigator({navigation} : any) {
       initialRouteName="Redirect"
     >
       <Stack.Screen name="Root" component={TopTabNavigator} options={{  }} />
-      <Stack.Screen name="SignIn" component={SignIn}/>
-      <Stack.Screen name="SignUp" component={SignUp}/>
-      <Stack.Screen name="ConfirmAccount" component={ConfirmAccount}/>
-      <Stack.Screen name="ConfirmPassword" component={ConfirmPassword}/>
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
+      <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
+      <Stack.Screen name="ConfirmAccount" component={ConfirmAccount} options={{ headerShown: false }}/>
+      <Stack.Screen name="ConfirmPassword" component={ConfirmPassword} options={{ headerShown: false }}/>
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }}/>
       <Stack.Screen name="Redirect" component={Redirect} options={{ headerShown: false }}/>
-      <Stack.Screen name="Welcome" component={Welcome}/>
-      <Stack.Screen name="SelectDept" component={SelectDept}/>
-      <Stack.Screen name="SelectHospital" component={SelectHospital}/>
-      <Stack.Screen name="SelectQuals" component={SelectQuals}/>
-      <Stack.Screen name="SelectRole" component={SelectRole}/>
-      <Stack.Screen name="ConfirmSetUp" component={ConfirmSetUp}/>
+      <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }}/>
+      <Stack.Screen name="SelectDept" component={SelectDept}options={{ headerShown: false }} />
+      <Stack.Screen name="SelectHospital" component={SelectHospital} options={{ headerShown: false }}/>
+      <Stack.Screen name="SelectQuals" component={SelectQuals} options={{ headerShown: false }}/>
+      <Stack.Screen name="SelectRole" component={SelectRole} options={{ headerShown: false }}/>
+      <Stack.Screen name="ConfirmSetUp" component={ConfirmSetUp} options={{ headerShown: false }}/>
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
       <Stack.Screen name="Inbox" component={Inbox} options={{ headerShown: false }}/>
       <Stack.Screen name="ViewMessage" component={ViewMessage} options={{ headerShown: false }} />

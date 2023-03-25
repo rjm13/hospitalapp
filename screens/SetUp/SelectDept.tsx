@@ -138,7 +138,7 @@ const SelectDept = ({navigation, route} : any) => {
                     </Text>
                 
             </View> 
-                {departments.map(({id, name, abbreviation}, index) => {
+                {departments?.map(({id, name, abbreviation}, index) => {
 
                 const AddTo = ({deptid} : any) => {
                     setDepartmentID(deptid)
@@ -150,7 +150,7 @@ const SelectDept = ({navigation, route} : any) => {
                             borderColor: departmentID === id ? 'maroon' : '#fff', 
                             //backgroundColor: hospitalIDs.includes(id) === true ? 'cyan' : '#fff',
                         }}>
-                            <Text style={{fontSize: 18, fontWeight: '600', textAlign: 'center', color: '#474747'}}>
+                            <Text style={[styles.paragraph, {fontSize: 18, fontWeight: '600', textAlign: 'center', }]}>
                                 {name}
                             </Text>
                         </View>
