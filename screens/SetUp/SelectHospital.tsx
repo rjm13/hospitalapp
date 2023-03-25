@@ -1,6 +1,6 @@
  //select multiple hospitals (many to many relationship)
 
- import React, {useState, useEffect} from 'react';
+ import React, {useState, useEffect, useContext} from 'react';
 import {
     View, 
     Text, 
@@ -21,10 +21,14 @@ import { AppContext } from '../../AppContext';
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-import {styles} from '../../styles'
+import useStyles from '../../styles'
 
 
 const SelectHospital = ({navigation, route} : any) => {
+
+    const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [processing, setProcessing] = useState(false);
 

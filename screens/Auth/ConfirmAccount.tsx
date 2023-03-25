@@ -11,7 +11,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 
 import Colors from '../../constants/Colors'
-import {styles} from '../../styles';
+import useStyles from '../../styles';
 import { AppContext } from '../../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
@@ -21,6 +21,8 @@ import { ActivityIndicator } from 'react-native-paper';
 const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
 
     const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [loggingIn, setLoggingIn] = useState(false);
 

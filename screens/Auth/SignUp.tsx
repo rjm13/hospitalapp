@@ -14,12 +14,14 @@ import {Auth} from 'aws-amplify';
 import { StatusBar } from 'expo-status-bar';
 
 import Colors from '../../constants/Colors'
-import {styles} from '../../styles';
+import useStyles from '../../styles';
 import { AppContext } from '../../AppContext';
 
 const SignUp = ({navigation} : any) => {
 
     const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [isErr, setIsErr] = useState(false);
 

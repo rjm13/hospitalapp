@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
     View, 
     Text,
@@ -9,11 +9,16 @@ import {
 } from 'react-native';
 
 import Colors from '../../constants/Colors'
-import {styles} from '../../styles';
+import useStyles from '../../styles';
+import { AppContext } from '../../AppContext';
 
 import { Auth } from 'aws-amplify';
 
 const ForgotPassword = ({navigation} : any) => {
+
+    const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [email, setEmail] = useState('');
 

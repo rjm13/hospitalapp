@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
     View, 
     Text, 
@@ -13,9 +13,14 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import Colors from '../../constants/Colors'
 
-import {styles} from '../../styles';
+import useStyles from '../../styles';
+import { AppContext } from '../../AppContext';
 
 const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) => {
+
+    const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const {email} = route.params
 
@@ -49,10 +54,6 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
         }} else {
             alert('Passwords do not match')
         }
-    }
-
-    const ResendCode = async () => {
-        
     }
 
     return (

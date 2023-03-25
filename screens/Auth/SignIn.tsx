@@ -16,7 +16,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import Colors from '../../constants/Colors'
 import { AppContext } from '../../AppContext';
-import {styles} from '../../styles';
+import useStyles from '../../styles';
 
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../../src/graphql/queries';
@@ -27,6 +27,8 @@ const SignIn = ({navigation} : any) => {
     const { setUserID } = useContext(AppContext);
 
     const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [seePass, setSeePass] = useState(false);
 
@@ -106,7 +108,7 @@ const SignIn = ({navigation} : any) => {
         } 
         catch (error) {
             console.log(error.message)
-            setErr(error?.message)
+            setErr(error?.message.toString())
             setIsErr(true);
             setSigningIn(false);
         }

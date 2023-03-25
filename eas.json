@@ -7,12 +7,10 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "staging": {
-      "distribution": "internal",
-      "channel": "staging"
+    "preview": {
+      "distribution": "internal"
     },
     "production": {
-      "channel": "main"
     }
   },
   "submit": {

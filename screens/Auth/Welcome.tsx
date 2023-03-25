@@ -14,10 +14,14 @@ import { updateUser } from '../../src/graphql/mutations';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import { AppContext } from '../../AppContext';
-import {styles} from '../../styles'
+import useStyles from '../../styles'
 
 
 const Welcome = ({navigation} : any) => {
+
+    const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const [ready, setReady] = useState(false);
 

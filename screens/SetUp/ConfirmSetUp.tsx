@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     View, 
     Text, 
@@ -18,10 +18,14 @@ import { AppContext } from '../../AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {LinearGradient} from 'expo-linear-gradient';
 
-import {styles} from '../../styles'
+import useStyles from '../../styles'
 
 
 const ConfirmSetUp = ({navigation, route} : any) => {
+
+    const { theme } = useContext(AppContext);
+
+    const styles = useStyles(theme);
 
     const {systemID, systemImageUri, systemName} = route.params
 
