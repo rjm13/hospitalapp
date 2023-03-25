@@ -18,8 +18,7 @@ import { AppContext } from '../AppContext';
 import useStyles from '../styles';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { updateUser } from '../src/graphql/mutations';
-import { getUser, shiftsByRole } from '../src/graphql/queries';
+import { shiftsByRole } from '../src/graphql/queries';
 
 const TabTwoScreen = ({ navigation }: any) => {
 
@@ -27,7 +26,6 @@ const TabTwoScreen = ({ navigation }: any) => {
   const { theme } = useContext(AppContext);
 
   const styles = useStyles(theme);
-
 
   const [activeSections, setActiveSections] = useState([])
 
@@ -281,7 +279,7 @@ const TabTwoScreen = ({ navigation }: any) => {
         ListFooterComponent={ () => (
             <View>
               {empty === true ? (
-                <Text style={{marginVertical: 80}}>
+                <Text style={[styles.paragraph, {marginVertical: 80}]}>
                   There are no open shifts posted at this time.
                 </Text>
               ) : (

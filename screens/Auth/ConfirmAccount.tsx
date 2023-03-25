@@ -147,7 +147,7 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
                         Go Back
                     </Text>
                 </TouchableOpacity>
-                <StatusBar style="dark" backgroundColor='transparent'/>
+                <StatusBar style={theme ? "light" : "dark"} backgroundColor='transparent'/>
         </View>
         </TouchableWithoutFeedback>
     );

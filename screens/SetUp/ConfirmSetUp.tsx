@@ -4,16 +4,12 @@ import {
     Text, 
     Dimensions, 
     TouchableOpacity,
-    TextInput,
-    FlatList,
     ScrollView,
-    TouchableWithoutFeedback,
     Image
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { updateUser, createQualUser } from '../../src/graphql/mutations';
-import { getUser, getRole } from '../../src/graphql/queries';
+import { getUser } from '../../src/graphql/queries';
 import { AppContext } from '../../AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -128,7 +124,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                     <View>
                         {/* {hospitalData.map(({id, name}, index) => {
                             return ( */}
-                                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                <View style={{padding: 10, backgroundColor: 'transparent', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                     <Text style={[styles.paragraph, {marginVertical: 0}]}>
                                         {hospitalData?.name}
                                     </Text>
@@ -144,7 +140,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
                 
-                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                <View style={{padding: 10, backgroundColor: 'transparent', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                     <Text style={[styles.paragraph, {marginVertical: 0}]}>
                         {department?.name}
                     </Text>
@@ -156,7 +152,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                     </Text>
                     <View style={{height: 1, backgroundColor: '#e0e0e0', width: SCREEN_WIDTH - 40}}/>
                 </View>
-                <View style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                <View style={{padding: 10, backgroundColor: 'transparent', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                     <Text style={[styles.paragraph, {marginVertical: 0, textTransform: 'capitalize'}]}>
                         {role?.title}
                     </Text>
@@ -173,7 +169,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
                     <View>
                         {quals.map(({id, title}, index) => {
                             return (
-                                <View key={id} style={{padding: 10, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                <View key={id} style={{padding: 10, backgroundColor: 'transparent', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                     <Text style={[styles.paragraph, {marginVertical: 0}]}>
                                         {title}
                                     </Text>
@@ -187,7 +183,7 @@ const ConfirmSetUp = ({navigation, route} : any) => {
         
 {/* FOOTER */}
         <LinearGradient
-            colors={['#fff','#fff', '#ffffffa5','transparent']}
+            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
             style={{position: 'absolute', bottom: 0 }}
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}

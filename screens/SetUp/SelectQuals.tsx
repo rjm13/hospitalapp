@@ -149,7 +149,7 @@ const SelectQuals = ({navigation, route} : any) => {
                         <View>
                             {/* {hospitalData.map(({id, name}, index) => {
                                 return ( */}
-                                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: theme === true ? '#000' : '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                                         <Text style={[styles.paragraph, {marginVertical: 0}]}>
                                             {hospitalData.name}
                                         </Text>
@@ -158,13 +158,13 @@ const SelectQuals = ({navigation, route} : any) => {
                         </View>
                     </View>
 
-                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: theme === true ? '#000' : '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                         <Text style={[styles.paragraph, {marginVertical: 0}]}>
                             {department?.name}
                         </Text>
                     </View>
 
-                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
+                    <View style={{padding: 10, elevation: 4,shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, backgroundColor: theme === true ? '#000' : '#fff', flexDirection: 'row', width: Dimensions.get('window').width - 80, justifyContent: 'center', marginVertical: 6}}>
                         <Text style={[styles.paragraph, {marginVertical: 0, textTransform: 'capitalize'}]}>
                             {role?.title}
                         </Text>
@@ -203,7 +203,7 @@ const SelectQuals = ({navigation, route} : any) => {
             <View style={{height: 0}}/>
 {/* FOOTER */}
         <LinearGradient
-            colors={['#fff','#fff', '#ffffffa5','transparent']}
+            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
             style={{position: 'absolute', bottom: 0 }}
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}

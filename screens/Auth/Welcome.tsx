@@ -5,7 +5,8 @@ import {
     Dimensions, 
     TouchableOpacity,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    Image
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
@@ -69,12 +70,6 @@ const Welcome = ({navigation} : any) => {
                     lastName:  data.lastName.toLowerCase()
                 }})
             )
-
-            console.log(changeUser)
-            
-            // if (changeUser) {
-            //     navigation.navigate('SelectHospital', {systemID: systemID})
-            // }
             setProcessing(false);
         } 
     }
@@ -104,10 +99,14 @@ const Welcome = ({navigation} : any) => {
         <View style={[styles.container, {justifyContent: 'space-between', height: SCREEN_HEIGHT}]}>
             <View style={{marginTop: 100, alignItems: 'center'}}>
                 <View style={{alignItems: 'center'}}>
-                    <Text style={[styles.title, {fontSize: 26}]}>
-                        Welcome to Medall
+                    <Image 
+                        source={require('../../assets/hospitalapplogo.png')}  
+                        style={{width: 80, height: 80}}
+                    />
+                    <Text style={[styles.title, {fontSize: 26, color: 'maroon'}]}>
+                        Welcome to Amble
                     </Text>
-                    <Text style={[styles.subtext, { fontWeight: '300'}]}>
+                    <Text style={[styles.subtext, { fontWeight: '300', fontSize: 14, color: 'maroon'}]}>
                         Communication for medical staff
                     </Text>
                     

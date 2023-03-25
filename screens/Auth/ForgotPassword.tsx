@@ -8,9 +8,9 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 
-import Colors from '../../constants/Colors'
 import useStyles from '../../styles';
 import { AppContext } from '../../AppContext';
+import { StatusBar } from 'expo-status-bar';
 
 import { Auth } from 'aws-amplify';
 
@@ -36,38 +36,40 @@ const ForgotPassword = ({navigation} : any) => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-                <View style={{ margin: 20}}>
-                    <View>
-                        <Text style={[styles.title, {marginBottom: 4}]}>
-                            Email
-                        </Text>
-                        <View style={styles.inputfield}>
-                            <TextInput 
-                                placeholder='....'
-                                placeholderTextColor='#ffffffa5'
-                                style={styles.textInputTitle}
-                                maxLength={40}
-                                onChangeText={val => setEmail(val)}
-                            />
+            <View style={[styles.container, {justifyContent: 'center'}]}>
+                    <View style={{ margin: 20}}>
+                        <View>
+                            <Text style={[styles.title, {marginBottom: 4}]}>
+                                Email
+                            </Text>
+                            <View style={styles.inputfield}>
+                                <TextInput 
+                                    placeholder='....'
+                                    placeholderTextColor='#ffffffa5'
+                                    style={styles.textInputTitle}
+                                    maxLength={40}
+                                    onChangeText={val => setEmail(val)}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
 
-                <TouchableOpacity onPress={handleForgotPassword}>
-                    <View style={styles.buttonlayout}>
-                        <Text style={styles.buttontext}>
-                            Send Reset Code
+                    <TouchableOpacity onPress={handleForgotPassword}>
+                        <View style={styles.buttonlayout}>
+                            <Text style={styles.buttontext}>
+                                Send Reset Code
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.goBack() }>
+                        <Text style={[styles.paragraph, {alignSelf: 'center', marginTop: 30}]}>
+                            Go Back
                         </Text>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                    <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
 
-                <TouchableOpacity onPress={() => navigation.goBack() }>
-                    <Text style={[styles.paragraph, {alignSelf: 'center', marginTop: 30}]}>
-                        Go Back
-                    </Text>
-                </TouchableOpacity>
-        </View>
+            </View>
         </TouchableWithoutFeedback>
     );
 }

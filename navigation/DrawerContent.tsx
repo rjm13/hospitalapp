@@ -1,20 +1,14 @@
 //contains all of the stlying for the drawer
 
 import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Avatar, Caption, Paragraph, Drawer, Text } from 'react-native-paper';
-//import * as Animatable from 'react-native-animatable';
-//import { styles } from '../styles';
 import useStyles from '../styles';
 import { useDrawerStatus } from '@react-navigation/drawer'
 
 import { getUser, getDepartment } from '../src/graphql/queries'
 import { API, graphqlOperation, Auth } from "aws-amplify";
-
-import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import uuid from 'react-native-uuid';
 
 import { AppContext } from '../AppContext';
 
@@ -25,10 +19,6 @@ export function DrawerContent({navigation} : any) {
     const styles = useStyles(theme);
 
     const status = useDrawerStatus()
-
-    const [scorecardExpanded, setScorecardExpanded] = useState(false);
-
-    const [didUpdate, setDidUpdate] = useState(false)
 
     const [hasPending, setHasPending] = useState(false)
 
@@ -90,7 +80,7 @@ export function DrawerContent({navigation} : any) {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext]}>
-                                       Trade Shift
+                                       Trade a Shift
                                     </Text>
                                 </View>
                             </View>
@@ -100,7 +90,7 @@ export function DrawerContent({navigation} : any) {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext]}>
-                                        Posted Shifts
+                                        My Posted Shifts
                                     </Text>
                                 </View>
                             </View>

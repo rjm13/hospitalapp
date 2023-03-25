@@ -13,8 +13,7 @@ import {
 } from 'react-native';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createHospitalUser, deleteHospitalUser, updateUser } from '../../src/graphql/mutations';
-import { getUser } from '../../src/graphql/queries';
+import { updateUser } from '../../src/graphql/mutations';
 import { getSystem } from '../../src/graphql/queries';
 
 import { AppContext } from '../../AppContext';
@@ -144,8 +143,8 @@ const SelectHospital = ({navigation, route} : any) => {
                         <View style={{ margin: 10, paddingVertical: 12, paddingHorizontal: 20, borderWidth: 2, borderRadius: 10,
                             // borderColor: hospitalIDs.includes(id) === true ? 'maroon' : '#fff', 
                             // backgroundColor: hospitalIDs.includes(id) === true ? '#fff' : '#fff',
-                            borderColor: hospID === id ? 'maroon' : '#fff', 
-                            backgroundColor: hospID === id ? '#fff' : '#fff',
+                            borderColor: hospID === id ? 'maroon' : 'transparent', 
+                            backgroundColor: theme === true ? '#000' : '#fff',
                         }}>
                             <View style={{borderRadius: 10, elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
                                 <Image
@@ -174,7 +173,7 @@ const SelectHospital = ({navigation, route} : any) => {
 {/* FOOTER */}
         
         <LinearGradient
-            colors={['#fff','#fff', '#ffffffa5','transparent']}
+            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
             style={{position: 'absolute', bottom: 0 }}
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}

@@ -101,13 +101,6 @@ const CreateUser = async () => {
         });
     }
 
-    // const handleNameChange = (val : any) => {
-    //     setData({
-    //         ... data,
-    //         Name: val
-    //     });
-    // }
-
     const handleSignUp = () => {
 
         const { password, confirm_password } = data;

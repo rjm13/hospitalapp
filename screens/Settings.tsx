@@ -114,7 +114,7 @@ const Settings = ({navigation} : any) => {
                         </Text>
                         <View style={{}}>
                             {signingout ? (
-                                <ActivityIndicator size="small" color="#00ffff"/>
+                                <ActivityIndicator size="small" color="maroon"/>
                             ) : (
                                <TouchableOpacity onPress={SignOut}>
                                     <View style={styles.buttonlayout} >

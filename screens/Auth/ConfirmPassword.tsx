@@ -11,8 +11,6 @@ import {
 import {Auth} from '@aws-amplify/auth'
 import Feather from 'react-native-vector-icons/Feather';
 
-import Colors from '../../constants/Colors'
-
 import useStyles from '../../styles';
 import { AppContext } from '../../AppContext';
 

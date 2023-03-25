@@ -189,7 +189,7 @@ const Announcements = ({ navigation }: any) => {
         data={announcements}
         style={{alignSelf: 'center'}}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={(item, index) => item.id + index}
         extraData={didUpdate}
         refreshControl={
           <RefreshControl
