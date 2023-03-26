@@ -15,6 +15,7 @@ import { AppContext } from '../AppContext';
 export function DrawerContent({navigation} : any) {
 
     const { theme } = useContext(AppContext);
+    const { isManager } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -22,18 +23,16 @@ export function DrawerContent({navigation} : any) {
 
     const [hasPending, setHasPending] = useState(false)
 
-    const [isManager, setIsManager] = useState(false)
+    const [manager, setManager] = useState(false)
 
     useEffect(() => {
-        const managerCheck = async () => {
-            const userInfo = await Auth.currentAuthenticatedUser();
-
-            if (userInfo.attributes.profile === 'manager') {
-                setIsManager(true)
-            }
+        console.log(isManager)
+        if (isManager === true) {
+            setManager(true)
+        } else {
+            setManager(false)
         }
-        managerCheck()
-    }, [])
+    }, [status])
 
     useEffect(() => {
         const countShifts = async () => {
@@ -106,7 +105,7 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        {isManager === true ? (
+                        {manager === true ? (
                             <View>
 
                             <View style={{backgroundColor: 'lightgray', height: 1, marginVertical: 10}}/>

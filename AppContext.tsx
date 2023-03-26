@@ -25,6 +25,9 @@ const context = {
 
     theme: false,
     setTheme: (val: boolean) => {},
+
+    isManager: false,
+    setIsManager: (val: boolean) => {},
 }
 
 export const AppContext = React.createContext(context);

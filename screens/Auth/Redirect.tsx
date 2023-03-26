@@ -20,6 +20,7 @@ const Redirect = ({route, navigation} : any) => {
 
     const trigger = route.params
 
+    const { isManager } = useContext(AppContext);
     const { theme } = useContext(AppContext);
     const { setUserID } = useContext(AppContext);
     const { setTheme } = useContext(AppContext);
@@ -27,6 +28,7 @@ const Redirect = ({route, navigation} : any) => {
     const { setHospID } = useContext(AppContext);
     const { setDepartID } = useContext(AppContext);
     const { setUserRoleID } = useContext(AppContext);
+    const { setIsManager } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -39,13 +41,20 @@ const Redirect = ({route, navigation} : any) => {
             try {
                 const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true }).catch(err=>err)
 
-                //console.log(userInfo)
+                console.log(userInfo)
 
                 if (userInfo === 'The user is not authenticated') {
                     navigation.navigate('SignIn')
                 }
 
                 else {
+
+                    if (userInfo.attributes.profile === 'manager') {
+                        setIsManager(true)
+                    } else {
+                        setIsManager(false)
+                    }
+
                     const userData = await API.graphql(graphqlOperation(
                         getUser,{ id: userInfo.attributes.sub}))
                     //console.log(userData.data.getUser)

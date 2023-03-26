@@ -30,6 +30,8 @@ export default function App() {
 
   const [theme, setTheme] = useState<boolean>(false);
 
+  const [isManager, setIsManager] = useState<boolean>(false);
+
   const [deepLink, setDeepLink] = useState(null);
 
   const isLoadingComplete = useCachedResources();
@@ -57,6 +59,8 @@ export default function App() {
           setDeepLink: (link: {}) => setDeepLink(link),
           theme,
           setTheme: (val: boolean) => setTheme(val),
+          isManager,
+          setIsManager: (val: boolean) => setIsManager(val),
         }}>
         <Navigation colorScheme={colorScheme} />
         </AppContext.Provider>
