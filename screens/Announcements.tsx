@@ -142,7 +142,7 @@ const Announcements = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback>
-      <View style={{alignSelf: 'center', marginVertical: 10, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+      <View style={{alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 10, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center',}}>
             <Text style={styles.title}>
               {title}
@@ -169,7 +169,7 @@ const Announcements = ({ navigation }: any) => {
         ) : null}
 
         <View style={{marginVertical: 4, padding: 10}}>
-          <Text numberOfLines={20} style={[styles.paragraph, {color: '#d3d3d3', fontSize: 15, fontWeight: '300'}]}>
+          <Text numberOfLines={20} style={[styles.paragraph, {color: theme === true ? '#d3d3d3' : 'black', fontSize: 15, fontWeight: '300'}]}>
             {announcement}
           </Text>
         </View>
