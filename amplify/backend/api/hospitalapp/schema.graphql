@@ -151,8 +151,10 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   month: Int
   year: Int
   startTime: String
+  start: AWSDateTime
   startAMPM: String
   endTime: String
+  end: AWSDateTime
   endAMPM: String
   payMultiplier: Float
   payRate: Float

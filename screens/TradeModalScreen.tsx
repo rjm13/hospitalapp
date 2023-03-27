@@ -25,8 +25,7 @@ const TradeModal = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { theme } = useContext(AppContext);
-  const { userID } = useContext(AppContext);
+  const { userID, militaryTime, theme } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
@@ -183,6 +182,21 @@ const DeleteShift = async () => {
   }
 }
 
+const convertTime12to24 = (inputtime : any) => {
+  const [time, modifier] = inputtime.split(' ');
+
+  let [hours, minutes] = time.split(':');
+
+  if (hours === '12') {
+    hours = '00';
+  }
+
+  if (modifier === 'PM') {
+    hours = parseInt(hours, 10) + 12;
+  }
+
+  return `${hours}:${minutes}`;
+}
 
 
   return (
@@ -347,7 +361,7 @@ const DeleteShift = async () => {
             >
                 <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
                 <Text style={[styles.timeselect, {color: theme === true && shift.isStartDayNight === 'night' ? '#fff' : theme === true && shift.isStartDayNight === 'day' ? '#000' :'#000'} ]}>
-                            {shift.startTime}
+                  {militaryTime === true ? convertTime12to24(shift.startTime) : shift.startTime}
                         </Text>
                     </View> 
             </ImageBackground>
@@ -368,7 +382,7 @@ const DeleteShift = async () => {
             >
                 <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
                 <Text style={[styles.timeselect, {color: theme === true && shift.isEndDayNight === 'night' ? '#fff' : theme === true && shift.isEndDayNight === 'day' ? '#000' :'#000'}]}>
-                            {shift.endTime}
+                  {militaryTime === true ? convertTime12to24(shift.endTime) : shift.endTime}
                         </Text>
                     </View> 
             </ImageBackground>

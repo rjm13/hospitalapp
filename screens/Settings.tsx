@@ -11,7 +11,7 @@ import { View,
     } from 'react-native';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import {StatusBar} from 'expo-status-bar';
 import {AppContext} from '../AppContext';
 
 import useStyles from '../styles';
@@ -24,9 +24,8 @@ import { Modal, Portal, Provider } from 'react-native-paper';
 
 const Settings = ({navigation} : any) => {
 
-    const { setTheme } = useContext(AppContext);
-    const { theme } = useContext(AppContext);
-    const { userID } = useContext(AppContext);
+    const { setTheme, setMilitaryTime } = useContext(AppContext);
+    const { theme, militaryTime, userID } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -34,6 +33,7 @@ const Settings = ({navigation} : any) => {
 
 //theme switch
     const [isSwitchOn, setIsSwitchOn] = useState<boolean>(theme);
+    const [is24SwitchOn, setIs24SwitchOn] = useState<boolean>(militaryTime);
 
 
     const onToggleSwitch = async () => {
@@ -55,6 +55,29 @@ const Settings = ({navigation} : any) => {
                     updateUser, {input: {
                         id: userID,
                         Setting1: true,
+            }}))
+        }
+    }  
+
+    const onToggle24Switch = async () => {
+
+        if (militaryTime === true) {
+            setIs24SwitchOn(false);
+            setMilitaryTime(false);
+            await API.graphql(
+                graphqlOperation(
+                    updateUser, {input: {
+                        id: userID,
+                        Setting4: false,
+            }}))
+        } else {
+            setIs24SwitchOn(true);
+            setMilitaryTime(true);
+            await API.graphql(
+                graphqlOperation(
+                    updateUser, {input: {
+                        id: userID,
+                        Setting4: true,
             }}))
         }
     }  
@@ -165,6 +188,24 @@ const Settings = ({navigation} : any) => {
                         ios_backgroundColor="maroon"
                         onValueChange={onToggleSwitch}
                         value={isSwitchOn}
+                    />
+                </View>
+            </View>
+
+            <View>
+                <View style={styles.optionsitem}>
+                    <View style={istyles.subblock}>
+                        <Text style={styles.settingsitem}>
+                            24-hour Time
+                        </Text>
+                    </View>
+                    
+                    <Switch
+                        trackColor={{ false: 'gray', true: '#800000a5' }}
+                        thumbColor={is24SwitchOn === true ? 'maroon' : is24SwitchOn === false ? "#474747" : "#474747"}
+                        ios_backgroundColor="maroon"
+                        onValueChange={onToggle24Switch}
+                        value={is24SwitchOn}
                     />
                 </View>
             </View>
@@ -283,6 +324,7 @@ const Settings = ({navigation} : any) => {
                     </View>
                 </View>
             </View>
+            <StatusBar style={theme === true ? 'light' : "dark"} backgroundColor='transparent'/>
         </ScrollView>
         </View>
         </Provider>

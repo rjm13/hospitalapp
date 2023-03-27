@@ -8,6 +8,12 @@ const context = {
     userID: null,
     setUserID: (val: string | null) => {},
 
+    userFirstName: null,
+    setUserFirstName: (val: string | null) => {},
+
+    userLastName: null,
+    setUserLastName: (val: string | null) => {},
+
     systemID: null,
     setSystemID: (val: string | null) => {},
 
@@ -28,6 +34,9 @@ const context = {
 
     isManager: false,
     setIsManager: (val: boolean) => {},
+
+    militaryTime: false,
+    setMilitaryTime: (val: boolean) => {},
 }
 
 export const AppContext = React.createContext(context);

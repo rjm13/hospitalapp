@@ -16,7 +16,7 @@ return StyleSheet.create ({
   
     container: {
         flex: 1,
-        backgroundColor:  theme === true ? '#000' : '#fff',
+        backgroundColor:  theme === true ? '#000' : '#F6F6F6',
         alignItems: 'center',
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,

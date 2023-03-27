@@ -18,6 +18,10 @@ export default function App() {
 
   const [userID, setUserID] = useState<string|null>(null);
 
+  const [userFirstName, setUserFirstName] = useState<string|null>(null);
+
+  const [userLastName, setUserLastName] = useState<string|null>(null);
+
   const [systemID, setSystemID] = useState<string|null>(null);
 
   const [hospID, setHospID] = useState<string|null>(null);
@@ -29,6 +33,8 @@ export default function App() {
   const [isRootScreen, setIsRootScreen] = useState<boolean|null>(null);
 
   const [theme, setTheme] = useState<boolean>(false);
+
+  const [militaryTime, setMilitaryTime] = useState<boolean>(false);
 
   const [isManager, setIsManager] = useState<boolean>(false);
 
@@ -61,6 +67,12 @@ export default function App() {
           setTheme: (val: boolean) => setTheme(val),
           isManager,
           setIsManager: (val: boolean) => setIsManager(val),
+          militaryTime,
+          setMilitaryTime: (val: boolean) => setMilitaryTime(val),
+          userFirstName,
+          setUserFirstName: (val: string | null) => setUserFirstName(val),
+          userLastName,
+          setUserLastName: (val: string | null) => setUserLastName(val),
         }}>
         <Navigation colorScheme={colorScheme} />
         </AppContext.Provider>

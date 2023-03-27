@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { 
-  StyleSheet, 
+import {  
   Text, 
   View, 
   Dimensions, 
@@ -13,6 +12,7 @@ import {
 import { format } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StatusBar} from 'expo-status-bar';
 
 import { AppContext } from '../AppContext';
 import useStyles from '../styles';
@@ -23,7 +23,7 @@ import { shiftsByRole } from '../src/graphql/queries';
 const TabOneScreen = ({ navigation }: any) => {
 
   const { userRoleID } = useContext(AppContext);
-  const { theme } = useContext(AppContext);
+  const { theme, militaryTime } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
@@ -106,72 +106,99 @@ const TabOneScreen = ({ navigation }: any) => {
           setVis(false);
         }
       }, [])
+
+      const convertTime12to24 = (startTime : any) => {
+        const [time, modifier] = startTime.split(' ');
+      
+        let [hours, minutes] = time.split(':');
+      
+        if (hours === '12') {
+          hours = '00';
+        }
+      
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+      
+        return `${hours}:${minutes}`;
+      }
       
     return (
       <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
-      <View style={{height:  vis ? undefined : 0, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
-          <View style={{flexDirection: 'row'}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {shiftType === 'night' ? (
-            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
-              <Ionicons 
-                name='moon'
-                color={theme === true ? 'lightblue' : 'darkblue'}
-                size={12}
-                style={{marginRight: 4}}
-              />
+        <View style={{height:  vis ? undefined : 0, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {shiftType === 'night' ? (
+              <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
+                <Ionicons 
+                  name='moon'
+                  color={theme === true ? 'lightblue' : 'darkblue'}
+                  size={12}
+                  style={{marginRight: 4}}
+                />
+              </View>
+            ) : null}
             </View>
-          ) : null}
-          </View>
-            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                {startTime}
-            </Text>
-            <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-            -
-            </Text>
-            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-            {endTime}
-            </Text>
-          </View>
-          
-        <View style={{flexDirection: 'row', alignItems: 'center',}}>
-          <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
-            <Text style={{}}>
-              {name}
-            </Text>
-          </View>
-          
-          <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-            <FontAwesome5 
-              name='bolt'
-              color='green'
-              size={12}
-              style={{marginRight: 4}}
-            />
-            <Text style={[styles.paragraph, {fontSize: 14}]}>
-              {payMultiplier}x
-            </Text>
+              <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : shiftType === 'night' && theme === false ? 'darkblue' : '#000'}}>
+                  {/* {startTime} */}
+                  {militaryTime === true ? convertTime12to24(startTime) : startTime}
+              </Text>
+              <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : shiftType === 'night' && theme === false ? 'darkblue' : '#000'}}>
+              -
+              </Text>
+              <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : shiftType === 'night' && theme === false ? 'darkblue' : '#000'}}>
+              {militaryTime === true ? convertTime12to24(endTime) : endTime}
+              </Text>
+            </View>
+            
+          <View style={{flexDirection: 'row', alignItems: 'center',}}>
+            <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
+              <Text style={{}}>
+                {name}
+              </Text>
+            </View>
+
+            {payMultiplier === 1 && payRate === 0 ? null : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                {payMultiplier === 1 ? null : (
+                  <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                    <FontAwesome5 
+                      name='bolt'
+                      color='green'
+                      size={12}
+                      style={{marginRight: 4}}
+                    />
+                    <Text style={[styles.paragraph, {fontSize: 14}]}>
+                      {payMultiplier}x
+                    </Text>
+                  </View>
+                )}
+                {payRate === 0 ? null : (
+                  <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                    <FontAwesome5 
+                      name='dollar-sign'
+                      color='green'
+                      size={12}
+                      style={{marginRight: 4}}
+                    />
+                    <Text style={[styles.paragraph, {fontSize: 14}]}>
+                      {'+' + '' + payRate}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )} 
           </View>
 
-        <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-          <FontAwesome5 
-            name='dollar-sign'
-            color='green'
-            size={12}
-            style={{marginRight: 4}}
-          />
-          <Text style={[styles.paragraph, {fontSize: 14}]}>
-            {'+' + '' + payRate}
-          </Text>
+          {notes.length === 0 ? null : (
+            <View style={{marginVertical: 4}}>
+              <Text style={styles.paragraph}>
+                {notes}
+              </Text>
+            </View>
+          )}
+          
         </View>
-        </View>
-
-        <View style={{marginVertical: 4}}>
-          <Text style={styles.paragraph}>
-            {notes}
-          </Text>
-        </View>
-      </View>
       </TouchableWithoutFeedback>
     )
   }
@@ -206,7 +233,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#d3d3d3a5' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
@@ -279,6 +306,7 @@ const TabOneScreen = ({ navigation }: any) => {
           </View>
       )}
       />
+      <StatusBar style='light' backgroundColor='transparent'/>
     </View>
   );
 }

@@ -20,15 +20,24 @@ const Redirect = ({route, navigation} : any) => {
 
     const trigger = route.params
 
-    const { isManager } = useContext(AppContext);
-    const { theme } = useContext(AppContext);
-    const { setUserID } = useContext(AppContext);
-    const { setTheme } = useContext(AppContext);
-    const { setSystemID } = useContext(AppContext);
-    const { setHospID } = useContext(AppContext);
-    const { setDepartID } = useContext(AppContext);
-    const { setUserRoleID } = useContext(AppContext);
-    const { setIsManager } = useContext(AppContext);
+    const { 
+        isManager, 
+        theme, 
+        militaryTime 
+    } = useContext(AppContext);
+    
+    const { 
+        setIsManager, 
+        setUserFirstName, 
+        setUserLastName, 
+        setMilitaryTime,
+        setUserID,
+        setUserRoleID,
+        setDepartID,
+        setHospID,
+        setSystemID,
+        setTheme
+    } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -76,6 +85,9 @@ const Redirect = ({route, navigation} : any) => {
                         setDepartID(userData.data.getUser.departmentID)
                         setUserRoleID(userData.data.getUser.primaryRoleID)
                         setTheme(userData.data.getUser.Setting1);
+                        setMilitaryTime(userData.data.getUser.Setting4);
+                        setUserFirstName(userData.data.getUser.firstName);
+                        setUserLastName(userData.data.getUser.lastName);
 
                         if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null || userData.data.getUser.lastName === null) {
                             setIsLoading(false)

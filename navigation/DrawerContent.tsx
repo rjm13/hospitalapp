@@ -16,6 +16,7 @@ export function DrawerContent({navigation} : any) {
 
     const { theme } = useContext(AppContext);
     const { isManager } = useContext(AppContext);
+    const { userFirstName, userLastName } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -65,6 +66,17 @@ export function DrawerContent({navigation} : any) {
     return(
         <View style={{ flex:1 , backgroundColor: theme === true ? '#000' : '#fff'}}>
             <DrawerContentScrollView>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 20, marginTop: 40}}>
+                    <Text style={[styles.title, {textTransform: 'capitalize', color: theme === true ? '#fff' : 'maroon'}]}>
+                        {userFirstName + ' ' + userLastName + ','} 
+                    </Text>
+                    <Text style={[styles.title, {textTransform: 'uppercase', color: theme === true ? '#fff' : 'maroon'}]}>
+                        {' ' + 'RN'}
+                    </Text>
+                </View>
+
+                <View style={{backgroundColor: theme === true ? '#fff' : 'maroon', height: 3, marginTop: 10, marginHorizontal: 20}}/>
+
                 <View style={{marginTop: 30}}>
                     <TouchableWithoutFeedback onPress={() => navigation.navigate('MyShifts')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>

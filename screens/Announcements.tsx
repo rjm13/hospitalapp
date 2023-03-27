@@ -22,12 +22,7 @@ import { announcementsBySystem, announcementsByHospital, announcementsByDepartme
 
 const Announcements = ({ navigation }: any) => {
 
-  const { userID } = useContext(AppContext);
-  const { departID } = useContext(AppContext);
-  const { hospID } = useContext(AppContext);
-  const { systemID } = useContext(AppContext);
-  const { userRoleID } = useContext(AppContext);
-  const { theme } = useContext(AppContext);
+  const { theme, militaryTime, userRoleID, systemID, hospID, departID, userID } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
@@ -140,9 +135,40 @@ const Announcements = ({ navigation }: any) => {
     
     const createdDate = parseISO(createdAt)
 
+    const convertTime12to24 = (datetime : any) => {
+
+      const timeampm = datetime.substring(datetime.length, 13)
+
+      const [time, modifier] = timeampm.split(' ');
+
+      const beginLength = datetime.length - 8;
+
+      const beginning = datetime.substring(0, beginLength)
+    
+      let [hours, minutes] = time.split(':');
+    
+      if (hours === '12') {
+        hours = '00';
+      }
+    
+      if (modifier === 'PM') {
+        hours = parseInt(hours, 10) + 12;
+      }
+
+      let final = beginning + hours + ':' + minutes
+
+      if (datetime.includes('/')) {
+        return datetime;
+      } else {
+        return final;
+      }
+      
+      //return `${hours}:${minutes}`;
+    }
+
     return (
       <TouchableWithoutFeedback>
-      <View style={{alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 10, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+      <View style={{alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 10, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, overflow: 'hidden', marginHorizontal: 10}}>
         <View style={{flexDirection: 'row', alignItems: 'center',}}>
             <Text style={styles.title}>
               {title}
@@ -156,13 +182,13 @@ const Announcements = ({ navigation }: any) => {
             </Text>
             <View style={{flexDirection: 'row'}}>
                 <Text style={[styles.paragraph, {}]}>
-                    {format(parseISO(startTime), "p")}
+                    {format(parseISO(startTime), militaryTime === true ? "HH:mm" : "p")}
                 </Text>
                 <Text style={[styles.paragraph, {marginHorizontal: 4, fontSize: 16}]}>
                 -
                 </Text>
                 <Text style={[styles.paragraph, {}]}>
-                {format(parseISO(endTime), "p")}
+                {format(parseISO(endTime), militaryTime === true ? "HH:mm" : "p")}
                 </Text>
             </View>
           </View>
@@ -175,7 +201,7 @@ const Announcements = ({ navigation }: any) => {
         </View>
         <View style={{marginVertical: 4, padding: 0}}>
           <Text style={[styles.paragraph, {fontSize: 12, color: 'gray'}]}>
-            Created {formatRelative(createdDate, new Date())} by Meghan Myers 
+            Created {militaryTime === true ? convertTime12to24(formatRelative(createdDate, new Date())) : formatRelative(createdDate, new Date())} by Meghan Myers 
           </Text>
         </View>
       </View>

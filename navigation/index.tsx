@@ -1,14 +1,13 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Octicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, {useEffect, useState, useContext} from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
-import {View} from 'react-native';
+import {View, Image, TouchableWithoutFeedback} from 'react-native';
 
 import { DrawerContent } from './DrawerContent';
-import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 import ModalScreen from '../screens/ModalScreen';
@@ -103,35 +102,42 @@ function RootNavigator({navigation} : any) {
         (
           <View style={{ height: 60, backgroundColor: theme === true ? '#000' : 'maroon', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <FontAwesome 
+              <TouchableWithoutFeedback onPress={() => { navigation.toggleDrawer()}} style={{}}>
+                <Image 
+                  source={require('../assets/images/IconWhite.png')}
+                  style={{height: 30, width: 32, marginTop: 0, marginLeft: 20, }}
+              />
+              </TouchableWithoutFeedback>
+              
+              {/* <FontAwesome 
                   name='ambulance'
                   size={20}
                   color='#fff'
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 20 }}
                   onPress={() => { navigation.toggleDrawer() }}
-              />
+              /> */}
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
               <FontAwesome
                   name='calendar'
-                  size={18}
+                  size={20}
                   color={'gray'}
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 12 }}
                   onPress={() => { alert('Calendar not set up yet') }}
               />
               <FontAwesome 
-                  name='envelope'
-                  size={20}
+                  name='envelope-o'
+                  size={21}
                   color={hasMessages === true ? 'gold' : '#fff'}
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 12 }}
                   onPress={() => { navigation.navigate('Inbox')}}
               />
-              <FontAwesome 
+              <Octicons 
                   name='gear'
-                  size={22}
+                  size={20}
                   color={'#fff'}
                   backgroundColor='#155843'
                   style={{ paddingHorizontal: 12, marginRight: 10 }}

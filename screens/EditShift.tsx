@@ -37,7 +37,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
     const { userID } = useContext(AppContext);
     const { systemID } = useContext(AppContext);
     const { departID } = useContext(AppContext);
-    const { hospID } = useContext(AppContext);
+    const { hospID, militaryTime } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -728,7 +728,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             >
                                                 <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
                                                     <Text style={[styles.timeselect, {color: theme === true && isStartDayNight === 'night' ? '#fff' : theme === true && isStartDayNight === 'day' ? '#000' :'#000'} ]}>
-                                                            {format(startTime, "p")}
+                                                            {format(startTime, militaryTime === true ? 'HH:mm' : "p")}
                                                         </Text>
                                                     </View> 
                                             </ImageBackground>
@@ -752,7 +752,7 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
                                             >
                                                 <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
                                                         <Text style={[styles.timeselect, {color: theme === true && isEndDayNight === 'night' ? '#fff' : theme === true && isEndDayNight === 'day' ? '#000' :'#000'}]}>
-                                                            {format(endTime, "p")}
+                                                            {format(endTime, militaryTime === true ? 'HH:mm' : "p")}
                                                         </Text>
                                                     </View> 
                                             </ImageBackground>

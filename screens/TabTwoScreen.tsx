@@ -22,8 +22,7 @@ import { shiftsByRole } from '../src/graphql/queries';
 
 const TabTwoScreen = ({ navigation }: any) => {
 
-  const { userRoleID } = useContext(AppContext);
-  const { theme } = useContext(AppContext);
+  const { theme, militaryTime, userRoleID } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
@@ -99,13 +98,31 @@ const TabTwoScreen = ({ navigation }: any) => {
   }, [didUpdate])
 
   const Item = ({id, date, firstName, lastName, title, giveUp, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+      
       const [vis, setVis] = useState(true);
+
       useEffect(() => {
         if (activeSections.includes(date) === true) {
         
           setVis(false);
         }
       }, [])
+
+      const convertTime12to24 = (startTime : any) => {
+        const [time, modifier] = startTime.split(' ');
+      
+        let [hours, minutes] = time.split(':');
+      
+        if (hours === '12') {
+          hours = '00';
+        }
+      
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+      
+        return `${hours}:${minutes}`;
+      }
       
     return (
       <TouchableWithoutFeedback onPress={() => navigation.navigate('TradeModalScreen', {id: id})}>
@@ -126,13 +143,13 @@ const TabTwoScreen = ({ navigation }: any) => {
           ) : null}
             </View>
             <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                {startTime}
+              {militaryTime === true ? convertTime12to24(startTime) : startTime}
             </Text>
             <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
             -
             </Text>
             <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-            {endTime}
+              {militaryTime === true ? convertTime12to24(endTime) : endTime}
             </Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center',}}>
@@ -173,11 +190,15 @@ const TabTwoScreen = ({ navigation }: any) => {
             
           </View>
           </View>
-          <View style={{marginVertical: 10}}>
-            <Text style={styles.paragraph}>
-              {notes}
-            </Text>
-          </View>
+          
+          {notes.length === 0 ? null : (
+            <View style={{marginVertical: 10}}>
+              <Text style={styles.paragraph}>
+                {notes}
+              </Text>
+            </View>
+          )}
+
           <View style={{marginVertical: 10}}>
             <Text style={[styles.paragraph, {textTransform: 'capitalize', color: 'gray'}]}>
               Posted by {firstName} {lastName}
@@ -219,7 +240,7 @@ const TabTwoScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#d3d3d3a5' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop:4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop:4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
@@ -298,124 +319,5 @@ const TabTwoScreen = ({ navigation }: any) => {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    //flex: 1,
-    //  `marginTop: Constants.statusBarHeight,
-  },
-  headerbox: {
-    backgroundColor: '#fff',
-    //height: 100,
-    elevation: 1,
-    padding: 16, 
-    
-},
-titlebox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-},
-  title: {
-    fontFamily: 'chalkboard-bold',
-    fontSize: 18,
-  },
-  titleblock: {
-
-},
-submittedby: {
-    fontFamily: 'chalkboard-regular',
-    color: '#155843',
-    fontSize: 14,
-  },
-iconbox: {
-    flexDirection: 'row',
-    //backgroundColor: 'green',
-    marginVertical: 8,
-    justifyContent: 'space-between',
-    width: 64,
-},
-category: {
-    fontFamily: 'chalkboard-light',
-    fontSize: 14,
-    color: '#155843',
-},
-footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 8
-},
-playersbutton: {
-    borderRadius: 4,
-    backgroundColor: '#B2D9BF',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-},
-variationsbutton: {
-    borderRadius: 4,
-    backgroundColor: '#D9D1B2',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-},
-footertext: {
-    fontFamily: 'chalkboard-regular',
-    fontSize: 14,
-},
-//   titlebox: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//   },
-  cardbox: {
-    marginHorizontal: 16,
-    marginTop: 16,
-    backgroundColor: '#fff',
-    elevation: 1,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  footerbox: {
-    marginHorizontal: 16,
-    backgroundColor: '#fff',
-    elevation: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  databox: {
-    marginHorizontal: 16,
-    backgroundColor: '#fff',
-    elevation: 1,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-    warningtext: {
-        fontFamily: 'chalkboard-regular',
-        fontSize: 14,
-  },
-  flattitlebox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-    marginTop: 16,
-},
-submitbutton: {
-    borderRadius: 4,
-    backgroundColor: '#D9D1B2',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    marginBottom: 8,
-},
-housefavbutton: {
-    marginVertical: 8,
-},
-bottombuttonbox: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginHorizontal: 16,
-    marginVertical: 16,
-},
-});
 
 export default TabTwoScreen;
