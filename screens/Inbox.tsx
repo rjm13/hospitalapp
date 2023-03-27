@@ -20,8 +20,7 @@ import { messagesByUser } from '../src/graphql/queries';
 
 const Inbox = ({navigation} : any) => {
 
-    const { theme } = useContext(AppContext);
-    const { userID } = useContext(AppContext);
+    const { userID, militaryTime, theme } = useContext(AppContext);
 
     const styles = useStyles(theme);
     
@@ -85,7 +84,7 @@ const Inbox = ({navigation} : any) => {
                             {title}
                         </Text>
                         <Text style={[styles.paragraph, {fontSize: 12, marginTop: 6 }]}>
-                            {format(parseISO(createdAt), "MMMM do yyyy p")}
+                            {format(parseISO(createdAt), militaryTime === true ? "MMMM do yyyy HH:mm" : "MMMM do yyyy p")}
                         </Text>
                     </View>
                 </View>
