@@ -172,7 +172,9 @@ type Shift @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   isStartDayNight: String
   isEndDayNight: String
   pickUpNote: String
-  location: 'String'
+  location: String
+  tradeShift: Shift @hasOne (fields: ["tradeShiftID"]) 
+  tradeShiftID: ID @index(name: "byTradeShift", sortKeyFields: ["dateOrder"])
 }
 
 type Announcement @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth( rules: [{ allow: private, operations: [create, delete, update, read]}])

@@ -69,7 +69,7 @@ const TradeApprovalRequests = ({navigation, route} : any) => {
     }, [didUpdate, trigger]);
 
   
-    const Item = ({id, date, firstName, lastName, acronym, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+    const Item = ({id, date, firstName, lastName, acronym, giveUp, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
          
         const convertTime12to24 = (startTime : any) => {
             const [time, modifier] = startTime.split(' ');
@@ -92,10 +92,16 @@ const TradeApprovalRequests = ({navigation, route} : any) => {
             <View style={{elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20,borderTopRightRadius: 10, borderTopLeftRadius: 10, overflow: 'hidden', backgroundColor: theme === true ? '#363636a5' : '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', paddingVertical: 10, overflow: 'hidden', paddingHorizontal: 10,width: Dimensions.get('window').width - 20, }}>
                     <View>
-                        <View>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={styles.title}>
                                 {date}
                             </Text>
+                            <FontAwesome5 
+                            name={giveUp === true ? 'hands-helping' : 'people-arrows' } 
+                            size={14} 
+                            color={theme=== true ? 'orange' : 'gray'}
+                            style={{marginHorizontal: 8}}
+                        />
                         </View>
                         <View style={{flexDirection: 'row',  marginVertical: 4}}>
                         <View style={{flexDirection: 'row', alignItems: 'center',  marginVertical: 4}}>
@@ -109,6 +115,7 @@ const TradeApprovalRequests = ({navigation, route} : any) => {
                             />
                         </View>
                         ) : null}
+                        
                         </View>
                         <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
                             {militaryTime === true ? convertTime12to24(startTime) : startTime}
@@ -122,6 +129,7 @@ const TradeApprovalRequests = ({navigation, route} : any) => {
                         </View>
                         
                     <View style={{flexDirection: 'row', alignItems: 'center',}}>
+
                         <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
                         <Text style={{}}>
                             {name}
@@ -226,6 +234,7 @@ const TradeApprovalRequests = ({navigation, route} : any) => {
                     firstName={item.user.firstName}
                     lastName={item.user.lastName}
                     acronym={item.user.primaryRole.acronym}
+                    giveUp={item.giveUp}
                 />
                 }
                 ListFooterComponent={

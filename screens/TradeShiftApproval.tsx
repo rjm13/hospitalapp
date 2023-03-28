@@ -421,20 +421,42 @@ const convertTime12to24 = (inputtime : any) => {
           {shift.notes}
         </Text>
       </View>
+
+      
 {/* request by section */}
-    <View style={{marginVertical: 60, borderRadius: 10, borderWidth: 1, borderColor: 'darkgray', paddingVertical: 20, width: Dimensions.get('window').width - 40}}>
-        <Text style={[styles.paragraph, {textAlign: 'center'}]}>
-            Pickup Requested by:
-        </Text>
+    <View style={{backgroundColor: theme === true ? '#363636' : '#474747', marginVertical: 50, borderRadius: 10, borderWidth: 0, borderColor: 'maroon', paddingVertical: 20, width: Dimensions.get('window').width - 40}}>
         <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-          <Text style={[styles.paragraph, {textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
+          <Text style={[styles.paragraph, {color: '#fff', textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
             {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
           </Text>
-          <Text style={[styles.paragraph, {textTransform: 'uppercase', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
+          <Text style={[styles.paragraph, {color: '#fff',textTransform: 'uppercase', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
             {shift.user.primaryRole.acronym}
         </Text>
         </View>
     </View>
+    {shift?.giveUp === true ? (
+      <View>
+        <Text style={[styles.title, {marginBottom: 10, alignSelf: 'center'}]}>
+            Give up this shift?
+          </Text>
+          <Text style={[styles.paragraph, {fontSize: 12, color: 'gray', paddingHorizontal: 40, textAlign: 'center'}]}>
+            A message will be sent to your manager for final approval.
+          </Text>
+      </View>
+    ) : (
+      <View>
+        <Text style={[styles.title, {marginBottom: 10, alignSelf: 'center'}]}>
+            Confirm this trade?
+          </Text>
+          <Text style={[styles.paragraph, {fontSize: 12, color: 'gray', paddingHorizontal: 40, textAlign: 'center'}]}>
+            A message will be sent to your manager for final approval.
+          </Text>
+      </View>
+    )
+
+    }
+    
+   
 {/* button */}
       <LinearGradient
         colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -446,7 +468,7 @@ const convertTime12to24 = (inputtime : any) => {
           <TouchableOpacity onPress={showConfirmModal}>
               <View style={styles.buttonlayout}>
                       <Text style={styles.buttontext}>
-                         Approve
+                         Yes
                       </Text> 
                   </View>  
           </TouchableOpacity>
@@ -455,7 +477,7 @@ const convertTime12to24 = (inputtime : any) => {
           <TouchableOpacity onPress={showDenyModal}>
               <View style={[styles.buttonlayout, {backgroundColor: theme === true ? '#363636' : 'lightgray'}]}>
                       <Text style={styles.buttontext}>
-                          Deny
+                          No
                       </Text> 
                   </View>  
           </TouchableOpacity>

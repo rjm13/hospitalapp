@@ -63,7 +63,7 @@ const PostedShifts = ({navigation} : any) => {
     }, []);
 
   
-    const Item = ({id, date, firstName, lastName, title, giveUp, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+    const Item = ({id, date, status, firstName, lastName, title, giveUp, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
 
         
       return (
@@ -113,22 +113,28 @@ const PostedShifts = ({navigation} : any) => {
           </View>
             </View>
             </View>
-            <View style={{alignItems: 'center', width: '20%', justifyContent: 'center'}}>
+            <View style={{alignItems: 'center', width: '20%', justifyContent: 'center', flexDirection: 'row'}}>
               {giveUp === true ? (
                 <View style={{alignItems: 'center'}}>
                 <FontAwesome5 name='hands-helping' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
-                <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                {/* <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
                   Giving
-                </Text>
+                </Text> */}
                 </View>
               ) : (
                 <View style={{alignItems: 'center'}}>
                 <FontAwesome5 name='people-arrows' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
-                <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                {/* <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
                   Trading
-                </Text>
+                </Text> */}
                 </View>
               )}
+               <View>
+                <FontAwesome5 name={status === 'pending' ? 'hourglass-half' : status === 'approved' ? 'check' : status === 'tradepending' ? 'door-open' : status === 'open' ? 'door-open' : 'skull-crossbones'} size={20} color={status === 'pending' ? '#BAB9A8' : status === 'approved' ? 'green' : 'lightgray'} style={{paddingHorizontal: 20}} />
+                {/* <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                      {status}
+                  </Text> */}
+              </View>
               
             </View>
             </View>

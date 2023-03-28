@@ -16,16 +16,17 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {format} from 'date-fns'
 import {LinearGradient} from 'expo-linear-gradient';
 import {Provider, Portal, Modal} from 'react-native-paper';
+import DatePicker from 'react-native-date-picker'
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift} from '../src/graphql/queries';
-import { updateShift, deleteShift} from '../src/graphql/mutations';
+import { updateShift, deleteShift, createShift} from '../src/graphql/mutations';
 
 const TradeModal = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { userID, militaryTime, theme } = useContext(AppContext);
+  const { userID, militaryTime, theme, systemID, userRoleID, hospID, departID} = useContext(AppContext);
 
   const styles = useStyles(theme);
 
@@ -63,6 +64,10 @@ const TradeModal = ({navigation, route} : any) => {
 
   const [processing, setProcessing] = useState(false);
 
+  const [date, setDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date('2023-01-15T13:00:00'));
+  const [endTime, setEndTime] = useState(new Date('2023-01-15T01:00:00'));
+
 //fetch the shift from AWS  
   useEffect(() => {
     const fetchShift = async () => {
@@ -89,12 +94,50 @@ const TradeModal = ({navigation, route} : any) => {
   const showReOpenModal = () => {setVisible11(true);}
   const hideReOpenModal = () => setVisible11(false);
 
+    //trade modal
+    const [visible2, setVisible2] = useState(false);
+    const showTradeModal = () => {setVisible2(true);}
+    const hideTradeModal = () => setVisible2(false);
+
+    //date modal
+    const [visible3, setVisible3] = useState(false);
+    const showDateModal = () => {setVisible3(true);}
+    const hideDateModal = () => setVisible3(false);
+
+    //start time modal
+    const [visible4, setVisible4] = useState(false);
+    const showStartModal = () => {setVisible4(true);}
+    const hideStartModal = () => setVisible4(false);
+
+//end time modal
+    const [visible5, setVisible5] = useState(false);
+    const showEndModal = () => {setVisible5(true);}
+    const hideEndModal = () => setVisible5(false);
+
   //modal container style
   const containerStyle = {
     backgroundColor: theme === true ? '#000' : '#fff', 
     borderRadius: 15,
     paddingVertical: 10
 };
+
+const dateplus = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const day = today.getDate();
+  const c = new Date(year, month + 4, day);
+  return c;
+}
+
+const dateminus = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const day = today.getDate();
+  const c = new Date(year, month, day - 1);
+  return c;
+}
 
 const PickUpShift = async () => {
     setProcessing(true);
@@ -130,6 +173,69 @@ const PickUpShift = async () => {
     }
 }
 
+const TradeShift = async () => {
+  setProcessing(true);
+  try {
+
+    const init = await API.graphql(graphqlOperation(
+      getShift, {id: id}
+    ))
+
+    if (init.data.getShift.status !== 'open') {
+      alert('Oops! It looks like you were beat to the punch. Someone else has already requested to pick up this shift.')
+      setProcessing(false)
+    } else {
+
+
+      const create = await API.graphql(graphqlOperation(
+          createShift, {input: {
+              type: 'Trade',
+              createdByID: userID, //the id of the manager who created the shift
+              systemID: systemID,
+              hospitalID: hospID,
+              departmentID: departID,
+              roleID: userRoleID,
+              //quals: [], //what quals are needed
+              date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
+              dateOrder: date.toISOString(),
+              //month: 0, //month integer
+              //year: 0, //year integer
+              startTime: format(startTime, "p"),
+              start: startTime.toISOString(),
+              //startAMPM: 'AM', //AM or PM
+              endTime: format(endTime, "p"),
+              end: endTime.toISOString(),
+              //endAMPM: 'PM', //AM or PM
+              //payAddToShift: 0,
+              //payAddToHour: 0,
+              status: 'trade', //open, filled, pending
+              //userID: null, //person working the shift
+              //jobType: 'Regular',
+          }}
+      ))
+
+      const response = await API.graphql(graphqlOperation(
+          updateShift, {input: {
+            id: id,
+            status: 'tradepending',
+            userID: userID,
+            updatedAt: new Date().toISOString(),
+            tradeShiftID: create.data.createShift.id
+          }}
+      ))
+      console.log(response)
+      if (response) {
+        alert('A pickup request has been sent to your manager.')
+        navigation.goBack();
+        setProcessing(false)
+      }
+    }
+  } catch (e) {
+    setProcessing(false)
+    alert(e.toString())
+  }
+}
+
 const ReOpenShift = async () => {
   setProcessing(true);
   try {
@@ -138,7 +244,7 @@ const ReOpenShift = async () => {
       getShift, {id: id}
     ))
 
-    if (init.data.getShift.status !== 'approved') {
+    if (init.data.getShift.status === 'approved') {
       alert('Oops! It looks like you were beat to the punch. This shift is either expierd or no longer approved.')
       setProcessing(false)
     } else {
@@ -202,6 +308,127 @@ const convertTime12to24 = (inputtime : any) => {
   return (
     <Provider>
       <Portal>
+
+        <Modal visible={visible2} onDismiss={hideTradeModal} contentContainerStyle={containerStyle}>
+          <View style={{height: '70%'}}>
+            <Text style={[styles.paragraph, {marginBottom: 40, textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              {/* Pick up this shift for {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}? */}
+              Select the shift date and time you would like to trade away
+            </Text>
+            <TouchableOpacity onPress={showDateModal}>
+              <View style={{alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10}}>
+                  <View>
+                      <Text style={[styles.title, {color: theme === true ? '#fff' : '#000'}]}>
+                          {format(date, "MMMM do yyyy") === format(new Date(), "MMMM do yyyy") ? 'Today' : format(date, "MMMM do yyyy") }
+                      </Text>
+                  </View>
+                  
+              </View>
+          </TouchableOpacity>
+
+              {/* select am/pm */}
+              <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 0}}>
+                <View>
+                    <TouchableOpacity activeOpacity={0.8} onPress={showStartModal}>
+                        
+                            <View style={{justifyContent: 'center', alignItems: 'center', height: 60, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                                    <Text style={[styles.timeselect ]}>
+                                        {format(startTime, "p")}
+                                    </Text>
+                                </View> 
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{justifyContent: 'center'}}>
+                    <Text style={{}}>
+                        to
+                    </Text>
+                </View>
+                
+                
+                <View>
+                    <TouchableOpacity activeOpacity={0.8} onPress={showEndModal}>
+                        
+                            <View style={{justifyContent: 'center', alignItems: 'center', height: 60, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                                    <Text style={[styles.timeselect]}>
+                                        {format(endTime, "p")}
+                                    </Text>
+                                </View> 
+                    </TouchableOpacity>
+                </View>
+              </View>  
+
+            <LinearGradient
+          colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+          style={{position: 'absolute', bottom: -50 }}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+        >
+          <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+              {processing ? (
+                  <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                      <ActivityIndicator size='small' color='maroon'/>
+                  </View>
+              ) : (
+                  <TouchableOpacity onPress={TradeShift}>
+                      <View style={styles.buttonlayout}>
+                              <Text style={styles.buttontext}>
+                                  Send Trade Proposal
+                              </Text> 
+                          </View>  
+                  </TouchableOpacity>
+              )}
+              <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+                This shift trade will not be final until it has been approved by your manager.
+              </Text>
+          </View>
+          
+        </LinearGradient>
+          </View>
+        </Modal>
+
+        {/* Date Modal */}
+        <Modal visible={visible3} onDismiss={hideDateModal} contentContainerStyle={containerStyle}>
+          <View style={{ alignItems: 'center'}}>
+              <DatePicker 
+                  date={date} 
+                  onDateChange={setDate} 
+                  maximumDate={new Date(dateplus())}
+                  minimumDate={new Date(dateminus())}
+                  mode='date'
+                  fadeToColor={theme === true ? '#000' : '#fff'}
+                  textColor={theme === true ? '#fff' : '#000'}
+                  //is24hourSource='device'
+              />
+          </View>
+        </Modal>
+
+        {/* start time Modal */}
+        <Modal visible={visible4} onDismiss={hideStartModal} contentContainerStyle={containerStyle}>
+          <View style={{ alignItems: 'center'}}>
+              <DatePicker 
+                  date={startTime} 
+                  onDateChange={setStartTime}
+                  mode='time'
+                  textColor={theme === true ? '#fff' : '#000'}
+                  fadeToColor={theme === true ? '#000' : '#fff'}
+                  //is24hourSource='device'
+              />
+          </View>
+        </Modal>
+{/* end time Modal */}
+        <Modal visible={visible5} onDismiss={hideEndModal} contentContainerStyle={containerStyle}>
+            <View style={{ alignItems: 'center'}}>
+                <DatePicker 
+                    date={endTime} 
+                    onDateChange={setEndTime}
+                    mode='time'
+                    textColor={theme === true ? '#fff' : '#000'}
+                    fadeToColor={theme === true ? '#000' : '#fff'}
+                    //is24hourSource='device'
+                />
+            </View>
+        </Modal>
 
         <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
           <View style={{height: '50%'}}>
@@ -441,7 +668,7 @@ const convertTime12to24 = (inputtime : any) => {
       </View>
 {/* button */}
           <LinearGradient
-            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+            colors={[ 'transparent','transparent']}
             style={{position: 'absolute', bottom: 0 }}
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
@@ -459,10 +686,10 @@ const convertTime12to24 = (inputtime : any) => {
                 </View>
               ) : (
                 <View style={{marginBottom: 20, width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-                  <TouchableOpacity onPress={showConfirmModal}>
+                  <TouchableOpacity onPress={() => shift?.trade === true && shift?.giveUp === false ? showTradeModal() : showConfirmModal()}>
                       <View style={styles.buttonlayout}>
                               <Text style={styles.buttontext}>
-                                  Pick Up
+                              {shift?.trade === true && shift?.giveUp === false ? 'Propose Trade' : 'Pick Up'}
                               </Text> 
                           </View>  
                   </TouchableOpacity>

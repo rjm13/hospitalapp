@@ -189,8 +189,10 @@ export const createUser = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -207,6 +209,8 @@ export const createUser = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -560,8 +564,10 @@ export const updateUser = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -578,6 +584,8 @@ export const updateUser = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -931,8 +939,10 @@ export const deleteUser = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -949,6 +959,8 @@ export const deleteUser = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -1290,8 +1302,10 @@ export const createRole = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -1308,6 +1322,8 @@ export const createRole = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -1520,8 +1536,10 @@ export const updateRole = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -1538,6 +1556,8 @@ export const updateRole = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -1750,8 +1770,10 @@ export const deleteRole = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -1768,6 +1790,8 @@ export const deleteRole = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -2701,8 +2725,10 @@ export const createDepartment = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -2719,6 +2745,8 @@ export const createDepartment = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -2878,8 +2906,10 @@ export const updateDepartment = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -2896,6 +2926,8 @@ export const updateDepartment = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -3055,8 +3087,10 @@ export const deleteDepartment = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -3073,6 +3107,8 @@ export const deleteDepartment = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -3605,8 +3641,10 @@ export const createShift = /* GraphQL */ `
       month
       year
       startTime
+      start
       startAMPM
       endTime
+      end
       endAMPM
       payMultiplier
       payRate
@@ -3733,6 +3771,238 @@ export const createShift = /* GraphQL */ `
       isStartDayNight
       isEndDayNight
       pickUpNote
+      location
+      tradeShift {
+        type
+        id
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        name
+        notes
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        announcementID
+        announcement {
+          id
+          type
+          createdAt
+          updatedAt
+          createdByID
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          title
+          announcement
+          notes
+          priority
+          duration
+          expire
+          category
+          link
+          sort
+          date
+          startTime
+          endTime
+          createdOn
+          updatedOn
+        }
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        date
+        dateOrder
+        month
+        year
+        startTime
+        start
+        startAMPM
+        endTime
+        end
+        endAMPM
+        payMultiplier
+        payRate
+        payAddToShift
+        payAddToHour
+        status
+        userID
+        user {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        priority
+        numNeeded
+        trade
+        giveUp
+        approved
+        shiftType
+        isStartDayNight
+        isEndDayNight
+        pickUpNote
+        location
+        tradeShift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          start
+          startAMPM
+          endTime
+          end
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          location
+          tradeShiftID
+          createdOn
+          updatedOn
+        }
+        tradeShiftID
+        createdOn
+        updatedOn
+      }
+      tradeShiftID
       createdOn
       updatedOn
     }
@@ -4185,8 +4455,10 @@ export const updateShift = /* GraphQL */ `
       month
       year
       startTime
+      start
       startAMPM
       endTime
+      end
       endAMPM
       payMultiplier
       payRate
@@ -4313,6 +4585,238 @@ export const updateShift = /* GraphQL */ `
       isStartDayNight
       isEndDayNight
       pickUpNote
+      location
+      tradeShift {
+        type
+        id
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        name
+        notes
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        announcementID
+        announcement {
+          id
+          type
+          createdAt
+          updatedAt
+          createdByID
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          title
+          announcement
+          notes
+          priority
+          duration
+          expire
+          category
+          link
+          sort
+          date
+          startTime
+          endTime
+          createdOn
+          updatedOn
+        }
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        date
+        dateOrder
+        month
+        year
+        startTime
+        start
+        startAMPM
+        endTime
+        end
+        endAMPM
+        payMultiplier
+        payRate
+        payAddToShift
+        payAddToHour
+        status
+        userID
+        user {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        priority
+        numNeeded
+        trade
+        giveUp
+        approved
+        shiftType
+        isStartDayNight
+        isEndDayNight
+        pickUpNote
+        location
+        tradeShift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          start
+          startAMPM
+          endTime
+          end
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          location
+          tradeShiftID
+          createdOn
+          updatedOn
+        }
+        tradeShiftID
+        createdOn
+        updatedOn
+      }
+      tradeShiftID
       createdOn
       updatedOn
     }
@@ -4765,8 +5269,10 @@ export const deleteShift = /* GraphQL */ `
       month
       year
       startTime
+      start
       startAMPM
       endTime
+      end
       endAMPM
       payMultiplier
       payRate
@@ -4893,6 +5399,238 @@ export const deleteShift = /* GraphQL */ `
       isStartDayNight
       isEndDayNight
       pickUpNote
+      location
+      tradeShift {
+        type
+        id
+        createdAt
+        updatedAt
+        createdByID
+        createdBy {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        name
+        notes
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        announcementID
+        announcement {
+          id
+          type
+          createdAt
+          updatedAt
+          createdByID
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          title
+          announcement
+          notes
+          priority
+          duration
+          expire
+          category
+          link
+          sort
+          date
+          startTime
+          endTime
+          createdOn
+          updatedOn
+        }
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        date
+        dateOrder
+        month
+        year
+        startTime
+        start
+        startAMPM
+        endTime
+        end
+        endAMPM
+        payMultiplier
+        payRate
+        payAddToShift
+        payAddToHour
+        status
+        userID
+        user {
+          type
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        priority
+        numNeeded
+        trade
+        giveUp
+        approved
+        shiftType
+        isStartDayNight
+        isEndDayNight
+        pickUpNote
+        location
+        tradeShift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          start
+          startAMPM
+          endTime
+          end
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          location
+          tradeShiftID
+          createdOn
+          updatedOn
+        }
+        tradeShiftID
+        createdOn
+        updatedOn
+      }
+      tradeShiftID
       createdOn
       updatedOn
     }
@@ -5248,8 +5986,10 @@ export const createAnnouncement = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -5266,6 +6006,8 @@ export const createAnnouncement = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -5630,8 +6372,10 @@ export const updateAnnouncement = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -5648,6 +6392,8 @@ export const updateAnnouncement = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -6012,8 +6758,10 @@ export const deleteAnnouncement = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -6030,6 +6778,8 @@ export const deleteAnnouncement = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -6577,8 +7327,10 @@ export const createReaction = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -6595,6 +7347,8 @@ export const createReaction = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -7140,8 +7894,10 @@ export const updateReaction = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -7158,6 +7914,8 @@ export const updateReaction = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -7703,8 +8461,10 @@ export const deleteReaction = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -7721,6 +8481,8 @@ export const deleteReaction = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -8442,8 +9204,10 @@ export const createMessage = /* GraphQL */ `
         month
         year
         startTime
+        start
         startAMPM
         endTime
+        end
         endAMPM
         payMultiplier
         payRate
@@ -8484,6 +9248,51 @@ export const createMessage = /* GraphQL */ `
         isStartDayNight
         isEndDayNight
         pickUpNote
+        location
+        tradeShift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          start
+          startAMPM
+          endTime
+          end
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          location
+          tradeShiftID
+          createdOn
+          updatedOn
+        }
+        tradeShiftID
         createdOn
         updatedOn
       }
@@ -9201,8 +10010,10 @@ export const updateMessage = /* GraphQL */ `
         month
         year
         startTime
+        start
         startAMPM
         endTime
+        end
         endAMPM
         payMultiplier
         payRate
@@ -9243,6 +10054,51 @@ export const updateMessage = /* GraphQL */ `
         isStartDayNight
         isEndDayNight
         pickUpNote
+        location
+        tradeShift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          start
+          startAMPM
+          endTime
+          end
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          location
+          tradeShiftID
+          createdOn
+          updatedOn
+        }
+        tradeShiftID
         createdOn
         updatedOn
       }
@@ -9960,8 +10816,10 @@ export const deleteMessage = /* GraphQL */ `
         month
         year
         startTime
+        start
         startAMPM
         endTime
+        end
         endAMPM
         payMultiplier
         payRate
@@ -10002,6 +10860,51 @@ export const deleteMessage = /* GraphQL */ `
         isStartDayNight
         isEndDayNight
         pickUpNote
+        location
+        tradeShift {
+          type
+          id
+          createdAt
+          updatedAt
+          createdByID
+          name
+          notes
+          systemID
+          hospitalID
+          departmentID
+          roleID
+          announcementID
+          date
+          dateOrder
+          month
+          year
+          startTime
+          start
+          startAMPM
+          endTime
+          end
+          endAMPM
+          payMultiplier
+          payRate
+          payAddToShift
+          payAddToHour
+          status
+          userID
+          priority
+          numNeeded
+          trade
+          giveUp
+          approved
+          shiftType
+          isStartDayNight
+          isEndDayNight
+          pickUpNote
+          location
+          tradeShiftID
+          createdOn
+          updatedOn
+        }
+        tradeShiftID
         createdOn
         updatedOn
       }
@@ -10210,8 +11113,10 @@ export const createMessageReply = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -10228,6 +11133,8 @@ export const createMessageReply = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -10550,8 +11457,10 @@ export const updateMessageReply = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -10568,6 +11477,8 @@ export const updateMessageReply = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }
@@ -10890,8 +11801,10 @@ export const deleteMessageReply = /* GraphQL */ `
           month
           year
           startTime
+          start
           startAMPM
           endTime
+          end
           endAMPM
           payMultiplier
           payRate
@@ -10908,6 +11821,8 @@ export const deleteMessageReply = /* GraphQL */ `
           isStartDayNight
           isEndDayNight
           pickUpNote
+          location
+          tradeShiftID
           createdOn
           updatedOn
         }

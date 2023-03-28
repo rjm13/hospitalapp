@@ -446,7 +446,7 @@ const convertTime12to24 = (inputtime : any) => {
                   <TouchableOpacity onPress={showConfirmModal}>
                       <View style={styles.buttonlayout}>
                               <Text style={styles.buttontext}>
-                                  Pick Up
+                                  {shift?.trade === true && shift?.giveUp === false ? 'Propose Trade' : 'Pick Up'}
                               </Text> 
                           </View>  
                   </TouchableOpacity>
