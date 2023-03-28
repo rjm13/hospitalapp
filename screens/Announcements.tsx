@@ -137,7 +137,11 @@ const Announcements = ({ navigation }: any) => {
 
     const convertTime12to24 = (datetime : any) => {
 
-      const timeampm = datetime.substring(datetime.length, 13)
+
+
+      const timeap = datetime.slice(-8)
+
+      const timeampm = timeap.startsWith(' ') ? datetime.slice(-7) : timeap
 
       const [time, modifier] = timeampm.split(' ');
 

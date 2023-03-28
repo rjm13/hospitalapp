@@ -6878,6 +6878,11 @@ export const shiftsByCreator = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          primaryRole {
+            id
+            title
+            acronym
+          }
           createdOn
           updatedOn
         }
@@ -6941,6 +6946,11 @@ export const shiftsByDepartment = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          primaryRole {
+            id
+            title
+            acronym
+          }
           createdOn
           updatedOn
         }
@@ -7082,6 +7092,11 @@ export const shiftsByDepartment = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          primaryRole {
+            id
+            title
+            acronym
+          }
           createdOn
           updatedOn
         }

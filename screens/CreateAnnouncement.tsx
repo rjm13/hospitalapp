@@ -415,7 +415,7 @@ const Create = async () => {
                                     </Text>
                                     <View>
                                         <TouchableOpacity onPress={showRoleModal}>
-                                            <Text style={[styles.title, {color: whoDat === 'Select Group' ? 'gray' : 'maroon'}]}>
+                                            <Text style={[styles.title, {color: whoDat === 'Select Group' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
                                                 {whoDat}
                                             </Text>
                                         </TouchableOpacity>
@@ -431,7 +431,7 @@ const Create = async () => {
                                     </Text>
                                     <View>
                                     <TouchableOpacity onPress={showTypeModal}>
-                                        <Text style={[styles.title, {color: data.type === 'Select Type' ? 'gray' : 'maroon'}]}>
+                                        <Text style={[styles.title, {color: data.type === 'Select Type' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
                                             {data.type}
                                         </Text>
                                     </TouchableOpacity>
@@ -449,7 +449,7 @@ const Create = async () => {
                                         </Text>
                                         <View>
                                             <TouchableOpacity onPress={showDateModal}>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
+                                            <Text style={[styles.title, {color: theme === true ? 'tomato' : 'maroon'}]}>
                                                 {format(date, "MMMM do yyyy") === format(new Date(), "MMMM do yyyy") ? 'Today' : format(date, "MMMM do yyyy") }
                                             </Text>
                                             </TouchableOpacity>
@@ -497,7 +497,7 @@ const Create = async () => {
                                     </Text>
                                     <View>
                                     <TouchableOpacity onPress={showPriorityModal}>
-                                        <Text style={[styles.title, {color: data.priority === 'normal' ? 'gray' : 'maroon', textTransform: 'capitalize'}]}>
+                                        <Text style={[styles.title, {color: data.priority === 'normal' ? 'gray' : theme === true ? 'tomato' : 'maroon', textTransform: 'capitalize'}]}>
                                             {data.priority}
                                         </Text>
                                     </TouchableOpacity>

@@ -5,7 +5,8 @@ import {
     TouchableWithoutFeedback,  
     FlatList,
     Dimensions,
-    RefreshControl
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
 
 import {AppContext} from '../AppContext';
@@ -13,6 +14,7 @@ import useStyles from '../styles';
 
 import { format, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {StatusBar} from 'expo-status-bar'
 
 import { API, graphqlOperation } from "aws-amplify";
 import { messagesByUser } from '../src/graphql/queries';
@@ -73,7 +75,7 @@ const Inbox = ({navigation} : any) => {
                             <FontAwesome5 
                                 name='hand-point-right'
                                 size={20}
-                                color='maroon'
+                                color={theme === true ? 'tomato' : 'maroon'}
                                 style={{marginLeft: 20, marginRight: 0, alignSelf: 'center'}}
                             />
                         </View>
@@ -167,13 +169,20 @@ const Inbox = ({navigation} : any) => {
                             <View style={{height: 20}}/>
                         )
                     }}
-                    ListEmptyComponent={() => {
-                        return (
-                            <View style={{height: 120}}/>
-                        )
-                    }}
+                    ListEmptyComponent={
+                        <View style={{height: 20}}>
+                            {isFetching === true ? (
+                                <ActivityIndicator size='small' color='maroon'/>
+                            ) : (
+                                <Text style={styles.paragraph}>
+                                    You have no messaages at this time.
+                                </Text>
+                            )}
+                        </View>
+                    }
                 />
             </View>
+            <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
         </View>
     );
 }

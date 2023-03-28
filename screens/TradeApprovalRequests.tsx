@@ -18,15 +18,15 @@ import { shiftsByCreator } from '../src/graphql/queries';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import { format, parseISO } from "date-fns";
+import {StatusBar } from 'expo-status-bar';
 
-const ApprovalRequests = ({navigation, route} : any) => {
+const TradeApprovalRequests = ({navigation, route} : any) => {
 
     const {trigger} = route.params;
 
-    const { userID } = useContext(AppContext);
-    const { theme } = useContext(AppContext);
-    const { departID } = useContext(AppContext);
+    const { theme, userID, militaryTime } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -69,84 +69,116 @@ const ApprovalRequests = ({navigation, route} : any) => {
     }, [didUpdate, trigger]);
 
   
-    const Item = ({id, date, firstName, lastName, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
+    const Item = ({id, date, firstName, lastName, acronym, title, status, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
          
+        const convertTime12to24 = (startTime : any) => {
+            const [time, modifier] = startTime.split(' ');
+          
+            let [hours, minutes] = time.split(':');
+          
+            if (hours === '12') {
+              hours = '00';
+            }
+          
+            if (modifier === 'PM') {
+              hours = parseInt(hours, 10) + 12;
+            }
+          
+            return `${hours}:${minutes}`;
+          }
+
         return (
         <TouchableWithoutFeedback onPress={() => navigation.navigate('TradeShiftApproval', {id: id})}>
-            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20, paddingVertical: 10, overflow: 'hidden', backgroundColor: theme === true ? '#363636a5' : '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
-                <View>
+            <View style={{elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3, alignSelf: 'center', marginVertical: 20,borderTopRightRadius: 10, borderTopLeftRadius: 10, overflow: 'hidden', backgroundColor: theme === true ? '#363636a5' : '#fcfcfc', borderRadius: 10, paddingHorizontal: 10, marginBottom: 0, borderWidth: 0, width: Dimensions.get('window').width - 20, marginHorizontal: 10}}>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', alignSelf: 'center', paddingVertical: 10, overflow: 'hidden', paddingHorizontal: 10,width: Dimensions.get('window').width - 20, }}>
                     <View>
-                        <Text style={styles.title}>
-                            {date}
+                        <View>
+                            <Text style={styles.title}>
+                                {date}
+                            </Text>
+                        </View>
+                        <View style={{flexDirection: 'row',  marginVertical: 4}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center',  marginVertical: 4}}>
+                        {shiftType === 'night' ? (
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
+                            <Ionicons 
+                            name='moon'
+                            color={theme === true ? 'lightblue' : 'darkblue'}
+                            size={12}
+                            style={{marginRight: 4}}
+                            />
+                        </View>
+                        ) : null}
+                        </View>
+                        <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                            {militaryTime === true ? convertTime12to24(startTime) : startTime}
+                        </Text>
+                        <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                        -
+                        </Text>
+                        <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+                            {militaryTime === true ? convertTime12to24(endTime) : endTime}
+                        </Text>
+                        </View>
+                        
+                    <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                        <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
+                        <Text style={{}}>
+                            {name}
+                        </Text>
+                        </View>
+                    
+                        {payMultiplier === 1 ? null : (
+                            <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                                <FontAwesome5 
+                                    name='bolt'
+                                    color='green'
+                                    size={12}
+                                    style={{marginRight: 4}}
+                                />
+                                <Text style={[styles.paragraph, {fontSize: 14}]}>
+                                    {payMultiplier}
+                                </Text>
+                            </View>
+                        )}
+                        
+                        {payRate === 0 ? null : (
+                            <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+                                <FontAwesome5 
+                                    name='dollar-sign'
+                                    color='green'
+                                    size={12}
+                                    style={{marginRight: 4}}
+                                />
+                                <Text style={[styles.paragraph, {fontSize: 14}]}>
+                                    {'+' + '' + payRate}
+                                </Text>
+                            </View>
+                        )}
+                        </View>
+                    </View>
+                    <View>
+                        <FontAwesome5 name={status === 'pending' ? 'hourglass-half' : status === 'approved' ? 'check' : status === 'open' ? 'skull-crossbones' : 'hand-holding-medical'} size={26} color={status === 'pending' ? '#BAB9A8' : status === 'approved' ? 'green' : 'lightgray'} style={{paddingHorizontal: 20}} />
+                        <Text style={{color: '#7F7D70', textAlign: 'center', fontSize: 12, marginTop: 6}}>
+                            {status === 'open' ? 'denied' : status}
                         </Text>
                     </View>
-                    <View style={{flexDirection: 'row',  marginVertical: 4}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center',  marginVertical: 4}}>
-                    {shiftType === 'night' ? (
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
-                        <Ionicons 
-                        name='moon'
-                        color={theme === true ? 'lightblue' : 'darkblue'}
-                        size={12}
-                        style={{marginRight: 4}}
+                </View>
+                <View style={{backgroundColor: '#5B5B5B', alignSelf: 'center', width: Dimensions.get('window').width - 20, borderBottomRightRadius: 10, borderBottomLeftRadius: 10}}>
+                    <View style={{paddingVertical: 10, marginBottom: 4, flexDirection: 'row', alignItems: 'center'}}>
+                        <Fontisto 
+                            name='doctor'
+                            size={20}
+                            color='orange'
+                            style={{marginHorizontal: 10}}
                         />
+                        <Text style={[styles.paragraph, {textTransform: 'capitalize', fontWeight: '500', marginLeft: 0, color: 'orange'}]}>
+                            {firstName + ' ' + lastName + ','}
+                        </Text>
+                        <Text style={[styles.paragraph, {textTransform: 'uppercase', fontWeight: '500', marginLeft: 4, color: 'orange'}]}>
+                            {acronym}
+                        </Text>
                     </View>
-                    ) : null}
-                    </View>
-                    <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                        {startTime}
-                    </Text>
-                    <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                    -
-                    </Text>
-                    <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                    {endTime}
-                    </Text>
-                    </View>
-                    
-                <View style={{flexDirection: 'row', alignItems: 'center',}}>
-                    <View style={{backgroundColor: '#FCF8DA', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
-                    <Text style={{}}>
-                        {name}
-                    </Text>
-                    </View>
-                
-                    <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-                    <FontAwesome5 
-                        name='bolt'
-                        color='green'
-                        size={12}
-                        style={{marginRight: 4}}
-                    />
-                    <Text style={[styles.paragraph, {fontSize: 14}]}>
-                        {payMultiplier}x
-                    </Text>
-                    </View>
-        
-                <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
-                    <FontAwesome5 
-                    name='dollar-sign'
-                    color='green'
-                    size={12}
-                    style={{marginRight: 4}}
-                    />
-                    <Text style={[styles.paragraph, {fontSize: 14}]}>
-                    {'+' + '' + payRate}
-                    </Text>
-                </View>
-                </View>
-        
-                <View style={{marginTop: 20, marginBottom: 4}}>
-                    <Text style={[styles.paragraph, {textTransform: 'capitalize'}]}>
-                    For {firstName + ' ' + lastName}
-                    </Text>
-                </View>
-                </View>
-                <View>
-                    <FontAwesome5 name={status === 'pending' ? 'hourglass-half' : status === 'approved' ? 'check' : status === 'open' ? 'skull-crossbones' : 'hand-holding-medical'} size={26} color={status === 'pending' ? '#BAB9A8' : status === 'approved' ? 'green' : 'lightgray'} style={{paddingHorizontal: 20}} />
-                    <Text style={{color: '#7F7D70', textAlign: 'center', fontSize: 12, marginTop: 6}}>
-                        {status === 'open' ? 'denied' : status}
-                    </Text>
                 </View>
             </View>
         </TouchableWithoutFeedback>
@@ -193,6 +225,7 @@ const ApprovalRequests = ({navigation, route} : any) => {
                     status={item.status}
                     firstName={item.user.firstName}
                     lastName={item.user.lastName}
+                    acronym={item.user.primaryRole.acronym}
                 />
                 }
                 ListFooterComponent={
@@ -217,8 +250,10 @@ const ApprovalRequests = ({navigation, route} : any) => {
                     </View>
                 }
             />
+            <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
+
         </View>
     );
 }
 
-export default ApprovalRequests;
+export default TradeApprovalRequests;

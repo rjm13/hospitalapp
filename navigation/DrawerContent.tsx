@@ -87,6 +87,17 @@ export function DrawerContent({navigation} : any) {
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
+
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('PostedShifts')}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                <View style={istyles.box}>
+                                    <Text style={[styles.itemtext]}>
+                                        My Trades
+                                    </Text>
+                                </View>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateTrade')}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
@@ -97,21 +108,11 @@ export function DrawerContent({navigation} : any) {
                             </View>
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate('PostedShifts')}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
-                                <View style={istyles.box}>
-                                    <Text style={[styles.itemtext]}>
-                                        My Posted Shifts
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableWithoutFeedback>
-
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('TradeApprovalRequests', {trigger: Math.random()})}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext]}>
-                                        Shift Responses
+                                        Trade Responses
                                     </Text>
                                 </View>
                             </View>

@@ -39,6 +39,11 @@ const ConfirmEmail = ({navigation, route} : {navigation: any, route : any}) => {
         const {username, code, password} = data;
 
         setLoggingIn(true);
+
+        if (data.code.length === 0) {
+            alert('Please check your email and enter the code you received.')
+            return;
+        }
         
         try {
 

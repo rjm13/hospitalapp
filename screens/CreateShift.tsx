@@ -163,8 +163,10 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                     //month: 0, //month integer
                     //year: 0, //year integer
                     startTime: format(startTime, "p"),
+                    start: startTime.toISOString(),
                     //startAMPM: 'AM', //AM or PM
                     endTime: format(endTime, "p"),
+                    end: endTime.toISOString(),
                     //endAMPM: 'PM', //AM or PM
                     payMultiplier: data.payMultiplier, //must be a decimal
                     payRate: data.payRate, //float, whatever that means
@@ -682,7 +684,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Role
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: roleTitle === 'Select Role' ? 'gray' : 'maroon'}]}>
+                                            <Text style={[styles.title, {color: roleTitle === 'Select Role' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
                                                 {roleTitle}
                                             </Text>
                                         </View>
@@ -696,7 +698,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Type
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: data.name === 'Regular' ? 'gray' : 'maroon'}]}>
+                                            <Text style={[styles.title, {color: data.name === 'Regular' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
                                                 {data.name}
                                             </Text>
                                         </View>
@@ -709,7 +711,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Date
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: 'gray'}]}>
+                                            <Text style={[styles.title, {color: theme === true ? 'tomato' : 'maroon'}]}>
                                                 {format(date, "MMMM do yyyy") === format(new Date(), "MMMM do yyyy") ? 'Today' : format(date, "MMMM do yyyy") }
                                             </Text>
                                         </View>
@@ -810,7 +812,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Priority
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: data.priority === 'normal' ? 'gray' : 'maroon', textTransform: 'capitalize'}]}>
+                                            <Text style={[styles.title, {color: data.priority === 'normal' ? 'gray' : theme === true ? 'tomato' : 'maroon', textTransform: 'capitalize'}]}>
                                                 {data.priority}
                                             </Text>
                                         </View>
@@ -823,7 +825,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             Required Quals
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: qualIDs.length > 0 ? 'gray' : 'maroon'}]}>
+                                            <Text style={[styles.title, {color: qualIDs.length === 0 ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
                                                 {qualIDs.length + ' ' + 'selected'}
                                             </Text>
                                         </View>
@@ -853,7 +855,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                             How Many?
                                         </Text>
                                         <View>
-                                            <Text style={[styles.title, {color: data.numNeeded === 1 ? 'gray' : 'maroon'}]}>
+                                            <Text style={[styles.title, {color: data.numNeeded === 1 ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
                                                 {data.numNeeded}
                                             </Text>
                                         </View>
@@ -879,7 +881,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                     <ActivityIndicator size='small' color='#fff'/>
                                 </View>
                             ) : (
-                                <TouchableOpacity onPress={showConfirmModal}>
+                                <TouchableOpacity onPress={() => {data.roleID.length === 0 ? alert('Please select a role.') : showConfirmModal()}}>
                                     <View style={styles.buttonlayout}>
                                             <Text style={styles.buttontext}>
                                                 Create Shift

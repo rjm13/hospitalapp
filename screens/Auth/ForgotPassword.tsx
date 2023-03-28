@@ -23,14 +23,21 @@ const ForgotPassword = ({navigation} : any) => {
     const [email, setEmail] = useState('');
 
     const handleForgotPassword = async () => {
-        try {
-            await Auth.forgotPassword(
-                email.replace(/ /g, ''),
-            )
-            .then(navigation.navigate('ForgotPasswordCon', {email: email.replace(/ /g, '')}))
 
-        } catch {
-            alert('Error. Please try again.')
+        if (email.length === 0 || email.includes('@') === false) {
+            alert('Please enter a valid email address.')
+            return;
+        } else {
+
+            try {
+                await Auth.forgotPassword(
+                    email.replace(/ /g, ''),
+                )
+                .then(navigation.navigate('ForgotPasswordCon', {email: email.replace(/ /g, '')}))
+
+            } catch {
+                alert('Error. Please try again.')
+            }
         }
       }
 

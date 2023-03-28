@@ -102,6 +102,8 @@ const SelectDept = ({navigation, route} : any) => {
             console.log(response)
             navigation.navigate('SelectRole', {systemID: systemID, systemImageUri: systemImageUri, systemName: systemName})
             setProcessing(false)
+        } else {
+            alert('Please select the department you work in.')
         }
     }
     

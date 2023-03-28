@@ -136,7 +136,7 @@ const SendDenialMessage = async () => {
 
   const Title = 'Your pick up request for' + ' ' +
                   shift.date + ' ' +
-                  'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime + ' ' +
+                  'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime + ' ' +
                   'has been denied.' + ' '
 
   const Subtitle = ''
@@ -235,6 +235,22 @@ const DenyShift = async () => {
     }
 }
 
+const convertTime12to24 = (inputtime : any) => {
+  const [time, modifier] = inputtime.split(' ');
+
+  let [hours, minutes] = time.split(':');
+
+  if (hours === '12') {
+    hours = '00';
+  }
+
+  if (modifier === 'PM') {
+    hours = parseInt(hours, 10) + 12;
+  }
+
+  return `${hours}:${minutes}`;
+}
+
   return (
     <Provider>
       <Portal>
@@ -242,14 +258,19 @@ const DenyShift = async () => {
         <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
           <View style={{height: '50%'}}>
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
-              Approve this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
+              Approve this shift for {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}?
             </Text>
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
               for
             </Text>
-            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}]}>
-              {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
-            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
+                {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
+              </Text>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
+                {shift.user.primaryRole.acronym}
+              </Text>
+            </View>
 
             <LinearGradient
           colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -283,14 +304,20 @@ const DenyShift = async () => {
         <Modal visible={visible9} onDismiss={hideDenyModal} contentContainerStyle={containerStyle}>
           <View style={{height: '50%'}}>
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
-              DENY this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
+              DENY this shift for {shift.date} from {convertTime12to24(shift.startTime)} to {shift.endTime}?
             </Text>
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
               for
             </Text>
-            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}]}>
-              {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
-            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
+                {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
+              </Text>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
+                {shift.user.primaryRole.acronym}
+              </Text>
+            </View>
+            
 
             <LinearGradient
           colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -327,7 +354,7 @@ const DenyShift = async () => {
 {/* header icon row */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 40}}>
         <FontAwesome onPress={()=> navigation.goBack()} name='close' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}}/>
-        <FontAwesome name='edit' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}}/>
+        {/* <FontAwesome name='edit' size={20} color={theme === true ? '#fff' : '#000'} style={{padding: 20, margin: -20}}/> */}
       </View>
 {/* date title */}
       <View style={{alignItems: 'center', marginBottom: 0, marginTop: 20}}>
@@ -338,10 +365,10 @@ const DenyShift = async () => {
 {/* shifts times */}
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20, width: Dimensions.get('window').width - 40}}>
-          <View>
-                <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+          <View style={{elevation: 4, backgroundColor: theme === true ? '#363636a5' : '#ffffff', borderRadius: 10, overflow: 'hidden'}}>
+                <View style={{justifyContent: 'center', alignItems: 'center', width: 120,  }}>
                     <Text style={styles.timeselect}>
-                        {shift.startTime}
+                        {convertTime12to24(shift.startTime)}
                     </Text>
                 </View> 
           </View>
@@ -352,10 +379,10 @@ const DenyShift = async () => {
               </Text>
           </View>
 
-          <View>
-                <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+          <View style={{elevation: 4, backgroundColor: theme === true ? '#363636a5' : '#ffffff', borderRadius: 10, overflow: 'hidden'}}>
+                <View style={{justifyContent: 'center', alignItems: 'center', width: 120,  }}>
                     <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
-                        {shift.endTime}
+                    {convertTime12to24(shift.endTime)}
                     </Text>
                 </View> 
           </View>
@@ -363,13 +390,13 @@ const DenyShift = async () => {
       </View>
 {/* shift type */}
       <View style={{marginVertical: 0, flexDirection: 'row', alignItems: 'center'}}>
-      <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
+      <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === false ? 'darkblue' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'tomato' , textTransform: 'capitalize'}]}>
           {(shift.priority === 'normal' ? '' : shift.priority + ' ') + (shift.name === 'Regular' ? '' : shift.name + ' ')}
         </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === false ? 'darkblue' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'tomato' , textTransform: 'uppercase'}]}>
           {shift.role.acronym + ' '}
         </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === false ? 'darkblue' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'tomato' , textTransform: 'capitalize'}]}>
           {shift.shiftType +' Shift'}
         </Text>
       </View>
@@ -410,7 +437,7 @@ const DenyShift = async () => {
           </View>
           {shift.payRate === 0 && shift.payMultiplier === 1.0 ? (
             <View>
-              <Text style={{fontSize: 20}}>
+              <Text style={[styles.paragraph, {fontSize: 20}]}>
                 No additional incentives
               </Text>
             </View>
@@ -429,9 +456,15 @@ const DenyShift = async () => {
         <Text style={[styles.paragraph, {textAlign: 'center'}]}>
             Pickup Requested by:
         </Text>
-        <Text style={[styles.paragraph, {textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
-            {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
+        <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+          <Text style={[styles.paragraph, {textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
+            {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
+          </Text>
+          <Text style={[styles.paragraph, {textTransform: 'uppercase', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
+            {shift.user.primaryRole.acronym}
         </Text>
+        </View>
+        
     </View>
 {/* button */}
       <LinearGradient
@@ -475,7 +508,7 @@ const DenyShift = async () => {
         
       </LinearGradient>
 
-      <StatusBar style="dark" backgroundColor='transparent'/>
+      <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
     </View>
     </Provider>
   )

@@ -36,7 +36,7 @@ const ForgotPassword = ({navigation, route} : {navigation : any, route : any}) =
     const handleResetPassword = async () => {
         const {username, code, password, confirmPass} = updatePass;
 
-        if(password === confirmPass) {
+        if(password === confirmPass && password.length > 0) {
 
         try {
             console.log(username, code, password);

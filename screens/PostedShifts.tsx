@@ -17,6 +17,7 @@ import { shiftsByCreator } from '../src/graphql/queries';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StatusBar} from 'expo-status-bar';
 
 const PostedShifts = ({navigation} : any) => {
 
@@ -131,16 +132,15 @@ const PostedShifts = ({navigation} : any) => {
               
             </View>
             </View>
-            <View style={{marginVertical: 10}}>
-              <Text style={styles.paragraph}>
-                {notes}
-              </Text>
-            </View>
-            <View style={{marginVertical: 10}}>
-              <Text style={[styles.paragraph, {textTransform: 'capitalize', color: 'gray'}]}>
-                Posted by {firstName} {lastName}
-              </Text>
-            </View>
+            {notes.length === 0 ? null : (
+              <View style={{marginVertical: 10}}>
+                <Text style={styles.paragraph}>
+                  {notes}
+                </Text>
+              </View>
+            )}
+            
+            
         </View>
         
         </TouchableWithoutFeedback>
@@ -209,6 +209,8 @@ const PostedShifts = ({navigation} : any) => {
                     </View>
                 }
             />
+            <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
+
         </View>
     );
 }

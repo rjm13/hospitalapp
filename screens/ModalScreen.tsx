@@ -13,6 +13,7 @@ import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import {format} from 'date-fns'
 import {LinearGradient} from 'expo-linear-gradient';
 import {Provider, Portal, Modal} from 'react-native-paper';
@@ -55,6 +56,7 @@ const ShiftModal = ({navigation, route} : any) => {
     createdOn: new Date(),
     priority: '',
     status: '',
+    userID: '',
     user: {
       firstName: '',
       lastName: ''
@@ -138,8 +140,8 @@ const ReOpenShift = async () => {
       getShift, {id: id}
     ))
 
-    if (init.data.getShift.status !== 'approved') {
-      alert('Oops! It looks like you were beat to the punch. This shift is either expierd or no longer approved.')
+    if (init.data.getShift.status === 'approved') {
+      alert('Oops! This shift has already been approved. Please contact your manager.')
       setProcessing(false)
     } else {
 
@@ -205,7 +207,7 @@ const convertTime12to24 = (inputtime : any) => {
         <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
           <View style={{height: '50%'}}>
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
-              Pick up this shift for {shift.date} from {shift.startTime} to {shift.endTime}?
+              Pick up this shift for {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}?
             </Text>
             <LinearGradient
           colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -272,8 +274,8 @@ const convertTime12to24 = (inputtime : any) => {
 
         <Modal visible={visible11} onDismiss={hideReOpenModal} contentContainerStyle={containerStyle}>
           <View style={{height: '50%'}}>
-            <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}}>
-              Cancel this approval for {shift?.user?.firstName.toUpperCase()} {shift?.user?.lastName.toUpperCase()} and re-open this shift on {shift.date} from {shift.startTime} to {shift.endTime}?
+            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              Cancel this approval request for {shift?.user?.firstName.toUpperCase()} {shift?.user?.lastName.toUpperCase()} and re-open this shift on {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}?
             </Text>
             <LinearGradient
           colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -296,7 +298,7 @@ const convertTime12to24 = (inputtime : any) => {
                   </TouchableOpacity>
               )}
               <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
-                This will cancel the shift pick up and re-open the shift for others. To cancel the shift, click on the edit icon.
+                This will cancel the shift pickup request and re-open the shift for others.
               </Text>
           </View>
           
@@ -321,13 +323,13 @@ const convertTime12to24 = (inputtime : any) => {
       </View>
 {/* shift type */}
       <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato', textTransform: 'capitalize'}]}>
           {(shift.priority === 'normal' ? '' : shift.priority + ' ') + (shift.name === 'Regular' ? '' : shift.name + ' ')}
         </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato'}]}>
           {shift.role.acronym + ' '}
         </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : 'darkblue', textTransform: 'capitalize'}]}>
+        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato', textTransform: 'capitalize'}]}>
           {shift.shiftType +' Shift'}
         </Text>
       </View>
@@ -423,7 +425,7 @@ const convertTime12to24 = (inputtime : any) => {
       </View>
 {/* button */}
           <LinearGradient
-            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+            colors={[theme === true ? '#transparent' : 'transparent', 'transparent']}
             style={{position: 'absolute', bottom: 0 }}
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
@@ -452,14 +454,18 @@ const convertTime12to24 = (inputtime : any) => {
               )
               
             ) : (
-              <TouchableOpacity onPress={showReOpenModal}>
-                <View style={{justifyContent: 'center', marginTop: 20, marginBottom: 40, overflow: 'hidden', borderRadius: 24, borderWidth: 1, paddingVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
-                    <FontAwesome5 name= 'user-nurse' color={theme === true ? '#fff' : '#000'} size={20} style={{marginRight: 6}}/>
-                    <Text style={[styles.paragraph, {textTransform: 'capitalize', fontSize: 20}]}>
-                        {shift?.user?.firstName + ' ' + shift?.user?.lastName}
-                    </Text>
-                </View>
-              </TouchableOpacity>
+              <View>
+                {shift.userID === userID ? (
+                  <TouchableOpacity onPress={showReOpenModal}>
+                    <View style={{justifyContent: 'center', marginTop: 20, marginBottom: 40, overflow: 'hidden', borderRadius: 24, borderColor: theme === true ? '#fff' : '#000', borderWidth: 1, paddingVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
+                        <Fontisto name= 'doctor' color={theme === true ? '#fff' : '#000'} size={20} style={{marginRight: 6}}/>
+                        <Text style={[styles.paragraph, {textTransform: 'capitalize', fontSize: 20}]}>
+                            {shift?.user?.firstName + ' ' + shift?.user?.lastName}
+                        </Text>
+                    </View>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
             )}
 
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 4, }}>
@@ -480,7 +486,7 @@ const convertTime12to24 = (inputtime : any) => {
           </LinearGradient>
       
 
-      <StatusBar style="dark" backgroundColor='transparent'/>
+      <StatusBar style={theme === true ? "light" : "dark"} backgroundColor='transparent'/>
     </View>
     </Provider>
   )
