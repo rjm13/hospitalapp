@@ -10,7 +10,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {format} from 'date-fns'
+import {format, parseISO} from 'date-fns'
 import {LinearGradient} from 'expo-linear-gradient';
 import {Provider, Portal, Modal} from 'react-native-paper';
 
@@ -20,12 +20,13 @@ import { AppContext } from '../AppContext';
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift} from '../src/graphql/queries';
 import { updateShift, createMessage} from '../src/graphql/mutations';
+import { startClock } from 'react-native-reanimated';
 
 const TradeShiftApproval = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { userID, theme, isManager } = useContext(AppContext);
+  const { userID, theme, isManager, militaryTime } = useContext(AppContext);
 
   const styles = useStyles(theme);
   
@@ -62,6 +63,12 @@ const TradeShiftApproval = ({navigation, route} : any) => {
             acronym: '',
 
         }
+    },
+    tradeShift: {
+      dateOrder: new Date().toISOString(),
+      start: new Date('2023-01-15T01:00:00').toISOString(),
+      end: new Date('2023-01-15T01:00:00').toISOString(),
+
     }
   })
 
@@ -234,16 +241,42 @@ const convertTime12to24 = (inputtime : any) => {
       <Portal>
 
         <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
-          <View style={{height: '50%'}}>
-            <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+          <View style={{height: '60%'}}>
+            {shift?.trade === true && shift?.giveUp === false ? (
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              Send this trade proposal for approval: {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}?
+            </Text>
+            ) : (
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
               Send this shift for approval: {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}?
             </Text>
+            )}
+            
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
               for
             </Text>
             <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', marginHorizontal: 20, textTransform: 'capitalize'}]}>
-              {shift.user.firstName + ' ' + shift.user.lastName + ' ' + '(' + shift.user.primaryRole.acronym + ')'}
+              {shift.user.firstName + ' ' + shift.user.lastName}
             </Text>
+            {shift?.trade === true && shift?.giveUp === false ? (
+            <View>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+              {format(parseISO(shift?.tradeShift?.dateOrder), "MMMM do yyyy")}
+            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+                {format(parseISO(shift?.tradeShift?.start), militaryTime === true ? "HH:mm" : "p")}
+              </Text>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500'}]}>
+                to
+              </Text>
+              <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+                {format(parseISO(shift?.tradeShift?.end), militaryTime=== true ? "HH:mm" : "p")}
+              </Text>
+            </View>
+            </View>
+            ) : null}
+            
 
             <LinearGradient
           colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -424,7 +457,7 @@ const convertTime12to24 = (inputtime : any) => {
 
       
 {/* request by section */}
-    <View style={{backgroundColor: theme === true ? '#363636' : '#474747', marginVertical: 50, borderRadius: 10, borderWidth: 0, borderColor: 'maroon', paddingVertical: 20, width: Dimensions.get('window').width - 40}}>
+    <View style={{backgroundColor: theme === true ? '#363636' : '#474747', marginVertical: 30, borderRadius: 10, borderWidth: 0, borderColor: 'maroon', paddingVertical: 20, width: Dimensions.get('window').width - 40}}>
         <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
           <Text style={[styles.paragraph, {color: '#fff', textTransform: 'capitalize', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}]}>
             {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
@@ -433,6 +466,26 @@ const convertTime12to24 = (inputtime : any) => {
             {shift.user.primaryRole.acronym}
         </Text>
         </View>
+        {shift.trade === true && shift.giveUp === false ? (
+          <View>
+            <Text style={[styles.paragraph, {color: '#fff', fontSize: 16, textAlign: 'center'}]}>
+              {format(parseISO(shift?.tradeShift?.dateOrder), "MMMM do yyyy")}
+            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+              <Text style={[styles.paragraph, {color: '#fff',  fontSize: 16, textAlign: 'center'}]}>
+                {format(parseISO(shift?.tradeShift?.start), militaryTime === true ? "HH:mm" : "p")}
+              </Text>
+              <Text style={[styles.paragraph, {color: '#fff',  fontSize: 16, textAlign: 'center', marginHorizontal: 6}]}>
+                to
+              </Text>
+              <Text style={[styles.paragraph, {color: '#fff',  fontSize: 16, textAlign: 'center'}]}>
+                {format(parseISO(shift?.tradeShift?.end), militaryTime === true ? "HH:mm" : "p")}
+              </Text>
+            </View>
+            
+          </View>
+        ) : null}
+        
     </View>
     {shift?.giveUp === true ? (
       <View>

@@ -98,7 +98,7 @@ const TradeShiftApproval = ({navigation, route} : any) => {
 
 const SendApprovalMessage = async () => {
 
-  const Title = 'Your pick up request for' + ' ' +
+  const Title = 'Your trade request for' + ' ' +
                   shift.date + ' ' +
                   'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime + ' ' +
                   'has been approved.' + ' '
@@ -131,7 +131,7 @@ const SendApprovalMessage = async () => {
 
 const SendDenialMessage = async () => {
 
-  const Title = 'Your pick up request for' + ' ' +
+  const Title = 'Your trade request for' + ' ' +
                   shift.date + ' ' +
                   'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime + ' ' +
                   'has been denied.' + ' '
@@ -236,7 +236,7 @@ const convertTime12to24 = (inputtime : any) => {
             <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
             <View style={{height: '50%'}}>
                 <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
-                Send this shift for approval: {shift.date} from {convertTime12to24(shift.startTime)} to {convertTime12to24(shift.endTime)}?
+               Approve this trade?
                 </Text>
                 <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
                 for
@@ -244,6 +244,17 @@ const convertTime12to24 = (inputtime : any) => {
                 <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
                     <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
                     {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
+                    </Text>
+                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
+                    {shift.user.primaryRole.acronym}
+                    </Text>
+                </View>
+                <Text style={[styles.paragraph, {textAlign: 'center'}]}>
+                    and 
+                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
+                    {shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ',' + ' '}
                     </Text>
                     <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
                     {shift.user.primaryRole.acronym}
@@ -425,7 +436,7 @@ const convertTime12to24 = (inputtime : any) => {
     {/* date title */}
             <View style={{alignItems: 'center', marginBottom: 0, marginTop: 20}}>
             <Text style={[styles.paragraph, {fontWeight: '800', fontSize: 30}]}>
-            {shift.date.substring(0, shift.date.length - 5)}
+            {shift.tradeShift.date.substring(0, shift.date.length - 5)}
             </Text>
             </View>
     {/* shifts times */}
@@ -434,7 +445,7 @@ const convertTime12to24 = (inputtime : any) => {
                     <View>
                             <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
                                 <Text style={styles.timeselect}>
-                                    {convertTime12to24(shift.startTime)}
+                                    {convertTime12to24(shift.tradeShift.startTime)}
                                 </Text>
                             </View> 
                     </View>
@@ -448,7 +459,7 @@ const convertTime12to24 = (inputtime : any) => {
                     <View>
                         <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
                             <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
-                                {convertTime12to24(shift.endTime)}
+                                {convertTime12to24(shift.tradeShift.endTime)}
                             </Text>
                         </View> 
                     </View>
