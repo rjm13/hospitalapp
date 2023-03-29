@@ -46,6 +46,7 @@ const Inbox = ({navigation} : any) => {
                 messagesByUser, {
                     nextToken, 
                     receiverID: userID,
+                    sortDirection: 'DESC'
                 }
             ))
 

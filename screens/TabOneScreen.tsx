@@ -300,6 +300,16 @@ const TabOneScreen = ({ navigation }: any) => {
               )}
             </View>
         )}
+        ListHeaderComponent={ () => (
+          <View>
+              <View style={{paddingVertical: 4, marginBottom: -4, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: 'black', fontSize: 12}}>
+                  Pull to refresh
+                </Text>
+                <FontAwesome5 name='chevron-down' size={12} style={{marginHorizontal: 8}}/>
+              </View>
+          </View>
+      )}
         ListEmptyComponent={ () => (
           <View style={{alignItems: 'center', justifyContent: 'center', marginVertical: 40}}>
             <ActivityIndicator size='small' color='maroon'/>

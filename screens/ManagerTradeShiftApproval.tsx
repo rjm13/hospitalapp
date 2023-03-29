@@ -41,6 +41,7 @@ const TradeShiftApproval = ({navigation, route} : any) => {
     payRate: 0,
     payMultiplier: 0,
     notes: '',
+    createdByID: '',
     createdBy: {
       id: '',
       firstName: '',
@@ -63,6 +64,14 @@ const TradeShiftApproval = ({navigation, route} : any) => {
             acronym: '',
 
         }
+    },
+    tradeShift: {
+        date: 'March 1st 2020',
+        startTime: '7:00 AM',
+        endTime: '7:00 PM',
+        start: new Date(),
+        end: new Date()
+
     }
   })
 
@@ -96,9 +105,121 @@ const TradeShiftApproval = ({navigation, route} : any) => {
     paddingVertical: 10
 };
 
+const SendTradeApprovalMessage = async () => {
+
+    const Title = 'Your shift trade with' + ' ' + shift.user.firstName + ' ' + shift.user.lastName + ' ' +
+                    'has been approved.'
+
+    const Title2 = 'Your shift trade with' + ' ' + shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ' ' +
+                    'has been approved.'
+  
+    const Content = 'You have traded your shift on' + ' ' + shift.date + ' ' +
+                    'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime + ' and will now be working on ' +
+                    shift.tradeShift.date + ' ' + 'from' + ' ' + shift.tradeShift.startTime + ' ' + 'to' + ' ' + shift.tradeShift.endTime
+
+    const Content2 = 'You have traded your shift on' + ' ' + shift.tradeShift.date + ' ' +
+                    'from' + ' ' + shift.tradeShift.startTime + ' ' + 'to' + ' ' + shift.tradeShift.endTime + ' and will now be working on ' +
+                    shift.date + ' ' + 'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime
+  
+    try {
+    //this message goes to the person who posted the trade
+        await API.graphql(graphqlOperation(
+        createMessage, {input: {
+            type: 'Message',
+            title: Title,
+            subtitle: '',
+            content: Content,
+            messageType: 'Trade Approved',
+            isReadBySender: true,
+            isReadByReceiver: false,
+            senderID: userID,
+            receiverID: shift.createdByID,
+            status: 'Approved',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            shiftID: shift.id
+        }}
+        ))
+    //this message goes to the person who offered to trade
+        await API.graphql(graphqlOperation(
+        createMessage, {input: {
+            type: 'Message',
+            title: Title2,
+            subtitle: '',
+            content: Content2,
+            messageType: 'Trade Approved',
+            isReadBySender: true,
+            isReadByReceiver: false,
+            senderID: userID,
+            receiverID: shift.userID,
+            status: 'Approved',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            shiftID: shift.id
+        }}
+        ))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  
+  const SendTradeDenialMessage = async () => {
+
+    const Title = 'Your shift trade with' + ' ' + shift.user.firstName + ' ' + shift.user.lastName + ' ' +
+                    'has been denied.'
+
+    const Title2 = 'Your shift trade with' + ' ' + shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ' ' +
+                    'has been denied.'
+  
+    const Content = ''
+
+    const Content2 = ''
+  
+    try {
+    //this message goes to the person who posted the trade
+        await API.graphql(graphqlOperation(
+        createMessage, {input: {
+            type: 'Message',
+            title: Title,
+            subtitle: '',
+            content: Content,
+            messageType: 'Trade Denied',
+            isReadBySender: true,
+            isReadByReceiver: false,
+            senderID: userID,
+            receiverID: shift.createdByID,
+            status: 'Denied',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            shiftID: shift.id
+        }}
+        ))
+    //this message goes to the person who offered to trade
+        await API.graphql(graphqlOperation(
+        createMessage, {input: {
+            type: 'Message',
+            title: Title2,
+            subtitle: '',
+            content: Content2,
+            messageType: 'Trade Approved',
+            isReadBySender: true,
+            isReadByReceiver: false,
+            senderID: userID,
+            receiverID: shift.userID,
+            status: 'Approved',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            shiftID: shift.id
+        }}
+        ))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 const SendApprovalMessage = async () => {
 
-  const Title = 'Your trade request for' + ' ' +
+  const Title = 'Your pickup request for' + ' ' +
                   shift.date + ' ' +
                   'from' + ' ' + shift.startTime + ' ' + 'to' + ' ' + shift.endTime + ' ' +
                   'has been approved.' + ' '
@@ -124,6 +245,7 @@ const SendApprovalMessage = async () => {
         shiftID: shift.id
       }}
     ))
+    
   } catch (e) {
     console.log(e)
   }
@@ -131,7 +253,7 @@ const SendApprovalMessage = async () => {
 
 const SendDenialMessage = async () => {
 
-  const Title = 'Your trade request for' + ' ' +
+  const Title = 'Your pickup request for' + ' ' +
                   shift.date + ' ' +
                   'from' + ' ' + shift.startTime + 'to' + ' ' + shift.endTime + ' ' +
                   'has been denied.' + ' '
@@ -164,6 +286,69 @@ const SendDenialMessage = async () => {
   }
 }
 
+const ApproveTradeShift = async () => {
+    setProcessing(true);
+    try {
+
+        const response = await API.graphql(graphqlOperation(
+            updateShift, {input: {
+              id: id,
+              status: 'approved',
+              updatedAt: new Date().toISOString()
+            }}
+        ))
+    
+        const newresponse = await API.graphql(graphqlOperation(
+            updateShift, {input: {
+            id: shift.tradeShiftID,
+            status: 'approved',
+            updatedAt: new Date().toISOString(),
+            userID: shift.createdByID,
+            }}
+        )) 
+        
+        if (response && newresponse) {
+          SendTradeApprovalMessage()
+          alert('Trade approved.')
+          navigation.goBack();
+          //navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});
+          setProcessing(false)
+        }
+      
+    } catch (e) {
+      setProcessing(false)
+      alert(e.toString())
+    }
+}
+
+const DenyTradeShift = async () => {
+    setProcessing(true);
+    try {
+
+        const response = await API.graphql(graphqlOperation(
+            updateShift, {input: {
+              id: id,
+              status: 'denied',
+              updatedAt: new Date().toISOString(),
+              tradeShiftID: null
+            }}
+        ))
+
+
+        console.log(response)
+        if (response) {
+          SendTradeDenialMessage();
+          alert('Trade denied.')
+          navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});
+          setProcessing(false)
+        }
+      
+    } catch (e) {
+      setProcessing(false)
+      alert(e.toString())
+    }
+}
+
 const ApproveShift = async () => {
     setProcessing(true);
     try {
@@ -175,11 +360,13 @@ const ApproveShift = async () => {
               updatedAt: new Date().toISOString()
             }}
         ))
+
         console.log(response)
         if (response) {
           SendApprovalMessage()
           alert('Shift sent for approval.')
-          navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});
+          navigation.goBack();
+          //navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});
           setProcessing(false)
         }
       
@@ -234,61 +421,61 @@ const convertTime12to24 = (inputtime : any) => {
     <Provider>
         <Portal>
             <Modal visible={visible10} onDismiss={hideConfirmModal} contentContainerStyle={containerStyle}>
-            <View style={{height: '50%'}}>
-                <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
-               Approve this trade?
-                </Text>
-                <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
-                for
-                </Text>
-                <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
-                    {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
+                <View style={{height: '50%'}}>
+                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, fontWeight: '500', marginHorizontal: 20}]}>
+                Approve this trade?
                     </Text>
-                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
-                    {shift.user.primaryRole.acronym}
+                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 15, marginHorizontal: 20, marginVertical: 20}]}>
+                    for
                     </Text>
-                </View>
-                <Text style={[styles.paragraph, {textAlign: 'center'}]}>
-                    and 
-                </Text>
-                <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
-                    {shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ',' + ' '}
+                    <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+                        <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
+                        {shift.user.firstName + ' ' + shift.user.lastName + ',' + ' '}
+                        </Text>
+                        <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
+                        {shift.user.primaryRole.acronym}
+                        </Text>
+                    </View>
+                    <Text style={[styles.paragraph, {textAlign: 'center'}]}>
+                        and 
                     </Text>
-                    <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
-                    {shift.user.primaryRole.acronym}
+                    <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+                        <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'capitalize'}]}>
+                        {shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ',' + ' '}
+                        </Text>
+                        <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 18, fontWeight: '800', textTransform: 'uppercase'}]}>
+                        {shift.user.primaryRole.acronym}
+                        </Text>
+                    </View>
+                    
+
+                    <LinearGradient
+                colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
+                style={{position: 'absolute', bottom: -70 }}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 0, y: 0 }}
+                >
+                <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
+                    {processing ? (
+                        <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
+                            <ActivityIndicator size='small' color='maroon'/>
+                        </View>
+                    ) : (
+                        <TouchableOpacity onPress={() => shift?.tradeShiftID.length > 1 ? ApproveTradeShift() : ApproveShift()}>
+                            <View style={styles.buttonlayout}>
+                                    <Text style={styles.buttontext}>
+                                        Approve
+                                    </Text> 
+                                </View>  
+                        </TouchableOpacity>
+                    )}
+                    <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
+                        {/* This shift pick up will not be final until it has been approved by your manager. */}
                     </Text>
                 </View>
                 
-
-                <LinearGradient
-            colors={[theme === true ? '#000' : '#fff', theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
-            style={{position: 'absolute', bottom: -70 }}
-            start={{ x: 0, y: 1 }}
-            end={{ x: 0, y: 0 }}
-            >
-            <View style={{width: Dimensions.get('window').width, justifyContent: 'center', paddingHorizontal: 40}}>
-                {processing ? (
-                    <View style={[{alignSelf: 'center', width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}]}>
-                        <ActivityIndicator size='small' color='maroon'/>
-                    </View>
-                ) : (
-                    <TouchableOpacity onPress={ApproveShift}>
-                        <View style={styles.buttonlayout}>
-                                <Text style={styles.buttontext}>
-                                    Approve
-                                </Text> 
-                            </View>  
-                    </TouchableOpacity>
-                )}
-                <Text style={{textAlign: 'center', marginTop: 20, color: 'gray'}}>
-                    {/* This shift pick up will not be final until it has been approved by your manager. */}
-                </Text>
-            </View>
-            
-            </LinearGradient>
-            </View>
+                </LinearGradient>
+                </View>
             </Modal>
 
             <Modal visible={visible9} onDismiss={hideDenyModal} contentContainerStyle={containerStyle}>
@@ -320,7 +507,7 @@ const convertTime12to24 = (inputtime : any) => {
                         <ActivityIndicator size='small' color='maroon'/>
                     </View>
                 ) : (
-                    <TouchableOpacity onPress={DenyShift}>
+                    <TouchableOpacity onPress={() => shift?.tradeShiftID.length > 1 ? DenyTradeShift() : DenyShift()}>
                         <View style={[styles.buttonlayout, {backgroundColor: theme === true ? '#363636' : 'darkgray'}]}>
                                 <Text style={styles.buttontext}>
                                     Deny
@@ -436,7 +623,7 @@ const convertTime12to24 = (inputtime : any) => {
     {/* date title */}
             <View style={{alignItems: 'center', marginBottom: 0, marginTop: 20}}>
             <Text style={[styles.paragraph, {fontWeight: '800', fontSize: 30}]}>
-            {shift.tradeShift.date.substring(0, shift.date.length - 5)}
+            {shift?.tradeShift?.date.substring(0, shift.date.length - 5)}
             </Text>
             </View>
     {/* shifts times */}
@@ -445,7 +632,7 @@ const convertTime12to24 = (inputtime : any) => {
                     <View>
                             <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
                                 <Text style={styles.timeselect}>
-                                    {convertTime12to24(shift.tradeShift.startTime)}
+                                    {convertTime12to24(shift?.tradeShift?.startTime)}
                                 </Text>
                             </View> 
                     </View>
@@ -459,7 +646,7 @@ const convertTime12to24 = (inputtime : any) => {
                     <View>
                         <View style={{justifyContent: 'center', alignItems: 'center', width: 120, backgroundColor: theme === true ? '#363636a5' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
                             <Text style={[styles.timeselect, {color: theme === true ? '#fff' : '#000'}]}>
-                                {convertTime12to24(shift.tradeShift.endTime)}
+                                {convertTime12to24(shift?.tradeShift?.endTime)}
                             </Text>
                         </View> 
                     </View>

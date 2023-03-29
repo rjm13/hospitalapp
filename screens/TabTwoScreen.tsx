@@ -300,7 +300,7 @@ const TabTwoScreen = ({ navigation }: any) => {
         ListFooterComponent={ () => (
             <View>
               {empty === true ? (
-                <Text style={[styles.paragraph, {marginVertical: 80}]}>
+                <Text style={[styles.paragraph, {textAlign: 'center', marginVertical: 80}]}>
                   There are no open shifts posted at this time.
                 </Text>
               ) : (
@@ -310,6 +310,16 @@ const TabTwoScreen = ({ navigation }: any) => {
               )}
             </View>
         )}
+        ListHeaderComponent={ () => (
+          <View style={{width: Dimensions.get('window').width}}>
+              <View style={{paddingVertical: 4, marginBottom: -4, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: 'black', fontSize: 12}}>
+                  Pull to refresh
+                </Text>
+                <FontAwesome5 name='chevron-down' size={12} style={{marginHorizontal: 8}}/>
+              </View>
+          </View>
+      )}
         ListEmptyComponent={ () => (
           <View style={{alignItems: 'center', justifyContent: 'center', marginVertical: 40}}>
             <ActivityIndicator size='small' color='maroon'/>

@@ -67,6 +67,8 @@ const TradeModal = ({navigation, route} : any) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date('2023-01-15T13:00:00'));
   const [endTime, setEndTime] = useState(new Date('2023-01-15T01:00:00'));
+  const [type, setType] = useState('Regular');
+  const [shiftTypes, setShiftTypes] = useState(['Regular', 'CCT', 'Charge', 'Manager'])
 
 //fetch the shift from AWS  
   useEffect(() => {
@@ -113,6 +115,11 @@ const TradeModal = ({navigation, route} : any) => {
     const [visible5, setVisible5] = useState(false);
     const showEndModal = () => {setVisible5(true);}
     const hideEndModal = () => setVisible5(false);
+
+    //multiptypelier modal
+    const [visible6, setVisible6] = useState(false);
+    const showTypeModal = () => {setVisible6(true);}
+    const hideTypeModal = () => setVisible6(false);
 
   //modal container style
   const containerStyle = {
@@ -195,6 +202,10 @@ const TradeShift = async () => {
               hospitalID: hospID,
               departmentID: departID,
               roleID: userRoleID,
+              notes: '',
+              name: type,
+              payMultiplier: 1,
+              payRate: 0,
               //quals: [], //what quals are needed
               date: format((date), "MMMM do yyyy"), //start date of the shift, format (March 8th 2023)
               dateOrder: date.toISOString(),
@@ -205,12 +216,19 @@ const TradeShift = async () => {
               //startAMPM: 'AM', //AM or PM
               endTime: format(endTime, "p"),
               end: endTime.toISOString(),
+              priority: 'normal', //urgent, high needs, normal
+              numNeeded: 1, //how many of the same shift are need. will loop and create multiple
+              trade: false, //is the shift for trade
+              giveUp: false, //is this someone giving up their shift
+              approved: false, //approved or denied
               //endAMPM: 'PM', //AM or PM
               //payAddToShift: 0,
               //payAddToHour: 0,
               status: 'trade', //open, filled, pending
               //userID: null, //person working the shift
-              //jobType: 'Regular',
+              shiftType: 'day', // day or night
+              isStartDayNight: 'day',
+              isEndDayNight: 'day',
           }}
       ))
 
@@ -225,7 +243,7 @@ const TradeShift = async () => {
       ))
       console.log(response)
       if (response) {
-        alert('A pickup request has been sent to your manager.')
+        alert('A trade request has been sent to your manager.')
         navigation.goBack();
         setProcessing(false)
       }
@@ -322,41 +340,54 @@ const convertTime12to24 = (inputtime : any) => {
                           {format(date, "MMMM do yyyy") === format(new Date(), "MMMM do yyyy") ? 'Today' : format(date, "MMMM do yyyy") }
                       </Text>
                   </View>
-                  
               </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
 
-              {/* select am/pm */}
-              <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 0}}>
-                <View>
-                    <TouchableOpacity activeOpacity={0.8} onPress={showStartModal}>
-                        
-                            <View style={{justifyContent: 'center', alignItems: 'center', height: 60, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
-                                    <Text style={[styles.timeselect ]}>
-                                        {format(startTime, "p")}
-                                    </Text>
-                                </View> 
-                    </TouchableOpacity>
-                </View>
+{/* select am/pm */}
+            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 0}}>
+              <View>
+                  <TouchableOpacity activeOpacity={0.8} onPress={showStartModal}>
+                      
+                          <View style={{justifyContent: 'center', alignItems: 'center', height: 60, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
+                                  <Text style={[styles.timeselect ]}>
+                                      {format(startTime, "p")}
+                                  </Text>
+                              </View> 
+                  </TouchableOpacity>
+              </View>
 
-                <View style={{justifyContent: 'center'}}>
-                    <Text style={{}}>
-                        to
-                    </Text>
-                </View>
-                
-                
-                <View>
-                    <TouchableOpacity activeOpacity={0.8} onPress={showEndModal}>
-                        
-                            <View style={{justifyContent: 'center', alignItems: 'center', height: 60, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                                    <Text style={[styles.timeselect]}>
-                                        {format(endTime, "p")}
-                                    </Text>
-                                </View> 
-                    </TouchableOpacity>
-                </View>
-              </View>  
+              <View style={{justifyContent: 'center'}}>
+                  <Text style={{}}>
+                      to
+                  </Text>
+              </View>
+              
+              
+              <View>
+                  <TouchableOpacity activeOpacity={0.8} onPress={showEndModal}>
+                      
+                          <View style={{justifyContent: 'center', alignItems: 'center', height: 60, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
+                                  <Text style={[styles.timeselect]}>
+                                      {format(endTime, "p")}
+                                  </Text>
+                              </View> 
+                  </TouchableOpacity>
+              </View>
+            </View>  
+
+{/* type of shift (name) */}
+            <TouchableOpacity onPress={showTypeModal}>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20, marginHorizontal: 40}}>
+                  <Text style={[styles.title, {}]}>
+                      Type
+                  </Text>
+                  <View>
+                      <Text style={[styles.title, {color: type === 'Regular' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
+                          {type}
+                      </Text>
+                  </View>
+              </View>
+            </TouchableOpacity>
 
             <LinearGradient
           colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -383,7 +414,23 @@ const convertTime12to24 = (inputtime : any) => {
               </Text>
           </View>
           
-        </LinearGradient>
+            </LinearGradient>
+          </View>
+        </Modal>
+
+{/* Type of Shift Modal */}
+        <Modal visible={visible6} onDismiss={hideTypeModal} contentContainerStyle={containerStyle}>
+          <View style={{ alignItems: 'center'}}>
+              {shiftTypes.map((item, index) => {
+                  return (
+                      <TouchableOpacity onPress={() => {hideTypeModal(); setType(shiftTypes[index]);}}>
+                          <Text style={[styles.title, {fontSize: 20, paddingVertical: 16, width: Dimensions.get('window').width, textAlign: 'center'}]}>
+                              {item}
+                          </Text> 
+                      </TouchableOpacity>
+                      
+                  )
+              })}
           </View>
         </Modal>
 
