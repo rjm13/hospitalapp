@@ -5,7 +5,6 @@ import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../../src/graphql/queries';
 import { updateUser } from '../../src/graphql/mutations';
 import { StatusBar } from 'expo-status-bar';
-//import {styles} from '../../styles';
 import useStyles from '../../styles';
 import Ambulance from '../../components/ActivityAmbulance'
 
@@ -47,10 +46,11 @@ const Redirect = ({route, navigation} : any) => {
 
         const fetchUser = async () => {
 
+
             try {
                 const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true }).catch(err=>err)
 
-                console.log(userInfo)
+                //console.log(userInfo)
 
                 if (userInfo === 'The user is not authenticated') {
                     navigation.navigate('SignIn')

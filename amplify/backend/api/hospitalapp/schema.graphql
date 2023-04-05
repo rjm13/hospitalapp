@@ -4,6 +4,7 @@ input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONL
 
 type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
+  expoNotificationToken: String,
   id: ID!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime

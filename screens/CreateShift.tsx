@@ -24,7 +24,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 
-import { Auth, graphqlOperation, API } from 'aws-amplify';
+import { Auth, graphqlOperation, API, Analytics } from 'aws-amplify';
 import { getDepartment, getRole} from '../src/graphql/queries';
 import { createShift} from '../src/graphql/mutations';
 
@@ -187,6 +187,13 @@ const CreateShift = ({navigation} : {navigation: any}) => {
             ))
             console.log(response)
             if (response && i === data.numNeeded - 1) {
+                Analytics.record({
+                    name: 'shiftCreated',
+                    attributes: {
+                        shiftID: '',
+                        userID: '',
+                    }
+                })
                 navigation.goBack();
             }
         }

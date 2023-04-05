@@ -6,6 +6,7 @@ export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
       type
+      expoNotificationToken
       id
       createdAt
       updatedAt
@@ -378,6 +379,7 @@ export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser {
     onUpdateUser {
       type
+      expoNotificationToken
       id
       createdAt
       updatedAt
@@ -750,6 +752,7 @@ export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser {
     onDeleteUser {
       type
+      expoNotificationToken
       id
       createdAt
       updatedAt
@@ -1232,6 +1235,7 @@ export const onCreateRole = /* GraphQL */ `
       peeps {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -1463,6 +1467,7 @@ export const onUpdateRole = /* GraphQL */ `
       peeps {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -1694,6 +1699,7 @@ export const onDeleteRole = /* GraphQL */ `
       peeps {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2726,6 +2732,7 @@ export const onCreateDepartment = /* GraphQL */ `
       members {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2904,6 +2911,7 @@ export const onUpdateDepartment = /* GraphQL */ `
       members {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3082,6 +3090,7 @@ export const onDeleteDepartment = /* GraphQL */ `
       members {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3150,6 +3159,7 @@ export const onCreateShift = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -3439,6 +3449,7 @@ export const onCreateShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3597,6 +3608,7 @@ export const onCreateShift = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -3723,6 +3735,7 @@ export const onCreateShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3866,6 +3879,7 @@ export const onCreateShift = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3961,6 +3975,7 @@ export const onUpdateShift = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -4250,6 +4265,7 @@ export const onUpdateShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4408,6 +4424,7 @@ export const onUpdateShift = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -4534,6 +4551,7 @@ export const onUpdateShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4677,6 +4695,7 @@ export const onUpdateShift = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4772,6 +4791,7 @@ export const onDeleteShift = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -5061,6 +5081,7 @@ export const onDeleteShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -5219,6 +5240,7 @@ export const onDeleteShift = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -5345,6 +5367,7 @@ export const onDeleteShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -5488,6 +5511,7 @@ export const onDeleteShift = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -5583,6 +5607,7 @@ export const onCreateAnnouncement = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -5966,6 +5991,7 @@ export const onUpdateAnnouncement = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6349,6 +6375,7 @@ export const onDeleteAnnouncement = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6732,6 +6759,7 @@ export const onCreateReaction = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6850,6 +6878,7 @@ export const onCreateReaction = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7079,6 +7108,7 @@ export const onCreateReaction = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7104,6 +7134,7 @@ export const onCreateReaction = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7211,6 +7242,7 @@ export const onCreateReaction = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7296,6 +7328,7 @@ export const onUpdateReaction = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -7414,6 +7447,7 @@ export const onUpdateReaction = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7643,6 +7677,7 @@ export const onUpdateReaction = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7668,6 +7703,7 @@ export const onUpdateReaction = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7775,6 +7811,7 @@ export const onUpdateReaction = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7860,6 +7897,7 @@ export const onDeleteReaction = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -7978,6 +8016,7 @@ export const onDeleteReaction = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8207,6 +8246,7 @@ export const onDeleteReaction = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8232,6 +8272,7 @@ export const onDeleteReaction = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8339,6 +8380,7 @@ export const onDeleteReaction = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8430,6 +8472,7 @@ export const onCreateMessage = /* GraphQL */ `
       isReadByReceiver
       sender {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -8541,6 +8584,7 @@ export const onCreateMessage = /* GraphQL */ `
       senderID
       receiver {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -8873,6 +8917,7 @@ export const onCreateMessage = /* GraphQL */ `
       otherUserID
       otherUser {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -8990,6 +9035,7 @@ export const onCreateMessage = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -9133,6 +9179,7 @@ export const onCreateMessage = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -9233,6 +9280,7 @@ export const onUpdateMessage = /* GraphQL */ `
       isReadByReceiver
       sender {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -9344,6 +9392,7 @@ export const onUpdateMessage = /* GraphQL */ `
       senderID
       receiver {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -9676,6 +9725,7 @@ export const onUpdateMessage = /* GraphQL */ `
       otherUserID
       otherUser {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -9793,6 +9843,7 @@ export const onUpdateMessage = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -9936,6 +9987,7 @@ export const onUpdateMessage = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -10036,6 +10088,7 @@ export const onDeleteMessage = /* GraphQL */ `
       isReadByReceiver
       sender {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -10147,6 +10200,7 @@ export const onDeleteMessage = /* GraphQL */ `
       senderID
       receiver {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -10479,6 +10533,7 @@ export const onDeleteMessage = /* GraphQL */ `
       otherUserID
       otherUser {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -10596,6 +10651,7 @@ export const onDeleteMessage = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -10739,6 +10795,7 @@ export const onDeleteMessage = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -10847,6 +10904,7 @@ export const onCreateMessageReply = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -10872,6 +10930,7 @@ export const onCreateMessageReply = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -10979,6 +11038,7 @@ export const onCreateMessageReply = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11050,6 +11110,7 @@ export const onCreateMessageReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -11188,6 +11249,7 @@ export const onUpdateMessageReply = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11213,6 +11275,7 @@ export const onUpdateMessageReply = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11320,6 +11383,7 @@ export const onUpdateMessageReply = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11391,6 +11455,7 @@ export const onUpdateMessageReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -11529,6 +11594,7 @@ export const onDeleteMessageReply = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11554,6 +11620,7 @@ export const onDeleteMessageReply = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11661,6 +11728,7 @@ export const onDeleteMessageReply = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11732,6 +11800,7 @@ export const onDeleteMessageReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -11864,6 +11933,7 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -11975,6 +12045,7 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -12107,6 +12178,7 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -12218,6 +12290,7 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -12350,6 +12423,7 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -12461,6 +12535,7 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -13504,6 +13579,7 @@ export const onCreateHospitalUser = /* GraphQL */ `
       hospitalID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -13667,6 +13743,7 @@ export const onUpdateHospitalUser = /* GraphQL */ `
       hospitalID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -13830,6 +13907,7 @@ export const onDeleteHospitalUser = /* GraphQL */ `
       hospitalID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -13993,6 +14071,7 @@ export const onCreateGroupUser = /* GraphQL */ `
       groupID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -14131,6 +14210,7 @@ export const onUpdateGroupUser = /* GraphQL */ `
       groupID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -14269,6 +14349,7 @@ export const onDeleteGroupUser = /* GraphQL */ `
       groupID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -14407,6 +14488,7 @@ export const onCreateRoleUser = /* GraphQL */ `
       roleID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -14591,6 +14673,7 @@ export const onUpdateRoleUser = /* GraphQL */ `
       roleID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -14775,6 +14858,7 @@ export const onDeleteRoleUser = /* GraphQL */ `
       roleID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -14959,6 +15043,7 @@ export const onCreateQualUser = /* GraphQL */ `
       qualID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -15111,6 +15196,7 @@ export const onUpdateQualUser = /* GraphQL */ `
       qualID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -15263,6 +15349,7 @@ export const onDeleteQualUser = /* GraphQL */ `
       qualID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -15415,6 +15502,7 @@ export const onCreateEventUser = /* GraphQL */ `
       eventID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -15640,6 +15728,7 @@ export const onUpdateEventUser = /* GraphQL */ `
       eventID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -15865,6 +15954,7 @@ export const onDeleteEventUser = /* GraphQL */ `
       eventID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt

@@ -6,6 +6,7 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       type
+      expoNotificationToken
       id
       createdAt
       updatedAt
@@ -162,11 +163,6 @@ export const getUser = /* GraphQL */ `
           id
           userID
           qualID
-          qual {
-            id
-            title
-            abbreviation
-          }
           createdAt
           updatedAt
         }
@@ -388,6 +384,7 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -614,6 +611,7 @@ export const getRole = /* GraphQL */ `
       peeps {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -1313,6 +1311,7 @@ export const getDepartment = /* GraphQL */ `
       members {
         items {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -1436,6 +1435,7 @@ export const getShift = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -1725,6 +1725,7 @@ export const getShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -1883,6 +1884,7 @@ export const getShift = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -2009,6 +2011,7 @@ export const getShift = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2152,6 +2155,7 @@ export const getShift = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2252,6 +2256,7 @@ export const listShifts = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2395,6 +2400,7 @@ export const listShifts = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2488,6 +2494,7 @@ export const getAnnouncement = /* GraphQL */ `
       createdByID
       createdBy {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -2876,6 +2883,7 @@ export const listAnnouncements = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -2999,6 +3007,7 @@ export const getReaction = /* GraphQL */ `
       userID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -3117,6 +3126,7 @@ export const getReaction = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3346,6 +3356,7 @@ export const getReaction = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3371,6 +3382,7 @@ export const getReaction = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3478,6 +3490,7 @@ export const getReaction = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3568,6 +3581,7 @@ export const listReactions = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -3694,6 +3708,7 @@ export const getMessage = /* GraphQL */ `
       isReadByReceiver
       sender {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -3805,6 +3820,7 @@ export const getMessage = /* GraphQL */ `
       senderID
       receiver {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -4137,6 +4153,7 @@ export const getMessage = /* GraphQL */ `
       otherUserID
       otherUser {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -4254,6 +4271,7 @@ export const getMessage = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4397,6 +4415,7 @@ export const getMessage = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4502,6 +4521,7 @@ export const listMessages = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4527,6 +4547,7 @@ export const listMessages = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4634,6 +4655,7 @@ export const listMessages = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4731,6 +4753,7 @@ export const getMessageReply = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4756,6 +4779,7 @@ export const getMessageReply = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4863,6 +4887,7 @@ export const getMessageReply = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -4934,6 +4959,7 @@ export const getMessageReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -5089,6 +5115,7 @@ export const listMessageReplies = /* GraphQL */ `
         }
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -5137,6 +5164,7 @@ export const getAnnouncementReply = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -5248,6 +5276,7 @@ export const getAnnouncementReply = /* GraphQL */ `
       }
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -5408,6 +5437,7 @@ export const listAnnouncementReplies = /* GraphQL */ `
         }
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -5896,6 +5926,7 @@ export const getHospitalUser = /* GraphQL */ `
       hospitalID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6064,6 +6095,7 @@ export const listHospitalUsers = /* GraphQL */ `
         hospitalID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -6120,6 +6152,7 @@ export const getGroupUser = /* GraphQL */ `
       groupID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6263,6 +6296,7 @@ export const listGroupUsers = /* GraphQL */ `
         groupID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -6311,6 +6345,7 @@ export const getRoleUser = /* GraphQL */ `
       roleID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6500,6 +6535,7 @@ export const listRoleUsers = /* GraphQL */ `
         roleID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -6553,6 +6589,7 @@ export const getQualUser = /* GraphQL */ `
       qualID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6710,6 +6747,7 @@ export const listQualUsers = /* GraphQL */ `
         qualID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -6759,6 +6797,7 @@ export const getEventUser = /* GraphQL */ `
       eventID
       user {
         type
+        expoNotificationToken
         id
         createdAt
         updatedAt
@@ -6989,6 +7028,7 @@ export const listEventUsers = /* GraphQL */ `
         eventID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7070,6 +7110,7 @@ export const shiftsByCreator = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7089,11 +7130,6 @@ export const shiftsByCreator = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          primaryRole {
-            id
-            title
-            acronym
-          }
           createdOn
           updatedOn
         }
@@ -7218,6 +7254,7 @@ export const shiftsByCreator = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7237,11 +7274,6 @@ export const shiftsByCreator = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          primaryRole {
-            id
-            title
-            acronym
-          }
           createdOn
           updatedOn
         }
@@ -7331,6 +7363,7 @@ export const shiftsByDepartment = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7350,11 +7383,6 @@ export const shiftsByDepartment = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          primaryRole {
-            id
-            title
-            acronym
-          }
           createdOn
           updatedOn
         }
@@ -7479,6 +7507,7 @@ export const shiftsByDepartment = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7498,11 +7527,6 @@ export const shiftsByDepartment = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
-          primaryRole {
-            id
-            title
-            acronym
-          }
           createdOn
           updatedOn
         }
@@ -7592,6 +7616,7 @@ export const shiftsByRole = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7735,6 +7760,7 @@ export const shiftsByRole = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7843,6 +7869,7 @@ export const shiftsByUser = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -7986,6 +8013,7 @@ export const shiftsByUser = /* GraphQL */ `
         userID
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8094,6 +8122,7 @@ export const announcementByDate = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8232,6 +8261,7 @@ export const announcementsBySystem = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8370,6 +8400,7 @@ export const announcementsByHospital = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8508,6 +8539,7 @@ export const announcementsByDepartment = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8646,6 +8678,7 @@ export const announcementsByRole = /* GraphQL */ `
         createdByID
         createdBy {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8790,6 +8823,7 @@ export const messagesByUser = /* GraphQL */ `
         isReadByReceiver
         sender {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8815,6 +8849,7 @@ export const messagesByUser = /* GraphQL */ `
         senderID
         receiver {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -8922,6 +8957,7 @@ export const messagesByUser = /* GraphQL */ `
         otherUserID
         otherUser {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt
@@ -9047,6 +9083,7 @@ export const announcementRepliesByDate = /* GraphQL */ `
         }
         user {
           type
+          expoNotificationToken
           id
           createdAt
           updatedAt

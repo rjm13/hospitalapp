@@ -22,6 +22,20 @@ export type AmplifyDependentResourcesAttributes = {
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string"
+        },
+        "dailyPushNotification": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "CloudWatchEventRule": "string"
+        }
+    },
+    "analytics": {
+        "hospitalapp": {
+            "Region": "string",
+            "Id": "string",
+            "appName": "string"
         }
     }
 }

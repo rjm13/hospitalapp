@@ -13,6 +13,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {format} from 'date-fns'
 import {LinearGradient} from 'expo-linear-gradient';
 import {Provider, Portal, Modal} from 'react-native-paper';
+import * as Notifications from 'expo-notifications';
 
 import useStyles from '../styles';
 import { AppContext } from '../AppContext';
@@ -95,6 +96,39 @@ const ShiftApproval = ({navigation, route} : any) => {
     borderRadius: 15,
     paddingVertical: 10
 };
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+const SendPushApproval = async () => {
+  // async function sendPushNotification(expoPushToken) {
+  //   const message = {
+  //       to: expoPushToken,
+  //       sound: "default",
+  //       title: "Original Title",
+  //       body: "And here is the body!",
+  //       data: {someData: "goes here"},
+  //   }
+
+// await fetch("https://exp.host/--/api/v2/push/send", {
+//     method: "POST",
+//     headers: {
+//         Accept: "application/json",
+//         "Accept-encoding": "gzip, deflate",
+//         "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(message)
+// });
+}
+
+const SendPushDenial = () => {
+
+}
 
 const SendApprovalMessage = async () => {
 
@@ -190,6 +224,7 @@ const ApproveShift = async () => {
         console.log(response)
         if (response) {
           SendApprovalMessage()
+          SendPushApproval();
           alert('Shift approved.')
           navigation.navigate('ApprovalRequests', {trigger: Math.random()});
           setProcessing(false)

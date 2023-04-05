@@ -56,6 +56,7 @@ return StyleSheet.create ({
         padding: 10,
         borderRadius: 10,
         alignSelf: 'center',
+        overflow: 'hidden',
     },
     inputtitle: {
       color: theme === true ? '#fff' : '#000',

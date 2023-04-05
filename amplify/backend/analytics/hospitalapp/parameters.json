@@ -1,0 +1,21 @@
+{
+    "appName": "hospitalapp",
+    "roleName": "pinpointLambdaRoled91d881f",
+    "cloudformationPolicyName": "cloudformationPolicyd91d881f",
+    "cloudWatchPolicyName": "cloudWatchPolicyd91d881f",
+    "pinpointPolicyName": "pinpointPolicyd91d881f",
+    "authPolicyName": "pinpoint_amplify_d91d881f",
+    "unauthPolicyName": "pinpoint_amplify_d91d881f",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "api": {
+      "hospitalapp": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "roleTable",
+      "environmentVariableName": "ROLE_TABLE"
+    }
+  ]
+}

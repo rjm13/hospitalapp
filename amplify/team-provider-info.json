@@ -13,12 +13,18 @@
     },
     "categories": {
       "auth": {
-        "hospitalapp71fd45eb": {}
+        "hospitalapp71fd45eb": {},
+        "true": {}
       },
       "function": {
         "addusertosystem": {
           "deploymentBucketName": "amplify-hospitalapp-dev-133832-deployment",
           "s3Key": "amplify-builds/addusertosystem-596b594f42314d5a4242-build.zip"
+        },
+        "dailyPushNotification": {
+          "deploymentBucketName": "amplify-hospitalapp-dev-133832-deployment",
+          "s3Key": "amplify-builds/dailyPushNotification-45477a662f6e354e4645-build.zip",
+          "roleTable": "Role-lethhvsrljdfzmupbuoc6dypee-dev"
         }
       }
     }

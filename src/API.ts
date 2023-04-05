@@ -4,6 +4,7 @@
 
 export type CreateUserInput = {
   type?: string | null,
+  expoNotificationToken?: string | null,
   id?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
@@ -27,6 +28,7 @@ export type CreateUserInput = {
 
 export type ModelUserConditionInput = {
   type?: ModelStringInput | null,
+  expoNotificationToken?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   firstName?: ModelStringInput | null,
@@ -116,6 +118,7 @@ export type ModelIDInput = {
 export type User = {
   __typename: "User",
   type?: string | null,
+  expoNotificationToken?: string | null,
   id: string,
   createdAt?: string | null,
   updatedAt?: string | null,
@@ -636,6 +639,7 @@ export type ModelAnnouncementConnection = {
 
 export type UpdateUserInput = {
   type?: string | null,
+  expoNotificationToken?: string | null,
   id: string,
   createdAt?: string | null,
   updatedAt?: string | null,
@@ -1563,6 +1567,7 @@ export type DeleteEventUserInput = {
 
 export type ModelUserFilterInput = {
   type?: ModelStringInput | null,
+  expoNotificationToken?: ModelStringInput | null,
   id?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
@@ -1940,6 +1945,7 @@ export type CreateUserMutation = {
   createUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -2358,6 +2364,7 @@ export type UpdateUserMutation = {
   updateUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -2776,6 +2783,7 @@ export type DeleteUserMutation = {
   deleteUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -3320,6 +3328,7 @@ export type CreateRoleMutation = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -3578,6 +3587,7 @@ export type UpdateRoleMutation = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -3836,6 +3846,7 @@ export type DeleteRoleMutation = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -5011,6 +5022,7 @@ export type CreateDepartmentMutation = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -5208,6 +5220,7 @@ export type UpdateDepartmentMutation = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -5405,6 +5418,7 @@ export type DeleteDepartmentMutation = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -5481,6 +5495,7 @@ export type CreateShiftMutation = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -5808,6 +5823,7 @@ export type CreateShiftMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -5977,6 +5993,7 @@ export type CreateShiftMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -6118,6 +6135,7 @@ export type CreateShiftMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -6268,6 +6286,7 @@ export type CreateShiftMutation = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -6370,6 +6389,7 @@ export type UpdateShiftMutation = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -6697,6 +6717,7 @@ export type UpdateShiftMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -6866,6 +6887,7 @@ export type UpdateShiftMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -7007,6 +7029,7 @@ export type UpdateShiftMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -7157,6 +7180,7 @@ export type UpdateShiftMutation = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -7259,6 +7283,7 @@ export type DeleteShiftMutation = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -7586,6 +7611,7 @@ export type DeleteShiftMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -7755,6 +7781,7 @@ export type DeleteShiftMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -7896,6 +7923,7 @@ export type DeleteShiftMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -8046,6 +8074,7 @@ export type DeleteShiftMutation = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -8148,6 +8177,7 @@ export type CreateAnnouncementMutation = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -8579,6 +8609,7 @@ export type UpdateAnnouncementMutation = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -9010,6 +9041,7 @@ export type DeleteAnnouncementMutation = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -9441,6 +9473,7 @@ export type CreateReactionMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -9574,6 +9607,7 @@ export type CreateReactionMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -9820,6 +9854,7 @@ export type CreateReactionMutation = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -9846,6 +9881,7 @@ export type CreateReactionMutation = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -9961,6 +9997,7 @@ export type CreateReactionMutation = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -10053,6 +10090,7 @@ export type UpdateReactionMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -10186,6 +10224,7 @@ export type UpdateReactionMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -10432,6 +10471,7 @@ export type UpdateReactionMutation = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -10458,6 +10498,7 @@ export type UpdateReactionMutation = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -10573,6 +10614,7 @@ export type UpdateReactionMutation = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -10665,6 +10707,7 @@ export type DeleteReactionMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -10798,6 +10841,7 @@ export type DeleteReactionMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -11044,6 +11088,7 @@ export type DeleteReactionMutation = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -11070,6 +11115,7 @@ export type DeleteReactionMutation = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -11185,6 +11231,7 @@ export type DeleteReactionMutation = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -11283,6 +11330,7 @@ export type CreateMessageMutation = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -11408,6 +11456,7 @@ export type CreateMessageMutation = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -11784,6 +11833,7 @@ export type CreateMessageMutation = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -11916,6 +11966,7 @@ export type CreateMessageMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -12066,6 +12117,7 @@ export type CreateMessageMutation = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -12173,6 +12225,7 @@ export type UpdateMessageMutation = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -12298,6 +12351,7 @@ export type UpdateMessageMutation = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -12674,6 +12728,7 @@ export type UpdateMessageMutation = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -12806,6 +12861,7 @@ export type UpdateMessageMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -12956,6 +13012,7 @@ export type UpdateMessageMutation = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -13063,6 +13120,7 @@ export type DeleteMessageMutation = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -13188,6 +13246,7 @@ export type DeleteMessageMutation = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -13564,6 +13623,7 @@ export type DeleteMessageMutation = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -13696,6 +13756,7 @@ export type DeleteMessageMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -13846,6 +13907,7 @@ export type DeleteMessageMutation = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -13962,6 +14024,7 @@ export type CreateMessageReplyMutation = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -13988,6 +14051,7 @@ export type CreateMessageReplyMutation = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14103,6 +14167,7 @@ export type CreateMessageReplyMutation = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14176,6 +14241,7 @@ export type CreateMessageReplyMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -14334,6 +14400,7 @@ export type UpdateMessageReplyMutation = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14360,6 +14427,7 @@ export type UpdateMessageReplyMutation = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14475,6 +14543,7 @@ export type UpdateMessageReplyMutation = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14548,6 +14617,7 @@ export type UpdateMessageReplyMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -14706,6 +14776,7 @@ export type DeleteMessageReplyMutation = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14732,6 +14803,7 @@ export type DeleteMessageReplyMutation = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14847,6 +14919,7 @@ export type DeleteMessageReplyMutation = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -14920,6 +14993,7 @@ export type DeleteMessageReplyMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -15072,6 +15146,7 @@ export type CreateAnnouncementReplyMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -15191,6 +15266,7 @@ export type CreateAnnouncementReplyMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -15343,6 +15419,7 @@ export type UpdateAnnouncementReplyMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -15462,6 +15539,7 @@ export type UpdateAnnouncementReplyMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -15614,6 +15692,7 @@ export type DeleteAnnouncementReplyMutation = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -15733,6 +15812,7 @@ export type DeleteAnnouncementReplyMutation = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -16927,6 +17007,7 @@ export type CreateHospitalUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -17115,6 +17196,7 @@ export type UpdateHospitalUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -17303,6 +17385,7 @@ export type DeleteHospitalUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -17491,6 +17574,7 @@ export type CreateGroupUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -17651,6 +17735,7 @@ export type UpdateGroupUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -17811,6 +17896,7 @@ export type DeleteGroupUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -17971,6 +18057,7 @@ export type CreateRoleUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -18182,6 +18269,7 @@ export type UpdateRoleUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -18393,6 +18481,7 @@ export type DeleteRoleUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -18604,6 +18693,7 @@ export type CreateQualUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -18778,6 +18868,7 @@ export type UpdateQualUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -18952,6 +19043,7 @@ export type DeleteQualUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -19126,6 +19218,7 @@ export type CreateEventUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -19378,6 +19471,7 @@ export type UpdateEventUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -19630,6 +19724,7 @@ export type DeleteEventUserMutation = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -19876,6 +19971,7 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -20297,6 +20393,7 @@ export type ListUsersQuery = {
     items:  Array< {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -20556,6 +20653,7 @@ export type GetRoleQuery = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -21342,6 +21440,7 @@ export type GetDepartmentQuery = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -21480,6 +21579,7 @@ export type GetShiftQuery = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -21807,6 +21907,7 @@ export type GetShiftQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -21976,6 +22077,7 @@ export type GetShiftQuery = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -22117,6 +22219,7 @@ export type GetShiftQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -22267,6 +22370,7 @@ export type GetShiftQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -22372,6 +22476,7 @@ export type ListShiftsQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -22522,6 +22627,7 @@ export type ListShiftsQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -22621,6 +22727,7 @@ export type GetAnnouncementQuery = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -23055,6 +23162,7 @@ export type ListAnnouncementsQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -23190,6 +23298,7 @@ export type GetReactionQuery = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -23323,6 +23432,7 @@ export type GetReactionQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -23569,6 +23679,7 @@ export type GetReactionQuery = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -23595,6 +23706,7 @@ export type GetReactionQuery = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -23710,6 +23822,7 @@ export type GetReactionQuery = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -23805,6 +23918,7 @@ export type ListReactionsQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -23939,6 +24053,7 @@ export type GetMessageQuery = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -24064,6 +24179,7 @@ export type GetMessageQuery = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -24440,6 +24556,7 @@ export type GetMessageQuery = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -24572,6 +24689,7 @@ export type GetMessageQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -24722,6 +24840,7 @@ export type GetMessageQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -24832,6 +24951,7 @@ export type ListMessagesQuery = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -24858,6 +24978,7 @@ export type ListMessagesQuery = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -24973,6 +25094,7 @@ export type ListMessagesQuery = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -25077,6 +25199,7 @@ export type GetMessageReplyQuery = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -25103,6 +25226,7 @@ export type GetMessageReplyQuery = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -25218,6 +25342,7 @@ export type GetMessageReplyQuery = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -25291,6 +25416,7 @@ export type GetMessageReplyQuery = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -25464,6 +25590,7 @@ export type ListMessageRepliesQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -25518,6 +25645,7 @@ export type GetAnnouncementReplyQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -25637,6 +25765,7 @@ export type GetAnnouncementReplyQuery = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -25811,6 +25940,7 @@ export type ListAnnouncementRepliesQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -26361,6 +26491,7 @@ export type GetHospitalUserQuery = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -26552,6 +26683,7 @@ export type ListHospitalUsersQuery = {
       user:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -26614,6 +26746,7 @@ export type GetGroupUserQuery = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -26777,6 +26910,7 @@ export type ListGroupUsersQuery = {
       user:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -26831,6 +26965,7 @@ export type GetRoleUserQuery = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -27045,6 +27180,7 @@ export type ListRoleUsersQuery = {
       user:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -27104,6 +27240,7 @@ export type GetQualUserQuery = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -27281,6 +27418,7 @@ export type ListQualUsersQuery = {
       user:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -27336,6 +27474,7 @@ export type GetEventUserQuery = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -27591,6 +27730,7 @@ export type ListEventUsersQuery = {
       user:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -27670,6 +27810,7 @@ export type ShiftsByCreatorQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -27820,6 +27961,7 @@ export type ShiftsByCreatorQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -27926,6 +28068,7 @@ export type ShiftsByDepartmentQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28076,6 +28219,7 @@ export type ShiftsByDepartmentQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28182,6 +28326,7 @@ export type ShiftsByRoleQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28332,6 +28477,7 @@ export type ShiftsByRoleQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28438,6 +28584,7 @@ export type ShiftsByUserQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28588,6 +28735,7 @@ export type ShiftsByUserQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28694,6 +28842,7 @@ export type AnnouncementByDateQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28836,6 +28985,7 @@ export type AnnouncementsBySystemQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -28978,6 +29128,7 @@ export type AnnouncementsByHospitalQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29120,6 +29271,7 @@ export type AnnouncementsByDepartmentQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29262,6 +29414,7 @@ export type AnnouncementsByRoleQuery = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29410,6 +29563,7 @@ export type MessagesByUserQuery = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29436,6 +29590,7 @@ export type MessagesByUserQuery = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29551,6 +29706,7 @@ export type MessagesByUserQuery = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29675,6 +29831,7 @@ export type AnnouncementRepliesByDateQuery = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -29709,6 +29866,7 @@ export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -30122,6 +30280,7 @@ export type OnUpdateUserSubscription = {
   onUpdateUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -30535,6 +30694,7 @@ export type OnDeleteUserSubscription = {
   onDeleteUser?:  {
     __typename: "User",
     type?: string | null,
+    expoNotificationToken?: string | null,
     id: string,
     createdAt?: string | null,
     updatedAt?: string | null,
@@ -31074,6 +31234,7 @@ export type OnCreateRoleSubscription = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -31327,6 +31488,7 @@ export type OnUpdateRoleSubscription = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -31580,6 +31742,7 @@ export type OnDeleteRoleSubscription = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -32705,6 +32868,7 @@ export type OnCreateDepartmentSubscription = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -32897,6 +33061,7 @@ export type OnUpdateDepartmentSubscription = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -33089,6 +33254,7 @@ export type OnDeleteDepartmentSubscription = {
       items:  Array< {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -33160,6 +33326,7 @@ export type OnCreateShiftSubscription = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -33487,6 +33654,7 @@ export type OnCreateShiftSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -33656,6 +33824,7 @@ export type OnCreateShiftSubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -33797,6 +33966,7 @@ export type OnCreateShiftSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -33947,6 +34117,7 @@ export type OnCreateShiftSubscription = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -34044,6 +34215,7 @@ export type OnUpdateShiftSubscription = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -34371,6 +34543,7 @@ export type OnUpdateShiftSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -34540,6 +34713,7 @@ export type OnUpdateShiftSubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -34681,6 +34855,7 @@ export type OnUpdateShiftSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -34831,6 +35006,7 @@ export type OnUpdateShiftSubscription = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -34928,6 +35104,7 @@ export type OnDeleteShiftSubscription = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -35255,6 +35432,7 @@ export type OnDeleteShiftSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -35424,6 +35602,7 @@ export type OnDeleteShiftSubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -35565,6 +35744,7 @@ export type OnDeleteShiftSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -35715,6 +35895,7 @@ export type OnDeleteShiftSubscription = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -35812,6 +35993,7 @@ export type OnCreateAnnouncementSubscription = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -36238,6 +36420,7 @@ export type OnUpdateAnnouncementSubscription = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -36664,6 +36847,7 @@ export type OnDeleteAnnouncementSubscription = {
     createdBy?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -37090,6 +37274,7 @@ export type OnCreateReactionSubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -37223,6 +37408,7 @@ export type OnCreateReactionSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -37469,6 +37655,7 @@ export type OnCreateReactionSubscription = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -37495,6 +37682,7 @@ export type OnCreateReactionSubscription = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -37610,6 +37798,7 @@ export type OnCreateReactionSubscription = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -37697,6 +37886,7 @@ export type OnUpdateReactionSubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -37830,6 +38020,7 @@ export type OnUpdateReactionSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38076,6 +38267,7 @@ export type OnUpdateReactionSubscription = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38102,6 +38294,7 @@ export type OnUpdateReactionSubscription = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38217,6 +38410,7 @@ export type OnUpdateReactionSubscription = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38304,6 +38498,7 @@ export type OnDeleteReactionSubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -38437,6 +38632,7 @@ export type OnDeleteReactionSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38683,6 +38879,7 @@ export type OnDeleteReactionSubscription = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38709,6 +38906,7 @@ export type OnDeleteReactionSubscription = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38824,6 +39022,7 @@ export type OnDeleteReactionSubscription = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -38917,6 +39116,7 @@ export type OnCreateMessageSubscription = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -39042,6 +39242,7 @@ export type OnCreateMessageSubscription = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -39418,6 +39619,7 @@ export type OnCreateMessageSubscription = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -39550,6 +39752,7 @@ export type OnCreateMessageSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -39700,6 +39903,7 @@ export type OnCreateMessageSubscription = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -39802,6 +40006,7 @@ export type OnUpdateMessageSubscription = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -39927,6 +40132,7 @@ export type OnUpdateMessageSubscription = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -40303,6 +40509,7 @@ export type OnUpdateMessageSubscription = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -40435,6 +40642,7 @@ export type OnUpdateMessageSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -40585,6 +40793,7 @@ export type OnUpdateMessageSubscription = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -40687,6 +40896,7 @@ export type OnDeleteMessageSubscription = {
     sender?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -40812,6 +41022,7 @@ export type OnDeleteMessageSubscription = {
     receiver?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -41188,6 +41399,7 @@ export type OnDeleteMessageSubscription = {
     otherUser?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -41320,6 +41532,7 @@ export type OnDeleteMessageSubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -41470,6 +41683,7 @@ export type OnDeleteMessageSubscription = {
       user?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -41581,6 +41795,7 @@ export type OnCreateMessageReplySubscription = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -41607,6 +41822,7 @@ export type OnCreateMessageReplySubscription = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -41722,6 +41938,7 @@ export type OnCreateMessageReplySubscription = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -41795,6 +42012,7 @@ export type OnCreateMessageReplySubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -41948,6 +42166,7 @@ export type OnUpdateMessageReplySubscription = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -41974,6 +42193,7 @@ export type OnUpdateMessageReplySubscription = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -42089,6 +42309,7 @@ export type OnUpdateMessageReplySubscription = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -42162,6 +42383,7 @@ export type OnUpdateMessageReplySubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -42315,6 +42537,7 @@ export type OnDeleteMessageReplySubscription = {
       sender?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -42341,6 +42564,7 @@ export type OnDeleteMessageReplySubscription = {
       receiver?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -42456,6 +42680,7 @@ export type OnDeleteMessageReplySubscription = {
       otherUser?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -42529,6 +42754,7 @@ export type OnDeleteMessageReplySubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -42676,6 +42902,7 @@ export type OnCreateAnnouncementReplySubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -42795,6 +43022,7 @@ export type OnCreateAnnouncementReplySubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -42942,6 +43170,7 @@ export type OnUpdateAnnouncementReplySubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -43061,6 +43290,7 @@ export type OnUpdateAnnouncementReplySubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -43208,6 +43438,7 @@ export type OnDeleteAnnouncementReplySubscription = {
       createdBy?:  {
         __typename: "User",
         type?: string | null,
+        expoNotificationToken?: string | null,
         id: string,
         createdAt?: string | null,
         updatedAt?: string | null,
@@ -43327,6 +43558,7 @@ export type OnDeleteAnnouncementReplySubscription = {
     user?:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -44486,6 +44718,7 @@ export type OnCreateHospitalUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -44669,6 +44902,7 @@ export type OnUpdateHospitalUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -44852,6 +45086,7 @@ export type OnDeleteHospitalUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -45035,6 +45270,7 @@ export type OnCreateGroupUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -45190,6 +45426,7 @@ export type OnUpdateGroupUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -45345,6 +45582,7 @@ export type OnDeleteGroupUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -45500,6 +45738,7 @@ export type OnCreateRoleUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -45706,6 +45945,7 @@ export type OnUpdateRoleUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -45912,6 +46152,7 @@ export type OnDeleteRoleUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -46118,6 +46359,7 @@ export type OnCreateQualUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -46287,6 +46529,7 @@ export type OnUpdateQualUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -46456,6 +46699,7 @@ export type OnDeleteQualUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -46625,6 +46869,7 @@ export type OnCreateEventUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -46872,6 +47117,7 @@ export type OnUpdateEventUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,
@@ -47119,6 +47365,7 @@ export type OnDeleteEventUserSubscription = {
     user:  {
       __typename: "User",
       type?: string | null,
+      expoNotificationToken?: string | null,
       id: string,
       createdAt?: string | null,
       updatedAt?: string | null,

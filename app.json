@@ -27,7 +27,8 @@
         "foregroundImage": "./assets/hospitalapplogo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.martianspidermedia.hospitalapp"
+      "package": "com.martianspidermedia.hospitalapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
