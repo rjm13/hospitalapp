@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useLayoutEffect} from "react";
+import React, {useState, useEffect, useContext, useLayoutEffect, useRef} from "react";
 import { View, Text, ActivityIndicator, Dimensions, TouchableWithoutFeedback, Platform } from "react-native";
 import { AppContext } from '../../AppContext';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
@@ -11,6 +11,7 @@ import Ambulance from '../../components/ActivityAmbulance'
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
+
 const Redirect = ({route, navigation} : any) => {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,8 @@ const Redirect = ({route, navigation} : any) => {
     const { 
         isManager, 
         theme, 
-        militaryTime 
+        militaryTime,
+        expoPushToken
     } = useContext(AppContext);
     
     const { 
@@ -40,12 +42,12 @@ const Redirect = ({route, navigation} : any) => {
 
     const styles = useStyles(theme);
 
+
     useEffect(() => {
 
         setIsLoading(true);
 
         const fetchUser = async () => {
-
 
             try {
                 const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true }).catch(err=>err)
@@ -75,7 +77,6 @@ const Redirect = ({route, navigation} : any) => {
                                 systemID: userInfo.attributes.zoneinfo
                             }}
                         ))
-                        //console.log(resp)
                     }
         
                     if (userData.data.getUser) {
@@ -88,6 +89,15 @@ const Redirect = ({route, navigation} : any) => {
                         setMilitaryTime(userData.data.getUser.Setting4);
                         setUserFirstName(userData.data.getUser.firstName);
                         setUserLastName(userData.data.getUser.lastName);
+                        
+                        await API.graphql(graphqlOperation(
+                            updateUser, {input: {
+                                id: userInfo.attributes.sub,
+                                expoNotificationToken: expoPushToken,
+                                Setting2: expoPushToken,
+                                Setting3: userInfo.attributes.profile
+                            }}
+                        ))
 
                         if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null || userData.data.getUser.lastName === null) {
                             setIsLoading(false)

@@ -26,6 +26,9 @@
     },
     "roleTable": {
       "Type": "String"
+    },
+    "userTable": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -89,6 +92,9 @@
             },
             "ROLE_TABLE": {
               "Ref": "roleTable"
+            },
+            "USER_TABLE": {
+              "Ref": "userTable"
             }
           }
         },
@@ -303,7 +309,8 @@
                 "dynamodb:Scan"
               ],
               "Resource": [
-                "arn:aws:dynamodb:us-east-2:904548764347:table/Role-lethhvsrljdfzmupbuoc6dypee-dev"
+                "arn:aws:dynamodb:us-east-2:904548764347:table/Role-lethhvsrljdfzmupbuoc6dypee-dev",
+                "arn:aws:dynamodb:us-east-2:904548764347:table/User-lethhvsrljdfzmupbuoc6dypee-dev"
               ],
               "Effect": "Allow"
             }

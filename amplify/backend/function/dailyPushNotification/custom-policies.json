@@ -1,6 +1,6 @@
 [
   {
     "Action": ["dynamodb:Scan"],
-    "Resource": ["arn:aws:dynamodb:us-east-2:904548764347:table/Role-lethhvsrljdfzmupbuoc6dypee-dev"]
+    "Resource": ["arn:aws:dynamodb:us-east-2:904548764347:table/Role-lethhvsrljdfzmupbuoc6dypee-dev", "arn:aws:dynamodb:us-east-2:904548764347:table/User-lethhvsrljdfzmupbuoc6dypee-dev"]
   }
 ]

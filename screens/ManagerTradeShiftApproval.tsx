@@ -18,14 +18,14 @@ import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { getShift} from '../src/graphql/queries';
+import { getShift, usersByPrimaryRole} from '../src/graphql/queries';
 import { updateShift, createMessage} from '../src/graphql/mutations';
 
 const TradeShiftApproval = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { userID, theme, isManager } = useContext(AppContext);
+  const { userID, theme, isManager, userRoleID } = useContext(AppContext);
 
   const styles = useStyles(theme);
   
@@ -105,6 +105,43 @@ const TradeShiftApproval = ({navigation, route} : any) => {
     paddingVertical: 10
 };
 
+const SendPushApproval = async () => {
+        const message = {
+            to: shift.user.Setting2,
+            sound: "default",
+            title: "Your trade has been approved.",
+            body: "For Today",
+            data: {someData: "goes here"},
+        }
+  
+        await fetch("https://exp.host/--/api/v2/push/send", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Accept-encoding": "gzip, deflate",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(message)
+        });
+        const message2 = {
+            to: shift.createdBy.Setting2,
+            sound: "default",
+            title: "Your trade has been approved.",
+            body: "For Today",
+            data: {someData: "goes here"},
+        }
+  
+        await fetch("https://exp.host/--/api/v2/push/send", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Accept-encoding": "gzip, deflate",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(message2)
+        });
+  }
+
 const SendTradeApprovalMessage = async () => {
 
     const Title = 'Your shift trade with' + ' ' + shift.user.firstName + ' ' + shift.user.lastName + ' ' +
@@ -161,61 +198,61 @@ const SendTradeApprovalMessage = async () => {
     } catch (e) {
       console.log(e)
     }
-  }
+}
   
-  const SendTradeDenialMessage = async () => {
+const SendTradeDenialMessage = async () => {
 
-    const Title = 'Your shift trade with' + ' ' + shift.user.firstName + ' ' + shift.user.lastName + ' ' +
-                    'has been denied.'
+const Title = 'Your shift trade with' + ' ' + shift.user.firstName + ' ' + shift.user.lastName + ' ' +
+                'has been denied.'
 
-    const Title2 = 'Your shift trade with' + ' ' + shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ' ' +
-                    'has been denied.'
-  
-    const Content = ''
+const Title2 = 'Your shift trade with' + ' ' + shift.createdBy.firstName + ' ' + shift.createdBy.lastName + ' ' +
+                'has been denied.'
 
-    const Content2 = ''
-  
-    try {
-    //this message goes to the person who posted the trade
-        await API.graphql(graphqlOperation(
-        createMessage, {input: {
-            type: 'Message',
-            title: Title,
-            subtitle: '',
-            content: Content,
-            messageType: 'Trade Denied',
-            isReadBySender: true,
-            isReadByReceiver: false,
-            senderID: userID,
-            receiverID: shift.createdByID,
-            status: 'Denied',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            shiftID: shift.id
-        }}
-        ))
-    //this message goes to the person who offered to trade
-        await API.graphql(graphqlOperation(
-        createMessage, {input: {
-            type: 'Message',
-            title: Title2,
-            subtitle: '',
-            content: Content2,
-            messageType: 'Trade Approved',
-            isReadBySender: true,
-            isReadByReceiver: false,
-            senderID: userID,
-            receiverID: shift.userID,
-            status: 'Approved',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            shiftID: shift.id
-        }}
-        ))
-    } catch (e) {
-      console.log(e)
-    }
-  }
+const Content = ''
+
+const Content2 = ''
+
+try {
+//this message goes to the person who posted the trade
+    await API.graphql(graphqlOperation(
+    createMessage, {input: {
+        type: 'Message',
+        title: Title,
+        subtitle: '',
+        content: Content,
+        messageType: 'Trade Denied',
+        isReadBySender: true,
+        isReadByReceiver: false,
+        senderID: userID,
+        receiverID: shift.createdByID,
+        status: 'Denied',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        shiftID: shift.id
+    }}
+    ))
+//this message goes to the person who offered to trade
+    await API.graphql(graphqlOperation(
+    createMessage, {input: {
+        type: 'Message',
+        title: Title2,
+        subtitle: '',
+        content: Content2,
+        messageType: 'Trade Approved',
+        isReadBySender: true,
+        isReadByReceiver: false,
+        senderID: userID,
+        receiverID: shift.userID,
+        status: 'Approved',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        shiftID: shift.id
+    }}
+    ))
+} catch (e) {
+    console.log(e)
+}
+}
 
 const SendApprovalMessage = async () => {
 
@@ -308,7 +345,8 @@ const ApproveTradeShift = async () => {
         )) 
         
         if (response && newresponse) {
-          SendTradeApprovalMessage()
+          SendTradeApprovalMessage();
+          SendPushApproval();
           alert('Trade approved.')
           navigation.goBack();
           //navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});

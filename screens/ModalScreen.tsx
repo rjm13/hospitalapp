@@ -26,7 +26,7 @@ const ShiftModal = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { userID, theme, militaryTime } = useContext(AppContext);
+  const { userID, theme, militaryTime, expoPushToken, userRoleID } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
@@ -98,6 +98,27 @@ const ShiftModal = ({navigation, route} : any) => {
     paddingVertical: 10
 };
 
+const SendPush = async () => {
+
+  const message = {
+      to: shift?.createdBy?.Setting2,
+      sound: "default",
+      title: "You have a new request pending your approval.",
+      body: "For Today",
+      data: {someData: "goes here"},
+  }
+
+await fetch("https://exp.host/--/api/v2/push/send", {
+    method: "POST",
+    headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(message)
+});
+}
+
 const PickUpShift = async () => {
     setProcessing(true);
     try {
@@ -121,6 +142,7 @@ const PickUpShift = async () => {
         ))
         console.log(response)
         if (response) {
+          SendPush();
           alert('A pickup request has been sent to your manager.')
           navigation.goBack();
           setProcessing(false)

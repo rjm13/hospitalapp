@@ -1920,7 +1920,7 @@ export type ModelEventUserFilterInput = {
   not?: ModelEventUserFilterInput | null,
 };
 
-export type ModelStringKeyConditionInput = {
+export type ModelIDKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
   lt?: string | null,
@@ -1935,6 +1935,16 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
 
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
@@ -27783,6 +27793,147 @@ export type ListEventUsersQuery = {
       },
       createdAt: string,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UsersByPrimaryRoleQueryVariables = {
+  primaryRoleID: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UsersByPrimaryRoleQuery = {
+  usersByPrimaryRole?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      type?: string | null,
+      expoNotificationToken?: string | null,
+      id: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      firstName?: string | null,
+      lastName?: string | null,
+      phone?: string | null,
+      email?: string | null,
+      imageUri?: string | null,
+      bio?: string | null,
+      status?: string | null,
+      Setting1?: boolean | null,
+      Setting2?: string | null,
+      Setting3?: string | null,
+      Setting4?: boolean | null,
+      Setting5?: boolean | null,
+      systemID?: string | null,
+      system?:  {
+        __typename: "System",
+        type?: string | null,
+        id: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        name?: string | null,
+        website?: string | null,
+        imageUri?: string | null,
+        createdOn: string,
+        updatedOn: string,
+      } | null,
+      hospital?:  {
+        __typename: "ModelHospitalUserConnection",
+        nextToken?: string | null,
+      } | null,
+      hospID?: string | null,
+      hosp?:  {
+        __typename: "Hospital",
+        type?: string | null,
+        id: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        name?: string | null,
+        abbreviation?: string | null,
+        systemID?: string | null,
+        streetNum?: string | null,
+        streetAddress?: string | null,
+        city?: string | null,
+        state?: string | null,
+        postalCode?: string | null,
+        phone?: string | null,
+        color?: string | null,
+        imageUri?: string | null,
+        createdOn: string,
+        updatedOn: string,
+      } | null,
+      groups?:  {
+        __typename: "ModelGroupUserConnection",
+        nextToken?: string | null,
+      } | null,
+      departmentID?: string | null,
+      department?:  {
+        __typename: "Department",
+        type?: string | null,
+        id: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        name?: string | null,
+        abbreviation?: string | null,
+        hospitalID?: string | null,
+        color?: string | null,
+        imageUri?: string | null,
+        createdOn: string,
+        updatedOn: string,
+      } | null,
+      role?:  {
+        __typename: "ModelRoleUserConnection",
+        nextToken?: string | null,
+      } | null,
+      quals?:  {
+        __typename: "ModelQualUserConnection",
+        nextToken?: string | null,
+      } | null,
+      shifts?:  {
+        __typename: "ModelShiftConnection",
+        nextToken?: string | null,
+      } | null,
+      messagesOut?:  {
+        __typename: "ModelMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      messagesIn?:  {
+        __typename: "ModelMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      announcements?:  {
+        __typename: "ModelAnnouncementConnection",
+        nextToken?: string | null,
+      } | null,
+      events?:  {
+        __typename: "ModelEventUserConnection",
+        nextToken?: string | null,
+      } | null,
+      primaryRoleID?: string | null,
+      primaryRole?:  {
+        __typename: "Role",
+        type?: string | null,
+        id: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        title?: string | null,
+        details?: string | null,
+        icon?: string | null,
+        color?: string | null,
+        imageUri?: string | null,
+        acronym?: string | null,
+        hospitalID?: string | null,
+        departmentID?: string | null,
+        createdOn: string,
+        updatedOn: string,
+      } | null,
+      createdOn: string,
+      updatedOn: string,
     } | null >,
     nextToken?: string | null,
   } | null,

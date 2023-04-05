@@ -23,8 +23,9 @@
         },
         "dailyPushNotification": {
           "deploymentBucketName": "amplify-hospitalapp-dev-133832-deployment",
-          "s3Key": "amplify-builds/dailyPushNotification-45477a662f6e354e4645-build.zip",
-          "roleTable": "Role-lethhvsrljdfzmupbuoc6dypee-dev"
+          "s3Key": "amplify-builds/dailyPushNotification-4d6149575562466e322b-build.zip",
+          "roleTable": "Role-lethhvsrljdfzmupbuoc6dypee-dev",
+          "userTable": "User-lethhvsrljdfzmupbuoc6dypee-dev"
         }
       }
     }

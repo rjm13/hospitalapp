@@ -19,7 +19,7 @@ import {Provider, Portal, Modal} from 'react-native-paper';
 import DatePicker from 'react-native-date-picker'
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { getShift} from '../src/graphql/queries';
+import { getShift, usersByPrimaryRole} from '../src/graphql/queries';
 import { updateShift, deleteShift, createShift} from '../src/graphql/mutations';
 
 const TradeModal = ({navigation, route} : any) => {
@@ -146,6 +146,41 @@ const dateminus = () => {
   return c;
 }
 
+const SendPush = async () => {
+
+  const response = await API.graphql(graphqlOperation(
+      usersByPrimaryRole, {
+          primaryRoleID: userRoleID,
+              filter: {
+                  Setting3: {
+                      eq: 'manager'
+                  }
+              }
+      }
+  ))
+
+  for (let i = 0; i < response.data.usersByPrimaryRole.items.length; i++) {
+
+      const message = {
+          to: response.data.usersByPrimaryRole.items[i].Setting2,
+          sound: "default",
+          title: "You have a new trade request pending your approval.",
+          body: "For Today",
+          data: {someData: "goes here"},
+      }
+
+      await fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+              Accept: "application/json",
+              "Accept-encoding": "gzip, deflate",
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message)
+      });
+  }
+}
+
 const PickUpShift = async () => {
     setProcessing(true);
     try {
@@ -169,6 +204,7 @@ const PickUpShift = async () => {
         ))
         console.log(response)
         if (response) {
+          SendPush();
           alert('A pickup request has been sent to your manager.')
           navigation.goBack();
           setProcessing(false)
@@ -243,6 +279,7 @@ const TradeShift = async () => {
       ))
       console.log(response)
       if (response) {
+        SendPush();
         alert('A trade request has been sent to your manager.')
         navigation.goBack();
         setProcessing(false)

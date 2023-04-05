@@ -26,7 +26,7 @@ const ShiftApproval = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { theme } = useContext(AppContext);
+  const { theme, expoPushToken } = useContext(AppContext);
   const { userID } = useContext(AppContext);
 
   const styles = useStyles(theme);
@@ -97,37 +97,44 @@ const ShiftApproval = ({navigation, route} : any) => {
     paddingVertical: 10
 };
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
 const SendPushApproval = async () => {
-  // async function sendPushNotification(expoPushToken) {
-  //   const message = {
-  //       to: expoPushToken,
-  //       sound: "default",
-  //       title: "Original Title",
-  //       body: "And here is the body!",
-  //       data: {someData: "goes here"},
-  //   }
+    const message = {
+        to: shift.user?.Setting2,
+        sound: "default",
+        title: "Your pickup request has been approved.",
+        body: "For Today",
+        data: {someData: "goes here"},
+    }
 
-// await fetch("https://exp.host/--/api/v2/push/send", {
-//     method: "POST",
-//     headers: {
-//         Accept: "application/json",
-//         "Accept-encoding": "gzip, deflate",
-//         "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(message)
-// });
+  await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+          Accept: "application/json",
+          "Accept-encoding": "gzip, deflate",
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message)
+  });
 }
 
-const SendPushDenial = () => {
+const SendPushDenial = async () => {
+  const message = {
+    to: shift.user?.Setting2,
+    sound: "default",
+    title: "Your pickup request has been denied.",
+    body: "For Today",
+    data: {someData: "goes here"},
+}
 
+await fetch("https://exp.host/--/api/v2/push/send", {
+  method: "POST",
+  headers: {
+      Accept: "application/json",
+      "Accept-encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+  },
+  body: JSON.stringify(message)
+});
 }
 
 const SendApprovalMessage = async () => {
@@ -259,6 +266,7 @@ const DenyShift = async () => {
         console.log(response)
         if (response) {
           SendDenialMessage();
+          SendPushDenial();
           alert('Shift pickup denied.')
           navigation.navigate('ApprovalRequests', {trigger: Math.random()});
           setProcessing(false)

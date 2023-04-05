@@ -27,7 +27,7 @@ import useStyles from '../styles';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { createAnnouncement } from '../src/graphql/mutations';
-import { getDepartment } from '../src/graphql/queries';
+import { getDepartment, usersByPrimaryRole } from '../src/graphql/queries';
 
 const CreateAnnouncement = ({ navigation }: any) => {
 
@@ -175,6 +175,36 @@ const dateminus = () => {
     return c;
 }
 
+const SendPushToRole = async () => {
+
+    const response = await API.graphql(graphqlOperation(
+        usersByPrimaryRole, {
+            primaryRoleID: userRoleID
+        }
+    ))
+  
+    for (let i = 0; i < response.data.usersByPrimaryRole.items.length; i++) {
+  
+        const message = {
+            to: response.data.usersByPrimaryRole.items[i].Setting2,
+            sound: "default",
+            title: "You have a new trade request pending your approval.",
+            body: "For Today",
+            data: {someData: "goes here"},
+        }
+  
+        await fetch("https://exp.host/--/api/v2/push/send", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Accept-encoding": "gzip, deflate",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(message)
+        });
+    }
+  }
+
 const Create = async () => {
 
     setIsCreating(true);
@@ -198,6 +228,10 @@ const Create = async () => {
         ))
         console.log(response)
 
+    if (data.roleID) {
+       SendPushToRole() 
+    }
+    
     setIsCreating(false);
     if (response) {
         navigation.goBack();

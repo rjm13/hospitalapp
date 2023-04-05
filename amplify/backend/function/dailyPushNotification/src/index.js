@@ -12,26 +12,42 @@ Amplify Params - DO NOT EDIT */
 
 const AWS = require("aws-sdk");
 const https = require("https")
-const{ROLE_TABLE} = process.env;
+const{ROLE_TABLE, USER_TABLE} = process.env;
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
 
     //get all of the Roles in the app
-    const params = {
+    const roleparams = {
         TableName : ROLE_TABLE,
         //FilterExpression : 'Year = :this_year',
         //ExpressionAttributes : {':this_year' : 2015}
     };
 
-    const roles = await docClient.scan(params).promise();
+    //get all of the users in the app
+    const userparams = {
+        TableName : USER_TABLE,
+        //FilterExpression : 'Year = :this_year',
+        //ExpressionAttributes : {':this_year' : 2015}
+    };
 
-    const activeShifts = roles.map((item) => {item.activeShifts.Items});
-    console.log('Sending notification for ${activeShifts.length} shifts', JSON.stringify(activeShifts))
+    const roles = await docClient.scan(roleparams).promise();
 
-    await Promise.all(roles.map(role => role.peeps.Items.map(user => 
-        user?.expoNotificationToken &&
-        sendPushNotification(user.expoNotificationToken))))
+    //const users = await docClient.scan(userparams).promise();
+    let scanResults = [];
+    let users;
+
+    do{
+        users = await docClient.scan(userparams).promise();
+        users.Items.forEach((item) => scanResults.push(item));
+        userparams.ExclusiveStartKey  = users.LastEvaluatedKey;
+    } while(typeof users.LastEvaluatedKey !== "undefined");
+
+    console.log(scanResults)
+
+    await Promise.all(scanResults.map(
+        (user) => user?.Setting2 &&
+        sendPushNotification(user.Setting2)))
 
     //filter roles.activeShifts by createdAt and status === open, in the last week
 

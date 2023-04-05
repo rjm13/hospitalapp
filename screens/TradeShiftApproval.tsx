@@ -18,7 +18,7 @@ import useStyles from '../styles';
 import { AppContext } from '../AppContext';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { getShift} from '../src/graphql/queries';
+import { getShift, usersByPrimaryRole} from '../src/graphql/queries';
 import { updateShift, createMessage} from '../src/graphql/mutations';
 import { startClock } from 'react-native-reanimated';
 
@@ -26,7 +26,7 @@ const TradeShiftApproval = ({navigation, route} : any) => {
 
   const {id} = route.params;
 
-  const { userID, theme, isManager, militaryTime } = useContext(AppContext);
+  const { userID, theme, isManager, militaryTime, userRoleID } = useContext(AppContext);
 
   const styles = useStyles(theme);
   
@@ -101,6 +101,61 @@ const TradeShiftApproval = ({navigation, route} : any) => {
     borderRadius: 15,
     paddingVertical: 10
 };
+
+const SendPushApproval = async () => {
+
+  const response = await API.graphql(graphqlOperation(
+      usersByPrimaryRole, {
+          primaryRoleID: userRoleID,
+              filter: {
+                  Setting3: {
+                      eq: 'manager'
+                  }
+              }
+      }
+  ))
+
+  for (let i = 0; i < response.data.usersByPrimaryRole.items.length; i++) {
+
+      const message = {
+          to: response.data.usersByPrimaryRole.items[i].Setting2,
+          sound: "default",
+          title: "You have a new trade request pending your approval.",
+          body: "For Today",
+          data: {someData: "goes here"},
+      }
+
+      await fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+              Accept: "application/json",
+              "Accept-encoding": "gzip, deflate",
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message)
+      });
+  }
+}
+
+const SendPushDenial = async () => {
+      const message = {
+          to: shift.user?.Setting2,
+          sound: "default",
+          title: "Your request has been denied.",
+          body: "For Today",
+          data: {someData: "goes here"},
+      }
+
+      await fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+              Accept: "application/json",
+              "Accept-encoding": "gzip, deflate",
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message)
+      });
+}
 
 const SendApprovalMessage = async () => {
 
@@ -184,6 +239,7 @@ const ApproveShift = async () => {
         console.log(response)
         if (response) {
           SendApprovalMessage()
+          SendPushApproval();
           alert('Shift sent for approval.')
           navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});
           setProcessing(false)
@@ -209,6 +265,7 @@ const DenyShift = async () => {
         console.log(response)
         if (response) {
           SendDenialMessage();
+          SendPushDenial();
           alert('Shift pickup denied.')
           navigation.navigate('TradeApprovalRequests', {trigger: Math.random()});
           setProcessing(false)

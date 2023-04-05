@@ -8,6 +8,9 @@ const context = {
     userID: null,
     setUserID: (val: string | null) => {},
 
+    expoPushToken: null,
+    setExpoPushToken: (val: string | null) => {},
+
     userFirstName: null,
     setUserFirstName: (val: string | null) => {},
 

@@ -52,13 +52,15 @@ async function registerForPushNotificationsAsync() {
       lightColor: '#FF231F7C',
     });
   }
-  console.log(token);
+  //console.log(token);
   return token;
 }
 
 export default function App() {
 
   const [userID, setUserID] = useState<string|null>(null);
+
+  const [expoPushToken, setExpoPushToken] = useState<string|null>(null);
 
   const [userFirstName, setUserFirstName] = useState<string|null>(null);
 
@@ -85,7 +87,6 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -107,11 +108,6 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    // console.log('token is')
-    // console.log(expoPushToken)
-  }, [expoPushToken])
-
 
   if (!isLoadingComplete) {
     return null;
@@ -121,6 +117,8 @@ export default function App() {
         <AppContext.Provider value={{
           userID,
           setUserID: (val: string | null) => setUserID(val),
+          expoPushToken,
+          setExpoPushToken: (val: string | null) => setExpoPushToken(val),
           systemID,
           setSystemID: (val: string | null) => setSystemID(val),
           hospID,
