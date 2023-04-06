@@ -121,8 +121,9 @@ const Redirect = ({route, navigation} : any) => {
                         });
                     }
                 }
-            } catch {
+            } catch (e) {
                 setIsLoading(false);
+                console.log(e)
             }
         }
         fetchUser();

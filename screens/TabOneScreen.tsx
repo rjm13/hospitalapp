@@ -18,22 +18,38 @@ import { AppContext } from '../AppContext';
 import useStyles from '../styles';
 
 import { API, graphqlOperation } from "aws-amplify";
-import { shiftsByRole } from '../src/graphql/queries';
+import { shiftsByRole, shiftsByUser } from '../src/graphql/queries';
 
 const TabOneScreen = ({ navigation }: any) => {
 
-  const { userRoleID } = useContext(AppContext);
-  const { theme, militaryTime } = useContext(AppContext);
+//hooks
+  const { 
+    userRoleID,
+    userID,
+    theme, 
+    militaryTime
+  } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
-  const [activeSections, setActiveSections] = useState([])
+//states
 
+  //triggers a refresh of the data
   const [didUpdate, setDidUpdate] = useState(false);
 
-  //refresh state of the flatlist
-  const [isFetching, setIsFetching] = useState(false);
+  //indicates the data is being fetched
+  const [isFetching, setIsFetching] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false)
+  
+  //indicates the list is empty in order to show the empty message
+  const [empty, setEmpty] = useState(false)
 
+  //these are the different dates. Hard coded to only show the next 60 days
+  const [activeSections, setActiveSections] = useState([])
+  const [sections, setSections] = useState([]);
+  const [userShifts, setUserShifts] = useState([])
+
+  //refreshes the flatlist
   const onRefresh = () => {
       setIsFetching(true);
       setDidUpdate(!didUpdate)
@@ -41,13 +57,12 @@ const TabOneScreen = ({ navigation }: any) => {
           setIsFetching(false);
       }, 2000);
       }
-
-  const [sections, setSections] = useState([]);
-
-  const [empty, setEmpty] = useState(false)
+    
 
 //fetch the data
   useEffect(() => {
+
+    setIsLoading(true);
 
     let arr = []
 
@@ -76,7 +91,10 @@ const TabOneScreen = ({ navigation }: any) => {
             },
             trade: {
               eq: false
-            }
+            },
+            userID: {
+              ne: userID
+            },
           }
         }
       ))
@@ -95,33 +113,59 @@ const TabOneScreen = ({ navigation }: any) => {
         setEmpty(false)
       }
     }
+
+    let userarr = [];
+
+    //get all of the days that a user is already working
+    const fetchUserShifts = async () => {
+      const response = await API.graphql(graphqlOperation(
+        shiftsByUser, {
+            userID: userID,
+                dateOrder: {
+                    gt: new Date().toISOString()
+                }
+        }
+      ))
+
+      for (let k = 0; k < response.data.shiftsByUser.items.length; k++) {
+        userarr.push(response.data.shiftsByUser.items[k].date)
+      }
+      setUserShifts(userarr)
+    }
+
+    fetchUserShifts();
     fetchShifts();
+    setIsLoading(false);
   }, [didUpdate])
 
-  const Item = ({id, date, title, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
-      const [vis, setVis] = useState(true);
-      useEffect(() => {
-        if (activeSections.includes(date) === true) {
-        
-          setVis(false);
-        }
-      }, [])
+//shift card for the flatlist
+  const Item = ({id, date, shiftType, notes, priority, startTime, endTime, name, payMultiplier, payRate} : any) => {
+      
+    const [vis, setVis] = useState(true);
 
-      const convertTime12to24 = (startTime : any) => {
-        const [time, modifier] = startTime.split(' ');
+    useEffect(() => {
+      if (activeSections.includes(date) === true) {
       
-        let [hours, minutes] = time.split(':');
-      
-        if (hours === '12') {
-          hours = '00';
-        }
-      
-        if (modifier === 'PM') {
-          hours = parseInt(hours, 10) + 12;
-        }
-      
-        return `${hours}:${minutes}`;
+        setVis(false);
       }
+    }, []);
+
+    //converts '7:00 PM' string to '19:00'
+    const convertTime12to24 = (startTime : any) => {
+      const [time, modifier] = startTime.split(' ');
+    
+      let [hours, minutes] = time.split(':');
+    
+      if (hours === '12') {
+        hours = '00';
+      }
+    
+      if (modifier === 'PM') {
+        hours = parseInt(hours, 10) + 12;
+      }
+    
+      return `${hours}:${minutes}`;
+    }
       
     return (
       <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
@@ -203,12 +247,19 @@ const TabOneScreen = ({ navigation }: any) => {
     )
   }
 
+//section header for ther flatlist
   const SectionHeader = ({title, data} : any) => {
 
     const [vis, setVis] = useState(true)
 
     useEffect(() => {
       if (activeSections.includes(title) === true) {
+        setVis(false);
+      }
+    }, [])
+
+    useEffect(() => {
+      if (userShifts.includes(title) === true) {
         setVis(false);
       }
     }, [])
@@ -302,12 +353,20 @@ const TabOneScreen = ({ navigation }: any) => {
         )}
         ListHeaderComponent={ () => (
           <View>
+            {isLoading === true ? (
+              <View>
+                <View style={{height: 60, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 4, backgroundColor: '#363636a5', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}} />
+                <View style={{height: 60, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 4, backgroundColor: '#363636a5', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}} />
+              </View>
+            ) : (
               <View style={{paddingVertical: 4, marginBottom: -4, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={{color: 'black', fontSize: 12}}>
                   Pull to refresh
                 </Text>
                 <FontAwesome5 name='chevron-down' size={12} style={{marginHorizontal: 8}}/>
               </View>
+            )}
+              
           </View>
       )}
         ListEmptyComponent={ () => (

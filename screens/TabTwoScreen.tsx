@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { 
-  StyleSheet, 
   Text, 
   View, 
   Dimensions, 
@@ -17,21 +16,28 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AppContext } from '../AppContext';
 import useStyles from '../styles';
 
-import { API, graphqlOperation, Auth } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { shiftsByRole } from '../src/graphql/queries';
 
 const TabTwoScreen = ({ navigation }: any) => {
 
-  const { theme, militaryTime, userRoleID } = useContext(AppContext);
+  const { 
+    theme, 
+    militaryTime, 
+    userRoleID,
+    userID
+  } = useContext(AppContext);
 
   const styles = useStyles(theme);
 
   const [activeSections, setActiveSections] = useState([])
-
-  const [didUpdate, setDidUpdate] = useState(false);
+  const [sections, setSections] = useState([]);
 
   //refresh state of the flatlist
   const [isFetching, setIsFetching] = useState(false);
+  const [didUpdate, setDidUpdate] = useState(false);
+
+  const [empty, setEmpty] = useState(false)
 
   const onRefresh = () => {
       setIsFetching(true);
@@ -40,10 +46,6 @@ const TabTwoScreen = ({ navigation }: any) => {
           setIsFetching(false);
       }, 2000);
       }
-
-  const [sections, setSections] = useState([]);
-
-  const [empty, setEmpty] = useState(false)
 
 //fetch the data
   useEffect(() => {
@@ -75,6 +77,9 @@ const TabTwoScreen = ({ navigation }: any) => {
             },
             trade: {
               eq: true
+            },
+            userID: {
+              ne: userID
             }
           }
         }
