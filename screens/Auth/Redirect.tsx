@@ -8,9 +8,6 @@ import { StatusBar } from 'expo-status-bar';
 import useStyles from '../../styles';
 import Ambulance from '../../components/ActivityAmbulance'
 
-const SCREEN_WIDTH = Dimensions.get('window').width
-const SCREEN_HEIGHT = Dimensions.get('window').height
-
 
 const Redirect = ({route, navigation} : any) => {
 
@@ -68,10 +65,9 @@ const Redirect = ({route, navigation} : any) => {
 
                     const userData = await API.graphql(graphqlOperation(
                         getUser,{ id: userInfo.attributes.sub}))
-                    //console.log(userData.data.getUser)
 
                     if (userData.data.getUser.system === null) {
-                        const resp = await API.graphql(graphqlOperation(
+                        await API.graphql(graphqlOperation(
                             updateUser, {input: {
                                 id: userInfo.attributes.sub,
                                 systemID: userInfo.attributes.zoneinfo
@@ -80,24 +76,6 @@ const Redirect = ({route, navigation} : any) => {
                     }
         
                     if (userData.data.getUser) {
-                        setUserID(userData.data.getUser.id);
-                        setSystemID(userData.data.getUser.systemID)
-                        setHospID(userData.data.getUser.hospID)
-                        setDepartID(userData.data.getUser.departmentID)
-                        setUserRoleID(userData.data.getUser.primaryRoleID)
-                        setTheme(userData.data.getUser.Setting1);
-                        setMilitaryTime(userData.data.getUser.Setting4);
-                        setUserFirstName(userData.data.getUser.firstName);
-                        setUserLastName(userData.data.getUser.lastName);
-                        
-                        await API.graphql(graphqlOperation(
-                            updateUser, {input: {
-                                id: userInfo.attributes.sub,
-                                expoNotificationToken: expoPushToken,
-                                Setting2: expoPushToken,
-                                Setting3: userInfo.attributes.profile
-                            }}
-                        ))
 
                         if (userData.data.getUser.hospID === null || userData.data.getUser.primaryRoleID === null || userData.data.getUser.departmentID === null || userData.data.getUser.firstName === null || userData.data.getUser.lastName === null) {
                             setIsLoading(false)
@@ -106,6 +84,24 @@ const Redirect = ({route, navigation} : any) => {
                                 routes: [{ name: 'Welcome' }],
                             });
                         } else {
+                            setUserID(userData.data.getUser.id);
+                            setSystemID(userData.data.getUser.systemID)
+                            setHospID(userData.data.getUser.hospID)
+                            setDepartID(userData.data.getUser.departmentID)
+                            setUserRoleID(userData.data.getUser.primaryRoleID)
+                            setTheme(userData.data.getUser.Setting1);
+                            setMilitaryTime(userData.data.getUser.Setting4);
+                            setUserFirstName(userData.data.getUser.firstName);
+                            setUserLastName(userData.data.getUser.lastName);
+                            
+                            await API.graphql(graphqlOperation(
+                                updateUser, {input: {
+                                    id: userInfo.attributes.sub,
+                                    expoNotificationToken: expoPushToken,
+                                    Setting2: expoPushToken,
+                                    Setting3: userInfo.attributes.profile
+                                }}
+                            ))
                             setIsLoading(false)
                             navigation.reset({
                                 //index: 0,

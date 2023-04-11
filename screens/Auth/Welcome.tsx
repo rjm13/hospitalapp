@@ -100,8 +100,8 @@ const Welcome = ({navigation} : any) => {
             <View style={{marginTop: 100, alignItems: 'center'}}>
                 <View style={{alignItems: 'center'}}>
                     <Image 
-                        source={require('../../assets/hospitalapplogo.png')}  
-                        style={{width: 80, height: 80}}
+                    source={theme === true ? require('../../assets/images/IconWhite.png') : require('../../assets/images/IconMaroon.png')}
+                    style={{width: 80, height: 80}}
                     />
                     <Text style={[styles.title, {fontSize: 26, color: 'maroon'}]}>
                         Welcome to Amble

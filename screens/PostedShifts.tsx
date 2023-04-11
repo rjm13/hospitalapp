@@ -21,8 +21,7 @@ import {StatusBar} from 'expo-status-bar';
 
 const PostedShifts = ({navigation} : any) => {
 
-    const { theme } = useContext(AppContext);
-    const { userID } = useContext(AppContext);
+    const { userID, theme, militaryTime } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -65,6 +64,21 @@ const PostedShifts = ({navigation} : any) => {
   
     const Item = ({id, date, status, firstName, lastName, title, giveUp, shiftType, notes, priority, startTime, endTime, startAMPM, endAMPM, numNeeded, name, payMultiplier, payRate} : any) => {
 
+      const convertTime12to24 = (inputtime : any) => {
+        const [time, modifier] = inputtime.split(' ');
+      
+        let [hours, minutes] = time.split(':');
+      
+        if (hours === '12') {
+          hours = '00';
+        }
+      
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+      
+        return `${hours}:${minutes}`;
+      }
         
       return (
         <TouchableWithoutFeedback onPress={() => navigation.navigate('TradeModalScreen', {id: id})}>
@@ -90,13 +104,13 @@ const PostedShifts = ({navigation} : any) => {
             ) : null}
               </View>
               <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-                  {startTime}
+              {convertTime12to24(startTime)}
               </Text>
               <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
               -
               </Text>
               <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
-              {endTime}
+              {convertTime12to24(endTime)}
               </Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center',}}>

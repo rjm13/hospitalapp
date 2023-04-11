@@ -23,7 +23,7 @@ import useStyles from '../../styles'
 
 const SelectDept = ({navigation, route} : any) => {
 
-    const { theme } = useContext(AppContext);
+    const { theme, departID } = useContext(AppContext);
 
     const styles = useStyles(theme);
 

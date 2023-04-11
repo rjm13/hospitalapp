@@ -18,7 +18,7 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   Setting1: Boolean #theme true === light
   Setting2: String #this is the expoPushToken
   Setting3: String #is manager or none
-  Setting4: Boolean
+  Setting4: Boolean #military time true === 24hr
   Setting5: Boolean
   systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
   system: System @hasOne (fields: ["systemID"])

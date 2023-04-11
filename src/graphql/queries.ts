@@ -71,7 +71,10 @@ export const getUser = /* GraphQL */ `
           updatedOn
         }
         departments {
-          nextToken
+          items {
+            id
+            name
+          }
         }
         people {
           nextToken
@@ -7525,6 +7528,11 @@ export const shiftsByDepartment = /* GraphQL */ `
           hospID
           departmentID
           primaryRoleID
+          primaryRole {
+            id
+            title
+            acronym
+          }
           createdOn
           updatedOn
         }

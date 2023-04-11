@@ -246,10 +246,10 @@ const TabTwoScreen = ({ navigation }: any) => {
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop:4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
-          <Text style={{fontWeight: '600', fontSize: 14}}>{title}</Text>
+          <Text style={{fontWeight: '600', fontSize: 14, color: theme === true ? '#e4e4e4' : '#000'}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{fontWeight: '400', fontSize: 14}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
-            <FontAwesome5 name={vis ? 'caret-down' : 'caret-right'} size={16} style={{width: 20, paddingHorizontal: 4}}/>
+            <Text style={{fontWeight: '400', fontSize: 14, color: theme === true ? '#e4e4e4' : '#000'}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
+            <FontAwesome5 name={vis ? 'caret-down' : 'caret-right'} color={theme === true ? '#e4e4e4' : '#000'} size={16} style={{width: 20, paddingHorizontal: 4}}/>
           </View>
         </View>
       </TouchableWithoutFeedback>
