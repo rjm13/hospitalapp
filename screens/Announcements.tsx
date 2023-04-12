@@ -250,7 +250,7 @@ const Announcements = ({ navigation }: any) => {
         )}
         ListHeaderComponent={ () => (
             <View>
-                <View style={{paddingVertical: 4, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{paddingVertical: 4, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width}}>
                   <Text style={{color: 'black', fontSize: 12}}>
                     Pull to refresh
                   </Text>

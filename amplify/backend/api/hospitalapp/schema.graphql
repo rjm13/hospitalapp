@@ -37,8 +37,8 @@ type User @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }
   events: [Event] @manyToMany (relationName: "EventUser")
   primaryRoleID: ID @index(name: "byPrimaryRole", queryField: "usersByPrimaryRole", sortKeyFields: ["id"])
   primaryRole: Role @hasOne (fields: ["primaryRoleID"]) 
+  modules: [ModuleUser] @hasMany (indexName: "byModule", fields: "id")
 }
-
 
 type Role @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
   type: String
@@ -335,4 +335,44 @@ type Group @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" 
   color: String
   imageUri: String
   messages: [Message] @hasMany(indexName: "byGroup", fields: ["id"])
+}
+
+type ModuleUser @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  id: ID
+  type: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  moduleID: ID @index(name: "byModule", queryField: "usersByModle", sortKeyFields: ["updatedAt"])
+  module: Module @hasOne (fields: ["moduleID"])
+  userID: ID @index(name: "byUser", queryField: "modulesByUser", sortKeyFields: ["updatedAt"])
+  user: User @hasOne (fields: ["userID"])
+  completionStatus: Boolean
+  deadline: AWSDateTime
+}
+
+type Module @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" }) @auth(rules: [{ allow: private, operations: [create, delete, update, read]}]) {
+  type: String
+  id: ID!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  name: String 
+  abbreviation: String
+  color: String
+  imageUri: String
+  deadline: AWSDateTime
+  completionPercent: Int
+  trainingDates: [AWSDateTime]
+  ownerID: ID @index(name: "byOwner", sortKeyFields: ["id"])
+  owner: User @hasOne (fields: ["ownerID"])
+  users: [ModuleUser] @hasMany(indexName: "byUser", fields: "id")
+  systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])
+  system: System @hasOne (fields: ["systemID"])
+  hospitalID: ID @index(name: "byHospital", sortKeyFields: ["id"])
+  hospital: Hospital @hasOne (fields: ["hospitalID"])
+  departmentID: ID @index(name: "byDepartment", sortKeyFields: ["id"])
+  department: Department @hasOne (fields: ["departmentID"])
+  roleID: ID @index(name: "byRole", sortKeyFields: ["id"])
+  role: Role @hasOne (fields: ["roleID"])
+  qualID: ID @index(name: "byQual", sortKeyFields: ["id"])
+  qual: Qual @hasOne (fields: ["qualID"])
 }

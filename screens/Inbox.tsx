@@ -30,7 +30,7 @@ const Inbox = ({navigation} : any) => {
 
     const [didUpdate, setDidUpdate] = useState(false);
 
-    const [nextToken, setNextToken] = useState()
+    const [nextToken, setNextToken] = useState();
 
     const [isLoading, setIsLoading] = useState(false)
 

@@ -370,6 +370,21 @@ export const onCreateUser = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      modules {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          moduleID
+          userID
+          completionStatus
+          deadline
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -743,6 +758,21 @@ export const onUpdateUser = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      modules {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          moduleID
+          userID
+          completionStatus
+          deadline
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
       createdOn
       updatedOn
     }
@@ -1115,6 +1145,21 @@ export const onDeleteUser = /* GraphQL */ `
         }
         createdOn
         updatedOn
+      }
+      modules {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          moduleID
+          userID
+          completionStatus
+          deadline
+          createdOn
+          updatedOn
+        }
+        nextToken
       }
       createdOn
       updatedOn
@@ -3265,6 +3310,9 @@ export const onCreateShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -3713,6 +3761,9 @@ export const onCreateShift = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -4081,6 +4132,9 @@ export const onUpdateShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -4529,6 +4583,9 @@ export const onUpdateShift = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -4897,6 +4954,9 @@ export const onDeleteShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5346,6 +5406,9 @@ export const onDeleteShift = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -5712,6 +5775,9 @@ export const onCreateAnnouncement = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -6097,6 +6163,9 @@ export const onUpdateAnnouncement = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -6481,6 +6550,9 @@ export const onDeleteAnnouncement = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -6864,6 +6936,9 @@ export const onCreateReaction = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -7434,6 +7509,9 @@ export const onUpdateReaction = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8002,6 +8080,9 @@ export const onDeleteReaction = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -8578,6 +8659,9 @@ export const onCreateMessage = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -8689,6 +8773,9 @@ export const onCreateMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -9022,6 +9109,9 @@ export const onCreateMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -9386,6 +9476,9 @@ export const onUpdateMessage = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -9497,6 +9590,9 @@ export const onUpdateMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -9830,6 +9926,9 @@ export const onUpdateMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -10194,6 +10293,9 @@ export const onDeleteMessage = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -10305,6 +10407,9 @@ export const onDeleteMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -10638,6 +10743,9 @@ export const onDeleteMessage = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -11216,6 +11324,9 @@ export const onCreateMessageReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -11560,6 +11671,9 @@ export const onUpdateMessageReply = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -11906,6 +12020,9 @@ export const onDeleteMessageReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -12150,6 +12267,9 @@ export const onCreateAnnouncementReply = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -12396,6 +12516,9 @@ export const onUpdateAnnouncementReply = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -12640,6 +12763,9 @@ export const onDeleteAnnouncementReply = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -13571,6 +13697,1809 @@ export const onDeleteGroup = /* GraphQL */ `
     }
   }
 `;
+export const onCreateModuleUser = /* GraphQL */ `
+  subscription OnCreateModuleUser {
+    onCreateModuleUser {
+      id
+      type
+      createdAt
+      updatedAt
+      moduleID
+      module {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        color
+        imageUri
+        deadline
+        completionPercent
+        trainingDates
+        ownerID
+        owner {
+          type
+          expoNotificationToken
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        users {
+          nextToken
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        qualID
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      userID
+      user {
+        type
+        expoNotificationToken
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        modules {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      completionStatus
+      deadline
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const onUpdateModuleUser = /* GraphQL */ `
+  subscription OnUpdateModuleUser {
+    onUpdateModuleUser {
+      id
+      type
+      createdAt
+      updatedAt
+      moduleID
+      module {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        color
+        imageUri
+        deadline
+        completionPercent
+        trainingDates
+        ownerID
+        owner {
+          type
+          expoNotificationToken
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        users {
+          nextToken
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        qualID
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      userID
+      user {
+        type
+        expoNotificationToken
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        modules {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      completionStatus
+      deadline
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const onDeleteModuleUser = /* GraphQL */ `
+  subscription OnDeleteModuleUser {
+    onDeleteModuleUser {
+      id
+      type
+      createdAt
+      updatedAt
+      moduleID
+      module {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        color
+        imageUri
+        deadline
+        completionPercent
+        trainingDates
+        ownerID
+        owner {
+          type
+          expoNotificationToken
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        users {
+          nextToken
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        qualID
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
+        createdOn
+        updatedOn
+      }
+      userID
+      user {
+        type
+        expoNotificationToken
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        modules {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      completionStatus
+      deadline
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const onCreateModule = /* GraphQL */ `
+  subscription OnCreateModule {
+    onCreateModule {
+      type
+      id
+      createdAt
+      updatedAt
+      name
+      abbreviation
+      color
+      imageUri
+      deadline
+      completionPercent
+      trainingDates
+      ownerID
+      owner {
+        type
+        expoNotificationToken
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        modules {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      users {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          moduleID
+          userID
+          completionStatus
+          deadline
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      systemID
+      system {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        hospitals {
+          nextToken
+        }
+        website
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      hospitalID
+      hospital {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departments {
+          nextToken
+        }
+        people {
+          nextToken
+        }
+        streetNum
+        streetAddress
+        city
+        state
+        postalCode
+        phone
+        color
+        imageUri
+        roles {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      departmentID
+      department {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        shifts {
+          nextToken
+        }
+        roles {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      roleID
+      role {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        details
+        icon
+        color
+        imageUri
+        acronym
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        people {
+          nextToken
+        }
+        peeps {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        activeShifts {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      qualID
+      qual {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        abbreviation
+        details
+        people {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const onUpdateModule = /* GraphQL */ `
+  subscription OnUpdateModule {
+    onUpdateModule {
+      type
+      id
+      createdAt
+      updatedAt
+      name
+      abbreviation
+      color
+      imageUri
+      deadline
+      completionPercent
+      trainingDates
+      ownerID
+      owner {
+        type
+        expoNotificationToken
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        modules {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      users {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          moduleID
+          userID
+          completionStatus
+          deadline
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      systemID
+      system {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        hospitals {
+          nextToken
+        }
+        website
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      hospitalID
+      hospital {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departments {
+          nextToken
+        }
+        people {
+          nextToken
+        }
+        streetNum
+        streetAddress
+        city
+        state
+        postalCode
+        phone
+        color
+        imageUri
+        roles {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      departmentID
+      department {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        shifts {
+          nextToken
+        }
+        roles {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      roleID
+      role {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        details
+        icon
+        color
+        imageUri
+        acronym
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        people {
+          nextToken
+        }
+        peeps {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        activeShifts {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      qualID
+      qual {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        abbreviation
+        details
+        people {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const onDeleteModule = /* GraphQL */ `
+  subscription OnDeleteModule {
+    onDeleteModule {
+      type
+      id
+      createdAt
+      updatedAt
+      name
+      abbreviation
+      color
+      imageUri
+      deadline
+      completionPercent
+      trainingDates
+      ownerID
+      owner {
+        type
+        expoNotificationToken
+        id
+        createdAt
+        updatedAt
+        firstName
+        lastName
+        phone
+        email
+        imageUri
+        bio
+        status
+        Setting1
+        Setting2
+        Setting3
+        Setting4
+        Setting5
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospital {
+          nextToken
+        }
+        hospID
+        hosp {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        groups {
+          nextToken
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        role {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        shifts {
+          nextToken
+        }
+        messagesOut {
+          nextToken
+        }
+        messagesIn {
+          nextToken
+        }
+        announcements {
+          nextToken
+        }
+        events {
+          nextToken
+        }
+        primaryRoleID
+        primaryRole {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        modules {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      users {
+        items {
+          id
+          type
+          createdAt
+          updatedAt
+          moduleID
+          userID
+          completionStatus
+          deadline
+          createdOn
+          updatedOn
+        }
+        nextToken
+      }
+      systemID
+      system {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        hospitals {
+          nextToken
+        }
+        website
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      hospitalID
+      hospital {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departments {
+          nextToken
+        }
+        people {
+          nextToken
+        }
+        streetNum
+        streetAddress
+        city
+        state
+        postalCode
+        phone
+        color
+        imageUri
+        roles {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      departmentID
+      department {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        shifts {
+          nextToken
+        }
+        roles {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        color
+        imageUri
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      roleID
+      role {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        details
+        icon
+        color
+        imageUri
+        acronym
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        people {
+          nextToken
+        }
+        peeps {
+          nextToken
+        }
+        quals {
+          nextToken
+        }
+        activeShifts {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      qualID
+      qual {
+        type
+        id
+        createdAt
+        updatedAt
+        title
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        abbreviation
+        details
+        people {
+          nextToken
+        }
+        createdOn
+        updatedOn
+      }
+      createdOn
+      updatedOn
+    }
+  }
+`;
 export const onCreateHospitalUser = /* GraphQL */ `
   subscription OnCreateHospitalUser {
     onCreateHospitalUser {
@@ -13684,6 +15613,9 @@ export const onCreateHospitalUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -13849,6 +15781,9 @@ export const onUpdateHospitalUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -14012,6 +15947,9 @@ export const onDeleteHospitalUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -14177,6 +16115,9 @@ export const onCreateGroupUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -14315,6 +16256,9 @@ export const onUpdateGroupUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -14455,6 +16399,9 @@ export const onDeleteGroupUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -14593,6 +16540,9 @@ export const onCreateRoleUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -14779,6 +16729,9 @@ export const onUpdateRoleUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -14963,6 +16916,9 @@ export const onDeleteRoleUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -15149,6 +17105,9 @@ export const onCreateQualUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -15301,6 +17260,9 @@ export const onUpdateQualUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -15455,6 +17417,9 @@ export const onDeleteQualUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -15607,6 +17572,9 @@ export const onCreateEventUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn
@@ -15834,6 +17802,9 @@ export const onUpdateEventUser = /* GraphQL */ `
           createdOn
           updatedOn
         }
+        modules {
+          nextToken
+        }
         createdOn
         updatedOn
       }
@@ -16059,6 +18030,9 @@ export const onDeleteEventUser = /* GraphQL */ `
           departmentID
           createdOn
           updatedOn
+        }
+        modules {
+          nextToken
         }
         createdOn
         updatedOn

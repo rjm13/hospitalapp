@@ -49,6 +49,8 @@ const TabOneScreen = ({ navigation }: any) => {
   const [sections, setSections] = useState([]);
   const [userShifts, setUserShifts] = useState([])
 
+  const [nextToken, setNextToken] = useState();
+
   //refreshes the flatlist
   const onRefresh = () => {
       setIsFetching(true);
@@ -104,6 +106,11 @@ const TabOneScreen = ({ navigation }: any) => {
         if (index !== -1 && resp.data.shiftsByRole.items[i].status === 'open') {
           arr[index].data.push(resp.data.shiftsByRole.items[i]);
         }
+        if (resp.data.shiftsByRole.nextToken) {
+          setNextToken(resp.data.shiftsByRole.nextToken)
+          fetchShifts();
+          return;
+      }
       }
 
       setSections(arr)
@@ -278,7 +285,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 0, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14, color: theme === true ? '#e4e4e4' : '#000'}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14, color: theme === true ? '#e4e4e4' : '#000'}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
@@ -358,7 +365,7 @@ const TabOneScreen = ({ navigation }: any) => {
                 <View style={{height: 60, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 4, backgroundColor: '#363636a5', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}} />
               </View>
             ) : (
-              <View style={{paddingVertical: 4, marginBottom: -4, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{paddingVertical: 4, marginBottom: 0, backgroundColor: '#757575a5',justifyContent: 'center', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width}}>
                 <Text style={{color: 'black', fontSize: 12}}>
                   Pull to refresh
                 </Text>
