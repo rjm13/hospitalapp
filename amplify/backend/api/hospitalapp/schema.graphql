@@ -362,6 +362,8 @@ type Module @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn"
   deadline: AWSDateTime
   completionPercent: Int
   trainingDates: [AWSDateTime]
+  location: String
+  notes: String
   ownerID: ID @index(name: "byOwner", sortKeyFields: ["id"])
   owner: User @hasOne (fields: ["ownerID"])
   users: [ModuleUser] @hasMany(indexName: "byUser", fields: "id")

@@ -45,6 +45,7 @@ export type RootStackParamList = {
   TradeApprovalRequests: undefined;
   TradeShiftApproval: undefined;
   ManagerTradeShiftApproval: undefined;
+  Training: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

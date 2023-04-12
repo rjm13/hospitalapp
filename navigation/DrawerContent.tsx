@@ -167,6 +167,16 @@ export function DrawerContent({navigation} : any) {
                                 </View>
                             </TouchableWithoutFeedback>
 
+                            <TouchableWithoutFeedback onPress={() => navigation.navigate('Training')}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
+                                    <View style={istyles.box}>
+                                        <Text style={[styles.itemtext]}>
+                                            Manage Training
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableWithoutFeedback>
+
                             </View>  
                         ) : null}
                         
