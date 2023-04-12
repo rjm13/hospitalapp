@@ -176,7 +176,7 @@ const TabOneScreen = ({ navigation }: any) => {
       
     return (
       <TouchableWithoutFeedback onPress={() => navigation.navigate('Modal', {id: id})}>
-        <View style={{height:  vis ? undefined : 0, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginVertical: 4, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 0, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
+        <View style={{height:  vis ? undefined : 0, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginTop: 0, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 4, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
             <View style={{flexDirection: 'row'}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
             {shiftType === 'night' ? (
@@ -285,7 +285,7 @@ const TabOneScreen = ({ navigation }: any) => {
 
     return (
       <TouchableWithoutFeedback onPress={() => AddToArray()}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginTop: 0, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme === true ? '#6A6A6A' : 'lightgray', paddingVertical: 4, paddingHorizontal: 10, marginBottom: 4, borderWidth: 0, borderTopRightRadius: 0, borderTopLeftRadius: 0,padding: 0, width: Dimensions.get('window').width - 0}}>
           <Text style={{fontWeight: '600', fontSize: 14, color: theme === true ? '#e4e4e4' : '#000'}}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontWeight: '400', fontSize: 14, color: theme === true ? '#e4e4e4' : '#000'}}>{data.length === 1 ? data.length + ' ' + 'Shift' : data.length + ' ' + 'Shifts'}</Text>
