@@ -19,11 +19,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StatusBar} from 'expo-status-bar'
 import ShiftTile from '../components/ShiftTile'
+import Header from '../components/Header'
 
 const MyShifts = ({navigation} : any) => {
 
-    const { theme } = useContext(AppContext);
-    const { userID } = useContext(AppContext);
+    const { userID, theme } = useContext(AppContext);
 
     const styles = useStyles(theme);
 
@@ -170,13 +170,7 @@ const MyShifts = ({navigation} : any) => {
     return (
         <View style={styles.container}>
 {/* header row */}
-            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 60, justifyContent: 'space-between', width: Dimensions.get('window').width - 80}}>
-                <FontAwesome name='close' color={theme === true ? '#fff' : '#000'} onPress={() => navigation.goBack()} size={20} style={{padding: 20, margin: -20}}/>
-                <Text style={styles.title}>
-                    Upcoming Shifts
-                </Text>
-                <View />
-            </View>
+            <Header header={'Upcoming Shifts'}/>
 
             <FlatList 
                 data={shifts}

@@ -11,6 +11,7 @@ import {
 
 import {AppContext} from '../AppContext';
 import useStyles from '../styles';
+import Header from '../components/Header';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -158,14 +159,8 @@ const Training = ({navigation} : any) => {
     return (
         <View style={styles.container}>
             <View style={{width: Dimensions.get('window').width - 60}}>
-                <View style={{height: 60}}/>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <FontAwesome onPress={() => navigation.goBack()} name='close' color={theme === true ? '#fff' : '#000'} size={20} style={{margin: -20, padding: 20}}/>
-                    <Text style={styles.title}>
-                        Training
-                    </Text>
-                    <View style={{width: 20}}/>
-                </View>
+                <Header header={'Training'}/>
+
                 <TouchableOpacity>
                     <View style={{marginVertical: 20, backgroundColor: 'lightgray', paddingVertical: 8, borderRadius: 20, overflow: 'hidden'}}>
                         <Text style={{textAlign: 'center'}}>

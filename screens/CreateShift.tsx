@@ -23,6 +23,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 
 import useStyles from '../styles';
 import { AppContext } from '../AppContext';
+import Header from '../components/Header';
 
 import { Auth, graphqlOperation, API, Analytics } from 'aws-amplify';
 import { getDepartment, getRole} from '../src/graphql/queries';
@@ -669,19 +670,7 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                     <ScrollView style={{ }} showsVerticalScrollIndicator={false}>
                         <View style={{justifyContent: 'space-between'}}>
 {/* header */}
-                            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
-                                <FontAwesome 
-                                    name='close'
-                                    color={theme === true ? '#fff' : '#000'}
-                                    size={20}
-                                    style={{padding: 20, margin: -20}}
-                                    onPress={() => navigation.goBack()}
-                                />
-                                <Text style={styles.title}>
-                                    Shift Template
-                                </Text>
-                                <View />
-                            </View>
+                            <Header header={'Create Shift'}/>
 {/* body */}
                             <View style={{marginTop: 40}}>
     {/*role */}

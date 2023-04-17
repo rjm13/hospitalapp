@@ -24,6 +24,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 
 import useStyles from '../styles';
 import { AppContext } from '../AppContext';
+import Header from '../components/Header';
 
 import { Auth, graphqlOperation, API } from 'aws-amplify';
 import { getShift, getRole, getUser} from '../src/graphql/queries';
@@ -658,21 +659,10 @@ const EditShift = ({navigation, route} : {navigation: any, route : any}) => {
             <View style={[styles.container]}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <ScrollView style={{ }} showsVerticalScrollIndicator={false}>
+                        <Header header={'Edit Shift'}/>
                         <View style={{justifyContent: 'space-between'}}>
 {/* header */}
-                            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
-                                <FontAwesome 
-                                    name='close'
-                                    color={theme === true ? '#fff' : '#000'}
-                                    size={20}
-                                    style={{padding: 20, margin: -20}}
-                                    onPress={() => navigation.goBack()}
-                                />
-                                <Text style={styles.title}>
-                                    Edit Shift
-                                </Text>
-                                <View />
-                            </View>
+                            
 {/* body */}
                             <View style={{marginTop: 40}}>
     {/*role */}

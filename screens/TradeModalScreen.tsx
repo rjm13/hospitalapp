@@ -76,6 +76,7 @@ const TradeModal = ({navigation, route} : any) => {
       const response = await API.graphql(graphqlOperation(
         getShift, {id: id}
     ))
+    
     setShift(response.data.getShift)
     }
     fetchShift();

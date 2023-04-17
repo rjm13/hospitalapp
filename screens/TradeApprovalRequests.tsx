@@ -21,6 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { format, parseISO } from "date-fns";
 import {StatusBar } from 'expo-status-bar';
+import Header from '../components/Header';
 
 const TradeApprovalRequests = ({navigation, route} : any) => {
 
@@ -196,13 +197,7 @@ const TradeApprovalRequests = ({navigation, route} : any) => {
     return (
         <View style={styles.container}>
 {/* header row */}
-            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 60, marginBottom: 10, justifyContent: 'space-between', width: Dimensions.get('window').width - 80}}>
-                <FontAwesome name='close' onPress={() => navigation.goBack()} color={theme === true ? '#fff' : '#000'} size={20} style={{padding: 20, margin: -20}}/>
-                <Text style={styles.title}>
-                    Pickup Responses
-                </Text>
-                <View />
-            </View>
+            <Header header={'Pickup Responses'}/>
 
             <FlatList 
                 data={shifts}

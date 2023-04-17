@@ -11,6 +11,8 @@ import {
 
 import useStyles from '../styles';
 import { AppContext } from '../AppContext';
+import Header from '../components/Header';
+import ShiftTile from '../components/ShiftTile';
 
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { shiftsByDepartment } from '../src/graphql/queries';
@@ -20,7 +22,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {StatusBar} from 'expo-status-bar'
-import ShiftTile from '../components/ShiftTile';
+
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -190,13 +192,7 @@ const FilledShifts = ({navigation, route} : any) => {
     return (
         <View style={styles.container}>
 {/* header row */}
-            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 60, marginBottom: 10, justifyContent: 'space-between', width: Dimensions.get('window').width - 80}}>
-                <FontAwesome name='close' color={theme === true ? '#fff' : '#000'} onPress={() => navigation.goBack()} size={20} style={{padding: 20, margin: -20}}/>
-                <Text style={styles.title}>
-                    Filled Shifts
-                </Text>
-                <View />
-            </View>
+            <Header header={'Filled Shifts'}/>
 
             <FlatList 
                 data={shifts}

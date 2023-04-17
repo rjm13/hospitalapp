@@ -11,6 +11,7 @@ import {
 
 import {AppContext} from '../AppContext';
 import useStyles from '../styles';
+import Header from '../components/Header';
 
 import { format, parseISO } from "date-fns";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -130,21 +131,7 @@ const Inbox = ({navigation} : any) => {
 
     return (
         <View style={styles.container}>
-            <View style={{width:Dimensions.get('window').width - 40, justifyContent: 'space-between', flexDirection: 'row', marginTop: 30, alignItems: 'center'}}>
-                <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                    <View style={{padding: 30, margin:-30}}>
-                        <FontAwesome5 
-                            name='chevron-left'
-                            color={theme === true ? '#fff' : '#000'}
-                            size={20}
-                        />
-                    </View>
-                </TouchableWithoutFeedback>
-                <Text style={[styles.title, { marginHorizontal: 40, marginVertical: 20, }]}>
-                    Inbox
-                </Text>
-                <View style={{width: 0}}/>
-            </View>
+            <Header header={'Inbox'}/>
 
             <View style={{height: '87%'}}>
                 <FlatList 

@@ -12,15 +12,17 @@ import { View,
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {StatusBar} from 'expo-status-bar';
-import {AppContext} from '../AppContext';
+import { Modal, Portal, Provider } from 'react-native-paper';
 
+import {AppContext} from '../AppContext';
 import useStyles from '../styles';
+import Header from '../components/Header';
 
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import { updateUser } from '../src/graphql/mutations';
 import { getUser } from '../src/graphql/queries';
 
-import { Modal, Portal, Provider } from 'react-native-paper';
+
 
 const Settings = ({navigation} : any) => {
 
@@ -151,22 +153,8 @@ const Settings = ({navigation} : any) => {
             </Portal>
 
         <View style={styles.container}>
+            <Header header={'Settings'}/>
         <ScrollView>
-            <View style={{width:Dimensions.get('window').width, justifyContent: 'space-between', flexDirection: 'row', marginTop: 30, marginLeft: 20, alignItems: 'center'}}>
-                <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                    <View style={{padding: 30, margin:-30}}>
-                        <FontAwesome5 
-                            name='chevron-left'
-                            color={theme === true ? '#fff' : '#000'}
-                            size={20}
-                        />
-                    </View>
-                </TouchableWithoutFeedback>
-                <Text style={[styles.title, { marginHorizontal: 40, marginVertical: 20, }]}>
-                    Settings
-                </Text>
-                <View style={{width: 50}}/>
-            </View>
 
             <View style={{ marginHorizontal: 20, marginVertical: 20}}>
                 <Text style={styles.paragraph}>

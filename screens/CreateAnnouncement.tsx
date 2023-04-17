@@ -24,6 +24,7 @@ import {Provider, Portal, Modal} from 'react-native-paper';
 
 import { AppContext } from '../AppContext';
 import useStyles from '../styles';
+import Header from '../components/Header';
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { createAnnouncement } from '../src/graphql/mutations';
@@ -426,19 +427,7 @@ const Create = async () => {
                 <ScrollView style={{ }} showsVerticalScrollIndicator={false}>
                     <View style={{justifyContent: 'space-between'}}>
     {/* header */}
-                        <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 40, justifyContent: 'space-between'}}>
-                            <FontAwesome 
-                                name='close'
-                                color={theme === true ? '#fff' : '#000'}
-                                size={20}
-                                style={{padding: 20, margin: -20}}
-                                onPress={() => navigation.goBack()}
-                            />
-                            <Text style={styles.title}>
-                                Announcement Template
-                            </Text>
-                            <View />
-                        </View>
+                        <Header header={'Announcement Template'}/>
     {/* body */}
                         <View style={{marginTop: 40}}>
     {/*to who */}
