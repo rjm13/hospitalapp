@@ -18,6 +18,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StatusBar} from 'expo-status-bar'
+import ShiftTile from '../components/ShiftTile'
 
 const MyShifts = ({navigation} : any) => {
 
@@ -187,7 +188,24 @@ const MyShifts = ({navigation} : any) => {
                     />
                 }
                 renderItem={({item} : any) =>
-                <Item 
+                // <Item 
+                //     id={item.id}
+                //     name={item.name}
+                //     date={item.date}
+                //     startTime={item.startTime}
+                //     endTime={item.endTime}
+                //     numNeeded={item.numNeeded}
+                //     payMultiplier={item.payMultiplier}
+                //     endAMPM={item.endAMPM}
+                //     startAMPM={item.startAMPM}
+                //     payRate={item.payRate}
+                //     priority={item.priority}
+                //     notes={item.notes}
+                //     shiftType={item.shiftType}
+                //     title={item.title}
+                //     status={item.status}
+                // />
+                <ShiftTile 
                     id={item.id}
                     name={item.name}
                     date={item.date}
@@ -203,6 +221,7 @@ const MyShifts = ({navigation} : any) => {
                     shiftType={item.shiftType}
                     title={item.title}
                     status={item.status}
+                    screen={'Modal'}
                 />
                 }
                 ListFooterComponent={

@@ -42,7 +42,7 @@ return StyleSheet.create ({
     itemtext: {
       marginLeft: 30,
       fontSize: 16,
-      fontWeight: '700',
+      fontWeight: '400',
       color: theme === true ? '#fff' : '#000',
     },
     textInputTitle: {

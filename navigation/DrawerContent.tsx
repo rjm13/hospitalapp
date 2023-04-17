@@ -82,7 +82,7 @@ export function DrawerContent({navigation} : any) {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={styles.itemtext}>
-                                        My Shifts
+                                        Upcoming Shifts
                                     </Text>
                                 </View>
                             </View>
@@ -102,7 +102,7 @@ export function DrawerContent({navigation} : any) {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext]}>
-                                       Trade a Shift
+                                       Post Shift 
                                     </Text>
                                 </View>
                             </View>
@@ -112,7 +112,7 @@ export function DrawerContent({navigation} : any) {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 20}}>
                                 <View style={istyles.box}>
                                     <Text style={[styles.itemtext]}>
-                                        Trade Responses
+                                        Pickup Responses
                                     </Text>
                                 </View>
                             </View>

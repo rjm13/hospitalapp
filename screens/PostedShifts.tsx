@@ -18,6 +18,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StatusBar} from 'expo-status-bar';
+import ShiftTile from '../components/ShiftTile';
 
 const PostedShifts = ({navigation} : any) => {
 
@@ -133,21 +134,18 @@ const PostedShifts = ({navigation} : any) => {
             </View>
             </View>
             <View style={{alignItems: 'center', width: '20%', justifyContent: 'center', flexDirection: 'row'}}>
-              {giveUp === true ? (
+              {/* {giveUp === true ? (
                 <View style={{alignItems: 'center'}}>
                 <FontAwesome5 name='hands-helping' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
-                {/* <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
-                  Giving
-                </Text> */}
                 </View>
               ) : (
                 <View style={{alignItems: 'center'}}>
                 <FontAwesome5 name='people-arrows' size={20} color={theme=== true ? 'orange' : 'tomato'}/>
-                {/* <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
+                <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
                   Trading
-                </Text> */}
+                </Text>
                 </View>
-              )}
+              )} */}
                <View>
                 <FontAwesome5 name={status === 'pending' ? 'hourglass-half' : status === 'approved' ? 'check' : status === 'tradepending' ? 'door-open' : status === 'open' ? 'door-open' : 'skull-crossbones'} size={20} color={status === 'pending' ? '#BAB9A8' : status === 'approved' ? 'green' : 'lightgray'} style={{paddingHorizontal: 20}} />
                 {/* <Text style={{color: 'gray', fontSize: 10, textAlign: 'center'}}>
@@ -193,7 +191,7 @@ const PostedShifts = ({navigation} : any) => {
                     />
                 }
                 renderItem={({item} : any) =>
-                <Item 
+                <ShiftTile 
                     id={item.id}
                     name={item.name}
                     date={item.date}
@@ -210,6 +208,8 @@ const PostedShifts = ({navigation} : any) => {
                     title={item.title}
                     status={item.status}
                     giveUp={item.giveUp}
+                    screen={'TradeModalScreen'}
+                    screen2={'TradeModalScreen'}
                 />
                 }
                 ListFooterComponent={

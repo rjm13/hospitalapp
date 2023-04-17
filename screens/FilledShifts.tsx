@@ -20,6 +20,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {StatusBar} from 'expo-status-bar'
+import ShiftTile from '../components/ShiftTile';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -208,7 +209,7 @@ const FilledShifts = ({navigation, route} : any) => {
                 }
                 extraData={[didUpdate, trigger]}
                 renderItem={({item} : any) =>
-                <Item 
+                <ShiftTile 
                     id={item.id}
                     name={item.name}
                     date={item.date}
@@ -227,6 +228,7 @@ const FilledShifts = ({navigation, route} : any) => {
                     firstName={item.user.firstName}
                     lastName={item.user.lastName}
                     acronym={item.user.primaryRole.acronym}
+                    screen={'Modal'}
                 />
                 }
                 ListFooterComponent={
