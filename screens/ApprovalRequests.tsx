@@ -17,11 +17,12 @@ import { shiftsByDepartment } from '../src/graphql/queries';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { format, parseISO } from "date-fns";
 import {StatusBar} from 'expo-status-bar';
-import { Octicons } from "@expo/vector-icons";
+import ShiftTile from '../components/ShiftTile';
 
 const ApprovalRequests = ({navigation, route} : any) => {
 
@@ -168,12 +169,6 @@ const ApprovalRequests = ({navigation, route} : any) => {
                 <View style={{backgroundColor: '#5B5B5B', alignSelf: 'center', width: Dimensions.get('window').width - 20, borderBottomRightRadius: 10, borderBottomLeftRadius: 10}}>
                     {trade === true ? (
                         <View style={{alignSelf: 'center', paddingVertical: 10, paddingHorizontal: 4, marginBottom: 4, flexDirection: 'row', alignItems: 'center'}}>
-                            {/* <Fontisto 
-                                name='doctor'
-                                size={20}
-                                color='orange'
-                                style={{marginHorizontal: 10}}
-                            /> */}
                             <Text style={[styles.paragraph, {textTransform: 'capitalize', fontWeight: '500', marginLeft: 0, color: 'orange'}]}>
                                 {createdFirstName + ' ' + createdLastName + ','}
                             </Text>
@@ -238,7 +233,7 @@ const ApprovalRequests = ({navigation, route} : any) => {
                   }
                 extraData={[didUpdate, trigger]}
                 renderItem={({item} : any) =>
-                <Item 
+                <ShiftTile 
                     id={item.id}
                     name={item.name}
                     date={item.date}
@@ -261,6 +256,8 @@ const ApprovalRequests = ({navigation, route} : any) => {
                     acronym={item.user.primaryRole.acronym}
                     createdAcronym={item.createdBy.primaryRole.acronym}
                     trade={item.trade}
+                    screen={'ShiftApproval'}
+                    screenTrade={'ManagerTradeShiftApproval'}
                 />
                 }
                 ListFooterComponent={
