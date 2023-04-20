@@ -364,7 +364,7 @@ type Module @model (timestamps: { createdAt: "createdOn", updatedAt: "updatedOn"
   trainingDates: [AWSDateTime]
   location: String
   notes: String
-  ownerID: ID @index(name: "byOwner", sortKeyFields: ["id"])
+  ownerID: ID @index(name: "byOwner", queryField: "modulesByOwner", sortKeyFields: ["id"])
   owner: User @hasOne (fields: ["ownerID"])
   users: [ModuleUser] @hasMany(indexName: "byUser", fields: "id")
   systemID: ID @index(name: "bySystem", sortKeyFields: ["id"])

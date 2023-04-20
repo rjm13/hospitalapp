@@ -19,7 +19,7 @@ import {StatusBar} from 'expo-status-bar';
 import { format, parseISO, formatRelative } from "date-fns";
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { getMessage } from '../src/graphql/queries';
+import { listModules } from '../src/graphql/queries';
 import { updateMessage } from '../src/graphql/mutations';
 
 const Training = ({navigation} : any) => {
@@ -41,9 +41,7 @@ const Training = ({navigation} : any) => {
             deadline: new Date().toISOString(),
             completionPercent: 40,
             trainingDates: [
-                'March 13th, 2023 at 9:00 PM',
-                'March 13th, 2023 at 9:00 PM',
-                'March 13th, 2023 at 9:00 PM'
+                new Date().toISOString()
             ]
         }
     ])
@@ -61,7 +59,15 @@ const Training = ({navigation} : any) => {
       }
 
     useEffect(() => {
+        const fetchInfo = async () => {
+            const response = await API.graphql(graphqlOperation(
+                listModules
+            ))
 
+            setModules(response.data.listModules.items)
+        }
+        
+        fetchInfo();
     }, []);
 
     const Item = ({id, name, trainingDates, abbreviation, createdAt, index, updatedAt, color, imageUri, deadline, completionPercent} : any) => {
@@ -124,7 +130,7 @@ const Training = ({navigation} : any) => {
                         {trainingDates.map((item : any) => {
                             return (
                                 <Text style={[styles.paragraph, {fontWeight: '300'}]}>
-                                    {item}
+                                    {(formatRelative(parseISO(item), new Date())).charAt(0).toUpperCase() + (formatRelative(parseISO(item), new Date())).slice(1) }
                                 </Text>  
                             )
                         })}
@@ -143,7 +149,7 @@ const Training = ({navigation} : any) => {
             <Item 
                 id={item.id}
                 name={item.name}
-                abbreviation={item.abbreviation}
+                location={item.location}
                 createdAt={item.createdAt}
                 index={index}
                 updatedAt={item.updatedAt}
@@ -152,6 +158,7 @@ const Training = ({navigation} : any) => {
                 deadline={item.deadline}
                 completionPercent={item.completionPercent}
                 trainingDates={item.trainingDates}
+                notes={item.notes}
             />
         )
     }

@@ -29,15 +29,16 @@ import { Auth, graphqlOperation, API, Analytics } from 'aws-amplify';
 import { getDepartment, getRole} from '../src/graphql/queries';
 import { createModule} from '../src/graphql/mutations';
 
-const CreateShift = ({navigation} : {navigation: any}) => {
+const CreateModule = ({navigation} : {navigation: any}) => {
 
     const { 
         theme, 
+        militaryTime,
         userRoleID, 
         userID, 
         systemID, 
         departID, 
-        hospID 
+        hospID
     } = useContext(AppContext);
 
 
@@ -62,11 +63,11 @@ const CreateShift = ({navigation} : {navigation: any}) => {
         imageUri: '',
         deadline: new Date().toISOString(),
         completionPercent: 0,
-        trainingDates: [new Date().toISOString()],
+        trainingDates: [],
         location: '',
         notes: '',
         ownerID: userID,
-        users: [],
+        //users: [],
         systemID: systemID,
         hospitalID: hospID,
         departmentID: departID,
@@ -75,18 +76,18 @@ const CreateShift = ({navigation} : {navigation: any}) => {
 
     useEffect(() => {
         
-        const fetchInfo = async () => {
-            const response = await API.graphql(graphqlOperation(
-                getDepartment, {id: departID}
-            ))
-            setData({...data, 
-                type: 'Shift',
-            })
+        // const fetchInfo = async () => {
+        //     const response = await API.graphql(graphqlOperation(
+        //         getDepartment, {id: departID}
+        //     ))
+        //     setData({...data, 
+        //         type: 'Shift',
+        //     })
 
-            setRoles(response.data.getDepartment.roles.items)
-        }
+        //     setRoles(response.data.getDepartment.roles.items)
+        // }
         
-        fetchInfo();
+        // fetchInfo();
     }, [])
 
     const Create = async () => {
@@ -96,18 +97,33 @@ const CreateShift = ({navigation} : {navigation: any}) => {
         try {
 
             const response = await API.graphql(graphqlOperation(
-                createModule, {input: data}
+                createModule, {input: {
+                    type: 'Module',
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    name: data.name, 
+                    deadline: data.deadline,
+                    completionPercent: 0,
+                    trainingDates: data.trainingDates,
+                    //location: data.location,
+                    //notes: data.notes,
+                    ownerID: userID,
+                    systemID: systemID,
+                    hospitalID: hospID,
+                    departmentID: departID,
+                    roleID: userRoleID,
+                }}
             ))
 
             console.log(response)
          
-            Analytics.record({
-                name: 'moduleCreated',
-                attributes: {
-                    moduleID: '',
-                    userID: '',
-                }
-            })
+            // Analytics.record({
+            //     name: 'moduleCreated',
+            //     attributes: {
+            //         moduleID: '',
+            //         userID: '',
+            //     }
+            // })
             navigation.goBack();
 
         setCreating(false);
@@ -131,6 +147,13 @@ const CreateShift = ({navigation} : {navigation: any}) => {
         setData({
             ... data,
             notes: val
+        });
+    };
+
+    const handleLocation = (val : any) => {
+        setData({
+            ... data,
+            location: val
         });
     };
 
@@ -228,6 +251,89 @@ const CreateShift = ({navigation} : {navigation: any}) => {
         hideDateModal();
     }
 
+    const Item = () => {
+
+        const deadlineDate = parseISO(data.deadline)
+
+        const convertTime12to24 = (datetime : any) => {
+    
+          const timeap = datetime.slice(-8)
+    
+          const timeampm = timeap.startsWith(' ') ? datetime.slice(-7) : timeap
+    
+          const [time, modifier] = timeampm.split(' ');
+    
+          const beginLength = datetime.length - 8;
+    
+          const beginning = datetime.substring(0, beginLength)
+        
+          let [hours, minutes] = time.split(':');
+        
+          if (hours === '12') {
+            hours = '00';
+          }
+        
+          if (modifier === 'PM') {
+            hours = parseInt(hours, 10) + 12;
+          }
+    
+          let final = beginning + hours + ':' + minutes
+    
+          if (datetime.includes('/')) {
+            return datetime;
+          } else {
+            return final;
+          }
+          
+          //return `${hours}:${minutes}`;
+        }
+
+        return (
+            <View style={{alignSelf: 'center', width: Dimensions.get('window').width - 40, padding: 10, borderRadius: 10, overflow: 'hidden', borderWidth: 1, borderColor: 'black' }}>
+                <View>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                       <Text style={styles.title}>
+                            {data.name}
+                        </Text> 
+                        <Text style={styles.title}>
+                            {data.completionPercent}%
+                        </Text>
+                    </View>
+
+                    <View>
+                        <Text style={[styles.paragraph, {marginVertical: 10}]}>
+                            {data.notes}
+                        </Text>
+                    </View>
+                    
+                    <Text style={[styles.paragraph, {color: 'maroon', fontWeight: '600'}]}>
+                        Due {militaryTime === true ? convertTime12to24(formatRelative(deadlineDate, new Date())) : formatRelative(deadlineDate, new Date())}
+                    </Text>
+                    <View style={{marginTop: 20}}>
+                        <Text style={styles.paragraph}>
+                            Date(s):
+                        </Text>
+                        <View style={{marginVertical: 4, height: 1, width: Dimensions.get('window').width - 60, backgroundColor: 'black'}}/>
+                        {data.trainingDates.map((item : any) => {
+                            return (
+                                <Text style={[styles.paragraph, {fontWeight: '300'}]}>
+                                    {(formatRelative(parseISO(item), new Date())).charAt(0).toUpperCase() + (formatRelative(parseISO(item), new Date())).slice(1) }
+                                </Text>  
+                            )
+                        })}
+                    </View>
+
+                    <View>
+                        <Text style={[styles.paragraph, {marginTop: 10, color: 'gray', fontWeight: '600'}]}>
+                            Location: {data.location}
+                        </Text>
+                    </View>
+                    
+                </View>
+            </View>
+        )
+    }
+
   
     return (
         <Provider>
@@ -268,17 +374,26 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                         </View>
                     </View>
                 </Modal>
-{/* start time Modal */}
+{/* deadline time Modal */}
                 <Modal visible={visible4} onDismiss={hideStartModal} contentContainerStyle={containerStyle}>
                     <View style={{ alignItems: 'center'}}>
                         <DatePicker 
                             date={startTime} 
                             onDateChange={setStartTime}
-                            mode='time'
+                            mode='date'
                             textColor={theme === true ? '#fff' : '#000'}
                             fadeToColor={theme === true ? '#000' : '#fff'}
                             //is24hourSource='device'
                         />
+                        <View style={{marginTop: 80, marginBottom: 40}}>
+                            <TouchableOpacity onPress={() => {setData({...data, deadline: startTime.toISOString()}); hideStartModal() }}>
+                                <View style={styles.buttonlayout}>
+                                    <Text style={styles.buttontext}>
+                                        Set Deadline
+                                    </Text> 
+                                </View>  
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Modal>
 {/* end time Modal */}
@@ -322,14 +437,17 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                     <View style={{ alignItems: 'center'}}>
                         <ScrollView style={{height: '70%'}} showsVerticalScrollIndicator={false}>
                             <Text style={[styles.title, {textAlign: 'center'}]}>
-                                Create these shifts?
+                                Create this training module?
                             </Text>
-                            <Text style={[styles.paragraph, {textAlign: 'center'}]}>
-                                For {roleTitle.toLowerCase()}s on {format(date, "MMMM do yyyy")}?
-                            </Text>
+                            {/* <Text style={[styles.paragraph, {textAlign: 'center'}]}>
+                                Due {format(date, "MMMM do yyyy")}?
+                            </Text> */}
                             <View style={{alignSelf: 'center', height: 1, backgroundColor: theme === true ? '#fff' : '#000', width: Dimensions.get('window').width - 80, marginVertical: 20}}/>
-                      
+                    
+                        <Item />
+
                         <View style={{height: 100}}/>
+
                         </ScrollView>
                         <LinearGradient
                         colors={[theme === true ? '#000' : '#fff',theme === true ? '#000' : '#fff', theme === true ? '#000000a5' : '#ffffffa5','transparent']}
@@ -385,14 +503,14 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                 </View>
 
                                     {/*role */}
-                                    <TouchableOpacity onPress={showRoleModal}>
+                                    <TouchableOpacity onPress={showStartModal}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
                                         <Text style={[styles.title, {}]}>
                                             Deadline
                                         </Text>
                                         <View>
                                             <Text style={[styles.title, {color: roleTitle === 'Select Role' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
-                                                {roleTitle}
+                                                {formatRelative(startTime, new Date())}
                                             </Text>
                                         </View>
                                     </View>
@@ -412,19 +530,23 @@ const CreateShift = ({navigation} : {navigation: any}) => {
                                     </View>
                                 </TouchableOpacity>
 
-{/*role */}
-                                <TouchableOpacity onPress={showRoleModal}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20}}>
-                                        <Text style={[styles.title, {}]}>
-                                            Location
-                                        </Text>
-                                        <View>
-                                            <Text style={[styles.title, {color: roleTitle === 'Select Role' ? 'gray' : theme === true ? 'tomato' : 'maroon'}]}>
-                                                {data.location}
-                                            </Text>
-                                        </View>
+{/*location */}
+                                <View style={{marginVertical: 20}}>
+                                    <Text style={[styles.title, {marginHorizontal: 0, marginVertical: 10,}]}>
+                                        Location
+                                    </Text>
+                                    <View style={[styles.inputfield, {height: 50, backgroundColor: theme === true ? '#363636' : 'white', borderWidth: 1}]}>
+                                        <TextInput 
+                                            placeholder='...'
+                                            placeholderTextColor={theme === true ? '#ffffffa5' : '#000000a5'}
+                                            style={[styles.textInputTitle, {color: theme === true ? '#fff' : '#000]'}]}
+                                            maxLength={100}
+                                            onChangeText={(val) => handleLocation(val)}
+                                            autoCapitalize='words'
+                                            multiline={false}
+                                        />
                                     </View>
-                                </TouchableOpacity>
+                                </View>
 
     {/* select day */}
                         
@@ -503,4 +625,4 @@ const CreateShift = ({navigation} : {navigation: any}) => {
     );
 }
 
-export default CreateShift;
+export default CreateModule;
