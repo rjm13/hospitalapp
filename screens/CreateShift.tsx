@@ -9,7 +9,7 @@ import {
     ScrollView,
     Dimensions,
     ImageBackground,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 
 import { format } from "date-fns";

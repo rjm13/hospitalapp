@@ -136,24 +136,15 @@ const TabTwoScreen = ({ navigation }: any) => {
             <View style={{width: '80%'}}>
             <View style={{flexDirection: 'row'}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {shiftType === 'night' ? (
-            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
-              <Ionicons 
-                name='moon'
-                color={theme === true ? 'lightblue' : 'darkblue'}
-                size={12}
-                style={{marginRight: 4}}
-              />
+    
             </View>
-          ) : null}
-            </View>
-            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+            <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
               {militaryTime === true ? convertTime12to24(startTime) : startTime}
             </Text>
-            <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+            <Text style={[styles.paragraph, {marginHorizontal: 4, fontSize: 16}]}>
             -
             </Text>
-            <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : '#000'}}>
+            <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
               {militaryTime === true ? convertTime12to24(endTime) : endTime}
             </Text>
           </View>
@@ -163,6 +154,13 @@ const TabTwoScreen = ({ navigation }: any) => {
               {name}
             </Text>
           </View>
+          {shiftType === 'night' ? (
+              <View style={{marginLeft: 10, backgroundColor: '#D2D1FFa5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
+                <Text style={{color: 'darkblue'}}>
+                  Night
+                </Text>
+              </View>
+            ) : null}
           <View style={{backgroundColor: theme === true ? '#474747a5' : '#D2E0D7a5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4,flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
             <FontAwesome5 
               name='dollar-sign'

@@ -141,7 +141,7 @@ export function DrawerContent({navigation} : any) {
                                         </Text>
                                     </View>
                                     {hasPending === true ? (
-                                    <FontAwesome5 name='exclamation-circle' color='tomato' size={20} />
+                                    <FontAwesome5 name='exclamation-circle' color='maroon' size={20} />
                                     ) : null}
                                 </View>
                             </TouchableWithoutFeedback>

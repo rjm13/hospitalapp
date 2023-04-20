@@ -179,25 +179,23 @@ const TabOneScreen = ({ navigation }: any) => {
         <View style={{height:  vis ? undefined : 0, alignSelf: 'center', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, marginTop: 0, backgroundColor: theme === true ? '#363636a5' : 'white', borderRadius: 10, paddingHorizontal: 10, paddingVertical: vis ? 10 : 0, marginBottom: 4, borderWidth: 0, borderColor: 'gray', width: Dimensions.get('window').width - 20}}>
             <View style={{flexDirection: 'row'}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {shiftType === 'night' ? (
-              <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
+              {/* <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 0}}>
                 <Ionicons 
                   name='moon'
                   color={theme === true ? 'lightblue' : 'darkblue'}
                   size={12}
                   style={{marginRight: 4}}
                 />
-              </View>
-            ) : null}
+              </View> */}
             </View>
-              <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : shiftType === 'night' && theme === false ? 'darkblue' : '#000'}}>
+              <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
                   {/* {startTime} */}
                   {militaryTime === true ? convertTime12to24(startTime) : startTime}
               </Text>
-              <Text style={{marginHorizontal: 4, fontSize: 16, color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : shiftType === 'night' && theme === false ? 'darkblue' : '#000'}}>
+              <Text style={[styles.paragraph, {marginHorizontal: 4, fontSize: 16}]}>
               -
               </Text>
-              <Text style={{fontSize: 16, fontWeight: '500', color: shiftType === 'night' && theme === true ? 'lightblue' : shiftType === 'day' && theme === true ? '#fff' : shiftType === 'night' && theme === false ? 'darkblue' : '#000'}}>
+              <Text style={[styles.paragraph, {fontSize: 16, fontWeight: '500'}]}>
               {militaryTime === true ? convertTime12to24(endTime) : endTime}
               </Text>
             </View>
@@ -208,6 +206,14 @@ const TabOneScreen = ({ navigation }: any) => {
                 {name}
               </Text>
             </View>
+
+            {shiftType === 'night' ? (
+              <View style={{marginLeft: 10, backgroundColor: '#D2D1FFa5', borderRadius: 20, borderColor: 'gold', paddingHorizontal: 4, paddingVertical: 0}}>
+                <Text style={{color: 'darkblue'}}>
+                  Night
+                </Text>
+              </View>
+            ) : null}
 
             {payMultiplier === 1 && payRate === 0 ? null : (
               <View style={{flexDirection: 'row', alignItems: 'center'}}>

@@ -33,6 +33,9 @@ const ShiftModal = ({navigation, route} : any) => {
   const nightimage ={uri: 'https://wallpapers.com/images/hd/romantic-blue-moon-and-stars-7bthn2mib21qvff0.jpg'}
   const dayimage ={uri: 'https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=' }
 
+  const SCREEN_HEIGHT = Dimensions.get('window').height
+  const SCREEN_WIDTH = Dimensions.get('window').width
+
   const [shift, setShift] = useState({
     id: id,
     date: '',
@@ -329,6 +332,11 @@ const convertTime12to24 = (inputtime : any) => {
         </Modal>
       </Portal>
     <View style={styles.container}>
+      <ImageBackground
+        source={shift.shiftType === 'day' && theme === false ? require('../assets/images/dayimage.png') : shift.shiftType === 'night' && theme === false ? require('../assets/images/nightimage.png') : shift.shiftType === 'night' && theme === true ? require('../assets/images/darknightimage.png') : shift.shiftType === 'day' && theme === true ? require('../assets/images/darkdayimage.png') : require('../assets/images/dayimage.png')}
+        style={{backgroundColor: '#ffffffa5', position: 'absolute', alignSelf: 'center', width: SCREEN_WIDTH, height: SCREEN_HEIGHT + 100}}
+        imageStyle={{}}
+      />
       <View style={{height: 60}}/>
 {/* header icon row */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 40}}>
@@ -339,38 +347,17 @@ const convertTime12to24 = (inputtime : any) => {
       </View>
 {/* date title */}
       <View style={{alignItems: 'center', marginBottom: 20, marginTop: 40}}>
-        <Text style={{color: theme === true ? '#fff' : '#000', fontWeight: '800', fontSize: 30}}>
+        <Text style={{color: theme === true ? '#fff' : '#000', fontWeight: '800', fontSize: 34}}>
           {shift.date.substring(0, shift.date.length - 5)}
-        </Text>
-      </View>
-{/* shift type */}
-      <View style={{marginVertical: 20, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato', textTransform: 'capitalize'}]}>
-          {(shift.priority === 'normal' ? '' : shift.priority + ' ') + (shift.name === 'Regular' ? '' : shift.name + ' ')}
-        </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato'}]}>
-          {shift.role.acronym + ' '}
-        </Text>
-        <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato', textTransform: 'capitalize'}]}>
-          {shift.shiftType +' Shift'}
         </Text>
       </View>
 {/* time row */}
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20, width: Dimensions.get('window').width - 40}}>
           <View>
-            <ImageBackground
-                source={shift.isStartDayNight === 'night' ? nightimage : shift.isStartDayNight === 'day' ? dayimage : dayimage}
-                style={{backgroundColor: '#fff', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,borderRadius: 10, height: 80, width: 120, overflow: 'hidden'}}
-                //borderRadius={0}
-                resizeMode="cover"
-            >
-                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa5', borderRadius: 10, overflow: 'hidden' }}>
-                <Text style={[styles.timeselect, {color: theme === true && shift.isStartDayNight === 'night' ? '#fff' : theme === true && shift.isStartDayNight === 'day' ? '#000' :'#000'} ]}>
-                            {militaryTime === true ? convertTime12to24(shift.startTime) : shift.startTime}
-                        </Text>
-                    </View> 
-            </ImageBackground>
+            <Text style={[styles.timeselect, {fontSize: 24, } ]}>
+              {militaryTime === true ? convertTime12to24(shift.startTime) : shift.startTime}
+            </Text>
           </View>
 
           <View style={{justifyContent: 'center'}}>
@@ -380,20 +367,26 @@ const convertTime12to24 = (inputtime : any) => {
           </View>
 
           <View>
-            <ImageBackground
-                source={shift.isEndDayNight === 'night' ? nightimage : shift.isEndDayNight === 'day' ? dayimage : nightimage}
-                style={{backgroundColor: '#fff', elevation: 4, shadowColor: '#000', shadowOffset: {width: -2, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,borderRadius: 10, height: 80, width: 120, overflow: 'hidden'}}
-                //borderRadius={0}
-                resizeMode="cover"
-            >
-                <View style={{justifyContent: 'center', alignItems: 'center', height: 80, width: 120, backgroundColor: theme === true ? '#00000033' : '#ffffffa6', borderRadius: 10, overflow: 'hidden' }}>
-                <Text style={[styles.timeselect, {color: theme === true && shift.isEndDayNight === 'night' ? '#fff' : theme === true && shift.isEndDayNight === 'day' ? '#000' :'#000'}]}>
-                  {militaryTime === true ? convertTime12to24(shift.endTime) : shift.endTime}
-                        </Text>
-                    </View> 
-            </ImageBackground>
-          </View>
+            <Text style={[styles.timeselect, {fontSize: 24}]}>
+              {militaryTime === true ? convertTime12to24(shift.endTime) : shift.endTime}
+            </Text>
+          </View> 
         </View> 
+      </View>
+{/* break */}
+          <View style={{height: 60}}/>
+{/* shift type */}
+      <View style={{marginVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={[styles.paragraph, {textAlign: 'center', fontSize: 20, fontWeight: '500'}]}>
+          {/* {(shift.priority === 'normal' ? '' : shift.priority + ' ') +  */}
+          {(shift.name === 'Regular' ? '' : shift.name + ' ')}
+        </Text>
+        {/* <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato'}]}>
+          {shift.role.acronym + ' '}
+        </Text> */}
+        {/* <Text style={[styles.paragraph, {fontSize: 20, fontWeight: '500', color: shift.shiftType === 'day' && theme === false ? 'maroon' : shift.shiftType === 'night' && theme === true ? 'lightblue' : shift.shiftType === 'night' && theme === false ? 'darkblue' : 'tomato', textTransform: 'capitalize'}]}>
+          {shift.shiftType +' Shift'}
+        </Text> */}
       </View>
 {/* incentives */}
       <View>
@@ -407,7 +400,7 @@ const convertTime12to24 = (inputtime : any) => {
                     color='green'
                     style={{marginHorizontal: 4}}
                 />
-                <Text style={styles.timeselect}>
+                <Text style={[styles.timeselect, {textTransform: 'capitalize'}]}>
                     {shift.payMultiplier}x pay multiplier
                 </Text>
               </View>
