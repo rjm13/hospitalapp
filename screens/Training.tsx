@@ -161,7 +161,7 @@ const Training = ({navigation} : any) => {
             <View style={{width: Dimensions.get('window').width - 60}}>
                 <Header header={'Training'}/>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('CreateModule')}>
                     <View style={{marginVertical: 20, backgroundColor: 'lightgray', paddingVertical: 8, borderRadius: 20, overflow: 'hidden'}}>
                         <Text style={{textAlign: 'center'}}>
                             Create Training Module

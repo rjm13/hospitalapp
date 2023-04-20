@@ -44,6 +44,7 @@ import TradeApprovalRequests from '../screens/TradeApprovalRequests'
 import TradeShiftApproval from '../screens/TradeShiftApproval'
 import ManagerTradeShiftApproval from '../screens/ManagerTradeShiftApproval'
 import Training from '../screens/Training'
+import CreateModule from '../screens/CreateModule'
 
 
 import { AppContext } from '../AppContext';
@@ -179,6 +180,7 @@ function RootNavigator({navigation} : any) {
       <Stack.Screen name="TradeShiftApproval" component={TradeShiftApproval} options={{ headerShown: false }}/>
       <Stack.Screen name="ManagerTradeShiftApproval" component={ManagerTradeShiftApproval} options={{ headerShown: false }}/>
       <Stack.Screen name="Training" component={Training} options={{ headerShown: false }}/>
+      <Stack.Screen name="CreateModule" component={CreateModule} options={{ headerShown: false }}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} options={{ headerShown: false }} />
