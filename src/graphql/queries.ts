@@ -74,6 +74,7 @@ export const getUser = /* GraphQL */ `
           items {
             id
             name
+            abbreviation
           }
         }
         people {
@@ -5991,6 +5992,8 @@ export const getModuleUser = /* GraphQL */ `
         deadline
         completionPercent
         trainingDates
+        location
+        notes
         ownerID
         owner {
           type
@@ -6246,6 +6249,8 @@ export const listModuleUsers = /* GraphQL */ `
           deadline
           completionPercent
           trainingDates
+          location
+          notes
           ownerID
           systemID
           hospitalID
@@ -6304,6 +6309,8 @@ export const getModule = /* GraphQL */ `
       deadline
       completionPercent
       trainingDates
+      location
+      notes
       ownerID
       owner {
         type
@@ -6660,6 +6667,8 @@ export const listModules = /* GraphQL */ `
         deadline
         completionPercent
         trainingDates
+        location
+        notes
         ownerID
         owner {
           type
@@ -8394,8 +8403,8 @@ export const shiftsByDepartment = /* GraphQL */ `
           primaryRoleID
           primaryRole {
             id
-            title
             acronym
+            title
           }
           createdOn
           updatedOn
@@ -8543,8 +8552,8 @@ export const shiftsByDepartment = /* GraphQL */ `
           primaryRoleID
           primaryRole {
             id
-            title
             acronym
+            title
           }
           createdOn
           updatedOn
@@ -10168,6 +10177,8 @@ export const usersByModle = /* GraphQL */ `
           deadline
           completionPercent
           trainingDates
+          location
+          notes
           ownerID
           systemID
           hospitalID
@@ -10247,6 +10258,8 @@ export const modulesByUser = /* GraphQL */ `
           deadline
           completionPercent
           trainingDates
+          location
+          notes
           ownerID
           systemID
           hospitalID
@@ -10284,6 +10297,149 @@ export const modulesByUser = /* GraphQL */ `
         }
         completionStatus
         deadline
+        createdOn
+        updatedOn
+      }
+      nextToken
+    }
+  }
+`;
+export const modulesByOwner = /* GraphQL */ `
+  query ModulesByOwner(
+    $ownerID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelModuleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    modulesByOwner(
+      ownerID: $ownerID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        createdAt
+        updatedAt
+        name
+        abbreviation
+        color
+        imageUri
+        deadline
+        completionPercent
+        trainingDates
+        location
+        notes
+        ownerID
+        owner {
+          type
+          expoNotificationToken
+          id
+          createdAt
+          updatedAt
+          firstName
+          lastName
+          phone
+          email
+          imageUri
+          bio
+          status
+          Setting1
+          Setting2
+          Setting3
+          Setting4
+          Setting5
+          systemID
+          hospID
+          departmentID
+          primaryRoleID
+          createdOn
+          updatedOn
+        }
+        users {
+          nextToken
+        }
+        systemID
+        system {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          website
+          imageUri
+          createdOn
+          updatedOn
+        }
+        hospitalID
+        hospital {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          systemID
+          streetNum
+          streetAddress
+          city
+          state
+          postalCode
+          phone
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        departmentID
+        department {
+          type
+          id
+          createdAt
+          updatedAt
+          name
+          abbreviation
+          hospitalID
+          color
+          imageUri
+          createdOn
+          updatedOn
+        }
+        roleID
+        role {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          details
+          icon
+          color
+          imageUri
+          acronym
+          hospitalID
+          departmentID
+          createdOn
+          updatedOn
+        }
+        qualID
+        qual {
+          type
+          id
+          createdAt
+          updatedAt
+          title
+          roleID
+          abbreviation
+          details
+          createdOn
+          updatedOn
+        }
         createdOn
         updatedOn
       }

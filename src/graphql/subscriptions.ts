@@ -13717,6 +13717,8 @@ export const onCreateModuleUser = /* GraphQL */ `
         deadline
         completionPercent
         trainingDates
+        location
+        notes
         ownerID
         owner {
           type
@@ -13967,6 +13969,8 @@ export const onUpdateModuleUser = /* GraphQL */ `
         deadline
         completionPercent
         trainingDates
+        location
+        notes
         ownerID
         owner {
           type
@@ -14217,6 +14221,8 @@ export const onDeleteModuleUser = /* GraphQL */ `
         deadline
         completionPercent
         trainingDates
+        location
+        notes
         ownerID
         owner {
           type
@@ -14461,6 +14467,8 @@ export const onCreateModule = /* GraphQL */ `
       deadline
       completionPercent
       trainingDates
+      location
+      notes
       ownerID
       owner {
         type
@@ -14812,6 +14820,8 @@ export const onUpdateModule = /* GraphQL */ `
       deadline
       completionPercent
       trainingDates
+      location
+      notes
       ownerID
       owner {
         type
@@ -15163,6 +15173,8 @@ export const onDeleteModule = /* GraphQL */ `
       deadline
       completionPercent
       trainingDates
+      location
+      notes
       ownerID
       owner {
         type
